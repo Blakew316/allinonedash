@@ -1,0 +1,32 @@
+{
+  "template": "bank",
+  "bankName": "Meridian Bank",
+  "bankAddress": ["P.O. Box 4820", "Riverton, CO 80202", "1-800-555-0142"],
+  "bankWebsite": "meridianbank.example",
+  "accountType": "Business Checking",
+  "accountNumber": "•••• 4821 7730",
+  "periodStart": "2026-05-01",
+  "periodEnd": "2026-05-31",
+  "holderName": "NORTHSIDE PROVISIONS LLC",
+  "holderAddress": ["1420 CEDAR STREET, SUITE 5", "RIVERTON, CO 80204"],
+  "beginningBalance": "4,215.60",
+  "fees": "12.00",
+  "credits": [
+    { "date": "2026-05-02", "description": "Mobile Deposit", "amount": "1,250.00" },
+    { "date": "2026-05-06", "description": "ACH Credit — Card Settlement", "amount": "842.19" },
+    { "date": "2026-05-13", "description": "Customer Payment — Invoice 2041", "amount": "3,100.00" },
+    { "date": "2026-05-21", "description": "ACH Credit — Card Settlement", "amount": "915.44" },
+    { "date": "2026-05-28", "description": "Mobile Deposit", "amount": "460.00" }
+  ],
+  "debits": [
+    { "date": "2026-05-03", "description": "Card Purchase — Restaurant Supply Co", "amount": "318.72" },
+    { "date": "2026-05-09", "description": "Online Transfer to Payroll", "amount": "2,400.00" },
+    { "date": "2026-05-15", "description": "Card Purchase — Fuel", "amount": "96.40" },
+    { "date": "2026-05-22", "description": "ACH Debit — Utilities", "amount": "214.83" },
+    { "date": "2026-05-27", "description": "Card Purchase — Office Supplies", "amount": "142.09" }
+  ],
+  "checks": [
+    { "date": "2026-05-11", "number": "1042", "amount": "500.00" },
+    { "date": "2026-05-24", "number": "1043", "amount": "275.00" }
+  ]
+}

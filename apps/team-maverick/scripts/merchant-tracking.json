@@ -1,0 +1,196 @@
+{
+  "merchants": {
+    "DURAN AUTO||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "PRECISION AUTO WASH INC||Adam Drexler": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "BIG TEX AUTO SALES||Gabriel Craft": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "BIG TEX TIRES||Gabriel Craft": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "Gettysburg Performance Gym||Isaac Jenkins": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "MISFIT MAMAS CHAOS & CAFFEINE||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "ZATA||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "Z AUTO MUFFLER SHOP #1||Gabriel Craft": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "R1 TOWING||Sadie Scoville": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "FIVE CITIES CO BRAND INC||Gabriel Craft": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "BOTAS EL BANDIDO||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "CHEAP THRILLZ||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "S & O CARIBBEAN GROCERY STORE||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "TONE TOWN GUITARS||Jaden Dufek": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "KAPOLEI KOREAN BAR-B-Q||Jason Coutcher": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "LEGACY GRINDZ||Jason Coutcher": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "BAZOOKA FOOD TRUCK||Sadie Scoville": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "FIX PHONE ZONE MJ||Sadie Scoville": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "BOXCAR BARGAINS||Seth Manshum": {
+      "firstSeen": "2026-06-20",
+      "status": "Delivered – Not Processing",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "FALCON METALS||Timothy Constenius": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "JJ'S DRYWALLING||Timothy Constenius": {
+      "firstSeen": "2026-06-20",
+      "status": "Awaiting Delivery",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "HELPING HAND AUTO||Jaden Dufek": {
+      "firstSeen": "2026-06-23",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "RANCHO CORDOVA AUTO DISMANTLING||Lloyd Cruz": {
+      "firstSeen": "2026-06-23",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "HUBCAP HEAVEN AND WHEELS||Sadie Scoville": {
+      "firstSeen": "2026-06-23",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "THE NEXT STEP DANCIN WITH MAREN||Adam Drexler": {
+      "firstSeen": "2026-06-24",
+      "status": "Approved",
+      "notified2day": true,
+      "notified3day": false
+    },
+    "DEALS FURNITURE & MATTRESS OUTLET||Sadie Scoville": {
+      "firstSeen": "2026-06-26",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "MEGA FURNITURE CITY OUTLET||Sadie Scoville": {
+      "firstSeen": "2026-06-26",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "TARA INTERNATIONAL MARKET INC||Sadie Scoville": {
+      "firstSeen": "2026-06-26",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "DREAMWORKZ GARAGE||Judah Steelman": {
+      "firstSeen": "2026-06-28",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "LUAU MOTORS||Jason Coutcher": {
+      "firstSeen": "2026-07-01",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "MIKES TOWING CA 2||Judah Steelman": {
+      "firstSeen": "2026-07-01",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    },
+    "MIKES TOWING CA INC||Judah Steelman": {
+      "firstSeen": "2026-07-01",
+      "status": "Approved",
+      "notified2day": false,
+      "notified3day": true
+    }
+  }
+}

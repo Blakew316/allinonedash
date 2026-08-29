@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · WPI University</title>
+<meta name="description" content="Appearance, sign-up, training, billing and developer settings.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="admin">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a><span data-icon="chevron"></span>
+      <span aria-current="page">Settings</span>
+    </nav>
+    <div class="enter" style="--enter-delay:60ms">
+      <h1 class="h1">Settings</h1>
+      <p class="lede" style="margin-top:8px">Everything an administrator can change, in one list.</p>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:200px minmax(0,1fr);gap:32px;align-items:start;margin-top:12px;padding-bottom:32px">
+    <nav class="settings-rail enter" style="--enter-delay:120ms" id="settingsRail" aria-label="Settings sections"></nav>
+    <div class="col gap-lg" id="settingsBody"></div>
+  </div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/media.js"></script>
+<script src="assets/js/billing.js" onerror="void 0"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+
+  var SECTIONS = [
+    { id: 'appearance', icon: 'sparkles', title: 'Appearance',
+      blurb: 'Logos and colours for this site, the quote site and proposal PDFs.' },
+    { id: 'signup', icon: 'users', title: 'Sign-up',
+      blurb: 'Who can create an account, and what they get when they do.' },
+    { id: 'training', icon: 'book', title: 'Training',
+      blurb: 'Course visibility, learning plans and completion rules.' },
+    { id: 'api', icon: 'key', title: 'API keys',
+      blurb: 'Keys for the reporting API and proposal integration.' },
+    { id: 'sso', icon: 'shield', title: 'Single sign-on',
+      blurb: 'SAML metadata and the identity provider your reps sign in with.' },
+    { id: 'retention', icon: 'doc', title: 'Data retention',
+      blurb: 'How long completed training records are kept.' },
+    { id: 'assets', icon: 'layers', title: 'Assets',
+      blurb: 'Images and files shared across proposals, quotes and courses.' },
+    { id: 'notifications', icon: 'mail', title: 'System notifications',
+      blurb: 'The banner shown to every rep when you need to say something.' },
+    { id: 'webhooks', icon: 'key', title: 'Training event webhooks',
+      blurb: 'Post lesson and certification events to your own endpoint.' },
+    { id: 'offline', icon: 'download', title: 'Offline',
+      blurb: 'Courses saved to this device, and how much room they take.' },
+    { id: 'billing', icon: 'chart', title: 'Billing',
+      blurb: 'Subscription, invoices and payment method.' }
+  ];
+
+  document.getElementById('settingsRail').innerHTML = SECTIONS.map(function (s, i) {
+    return '<a class="rail-link' + (i === 0 ? ' is-active' : '') + '" href="#' + s.id + '">' +
+      App.icon(s.icon) + '<span>' + esc(s.title) + '</span></a>';
+  }).join('');
+
+  function panel(s, inner) {
+    return '<section class="panel" id="' + s.id + '" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+        '<div class="panel-head">' +
+          '<span class="tile tile-blue" data-icon="' + s.icon + '"></span>' +
+          '<div><div class="h4">' + esc(s.title) + '</div><div class="tiny faint">' + esc(s.blurb) + '</div></div>' +
+        '</div>' +
+        '<div class="panel-body">' + inner + '</div>' +
+      '</section>';
+  }
+
+  function field(label, control, hint) {
+    return '<div class="field"><span class="label">' + esc(label) + '</span>' + control +
+      (hint ? '<span class="hint">' + esc(hint) + '</span>' : '') + '</div>';
+  }
+
+  var swatches = [
+    ['Header background', '#ffffff'],
+    ['Header text', '#00125e'],
+    ['Primary accent', '#00a3e6'],
+    ['Success accent', '#00c776']
+  ].map(function (s) {
+    return '<div class="field"><span class="label">' + esc(s[0]) + '</span>' +
+      '<div class="swatch-row"><input class="swatch" type="color" value="' + s[1] + '" aria-label="' + esc(s[0]) + '">' +
+      '<input class="input" value="' + s[1] + '" style="max-width:130px" aria-label="' + esc(s[0]) + ' hex"></div></div>';
+  }).join('');
+
+  var body = [
+    panel(SECTIONS[0],
+      '<div class="row-between" style="gap:22px;align-items:flex-start;flex-wrap:wrap">' +
+        '<div style="flex:1 1 300px">' +
+          '<div class="label" style="margin-bottom:10px">Logo</div>' +
+          '<div class="logo-drop">' +
+            App.logo(44) +
+            '<div class="tiny faint" style="margin-top:14px">PNG or SVG, transparent background, at least 400px wide.</div>' +
+            '<div class="row gap-sm" style="margin-top:12px;justify-content:center;flex-wrap:wrap">' +
+              '<button class="btn btn-secondary btn-sm" data-toast="Logo upload is not wired up in this prototype">Replace logo</button>' +
+              '<button class="btn btn-ghost btn-sm" data-toast="Logo upload is not wired up in this prototype">Quote site logo</button>' +
+              '<button class="btn btn-ghost btn-sm" data-toast="Logo upload is not wired up in this prototype">Proposal PDF logo</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="col" style="flex:1 1 300px;gap:18px">' + swatches + '</div>' +
+      '</div>' +
+      '<hr class="hairline" style="margin:22px 0 18px">' +
+      '<div class="col" style="gap:14px">' +
+        '<label class="switch"><input type="checkbox" checked><span class="switch-track"></span>' +
+          '<span class="small">Use these colours on proposal PDFs</span></label>' +
+        '<label class="switch"><input type="checkbox" checked><span class="switch-track"></span>' +
+          '<span class="small">Let reps choose light or dark appearance</span></label>' +
+      '</div>' +
+      '<div class="row" style="margin-top:22px"><button class="btn btn-primary" data-toast="Appearance saved">Save appearance</button></div>'),
+
+    panel(SECTIONS[1],
+      '<div class="col" style="gap:16px">' +
+        '<label class="switch"><input type="checkbox" checked><span class="switch-track"></span>' +
+          '<span class="small">Allow self sign-up</span></label>' +
+        field('Allowed email domains',
+          '<input class="input" value="wholesalepayments.com, wpiuniversity.com">',
+          'Comma separated. Anyone outside these domains needs an invitation.') +
+        field('Learning plan for new accounts',
+          '<select class="select"><option>WPI Rep Certification Program</option>' +
+          '<option>New hire onboarding</option><option>No plan</option></select>') +
+        field('Default sales team',
+          '<select class="select"><option>No team — assign manually</option>' +
+          D.teams.slice(0, 8).map(function (t) { return '<option>' + esc(t) + '</option>'; }).join('') + '</select>') +
+      '</div>' +
+      '<div class="row" style="margin-top:22px"><button class="btn btn-primary" data-toast="Sign-up settings saved">Save</button></div>'),
+
+    panel(SECTIONS[2],
+      '<div class="grid grid-3">' +
+        [['book', D.stats.courses, 'courses published'],
+         ['layers', 228, 'lessons in total'],
+         ['award', 3, 'learning plans']].map(function (s) {
+          return '<div class="row" style="gap:12px"><span class="pi-icon" data-icon="' + s[0] + '"></span>' +
+            '<div><span class="strong numeric" data-count="' + s[1] + '">0</span> ' +
+            '<span class="small muted">' + esc(s[2]) + '</span></div></div>';
+        }).join('') +
+      '</div>' +
+      '<hr class="hairline" style="margin:20px 0">' +
+      '<div class="col" style="gap:14px">' +
+        '<label class="switch"><input type="checkbox" checked><span class="switch-track"></span>' +
+          '<span class="small">Require lessons to be watched in order</span></label>' +
+        '<label class="switch"><input type="checkbox"><span class="switch-track"></span>' +
+          '<span class="small">Allow reps to skip to the end of a video</span></label>' +
+        '<label class="switch"><input type="checkbox" checked><span class="switch-track"></span>' +
+          '<span class="small">Email a certificate when a plan is completed</span></label>' +
+      '</div>' +
+      '<div class="row" style="margin-top:22px">' +
+        '<a class="btn btn-secondary" href="training.html">Manage courses</a>' +
+        '<button class="btn btn-ghost" data-toast="Learning plan editor is not wired up in this prototype">Edit learning plans</button></div>'),
+
+    panel(SECTIONS[3],
+      '<div class="table-scroll"><table class="table"><thead><tr>' +
+        '<th>Label</th><th>Key</th><th>Created</th><th>Last used</th><th></th></tr></thead><tbody>' +
+        [['Reporting export', 'wpi_live_8f3c…a91d', '12 Mar 2025', '4 hrs ago'],
+         ['Proposal integration', 'wpi_live_2b77…c40e', '2 Sep 2024', 'Yesterday']].map(function (k) {
+          return '<tr><td class="strong">' + esc(k[0]) + '</td>' +
+            '<td><code class="key">' + esc(k[1]) + '</code></td>' +
+            '<td class="small muted">' + esc(k[2]) + '</td>' +
+            '<td class="small muted">' + esc(k[3]) + '</td>' +
+            '<td class="num"><button class="btn btn-ghost btn-sm" data-toast="Key revoked">Revoke</button></td></tr>';
+        }).join('') + '</tbody></table></div>' +
+      '<div class="row" style="margin-top:18px"><button class="btn btn-primary" data-toast="New API key created">Create a key</button></div>'),
+
+    panel(SECTIONS[4],
+      '<div class="col" style="gap:16px">' +
+        '<label class="switch"><input type="checkbox"><span class="switch-track"></span>' +
+          '<span class="small">Require single sign-on for every rep</span></label>' +
+        field('Identity provider', '<select class="select"><option>Okta</option><option>Microsoft Entra ID</option>' +
+          '<option>Google Workspace</option><option>Custom SAML 2.0</option></select>') +
+        field('Sign-in URL', '<input class="input" placeholder="https://your-idp.example.com/sso/saml">') +
+        field('Service provider metadata',
+          '<input class="input" value="https://www.wpiuniversity.com/sso/metadata.xml" readonly>',
+          'Paste this into your identity provider.') +
+      '</div>' +
+      '<div class="row" style="margin-top:22px">' +
+        '<button class="btn btn-primary" data-toast="Single sign-on settings saved">Save</button>' +
+        '<button class="btn btn-ghost" data-toast="Test connection is not wired up in this prototype">Test connection</button></div>'),
+
+    panel(SECTIONS[5],
+      '<div class="col" style="gap:16px">' +
+        field('Keep completed training records for',
+          '<select class="select"><option>Forever</option><option selected>7 years</option>' +
+          '<option>3 years</option><option>13 months</option></select>',
+          'Applies to lesson completions, quiz results and certificates.') +
+        field('Remove deactivated accounts after',
+          '<select class="select"><option>Never</option><option selected>90 days</option><option>30 days</option></select>') +
+      '</div>' +
+      '<div class="row" style="margin-top:22px"><button class="btn btn-primary" data-toast="Retention policy saved">Save policy</button></div>'),
+
+    /* No invoice, plan or payment figure appears here. The archive contains no
+       billing data at all — /isoamp/billing is a client-rendered page and the
+       crawl captured only its empty shell — and inventing numbers on a screen
+       people would reconcile against would be worse than showing none. */
+    panel(SECTIONS[6],
+      '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">' +
+        ['Logo — dark', 'Logo — light', 'Proposal header', 'Quote site hero',
+         'Terminal photo', 'Dual pricing sign'].map(function (n) {
+          return '<div class="asset-tile"><span class="tile tile-blue" data-icon="layers"></span>' +
+            '<div class="tiny strong" style="margin-top:9px">' + esc(n) + '</div>' +
+            '<div class="tiny faint">PNG</div></div>';
+        }).join('') +
+      '</div>' +
+      '<div class="row gap-sm" style="margin-top:18px">' +
+        '<button class="btn btn-primary btn-sm" data-toast="Asset upload is not wired up in this prototype">Upload</button>' +
+        '<span class="tiny faint" style="align-self:center">Assets are shared by the quote site and proposal PDFs.</span>' +
+      '</div>'),
+
+    panel(SECTIONS[7],
+      '<div class="col" style="gap:16px">' +
+        '<label class="switch"><input type="checkbox"><span class="switch-track"></span>' +
+          '<span class="small">Show a notification banner to all reps</span></label>' +
+        field('Message', '<textarea class="textarea" placeholder="Shown across the top of every page until you turn it off."></textarea>') +
+        field('Style', '<select class="select"><option>Information</option><option>Warning</option>' +
+          '<option>Maintenance</option></select>') +
+        field('Stop showing on', '<input class="input" type="date">') +
+      '</div>' +
+      '<div class="row" style="margin-top:20px"><button class="btn btn-primary" data-toast="Notification saved">Save notification</button></div>'),
+
+    panel(SECTIONS[8],
+      '<div class="col" style="gap:16px">' +
+        field('Endpoint URL', '<input class="input" placeholder="https://your-app.example.com/hooks/wpi">',
+          'We POST a JSON body and retry failures for 24 hours.') +
+        field('Signing secret', '<input class="input" value="whsec_' + '\u2022'.repeat(24) + '" readonly>',
+          'Verify the X-WPI-Signature header against this.') +
+        '<div class="label">Events</div>' +
+        ['Lesson completed', 'Course completed', 'Learning plan completed',
+         'Quiz passed', 'Quiz failed', 'Rep certified'].map(function (n, i) {
+          return '<label class="switch"><input type="checkbox"' + (i < 3 ? ' checked' : '') + '>' +
+            '<span class="switch-track"></span><span class="small">' + esc(n) + '</span></label>';
+        }).join('') +
+      '</div>' +
+      '<div class="row gap-sm" style="margin-top:20px">' +
+        '<button class="btn btn-primary" data-toast="Webhook settings saved">Save</button>' +
+        '<button class="btn btn-ghost" data-toast="Test event sent">Send a test event</button></div>'),
+
+    panel(SECTIONS[9], '<div id="offlinePanel"><p class="small muted">Checking storage…</p></div>'),
+
+    panel(SECTIONS[10], '<div id="billingPanel"></div>')
+  ].join('');
+
+  document.getElementById('settingsBody').innerHTML = body;
+
+  /* ------------------------------------------------------------- billing */
+
+  var usd = function (n) {
+    return '$' + (n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+  var day = function (iso) {
+    if (!iso) return '—';
+    return new Date(iso + 'T00:00:00').toLocaleDateString('en-US',
+      { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  function renderBilling() {
+    var box = document.getElementById('billingPanel');
+    if (!box) return;
+    var B = window.WPI_BILLING;
+
+    if (!B) {
+      box.innerHTML = '<div class="empty" style="padding:34px 20px">' +
+          '<span class="tile tile-blue" data-icon="doc"></span>' +
+          '<div class="h3">No billing records loaded</div>' +
+          '<p class="small muted" style="max-width:50ch">Generate them from the account export with ' +
+            '<code class="key">python3 tools/import-billing.py path/to/WPI_Billing_Records</code>.</p>' +
+        '</div>';
+      A.refresh();
+      return;
+    }
+
+    var t = B.totals, a = B.account;
+    var settled = t.outstanding === 0;
+
+    var stats = [
+      ['chart', 'blue',  usd(t.invoiced), 'Invoiced since ' + day(t.first).replace(/\d+, /, '')],
+      ['check', 'green', usd(t.paid),     t.complete + ' successful charges'],
+      ['doc',   'navy',  t.invoices,      'Invoices on record'],
+      [settled ? 'check' : 'clock', settled ? 'mint' : 'blue',
+       usd(t.outstanding), settled ? 'Nothing outstanding' : 'Outstanding balance']
+    ].map(function (s) {
+      return '<div class="card card-pad-sm">' +
+          '<span class="pi-icon ' + (s[1] === 'green' || s[1] === 'mint' ? 'green' : s[1] === 'navy' ? 'navy' : '') + '" data-icon="' + s[0] + '"></span>' +
+          '<div class="stat" style="margin-top:12px">' +
+            '<span class="stat-value" style="font-size:1.5rem">' + esc(String(s[2])) + '</span>' +
+            '<span class="tiny faint">' + esc(s[3]) + '</span>' +
+          '</div></div>';
+    }).join('');
+
+    var declineNote = '';
+    if (t.declined) {
+      declineNote = '<div class="card card-pad-sm" style="margin-top:16px;border-color:rgba(var(--blue-rgb),.3)">' +
+          '<div class="row" style="align-items:flex-start;gap:12px">' +
+            '<span class="pi-icon" data-icon="clock"></span>' +
+            '<div><div class="h4">' + t.declined + ' declined charges in ' +
+              t.declineClusters.length + ' cluster' + (t.declineClusters.length === 1 ? '' : 's') + '</div>' +
+              '<p class="small muted" style="margin-top:5px">' +
+                t.declineClusters.map(function (c) {
+                  return c.count + ' in ' + day(c.from).replace(/ \d+,/, '') +
+                         (c.from === c.to ? '' : '–' + day(c.to).replace(/ \d+,/, ''));
+                }).join(' · ') +
+                '. Every cluster ended in a successful charge, so nothing went unpaid — ' +
+                'but repeated declines usually mean the card on file is near an expiry or limit.' +
+              '</p></div></div></div>';
+    }
+
+    box.innerHTML =
+      '<div class="row-between" style="gap:20px;flex-wrap:wrap;margin-bottom:18px">' +
+        '<div><div class="eyebrow">Current plan</div>' +
+          '<div class="h2" style="margin-top:6px">' + esc(a.plan) + '</div>' +
+          '<p class="small muted" style="margin-top:6px">' +
+            usd(a.planAmount) + ' a month · term ' + day(a.termStart) + ' to ' + day(a.termEnd) +
+            (a.autoRenew ? ' · renews automatically' : ' · does not auto-renew') + '</p></div>' +
+        '<div class="text-right"><div class="eyebrow">Most recent invoice</div>' +
+          '<div class="h2" style="margin-top:6px">' + day(t.last) + '</div>' +
+          '<p class="small muted" style="margin-top:6px">Billed to ' + esc(a.billingEmail) + '</p></div>' +
+      '</div>' +
+
+      '<div class="grid grid-4">' + stats + '</div>' +
+      declineNote +
+
+      '<div class="segmented" id="billingTabs" role="tablist" style="margin-top:22px">' +
+        '<button role="tab" data-btab="invoices" aria-selected="true">Invoices</button>' +
+        '<button role="tab" data-btab="payments" aria-selected="false">Payments</button>' +
+      '</div>' +
+      '<div id="billingTable" style="margin-top:14px"></div>' +
+
+      '<hr class="hairline" style="margin:22px 0 14px">' +
+      '<p class="tiny faint">' +
+        'Invoice PDFs were generated from the account\'s own records for filing, not issued by the ' +
+        'billing provider — request documents on their letterhead if you need them. Payments carry ' +
+        'no invoice reference in the source, so each charge is matched to the most recent invoice ' +
+        'issued on or before it' +
+        (t.unmatchedPayments ? ', and ' + t.unmatchedPayments + ' could not be placed' : '') + '.' +
+      '</p>';
+
+    renderBillingTable('invoices');
+    A.refresh();
+  }
+
+  function renderBillingTable(which) {
+    var B = window.WPI_BILLING;
+    var box = document.getElementById('billingTable');
+    if (!B || !box) return;
+
+    if (which === 'payments') {
+      box.innerHTML = '<div class="table-scroll"><table class="table"><thead><tr>' +
+          '<th>Date</th><th>Status</th><th class="num">Amount</th><th class="num">Applied</th>' +
+          '<th>Invoice</th><th>Gateway transaction</th></tr></thead><tbody>' +
+          B.payments.slice().reverse().map(function (p) {
+            return '<tr><td class="strong">' + day(p.date) + '</td>' +
+              '<td><span class="chip ' + (p.ok ? 'chip-green' : '') + '">' + esc(p.status) + '</span></td>' +
+              '<td class="num numeric">' + usd(p.amount) + '</td>' +
+              '<td class="num numeric' + (p.applied ? '' : ' faint') + '">' + usd(p.applied) + '</td>' +
+              '<td class="small muted">' + (p.invoice ? '#' + esc(p.invoice) : '—') + '</td>' +
+              '<td><code class="key">' + esc(p.txn) + '</code></td></tr>';
+          }).join('') + '</tbody></table></div>';
+      A.refresh();
+      return;
+    }
+
+    box.innerHTML = '<div class="table-scroll"><table class="table"><thead><tr>' +
+        '<th>Invoice</th><th>Issued</th><th>Description</th><th>Service period</th>' +
+        '<th class="num">Amount</th><th>Status</th><th></th></tr></thead><tbody>' +
+        B.invoices.slice().reverse().map(function (i) {
+          return '<tr><td class="strong numeric">#' + esc(i.number) + '</td>' +
+            '<td class="small">' + day(i.issued) + '</td>' +
+            '<td class="small muted">' + esc(i.description) + '</td>' +
+            '<td class="small muted">' + (i.period ? esc(i.period) : '—') + '</td>' +
+            '<td class="num numeric strong">' + usd(i.amount) + '</td>' +
+            '<td><span class="chip ' + (i.status === 'paid' ? 'chip-green' : '') + '">' +
+              (i.status === 'paid' ? 'Paid' : i.status === 'partial' ? 'Part paid' : 'Open') + '</span></td>' +
+            '<td class="num">' + (i.pdf
+              ? '<a class="btn btn-ghost btn-sm" href="' + esc(i.pdf) + '" target="_blank" rel="noopener">PDF</a>'
+              : '<span class="tiny faint">—</span>') + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    A.refresh();
+  }
+
+  renderBilling();
+
+  document.addEventListener('click', function (e) {
+    var tab = e.target.closest('[data-btab]');
+    if (!tab || tab.getAttribute('aria-selected') === 'true') return;
+    document.querySelectorAll('#billingTabs button').forEach(function (b) {
+      b.setAttribute('aria-selected', String(b === tab));
+    });
+    renderBillingTable(tab.getAttribute('data-btab'));
+  });
+
+  /* ------------------------------------------------------------- offline */
+
+  function renderOfflinePanel() {
+    var box = document.getElementById('offlinePanel');
+    if (!box) return;
+
+    if (!A.offline.supported) {
+      box.innerHTML = '<p class="small muted">This browser cannot store lessons offline. ' +
+        'Offline viewing needs a browser with service worker support, served over HTTPS.</p>';
+      return;
+    }
+    if (location.protocol === 'file:') {
+      box.innerHTML = '<p class="small muted">Offline storage is unavailable when the site is ' +
+        'opened as a file. Serve it over HTTPS (or localhost) and this section becomes active.</p>';
+      return;
+    }
+
+    Promise.all([A.offline.cached(), A.offline.estimate()]).then(function (r) {
+      var urls = r[0], est = r[1];
+
+      /* Group what is stored back into the courses it came from. */
+      var byCourse = [];
+      D.courses.forEach(function (c) {
+        var srcs = A.courseSources(c);
+        if (!srcs.length) return;
+        var have = srcs.filter(function (u) { return urls.indexOf(u) >= 0; }).length;
+        if (have) byCourse.push({ course: c, have: have, total: srcs.length, srcs: srcs });
+      });
+
+      var used = est && est.usage ? est.usage : 0;
+      var quota = est && est.quota ? est.quota : 0;
+      var pct = quota ? Math.min(100, Math.round(used / quota * 100)) : 0;
+
+      box.innerHTML =
+        (quota
+          ? '<div class="row-between small"><span class="muted">Storage used on this device</span>' +
+              '<span class="strong numeric">' + A.fmtBytes(used) + ' of ' + A.fmtBytes(quota) + '</span></div>' +
+            '<div class="bar" style="margin-top:8px"><i style="width:' + pct + '%"></i></div>' +
+            '<p class="tiny faint" style="margin-top:8px">' +
+              'The browser sets this limit and can reclaim space when it runs low. ' +
+              '“Keep downloads” asks it not to.</p>'
+          : '<p class="small muted">This browser does not report a storage quota.</p>') +
+
+        '<div class="row gap-sm" style="margin-top:16px">' +
+          '<button class="btn btn-secondary btn-sm" data-persist>Keep downloads</button>' +
+          (byCourse.length ? '<button class="btn btn-ghost btn-sm" data-clear-all>Remove all downloads</button>' : '') +
+        '</div>' +
+
+        '<hr class="hairline" style="margin:20px 0 16px">' +
+
+        (byCourse.length
+          ? '<div class="col" style="gap:14px">' + byCourse.map(function (b) {
+              return '<div class="row-between" style="gap:12px">' +
+                  '<div style="min-width:0">' +
+                    '<a class="strong small" href="course.html?c=' + b.course.slug + '">' +
+                      esc(b.course.title) + '</a>' +
+                    '<div class="tiny faint">' + b.have + ' of ' + b.total + ' lessons stored</div>' +
+                  '</div>' +
+                  '<button class="btn btn-ghost btn-sm" data-drop="' + b.course.slug + '">Remove</button>' +
+                '</div>';
+            }).join('') + '</div>'
+          : '<div class="empty" style="padding:28px 16px">' +
+              '<span class="tile tile-blue" data-icon="download"></span>' +
+              '<div class="h4">Nothing downloaded yet</div>' +
+              '<p class="small muted" style="max-width:44ch">Open a course and choose ' +
+                '“Download course” to keep it on this device. Lessons that stream from ' +
+                'Vimeo cannot be stored — those need a connection.</p>' +
+            '</div>');
+      A.refresh();
+    });
+  }
+  renderOfflinePanel();
+
+  document.addEventListener('click', function (e) {
+    var drop = e.target.closest('[data-drop]');
+    if (drop) {
+      var c = A.course(drop.getAttribute('data-drop'));
+      A.offline.remove(A.courseSources(c)).then(function () {
+        setTimeout(function () { renderOfflinePanel(); A.toast('Removed ' + c.title); }, 250);
+      });
+      return;
+    }
+    if (e.target.closest('[data-clear-all]')) {
+      var all = [];
+      D.courses.forEach(function (c) { all = all.concat(A.courseSources(c)); });
+      A.offline.remove(all).then(function () {
+        setTimeout(function () { renderOfflinePanel(); A.toast('All downloads removed'); }, 300);
+      });
+      return;
+    }
+    if (e.target.closest('[data-persist]')) {
+      A.offline.persist().then(function (ok) {
+        A.toast(ok ? 'Downloads will be kept' : 'The browser declined to reserve storage');
+      });
+    }
+  });
+
+  /* Rail highlight follows whichever panel is nearest the top of the viewport. */
+  var links = [].slice.call(document.querySelectorAll('.rail-link'));
+  var panels = SECTIONS.map(function (s) { return document.getElementById(s.id); });
+  function syncRail() {
+    var top = window.scrollY + 140, best = 0;
+    panels.forEach(function (p, i) { if (p && p.offsetTop <= top) best = i; });
+    links.forEach(function (l, i) { l.classList.toggle('is-active', i === best); });
+  }
+  window.addEventListener('scroll', syncRail, { passive: true });
+  syncRail();
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-toast]');
+    if (t) { e.preventDefault(); A.toast(t.getAttribute('data-toast')); }
+  });
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

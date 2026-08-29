@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Statement Studio — Merchant Statement Generator</title>
+<meta name="theme-color" content="#f5f5f7">
+<script>
+  /* Apply the saved (or system) colour theme before first paint to avoid a
+     flash. The toggle in the top bar updates it and persists the choice. */
+  (function () {
+    try {
+      var t = localStorage.getItem('statement-studio-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* private mode — fall back to the system setting */ }
+  })();
+</script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Statements">
+<link id="favicon" rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%2334495E%22/><rect x=%2222%22 y=%2228%22 width=%2256%22 height=%226%22 rx=%223%22 fill=%22white%22/><rect x=%2222%22 y=%2246%22 width=%2242%22 height=%226%22 rx=%223%22 fill=%22white%22 opacity=%22.75%22/><rect x=%2222%22 y=%2264%22 width=%2250%22 height=%226%22 rx=%223%22 fill=%22white%22 opacity=%22.5%22/></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="tpl-check">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark" id="brand-mark" aria-hidden="true">
+        <img id="brand-logo" alt="" hidden>
+      </div>
+      <div class="brand-text">
+        <h1>Statement Studio</h1>
+        <p>Merchant statement generator</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" class="btn-theme" id="btn-theme" aria-label="Switch to dark mode" title="Dark mode">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20.5 14.2A8.2 8.2 0 0 1 9.8 3.5a0.9 0.9 0 0 0-1.2-1.1A9.6 9.6 0 1 0 21.6 15.4a0.9 0.9 0 0 0-1.1-1.2z" fill="currentColor"/>
+        </svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.1" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M12 2.6v2.4M12 19v2.4M4.7 4.7l1.7 1.7M17.6 17.6l1.7 1.7M2.6 12H5M19 12h2.4M4.7 19.3l1.7-1.7M17.6 6.4l1.7-1.7"/>
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="btn btn-ghost" id="btn-reset">
+        <span class="reset-idle reset-full">Reset to sample</span>
+        <span class="reset-idle reset-short">Reset</span>
+        <span class="reset-armed">Replace everything?</span>
+      </button>
+      <button type="button" class="btn btn-primary" id="btn-download-top"><span class="dl-full">Download PDF</span><span class="dl-short">Download</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- ============================ FORM ============================ -->
+  <section class="form-pane" id="form-pane">
+
+    <!-- Template choice -->
+    <article class="card">
+      <div class="card-body seg-body">
+        <div class="segmented" role="tablist" aria-label="Statement style">
+          <button type="button" class="seg-option active" id="seg-check" role="tab" aria-selected="true">
+            <strong>Voided Check</strong>
+            <span>Bank details · direct deposit</span>
+          </button>
+          <button type="button" class="seg-option" id="seg-processing" role="tab" aria-selected="false">
+            <strong>Card Processing Statement</strong>
+            <span>Funding by batch · card types</span>
+          </button>
+          <button type="button" class="seg-option" id="seg-bank" role="tab" aria-selected="false">
+            <strong>Bank Statement</strong>
+            <span>Account summary · transactions</span>
+          </button>
+          <button type="button" class="seg-option" id="seg-letter" role="tab" aria-selected="false">
+            <strong>Bank Letter</strong>
+            <span>Account verification · signature</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Voided check: upload -->
+    <article class="card only-check">
+      <header class="card-head">
+        <h2>Upload a Check</h2>
+        <p>Drop a photo or PDF of a check to lift its bank logo onto the generated
+           voided check. Check photos have no readable text, so the account details
+           are entered in the fields below.</p>
+      </header>
+      <div class="card-body">
+        <div class="logo-drop" id="check-drop" tabindex="0" role="button"
+             aria-label="Upload check — click or drop a PDF or image">
+          <input type="file" id="check-input" accept="application/pdf,image/*" hidden>
+          <div class="logo-drop-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M3 10h18M7 14h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span><strong>Upload a check</strong> — click or drag a PDF or image here</span>
+            <span class="hint">The bank logo is lifted from it; enter the details below</span>
+          </div>
+        </div>
+        <p class="drop-error" id="check-error" hidden role="alert"></p>
+        <p class="month-note" id="check-note" hidden></p>
+        <div class="check-ref-wrap" id="check-ref-wrap" hidden>
+          <img id="check-ref" alt="Uploaded check — reference for the details below">
+        </div>
+      </div>
+    </article>
+
+    <!-- Voided check: details -->
+    <article class="card card-accent only-check">
+      <header class="card-head">
+        <h2>Check Details</h2>
+        <p>Everything here transposes onto the live voided-check preview.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <label for="chk-payer-name">Account holder / business name</label>
+          <input type="text" id="chk-payer-name" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="chk-payer-address">Address <span class="label-hint">(one line per row, up to 3)</span></label>
+          <textarea id="chk-payer-address" rows="3" spellcheck="false"></textarea>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="chk-bank-name">Bank name</label>
+            <input type="text" id="chk-bank-name" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="chk-check-number">Check number</label>
+            <input type="text" id="chk-check-number" inputmode="numeric">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="chk-routing">Routing number <span class="label-hint">(9 digits)</span></label>
+            <input type="text" id="chk-routing" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="chk-account">Account number</label>
+            <input type="text" id="chk-account" inputmode="numeric">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="chk-fraction">Fraction <span class="label-hint">(e.g. 87-1/640)</span></label>
+            <input type="text" id="chk-fraction" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="chk-date">Date</label>
+            <input type="date" id="chk-date">
+          </div>
+        </div>
+        <div class="field">
+          <label for="chk-pay-to">Pay to the order of <span class="label-hint">(optional on a voided check)</span></label>
+          <input type="text" id="chk-pay-to" spellcheck="false">
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="chk-amount">Amount ($) <span class="label-hint">(optional)</span></label>
+            <input type="text" id="chk-amount" inputmode="decimal" placeholder="0.00">
+          </div>
+          <div class="field">
+            <label for="chk-memo">Memo / For</label>
+            <input type="text" id="chk-memo" spellcheck="false">
+          </div>
+        </div>
+        <label class="switch-row">
+          <input type="checkbox" id="chk-void" checked>
+          <span class="switch" aria-hidden="true"></span>
+          <span>Mark as VOID
+            <span class="label-hint">(recommended — makes the check non-negotiable)</span></span>
+        </label>
+      </div>
+    </article>
+
+    <!-- Bank letter: upload -->
+    <article class="card only-letter">
+      <header class="card-head">
+        <h2>Upload a Bank Letter</h2>
+        <p>Drop a photo or PDF of a bank letter to show it as a reference. Letter
+           photos have no readable text, so the details are entered in the fields
+           below and rendered onto a clean letter.</p>
+      </header>
+      <div class="card-body">
+        <div class="logo-drop" id="letter-drop" tabindex="0" role="button"
+             aria-label="Upload bank letter — click or drop a PDF or image">
+          <input type="file" id="letter-input" accept="application/pdf,image/*" hidden>
+          <div class="logo-drop-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span><strong>Upload a bank letter</strong> — click or drag a PDF or image here</span>
+            <span class="hint">Shown as a reference; enter the details below</span>
+          </div>
+        </div>
+        <p class="drop-error" id="letter-error" hidden role="alert"></p>
+        <p class="month-note" id="letter-note" hidden></p>
+        <div class="check-ref-wrap" id="letter-ref-wrap" hidden>
+          <img id="letter-ref" alt="Uploaded bank letter — reference for the details below">
+        </div>
+      </div>
+    </article>
+
+    <!-- Bank letter: bank/letterhead -->
+    <article class="card card-accent only-letter">
+      <header class="card-head">
+        <h2>Bank &amp; Letter</h2>
+        <p>The letterhead, date, and signer. Everything transposes onto the live letter.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label for="lt-bank-name">Bank name</label>
+            <input type="text" id="lt-bank-name" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="lt-date">Letter date</label>
+            <input type="date" id="lt-date">
+          </div>
+        </div>
+        <div class="field">
+          <label for="lt-bank-address">Bank address <span class="label-hint">(letterhead &amp; footer, one line)</span></label>
+          <input type="text" id="lt-bank-address" spellcheck="false">
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="lt-bank-phone">Bank phone</label>
+            <input type="text" id="lt-bank-phone" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="lt-salutation">Salutation</label>
+            <input type="text" id="lt-salutation" spellcheck="false" placeholder="To Whom It May Concern:">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bank letter: account holder -->
+    <article class="card only-letter">
+      <header class="card-head">
+        <h2>Account Holder</h2>
+        <p>The customer the letter is written for.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <label for="lt-holder-name">Account holder / business name</label>
+          <input type="text" id="lt-holder-name" spellcheck="false">
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="lt-account-label">Account label <span class="label-hint">(optional, e.g. Payroll Account)</span></label>
+            <input type="text" id="lt-account-label" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="lt-account-type">Account type <span class="label-hint">(optional, e.g. checking)</span></label>
+            <input type="text" id="lt-account-type" spellcheck="false">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="lt-holder-address1">Address line 1</label>
+            <input type="text" id="lt-holder-address1" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="lt-holder-address2">City, State ZIP</label>
+            <input type="text" id="lt-holder-address2" spellcheck="false">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bank letter: verification details -->
+    <article class="card only-letter">
+      <header class="card-head">
+        <h2>Verification Details</h2>
+        <p>These fill the body paragraph and the account block.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-3">
+          <div class="field">
+            <label for="lt-since-year">Customer since <span class="label-hint">(year)</span></label>
+            <input type="text" id="lt-since-year" inputmode="numeric" placeholder="2025">
+          </div>
+          <div class="field">
+            <label for="lt-balance">Net balance ($)</label>
+            <input type="text" id="lt-balance" inputmode="decimal" placeholder="0.00">
+          </div>
+          <div class="field">
+            <label for="lt-auth-action">Authorization</label>
+            <input type="text" id="lt-auth-action" spellcheck="false" placeholder="credit / debit and credit">
+          </div>
+        </div>
+        <div class="field">
+          <label for="lt-third-party">Authorized third party <span class="label-hint">(optional, e.g. Wholesale Payments)</span></label>
+          <input type="text" id="lt-third-party" spellcheck="false">
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="lt-account-number">Account number</label>
+            <input type="text" id="lt-account-number" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="lt-routing-number">Routing number</label>
+            <input type="text" id="lt-routing-number" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bank letter: signature -->
+    <article class="card only-letter">
+      <header class="card-head">
+        <h2>Signature &amp; Contact</h2>
+        <p>The bank representative who signs the letter.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label for="lt-signer-name">Signer name</label>
+            <input type="text" id="lt-signer-name" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="lt-signer-title">Signer title</label>
+            <input type="text" id="lt-signer-title" spellcheck="false" placeholder="Teller / Account Manager">
+          </div>
+        </div>
+        <div class="field">
+          <label for="lt-contact-phone">Contact phone <span class="label-hint">(in the closing line; defaults to the bank phone)</span></label>
+          <input type="text" id="lt-contact-phone" spellcheck="false">
+        </div>
+      </div>
+    </article>
+
+    <!-- Import -->
+    <article class="card only-statement">
+      <header class="card-head">
+        <h2>Import a Statement</h2>
+        <p>Drop a statement PDF and every value on it lands in the form fields below —
+           edit anything, change the month, and the PDF rebuilds automatically. Works
+           with statements this tool generated, real merchant processing statements
+           (deposits, card totals, and fees), and a best-effort read of most real bank
+           statements (balances and transactions), which you can then edit.</p>
+      </header>
+      <div class="card-body">
+        <div class="logo-drop" id="import-drop" tabindex="0" role="button"
+             aria-label="Import statement — click or drop a PDF">
+          <input type="file" id="import-input" accept="application/pdf,.pdf" hidden>
+          <div class="logo-drop-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M14 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M9 13h6M9 17h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span><strong>Import an old statement</strong> — click or drag a PDF here</span>
+            <span class="hint">Billing, card-processing and bank statements are recognized automatically</span>
+          </div>
+        </div>
+        <p class="drop-error" id="import-error" hidden role="alert"></p>
+        <p class="month-note" id="import-note" hidden></p>
+      </div>
+    </article>
+
+    <!-- Statement month -->
+    <article class="card card-accent only-statement">
+      <header class="card-head">
+        <h2>Statement Month</h2>
+        <p>Pick a month and the billing period is set for you. Enter a total monthly
+           volume and the batch details fill in automatically — one settlement batch
+           per day, with randomized daily amounts (2 decimals) that add up exactly to
+           your total.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field mp-field">
+            <span class="field-label" id="mp-title">Statement month</span>
+            <div class="month-picker" id="month-picker">
+              <button type="button" class="mp-nav" id="mp-prev" aria-label="Previous month">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="mp-label" id="mp-label"
+                      aria-haspopup="true" aria-expanded="false" aria-describedby="mp-title">
+                <span id="mp-label-text">Month</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="mp-nav" id="mp-next" aria-label="Next month">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="mp-pop" id="mp-pop" hidden>
+                <div class="mp-year-row">
+                  <button type="button" class="mp-nav" id="mp-year-prev" aria-label="Previous year">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <span class="mp-year" id="mp-year">2026</span>
+                  <button type="button" class="mp-nav" id="mp-year-next" aria-label="Next year">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="mp-grid" id="mp-grid"><!-- built by app.js --></div>
+              </div>
+            </div>
+            <select id="month-select" hidden aria-hidden="true" tabindex="-1">
+              <option value="0">January</option><option value="1">February</option>
+              <option value="2">March</option><option value="3">April</option>
+              <option value="4">May</option><option value="5">June</option>
+              <option value="6">July</option><option value="7">August</option>
+              <option value="8">September</option><option value="9">October</option>
+              <option value="10">November</option><option value="11">December</option>
+            </select>
+            <input type="number" id="year-input" hidden aria-hidden="true" tabindex="-1">
+          </div>
+          <div class="field only-merchant">
+            <label for="monthly-volume">Total monthly volume ($)</label>
+            <input type="text" id="monthly-volume" inputmode="decimal" placeholder="e.g. 25,000.00">
+          </div>
+        </div>
+        <div class="month-actions only-merchant">
+          <button type="button" class="btn btn-ghost btn-small" id="btn-reroll" hidden>
+            Shuffle daily amounts
+          </button>
+          <span class="month-note" id="month-note"></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Branding & cover -->
+    <article class="card only-statement">
+      <header class="card-head">
+        <h2>Branding &amp; Cover</h2>
+        <p>The logo and remittance details shown on the statement’s first page.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <span class="field-label" id="logo-label">Company logo</span>
+          <div class="logo-drop" id="logo-drop" tabindex="0" role="button"
+               aria-labelledby="logo-label"
+               aria-label="Upload logo — click or drop an image">
+            <input type="file" id="logo-input" accept="image/*" hidden>
+            <div class="logo-drop-empty" id="logo-empty">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 16V4m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span><strong>Upload a logo</strong> — click or drag an image here</span>
+              <span class="hint">PNG, JPEG, SVG or WebP · appears top-left on the cover page</span>
+            </div>
+            <div class="logo-drop-preview" id="logo-preview" hidden>
+              <img id="logo-img" alt="Uploaded logo preview">
+              <button type="button" class="btn btn-ghost btn-small" id="logo-remove">Remove</button>
+            </div>
+          </div>
+          <p class="drop-error" id="logo-error" hidden role="alert"></p>
+        </div>
+        <div class="field only-billing">
+          <label for="remit-address">Remittance address <span class="label-hint">(top right of the cover, one line per row, up to 3 lines)</span></label>
+          <textarea id="remit-address" rows="3" spellcheck="false"></textarea>
+        </div>
+        <div class="field only-billing">
+          <label for="cover-notice">Cover notice <span class="label-hint">(bold line at the bottom of the cover page)</span></label>
+          <textarea id="cover-notice" rows="2"></textarea>
+        </div>
+        <div class="field only-processing">
+          <label for="p-processor-line">Processor line <span class="label-hint">(under the logo and in every footer)</span></label>
+          <input type="text" id="p-processor-line" spellcheck="false">
+        </div>
+      </div>
+    </article>
+
+    <!-- Merchant -->
+    <article class="card only-billing">
+      <header class="card-head">
+        <h2>Merchant — Bill To</h2>
+        <p>Merchant name and address, one line per row.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <label for="bill-to">Bill to</label>
+          <textarea id="bill-to" rows="4" spellcheck="false"></textarea>
+        </div>
+      </div>
+    </article>
+
+    <!-- Details -->
+    <article class="card only-billing">
+      <header class="card-head">
+        <h2>Statement Details</h2>
+        <p>Shown in the Details panel beside the merchant address.</p>
+      </header>
+      <div class="card-body grid-2">
+        <div class="field">
+          <label for="d-statement-number">Statement number</label>
+          <input type="text" id="d-statement-number" placeholder="Leave empty for “Pending”">
+        </div>
+        <div class="field">
+          <label for="d-issue-date">Issue date</label>
+          <input type="text" id="d-issue-date" placeholder="Pending">
+        </div>
+        <div class="field">
+          <label for="d-payment-terms">Payment terms</label>
+          <input type="text" id="d-payment-terms" placeholder="Auto-Draft">
+        </div>
+        <div class="field">
+          <label for="d-billing-id">Billing ID</label>
+          <input type="text" id="d-billing-id" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="d-billing-account">Billing account number</label>
+          <input type="text" id="d-billing-account" inputmode="numeric" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="d-product-id">Product ID</label>
+          <input type="text" id="d-product-id">
+        </div>
+      </div>
+    </article>
+
+    <!-- Period & summary -->
+    <article class="card only-billing">
+      <header class="card-head">
+        <h2>Billing Period &amp; Summary</h2>
+        <p>Total sales and transaction count can follow the batch details automatically.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label for="period-start">Period start</label>
+            <input type="date" id="period-start">
+          </div>
+          <div class="field">
+            <label for="period-end">Period end</label>
+            <input type="date" id="period-end">
+          </div>
+        </div>
+        <label class="switch-row">
+          <input type="checkbox" id="summary-auto" checked>
+          <span class="switch" aria-hidden="true"></span>
+          <span>Calculate automatically from batch details
+            <span class="label-hint">(falls back to Transaction Fees items when no batches are entered)</span></span>
+        </label>
+        <div class="grid-2">
+          <div class="field">
+            <label for="total-sales">Total sales ($)</label>
+            <input type="text" id="total-sales" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="transaction-count">Transaction count</label>
+            <input type="text" id="transaction-count" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Fees -->
+    <article class="card only-billing">
+      <header class="card-head">
+        <h2>Fees</h2>
+        <p>Line items per category. Amounts auto-calculate from Volume × Rate or
+           Fee × Count as you type — enter an amount to override, clear it to go back
+           to auto. Categories that are switched off are left off the statement
+           entirely; a category with no rows still prints with a 0.00 total. Empty
+           cells print as “--”.</p>
+      </header>
+      <div class="card-body" id="fee-categories"><!-- built by app.js --></div>
+    </article>
+
+    <!-- Totals -->
+    <article class="card only-billing">
+      <header class="card-head">
+        <h2>Tax &amp; Collection</h2>
+        <p>“Fees collected” prints as a negative amount and switches the totals block to the
+           collected layout. Leave it 0 to print the simple layout.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-3">
+          <div class="field">
+            <label for="tax-rate">Tax rate (%)</label>
+            <input type="text" id="tax-rate" inputmode="decimal" placeholder="0">
+          </div>
+          <div class="field">
+            <label for="fees-collected">Fees collected ($)</label>
+            <input type="text" id="fees-collected" inputmode="decimal" placeholder="0.00">
+          </div>
+          <div class="field">
+            <label for="currency">Currency label</label>
+            <input type="text" id="currency" placeholder="USD" maxlength="8">
+          </div>
+        </div>
+        <dl class="totals-readout" id="totals-readout">
+          <div><dt>Subtotal</dt><dd id="ro-subtotal">$0.00</dd></div>
+          <div><dt>Tax</dt><dd id="ro-tax">$0.00</dd></div>
+          <div><dt>Fees collected</dt><dd id="ro-collected">$0.00</dd></div>
+          <div class="due"><dt>Amount due</dt><dd id="ro-due">$0.00</dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <!-- Style 2: merchant & account -->
+    <article class="card only-processing">
+      <header class="card-head">
+        <h2>Merchant &amp; Account</h2>
+        <p>The addressee block, service location and account identifiers shown on the
+           processing statement.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label for="p-addressee">Addressee <span class="label-hint">(one line per row)</span></label>
+            <textarea id="p-addressee" rows="4" spellcheck="false"></textarea>
+          </div>
+          <div class="field">
+            <label for="p-location">Location <span class="label-hint">(one line per row)</span></label>
+            <textarea id="p-location" rows="4" spellcheck="false"></textarea>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="field">
+            <label for="p-merchant-number">Merchant number</label>
+            <input type="text" id="p-merchant-number" inputmode="numeric" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="p-customer-service">Customer service</label>
+            <input type="text" id="p-customer-service" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="p-seq">Statement sequence #</label>
+            <input type="text" id="p-seq" inputmode="numeric" spellcheck="false">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="p-tin">TIN label <span class="label-hint">(tax section, e.g. XXXXX0360)</span></label>
+            <input type="text" id="p-tin" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="p-ytd">YTD gross reportable sales ($)</label>
+            <input type="text" id="p-ytd" inputmode="decimal">
+          </div>
+        </div>
+        <div class="field">
+          <label for="p-important">Important information <span class="label-hint">(printed inside the red-bannered box; up to 3 lines)</span></label>
+          <textarea id="p-important" rows="2"></textarea>
+        </div>
+      </div>
+    </article>
+
+    <!-- Style 2: card types -->
+    <article class="card only-processing">
+      <header class="card-head">
+        <h2>Summary By Card Type</h2>
+        <p>Gross sales per card brand. Average ticket and all totals are calculated;
+           entering a total monthly volume above re-distributes the amounts
+           proportionally so they always sum to it.</p>
+      </header>
+      <div class="card-body">
+        <div class="table-scroll">
+          <table class="rows-table">
+            <thead>
+              <tr>
+                <th>Card type</th><th class="num">Items</th><th class="num">Amount $</th>
+                <th class="num">Refund items</th><th class="num">Refund $</th>
+                <th class="num">Avg ticket</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="cardtype-rows"></tbody>
+          </table>
+        </div>
+        <div class="row-foot">
+          <button type="button" class="btn btn-ghost btn-small" id="cardtype-add">+ Add card type</button>
+          <span class="fee-cat-total" id="cardtype-total"></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Style 2: fees charged -->
+    <article class="card only-processing">
+      <header class="card-head">
+        <h2>Fees Charged</h2>
+        <p>The fee schedule. Rows sharing a group label print under one group heading
+           (card brand, AUTHS &amp; AVS, …). Totals derive from −(Volume × Rate) when a
+           rate is present — type a total to override. MISC rows print after
+           “Total Card Fees”.</p>
+      </header>
+      <div class="card-body">
+        <div class="table-scroll">
+          <table class="rows-table fees2-table">
+            <thead>
+              <tr>
+                <th>Group</th><th>Type</th><th>Description</th>
+                <th class="num">Volume</th><th class="num">Rate</th><th class="num">Total $</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="fees2-rows"></tbody>
+          </table>
+        </div>
+        <div class="row-foot">
+          <button type="button" class="btn btn-ghost btn-small" id="fees2-add">+ Add fee</button>
+          <span class="fee-cat-total" id="fees2-total"></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Style 2: third party & adjustments -->
+    <article class="card only-processing">
+      <header class="card-head">
+        <h2>Third Party &amp; Adjustments</h2>
+        <p>Usually empty — the statement then prints “There are no … for this statement
+           period.” Add rows only when something applies.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <span class="field-label">Third party transactions</span>
+          <div class="table-scroll">
+            <table class="rows-table">
+              <tbody id="thirdparty-rows"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-ghost btn-small" id="thirdparty-add">+ Add third party transaction</button>
+        </div>
+        <div class="field">
+          <span class="field-label">Adjustments / chargebacks</span>
+          <div class="table-scroll">
+            <table class="rows-table">
+              <tbody id="adjustments-rows"></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-ghost btn-small" id="adjustments-add">+ Add adjustment</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Batches -->
+    <article class="card only-merchant">
+      <header class="card-head">
+        <h2>Batch Details</h2>
+        <p>Daily settlement batches. Net figures are calculated for you. Use
+           <strong>Statement Month</strong> above to fill these in automatically, or add
+           and edit rows by hand. With no rows, the batch section is left off the
+           statement.</p>
+      </header>
+      <div class="card-body">
+        <div class="table-scroll">
+          <table class="rows-table batch-table">
+            <thead>
+              <tr>
+                <th>Date</th><th>Batch number</th>
+                <th class="num">Sales #</th><th class="num">Sales $</th>
+                <th class="num">Refunds #</th><th class="num">Refunds $</th>
+                <th class="num">Net $</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="batch-rows"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-ghost btn-small" id="batch-add">+ Add batch</button>
+      </div>
+    </article>
+
+    <!-- Bank: details -->
+    <article class="card only-bank">
+      <header class="card-head">
+        <h2>Bank &amp; Account Details</h2>
+        <p>A generic bank-statement layout — use any placeholder bank name. This is not a
+           reproduction of any real bank; nothing here carries a real institution’s logo,
+           colors, or branding.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label for="bk-name">Bank name</label>
+            <input type="text" id="bk-name" placeholder="e.g. Meridian Bank">
+          </div>
+          <div class="field">
+            <label for="bk-account-type">Account type</label>
+            <input type="text" id="bk-account-type" placeholder="e.g. Business Checking">
+          </div>
+          <div class="field">
+            <label for="bk-account-number">Account number</label>
+            <input type="text" id="bk-account-number" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="bk-phone">Bank phone</label>
+            <input type="text" id="bk-phone" placeholder="1-800-555-0142">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="bk-address">Bank address <span class="label-hint">(one line per row)</span></label>
+            <textarea id="bk-address" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="bk-website">Website</label>
+            <input type="text" id="bk-website" spellcheck="false" placeholder="bank.example">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bank: account holder -->
+    <article class="card only-bank">
+      <header class="card-head">
+        <h2>Account Holder</h2>
+        <p>The account holder’s name and address, shown under the statement title.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <label for="bk-holder-name">Account holder name</label>
+          <input type="text" id="bk-holder-name">
+        </div>
+        <div class="field">
+          <label for="bk-holder-address">Address <span class="label-hint">(one line per row)</span></label>
+          <textarea id="bk-holder-address" rows="2"></textarea>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bank: summary -->
+    <article class="card only-bank">
+      <header class="card-head">
+        <h2>Account Summary</h2>
+        <p>Beginning balance and fees. Totals and the ending balance are calculated from
+           the transactions below.</p>
+      </header>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label for="bk-beginning">Beginning balance ($)</label>
+            <input type="text" id="bk-beginning" inputmode="decimal" placeholder="0.00">
+          </div>
+          <div class="field">
+            <label for="bk-fees">Fees ($)</label>
+            <input type="text" id="bk-fees" inputmode="decimal" placeholder="0.00">
+          </div>
+        </div>
+        <dl class="totals-readout" id="bk-readout">
+          <div><dt>Deposits &amp; credits</dt><dd id="bk-ro-credits">$0.00</dd></div>
+          <div><dt>Withdrawals &amp; debits</dt><dd id="bk-ro-debits">$0.00</dd></div>
+          <div><dt>Checks paid</dt><dd id="bk-ro-checks">$0.00</dd></div>
+          <div class="due"><dt>Ending balance</dt><dd id="bk-ro-ending">$0.00</dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <!-- Bank: deposits & credits -->
+    <article class="card only-bank">
+      <header class="card-head">
+        <h2>Deposits &amp; Credits</h2>
+        <p>Money into the account. Each row: date, description, amount.</p>
+      </header>
+      <div class="card-body">
+        <div class="table-scroll">
+          <table class="rows-table bank-table">
+            <thead>
+              <tr><th>Date</th><th>Description</th><th class="num">Amount $</th><th></th></tr>
+            </thead>
+            <tbody id="bk-credit-rows"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-ghost btn-small" id="bk-credit-add">+ Add credit</button>
+      </div>
+    </article>
+
+    <!-- Bank: withdrawals & debits -->
+    <article class="card only-bank">
+      <header class="card-head">
+        <h2>Withdrawals &amp; Debits</h2>
+        <p>Money out of the account. Each row: date, description, amount.</p>
+      </header>
+      <div class="card-body">
+        <div class="table-scroll">
+          <table class="rows-table bank-table">
+            <thead>
+              <tr><th>Date</th><th>Description</th><th class="num">Amount $</th><th></th></tr>
+            </thead>
+            <tbody id="bk-debit-rows"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-ghost btn-small" id="bk-debit-add">+ Add debit</button>
+      </div>
+    </article>
+
+    <!-- Bank: checks -->
+    <article class="card only-bank">
+      <header class="card-head">
+        <h2>Checks Paid</h2>
+        <p>Optional. Leave empty and the checks section is left off the statement.</p>
+      </header>
+      <div class="card-body">
+        <div class="table-scroll">
+          <table class="rows-table bank-check-table">
+            <thead>
+              <tr><th>Date</th><th>Check number</th><th class="num">Amount $</th><th></th></tr>
+            </thead>
+            <tbody id="bk-check-rows"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-ghost btn-small" id="bk-check-add">+ Add check</button>
+      </div>
+    </article>
+
+    <!-- Notices -->
+    <article class="card only-billing">
+      <header class="card-head">
+        <h2>Important Notices</h2>
+        <p>Printed bold and uppercase ahead of the statement, exactly like the network
+           fee-change notices on real statements. Separate notices with a blank line.
+           Leave empty to skip.</p>
+      </header>
+      <div class="card-body">
+        <div class="field">
+          <textarea id="notices" rows="6" aria-label="Important notices"></textarea>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================ PREVIEW ============================ -->
+  <section class="preview-pane">
+    <div class="preview-card">
+      <header class="preview-head">
+        <div>
+          <h2>Live preview</h2>
+          <p id="preview-filename">Statement.pdf</p>
+        </div>
+        <span class="preview-status" id="preview-status" role="status">Ready</span>
+      </header>
+      <div class="preview-frame-wrap">
+        <iframe id="preview-frame" title="Statement PDF preview"></iframe>
+        <div class="preview-fallback" id="preview-fallback" hidden>
+          <p>This browser can’t show PDFs inline.</p>
+          <button type="button" class="btn btn-primary" id="preview-open">Open the PDF</button>
+        </div>
+      </div>
+      <footer class="preview-foot">
+        <button type="button" class="btn btn-primary btn-wide" id="btn-download">
+          Download PDF
+        </button>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<script src="vendor/pdf-lib.min.js"></script>
+<script src="vendor/fontkit.umd.min.js"></script>
+<script src="vendor/pdfjs.min.js"></script>
+<script src="js/fonts.data.js"></script>
+<script src="js/brand.data.js"></script>
+<script src="js/importer.js"></script>
+<script src="js/statement.js"></script>
+<script src="js/statement2.js"></script>
+<script src="js/statement3.js"></script>
+<script src="js/check.js"></script>
+<script src="js/letter.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Merchant Portal — Wholesale Payments</title>
+  <meta name="description" content="Sign in with your Merchant ID (MID) to view your Wholesale Payments dashboard, monthly statements, deposits, and processing summary." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Wholesale Payments home">
+        <img src="assets/logo.png" alt="Wholesale Payments" />
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="about.html">About</a>
+        <a href="processing-solutions.html">Solutions</a>
+        <a href="wholesale-advantage.html">Wholesale Advantage</a>
+        <a href="products.html">Equipment &amp; Technology</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact-us.html">Contact</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="tel:+18066980625" class="nav__phone">(806)&nbsp;698-0625</a>
+        <a href="contact-us.html" class="btn btn--small">Talk to us today</a>
+      </div>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="nav__mobile" id="navMobile" aria-label="Mobile">
+      <a href="about.html">About</a>
+      <a href="processing-solutions.html">Solutions</a>
+      <a href="wholesale-advantage.html">Wholesale Advantage</a>
+      <a href="products.html">Equipment &amp; Technology</a>
+      <a href="careers.html">Careers</a>
+      <a href="contact-us.html">Contact</a>
+      <a href="contact-us.html" class="btn">Talk to us today</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== Step 1: MID sign-in ===== -->
+    <section class="page-hero" id="midGate">
+      <p class="kicker reveal">Merchant Portal</p>
+      <h1 class="reveal" style="--d:.08s">Your statements,<br /><span class="grad">all in one place.</span></h1>
+      <div class="portal-login reveal" style="--d:.16s">
+        <form id="midForm" novalidate>
+          <div class="portal-login__fields">
+            <div class="field">
+              <input type="text" id="username" name="username" placeholder=" " autocomplete="username" required />
+              <label for="username">Username</label>
+            </div>
+            <div class="field">
+              <input type="password" id="password" name="password" placeholder=" " autocomplete="current-password" required />
+              <label for="password">Password</label>
+            </div>
+            <div class="field">
+              <input type="text" id="mid" name="mid" placeholder=" " inputmode="numeric" autocomplete="off"
+                     aria-describedby="midError" required />
+              <label for="mid">Merchant ID (MID)</label>
+            </div>
+          </div>
+          <p class="portal-login__error" id="midError" role="alert" hidden></p>
+          <button type="submit" class="btn btn--lg btn--full">Sign in</button>
+        </form>
+        <p class="portal-login__fine">
+          Need access or can't find your MID? Call <a href="tel:+18064514863">(806) 451-4863</a> and our team will help.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Step 2: Dashboard ===== -->
+    <section class="portal" id="portalDash" hidden>
+      <div class="wrap">
+        <!-- Account header -->
+        <div class="portal-head">
+          <div>
+            <p class="kicker">Merchant dashboard</p>
+            <h1 class="portal-head__name" id="dashName">—</h1>
+            <p class="portal-head__meta">
+              MID <strong id="dashMid">—</strong> · <span id="dashLocation">—</span>
+            </p>
+          </div>
+          <button type="button" class="btn btn--ghost" id="signOut">Sign out</button>
+        </div>
+
+        <!-- Merchant profile (from account of record) — view-only, collapsible -->
+        <details class="portal-panel portal-profile" id="profilePanel">
+          <summary class="portal-profile__summary">
+            <span class="portal-profile__title">Account details</span>
+            <span class="portal-profile__hint">View</span>
+            <span class="portal-profile__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="portal-profile__body">
+            <dl class="portal-details">
+              <div class="portal-details__address">
+                <div><dt>Street address</dt><dd id="profStreet">—</dd></div>
+                <div><dt>City</dt><dd id="profCity">—</dd></div>
+                <div><dt>State</dt><dd id="profState">—</dd></div>
+                <div><dt>ZIP</dt><dd id="profZip">—</dd></div>
+              </div>
+              <div><dt>Business name</dt><dd id="profBusiness">—</dd></div>
+              <div><dt>Owner / contact</dt><dd id="profOwner">—</dd></div>
+              <div><dt>Email</dt><dd id="profEmail">—</dd></div>
+              <div><dt>Phone</dt><dd id="profPhone">—</dd></div>
+            </dl>
+            <p class="portal-profile__disclaimer">
+              Need to update your info?
+              <a href="tel:+18064514863" class="btn btn--small">Give us a call</a>
+            </p>
+          </div>
+        </details>
+
+        <!-- Summary tiles (from the most recent statement on file) -->
+        <div class="portal-stats" id="statTiles">
+          <div class="portal-stat">
+            <p class="portal-stat__label">Total sales</p>
+            <p class="portal-stat__value" id="statVolume">—</p>
+            <p class="portal-stat__sub" id="statPeriod">—</p>
+          </div>
+          <div class="portal-stat">
+            <p class="portal-stat__label">Transactions</p>
+            <p class="portal-stat__value" id="statCount">—</p>
+            <p class="portal-stat__sub">Most recent statement</p>
+          </div>
+          <div class="portal-stat">
+            <p class="portal-stat__label">Average ticket</p>
+            <p class="portal-stat__value" id="statAvg">—</p>
+            <p class="portal-stat__sub">Per transaction</p>
+          </div>
+          <div class="portal-stat">
+            <p class="portal-stat__label">Amount charged</p>
+            <p class="portal-stat__value" id="statNet">—</p>
+            <p class="portal-stat__sub">To your account</p>
+          </div>
+        </div>
+
+        <!-- Statements -->
+        <div class="portal-panel">
+          <div class="portal-panel__head">
+            <h2>Statements</h2>
+          </div>
+
+          <div class="portal-table-wrap">
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th scope="col">Statement period</th>
+                  <th scope="col">Total sales</th>
+                  <th scope="col">Transactions</th>
+                  <th scope="col">Amount charged</th>
+                  <th scope="col"><span class="visually-hidden">Download</span></th>
+                </tr>
+              </thead>
+              <tbody id="stmtBody"></tbody>
+            </table>
+          </div>
+          <p class="portal-empty" id="stmtEmpty" hidden>No statements are on file for this account yet.</p>
+        </div>
+
+        <!-- Requests & supplies -->
+        <div class="portal-panel portal-services">
+          <div class="portal-panel__head">
+            <h2>Requests &amp; supplies</h2>
+          </div>
+
+          <div class="service-grid">
+            <!-- Callback -->
+            <details class="service-card">
+              <summary class="service-card__summary">
+                <span class="service-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 14v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="2.6" y="13" width="4.4" height="7" rx="2.2"/><rect x="17" y="13" width="4.4" height="7" rx="2.2"/></svg></span>
+                <span class="service-card__text">
+                  <span class="service-card__title">Request a callback</span>
+                </span>
+                <span class="service-card__chevron" aria-hidden="true"></span>
+              </summary>
+              <form class="service-form" data-service="callback" novalidate>
+                <div class="service-field">
+                  <label for="cbPhone">Best number to reach you</label>
+                  <input type="tel" id="cbPhone" name="phone" autocomplete="tel" required />
+                </div>
+                <div class="service-field">
+                  <label for="cbTime">Best time to call</label>
+                  <select id="cbTime" name="time">
+                    <option>Morning (8am–12pm)</option>
+                    <option>Afternoon (12pm–5pm)</option>
+                    <option>Evening (5pm–8pm)</option>
+                    <option>Anytime</option>
+                  </select>
+                </div>
+                <div class="service-field">
+                  <label for="cbTopic">What's it about? <span class="service-opt">(optional)</span></label>
+                  <input type="text" id="cbTopic" name="topic" />
+                </div>
+                <button type="submit" class="btn btn--small btn--full">Request callback</button>
+                <p class="service-form__done" role="status" hidden></p>
+              </form>
+            </details>
+
+            <!-- Replacement terminal -->
+            <details class="service-card">
+              <summary class="service-card__summary">
+                <span class="service-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="2.5" width="12" height="19" rx="3.2"/><rect x="7.8" y="5.2" width="8.4" height="11.5" rx="1" fill="#fff"/><circle cx="12" cy="19" r="1" fill="#fff"/></svg></span>
+                <span class="service-card__text">
+                  <span class="service-card__title">Replacement terminal</span>
+                </span>
+                <span class="service-card__chevron" aria-hidden="true"></span>
+              </summary>
+              <form class="service-form" data-service="replacement" novalidate>
+                <div class="service-field">
+                  <label for="rtDevice">Which device?</label>
+                  <select id="rtDevice" name="device">
+                    <option>Valor VL550</option>
+                    <option>Dejavoo P1</option>
+                    <option>Clover Station Duo</option>
+                    <option>Genius POS</option>
+                    <option>Other / not sure</option>
+                  </select>
+                </div>
+                <div class="service-field">
+                  <label for="rtIssue">What's happening?</label>
+                  <select id="rtIssue" name="issue">
+                    <option>Won't power on</option>
+                    <option>Card reader not working</option>
+                    <option>Printer issue</option>
+                    <option>Screen damaged / cracked</option>
+                    <option>Connectivity problem</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="service-field">
+                  <label for="rtNote">Details <span class="service-opt">(optional)</span></label>
+                  <input type="text" id="rtNote" name="note" />
+                </div>
+                <button type="submit" class="btn btn--small btn--full">Request replacement</button>
+                <p class="service-form__done" role="status" hidden></p>
+              </form>
+            </details>
+
+            <!-- Receipt paper -->
+            <details class="service-card">
+              <summary class="service-card__summary">
+                <span class="service-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 2a1 1 0 0 0-1 1v18.2a.8.8 0 0 0 1.2.68l2-1.2 2 1.2a.8.8 0 0 0 .82 0l2-1.2 2 1.2A.8.8 0 0 0 19 21.2V3a1 1 0 0 0-1-1H6Zm2.5 5h7a1 1 0 1 1 0 2h-7a1 1 0 0 1 0-2Zm0 4h7a1 1 0 1 1 0 2h-7a1 1 0 1 1 0-2Z"/></svg></span>
+                <span class="service-card__text">
+                  <span class="service-card__title">Order receipt paper</span>
+                </span>
+                <span class="service-card__chevron" aria-hidden="true"></span>
+              </summary>
+              <form class="service-form" data-service="paper" novalidate>
+                <div class="service-field">
+                  <label for="rpType">Paper size</label>
+                  <select id="rpType" name="type">
+                    <option>2¼" thermal</option>
+                    <option>3⅛" thermal</option>
+                    <option>Not sure — match my terminal</option>
+                  </select>
+                </div>
+                <div class="service-field">
+                  <label for="rpQty">Quantity</label>
+                  <select id="rpQty" name="qty">
+                    <option>1 roll</option>
+                    <option>5 rolls</option>
+                    <option>10 rolls</option>
+                    <option>Case (50 rolls)</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn--small btn--full">Order paper</button>
+                <p class="service-form__done" role="status" hidden></p>
+              </form>
+            </details>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="portal-help">
+          <div class="portal-help__item">
+            <h3>Questions about a statement?</h3>
+            <a class="textlink" href="tel:+18064514863">Call (806) 451-4863 →</a>
+          </div>
+          <div class="portal-help__item">
+            <h3>Need technical support?</h3>
+            <a class="textlink" href="tel:+18063000182">Call (806) 300-0182 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="assets/logo.png" alt="Wholesale Payments" />
+        <p>No-fee payment processing, modern point-of-sale, and local support — helping businesses nationwide keep more of every sale since 2007.</p>
+        <div class="footer__rating">
+          <span class="footer__stars" aria-hidden="true">★★★★★</span>
+          <span class="footer__rating-text"><strong>4.8</strong> out of 5 · Rated Excellent on <a href="https://www.trustpilot.com/review/wholesalepayments.com" rel="noopener" target="_blank">Trustpilot</a></span>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="processing-solutions.html">Processing Solutions</a>
+          <a href="wholesale-advantage.html">Wholesale Advantage</a>
+          <a href="products.html">Equipment &amp; Technology</a>
+          <a href="careers.html">Careers</a>
+          <a href="contact-us.html">Contact Us</a>
+        </div>
+        <div>
+          <h4>Office Locations</h4>
+          <span>Lubbock, TX</span>
+          <span>Dallas, TX</span>
+          <span>Fort Worth, TX</span>
+          <span>San Antonio, TX</span>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <a href="tel:+18066980625">Main: (806) 698-0625</a>
+          <a href="tel:+18064514863">Service: (806) 451-4863</a>
+          <a href="tel:+18063000182">Tech: (806) 300-0182</a>
+          <a href="tel:+18069055297">Installs: (806) 905-5297</a>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <a href="https://www.merchantoverview.com/v2" rel="noopener" target="_blank">Merchant Overview</a>
+          <a href="https://customerconnectwp.com/" rel="noopener" target="_blank">Customer Connect</a>
+          <a href="https://wholesalepayments.com/resource-bank" rel="noopener" target="_blank">Agent Portal</a>
+          <a href="merchant-portal.html" aria-current="page">Merchant Portal</a>
+          <a href="https://www.trustpilot.com/review/wholesalepayments.com" rel="noopener" target="_blank">Trustpilot Reviews</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>© <span id="year">2026</span> Wholesale Payments, Inc. All rights reserved. · <a href="privacy-policy.html">Privacy Policy</a> · <a href="terms-and-conditions.html">Terms &amp; Conditions</a></p>
+      <p>The Credit Wholesale Company, Inc. is a registered Independent Sales Organization of Wells Fargo Bank, N.A., Concord, CA. and Merrick Bank, South Jordan, UT.</p>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/portal.js"></script>
+</body>
+</html>

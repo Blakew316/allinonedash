@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# Original WordPress export — only needed to re-extract long-form copy.
+# The cleaned fragments in tools/longform/ are committed instead.
+tools/source/
+__pycache__/
+*.pyc

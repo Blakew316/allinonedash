@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pricing · WPI University</title>
+<meta name="description" content="Interchange schedule, merchant card mixes, margin adjustment types and pricing models.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="admin">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a><span data-icon="chevron"></span>
+      <a href="admin.html">Admin</a><span data-icon="chevron"></span>
+      <span aria-current="page">Pricing</span>
+    </nav>
+    <div class="row-between">
+      <div class="enter" style="--enter-delay:60ms">
+        <h1 class="h1">Pricing</h1>
+      </div>
+      <a class="btn btn-primary enter" style="--enter-delay:120ms" href="proposal.html">Build a proposal</a>
+    </div>
+  </div>
+
+  <div class="col gap-lg" style="margin-top:22px;padding-bottom:32px" id="pricingBody"></div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/interchange.js"></script>
+<script src="assets/js/pricing.js"></script>
+<script src="assets/js/quote.js"></script>
+<script>
+window.pageInit = function () {
+  var A = window.App, esc = A.esc, P = window.WPI_PRICING, Q = window.WPI_QUOTE;
+  var pct = function (n, dp) { return n.toFixed(dp == null ? 3 : dp) + '%'; };
+  var usd = function (n) { return '$' + n.toFixed(2); };
+  var per = function (n) {
+    return '$' + (Math.abs(n) < 1 ? n.toFixed(4).replace(/(\.\d\d)0+$/, '$1') : n.toFixed(2));
+  };
+  var BRAND = { visa: 'Visa', mastercard: 'Mastercard', discover: 'Discover' };
+  var KIND  = { credit: 'Credit', debit: 'Debit', prepaid: 'Prepaid' };
+  var UNITS = { monthly: 'per month', perItem: 'per transaction', pct: 'of volume' };
+
+  /* A worked example keeps the blended figures honest: the same merchant is
+     priced across every type so the numbers can be compared like for like. */
+  var EG_VOLUME = 50000, EG_TXNS = 900;
+
+  /* ------------------------------------------------------------ card mixes */
+  function mixRows(type) {
+    var b = Q.blend(type.mix);
+    return '<div class="mix-detail">' +
+      '<table class="table table-tight"><thead><tr>' +
+        '<th>Interchange program</th><th>Network</th><th>Card</th>' +
+        '<th class="num">Rate</th><th class="num">Per item</th><th class="num">Share</th>' +
+      '</tr></thead><tbody>' +
+      b.rows.map(function (r) {
+        return '<tr>' +
+          '<td><span class="mono tiny faint">' + esc(r.code) + '</span> ' + esc(r.name) + '</td>' +
+          '<td class="small muted">' + esc(BRAND[r.brand] || r.brand) + '</td>' +
+          '<td class="small muted">' + esc(KIND[r.kind] || r.kind) + '</td>' +
+          '<td class="num numeric">' + pct(r.rate, 2) + '</td>' +
+          '<td class="num numeric">' + per(r.item) + '</td>' +
+          '<td class="num numeric strong">' + (r.weight * 100).toFixed(1) + '%</td>' +
+        '</tr>';
+      }).join('') +
+      '</tbody></table>' +
+      (b.missing.length
+        ? '<p class="tiny mix-warn" style="margin-top:10px">' +
+          'Not in the schedule: ' + esc(b.missing.join(', ')) + '</p>'
+        : '') +
+    '</div>';
+  }
+
+  function passthroughSection() {
+    var types = P.merchantTypes || [];
+    return '<section class="panel" id="passthrough" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+      '<div class="panel-head">' +
+        '<span class="tile tile-blue" data-icon="storefront"></span>' +
+        '<div><div class="h4">Merchant type card mixes</div>' +
+        '<div class="tiny faint">Which interchange programs each kind of business clears at</div></div>' +
+      '</div>' +
+      '<div class="table-scroll"><table class="table"><thead><tr>' +
+        '<th>Business type</th><th class="num">Interchange</th><th class="num">Per item</th>' +
+        '<th class="num">Dues</th>' +
+        '<th class="num">Cost on $' + EG_VOLUME.toLocaleString('en-US') + ' / ' + EG_TXNS + '</th>' +
+        '<th class="num">Programs</th><th></th></tr></thead><tbody>' +
+        types.map(function (m, i) {
+          var b = Q.blend(m.mix);
+          var ic = EG_VOLUME * b.rate / 100 + EG_TXNS * b.item;
+          var du = EG_VOLUME * b.duesRate / 100 + EG_TXNS * b.duesItem;
+          return '<tr class="mix-head" data-mix="' + i + '">' +
+              '<td class="strong">' + esc(m.name) + '</td>' +
+              '<td class="num numeric">' + pct(b.rate) + '</td>' +
+              '<td class="num numeric">' + per(b.item) + '</td>' +
+              '<td class="num numeric muted">' + pct(b.duesRate, 4) + '</td>' +
+              '<td class="num numeric">' + usd(ic + du) + '</td>' +
+              '<td class="num numeric muted">' + b.rows.length + '</td>' +
+              '<td class="num"><button class="btn btn-ghost btn-sm" data-mix-toggle="' + i + '" ' +
+                'aria-expanded="false">Show mix</button></td>' +
+            '</tr>' +
+            '<tr class="mix-body" data-mix-row="' + i + '" hidden><td colspan="7">' +
+              mixRows(m) + '</td></tr>';
+        }).join('') + '</tbody></table></div>' +
+      '<div class="panel-body" style="padding-top:14px">' +
+        '<p class="tiny faint">Every rate is read from the interchange schedule below by program ' +
+        'code. A mix is what a typical business of that type clears at — on a proposal a rep can ' +
+        'use the merchant\'s own interchange total from their statement instead.</p>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ------------------------------------------------------------------ dues */
+  function duesSection() {
+    var dues = P.dues || {};
+    return '<section class="panel" id="dues" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+      '<div class="panel-head">' +
+        '<span class="tile" data-icon="layers"></span>' +
+        '<div><div class="h4">Network dues and assessments</div>' +
+        '<div class="tiny faint">Charged by the networks on top of interchange</div></div>' +
+      '</div>' +
+      '<div class="table-scroll"><table class="table"><thead><tr>' +
+        '<th>Network</th><th>Fee</th><th class="num">Rate on volume</th>' +
+        '<th class="num">Per transaction</th></tr></thead><tbody>' +
+        Object.keys(dues).map(function (k) {
+          var d = dues[k];
+          return '<tr><td class="strong">' + esc(BRAND[k] || k) + '</td>' +
+            '<td class="small muted">' + esc(d.label || '') + '</td>' +
+            '<td class="num numeric">' + pct(d.pct, 4) + '</td>' +
+            '<td class="num numeric">' + per(d.perItem) + '</td></tr>';
+        }).join('') + '</tbody></table></div>' +
+      '<div class="panel-body" style="padding-top:14px">' +
+        '<p class="tiny faint">The interchange schedule states that its rates are in addition to ' +
+        'network dues and assessments, so these are held separately and blended across the same ' +
+        'card mix. They live in <code class="key">assets/js/pricing.js</code>.</p>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* --------------------------------------------------------------- margins */
+  function marginSection() {
+    return '<section class="panel" id="margins" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+      '<div class="panel-head">' +
+        '<span class="tile tile-green" data-icon="tag"></span>' +
+        '<div><div class="h4">Margin adjustment types</div>' +
+        '<div class="tiny faint">Line items a rep can add to a proposal</div></div>' +
+      '</div>' +
+      '<div class="table-scroll"><table class="table"><thead><tr>' +
+        '<th>Fee</th><th>Applied</th><th class="num">Default amount</th><th>On by default</th>' +
+        '</tr></thead><tbody>' +
+        (P.marginAdjustments || []).map(function (m) {
+          return '<tr><td class="strong">' + esc(m.name) + '</td>' +
+            '<td class="small muted">' + esc(UNITS[m.unit] || m.unit) + '</td>' +
+            '<td class="num numeric">' + usd(m.amount) + '</td>' +
+            '<td>' + (m.on ? '<span class="chip chip-green">Yes</span>' : '<span class="chip">No</span>') +
+            '</td></tr>';
+        }).join('') + '</tbody></table></div>' +
+    '</section>';
+  }
+
+  /* ---------------------------------------------------------------- models */
+  function modelSection() {
+    return '<section class="panel" id="models" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+      '<div class="panel-head">' +
+        '<span class="tile tile-mint" data-icon="sparkles"></span>' +
+        '<div><div class="h4">Pricing models</div>' +
+        '<div class="tiny faint">How the merchant is billed on top of cost</div></div>' +
+      '</div>' +
+      '<div class="panel-body"><div class="grid grid-3">' +
+        (P.models || []).map(function (m) {
+          var detail = m.id === 'icplus'
+              ? m.markupPct + '% + ' + usd(m.markupPerItem) + ' over cost'
+            : m.id === 'flat'
+              ? m.flatPct + '% + ' + usd(m.flatPerItem) + ' blended'
+              : m.dualPct + '% card price · ' + usd(m.monthly) + '/mo';
+          return '<div class="card card-flat" style="border:1px solid var(--line)">' +
+              '<div class="h4">' + esc(m.name) + '</div>' +
+              '<p class="small muted" style="margin-top:7px">' + esc(m.blurb) + '</p>' +
+              '<div class="chip chip-blue" style="margin-top:12px">' + esc(detail) + '</div>' +
+            '</div>';
+        }).join('') +
+      '</div></div>' +
+    '</section>';
+  }
+
+  /* ---------------------------------------------------- interchange browser */
+  var PAGE = 60;
+  var browse = { q: '', brand: '', kind: '', shown: PAGE };
+
+  function matches(p) {
+    if (browse.brand && p.brand !== browse.brand) return false;
+    if (browse.kind && p.kind !== browse.kind) return false;
+    if (!browse.q) return true;
+    var q = browse.q.toLowerCase();
+    return p.code.toLowerCase().indexOf(q) === 0 ||
+           p.name.toLowerCase().indexOf(q) >= 0;
+  }
+
+  function scheduleSection() {
+    var src = Q.source || {};
+    return '<section class="panel" id="schedule" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+      '<div class="panel-head">' +
+        '<span class="tile tile-blue" data-icon="receipt"></span>' +
+        '<div><div class="h4">Interchange schedule</div>' +
+        '<div class="tiny faint">' + esc(src.reference || '') + ' · ' +
+          (Q.programs.length).toLocaleString('en-US') + ' programs</div></div>' +
+      '</div>' +
+      '<div class="panel-body" style="padding-bottom:14px">' +
+        '<div class="row gap-sm" style="flex-wrap:wrap">' +
+          '<input class="input" id="icSearch" type="search" style="flex:1;min-width:220px" ' +
+            'placeholder="Search by program code or name…" aria-label="Search interchange programs">' +
+          '<div class="segmented" id="icBrand" role="tablist" aria-label="Filter by network">' +
+            '<button role="tab" data-brand="" aria-selected="true">All networks</button>' +
+            '<button role="tab" data-brand="visa" aria-selected="false">Visa</button>' +
+            '<button role="tab" data-brand="mastercard" aria-selected="false">Mastercard</button>' +
+            '<button role="tab" data-brand="discover" aria-selected="false">Discover</button>' +
+          '</div>' +
+          '<div class="segmented" id="icKind" role="tablist" aria-label="Filter by card type">' +
+            '<button role="tab" data-kind="" aria-selected="true">All</button>' +
+            '<button role="tab" data-kind="credit" aria-selected="false">Credit</button>' +
+            '<button role="tab" data-kind="debit" aria-selected="false">Debit</button>' +
+            '<button role="tab" data-kind="prepaid" aria-selected="false">Prepaid</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div id="icResults"></div>' +
+    '</section>';
+  }
+
+  function renderSchedule() {
+    var hits = Q.programs.filter(matches);
+    var slice = hits.slice(0, browse.shown);
+    var host = document.getElementById('icResults');
+    if (!hits.length) {
+      host.innerHTML = '<div class="panel-body"><div class="empty">' +
+        '<span class="tile" data-icon="search"></span>' +
+        '<div class="h4" style="margin-top:12px">Nothing matches</div>' +
+        '<p class="small muted" style="margin-top:5px">No interchange program matches that filter.</p>' +
+        '</div></div>';
+      A.refresh();
+      return;
+    }
+    host.innerHTML =
+      '<div class="table-scroll"><table class="table table-tight"><thead><tr>' +
+        '<th>Code</th><th>Interchange program</th><th>Network</th><th>Card</th>' +
+        '<th class="num">Rate</th><th class="num">Per item</th></tr></thead><tbody>' +
+        slice.map(function (p) {
+          return '<tr>' +
+            '<td class="mono tiny">' + esc(p.code) + '</td>' +
+            '<td>' + esc(p.name) + '</td>' +
+            '<td class="small muted">' + esc(BRAND[p.brand] || p.brand) + '</td>' +
+            '<td class="small muted">' + esc(KIND[p.kind] || p.kind) + '</td>' +
+            '<td class="num numeric">' + p.rate.toFixed(2) + '%</td>' +
+            '<td class="num numeric">' + per(p.item) + '</td></tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+      '<div class="panel-body row-between" style="padding-top:14px">' +
+        '<span class="tiny faint">Showing ' + slice.length.toLocaleString('en-US') +
+          ' of ' + hits.length.toLocaleString('en-US') + '</span>' +
+        (hits.length > slice.length
+          ? '<button class="btn btn-secondary btn-sm" id="icMore">Show more</button>' : '') +
+      '</div>';
+    A.refresh();
+  }
+
+  /* ----------------------------------------------------------------- mount */
+  document.getElementById('pricingBody').innerHTML =
+    passthroughSection() + duesSection() + marginSection() + modelSection() + scheduleSection();
+  renderSchedule();
+
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('[data-mix-toggle]');
+    if (toggle) {
+      var i = toggle.getAttribute('data-mix-toggle');
+      var row = document.querySelector('[data-mix-row="' + i + '"]');
+      var open = row.hasAttribute('hidden');
+      if (open) { row.removeAttribute('hidden'); } else { row.setAttribute('hidden', ''); }
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Hide mix' : 'Show mix';
+      return;
+    }
+    if (e.target.id === 'icMore') { browse.shown += PAGE; renderSchedule(); return; }
+    var tab = e.target.closest('#icBrand [role="tab"], #icKind [role="tab"]');
+    if (tab) {
+      var group = tab.closest('.segmented');
+      group.querySelectorAll('[role="tab"]').forEach(function (b) {
+        b.setAttribute('aria-selected', String(b === tab));
+      });
+      if (group.id === 'icBrand') browse.brand = tab.getAttribute('data-brand');
+      else browse.kind = tab.getAttribute('data-kind');
+      browse.shown = PAGE;
+      renderSchedule();
+    }
+  });
+
+  document.addEventListener('input', function (e) {
+    if (e.target.id !== 'icSearch') return;
+    browse.q = e.target.value.trim();
+    browse.shown = PAGE;
+    renderSchedule();
+  });
+
+  A.refresh();
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

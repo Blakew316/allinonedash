@@ -1,0 +1,29 @@
+{
+  "remitAddress": ["PO Box 246", "Alpharetta, GA, 30024", "United States"],
+  "coverNotice": "Your account will be automatically charged for the amount due. No action is required on your part.",
+  "notices": "Effective April 1, 2026, Mastercard will start to calculate the existing Mail/Telephone Order Fee based on authorization volume rather than clearing volumes. This change shifts the fee assessment from cleared transactions, including both approved and declined. In addition, Mastercard is introducing a fee cap on declined transactions over $500.00 of $75.00. Continuing your merchant account with us or use of your merchant account after 30 days will represent your acceptance to these terms.",
+  "billTo": ["HOUSE OF BOOM", "20255 Texas 110", "Whitehouse, TX, 75791", "United States"],
+  "details": {
+    "statementNumber": "",
+    "issueDate": "Pending",
+    "paymentTerms": "Auto-Draft",
+    "billingId": "e90fbdf3-b58b-5b36-b2f8-31d7acc6fdd1",
+    "billingAccountNumber": "815230777881",
+    "productId": "6"
+  },
+  "periodStart": "2026-04-01",
+  "periodEnd": "2026-04-30",
+  "totalSales": 0,
+  "transactionCount": 0,
+  "currency": "USD",
+  "taxRate": 0,
+  "feesCollected": 0,
+  "categories": {
+    "transaction": { "included": false, "items": [] },
+    "cardNetwork": { "included": false, "items": [] },
+    "otherProcessing": { "included": false, "items": [] },
+    "thirdParty": { "included": true, "items": [] },
+    "recurring": { "included": false, "items": [] }
+  },
+  "batches": []
+}

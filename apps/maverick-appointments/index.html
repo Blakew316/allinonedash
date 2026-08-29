@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Team Maverick · Appointments</title>
+  <meta name="description" content="Daily and monthly appointment calendar for Team Maverick — Wholesale Payments.">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1026" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Maverick">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ===================== Live ticker (today's itinerary + payouts) ===================== -->
+<div id="ticker" class="ticker" aria-hidden="true">
+  <div class="ticker-viewport"><div id="ticker-track" class="ticker-track"></div></div>
+</div>
+
+<!-- ===================== App bar ===================== -->
+<header class="appbar">
+  <button id="btn-menu" class="icon-btn" aria-label="Main menu" title="Main menu">
+    <svg viewBox="0 0 24 24" class="ic"><g stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></g></svg>
+  </button>
+
+  <a class="brand" href="./" aria-label="Wholesale Payments — Team Maverick">
+    <img id="brand-logo" class="brand-logo-img" src="assets/logo.png" alt="Wholesale Payments">
+  </a>
+  <span class="brand-divider" aria-hidden="true"></span>
+  <span class="team-tag">Team&nbsp;Maverick</span>
+
+  <button id="nav-today" class="ghost-btn" title="Today (T)">Today</button>
+
+  <div class="datenav">
+    <button id="nav-prev" class="icon-btn small" aria-label="Previous" title="Previous (←)">
+      <svg viewBox="0 0 24 24" class="ic"><path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="nav-next" class="icon-btn small" aria-label="Next" title="Next (→)">
+      <svg viewBox="0 0 24 24" class="ic"><path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <h1 id="current-label" class="current-label">—</h1>
+
+  <div class="appbar-right">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" class="ic search-ic"><circle cx="11" cy="11" r="6.4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      <input id="search" class="search-input" type="search" placeholder="Search appointments" aria-label="Search appointments" autocomplete="off" spellcheck="false">
+      <button id="search-clear" class="icon-btn small search-clear" aria-label="Clear search" hidden>
+        <svg viewBox="0 0 24 24" class="ic"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <button id="btn-refresh" class="icon-btn" title="Refresh (R)" aria-label="Refresh appointments">
+      <svg viewBox="0 0 24 24" class="ic"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20 3v4.5h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="btn-theme" class="icon-btn" title="Toggle dark mode" aria-label="Toggle dark mode">
+      <svg viewBox="0 0 24 24" class="ic ic-sun"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.8v2.2"/><path d="M12 19v2.2"/><path d="M2.8 12h2.2"/><path d="M19 12h2.2"/><path d="M5.4 5.4l1.6 1.6"/><path d="M17 17l1.6 1.6"/><path d="M18.6 5.4L17 7"/><path d="M7 17l-1.6 1.6"/></g></svg>
+      <svg viewBox="0 0 24 24" class="ic ic-moon"><path d="M20.2 14.5A8.5 8.5 0 0 1 9.5 3.8a8.5 8.5 0 1 0 10.7 10.7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="btn-settings" class="icon-btn" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24" class="ic"><circle cx="12" cy="12" r="3.1" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.5-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5a7.6 7.6 0 0 0-2.6 1.5l-2.4-.9-2 3.4 2 1.5a7.6 7.6 0 0 0 0 3l-2 1.5 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="viewswitch" role="radiogroup" aria-label="View switcher">
+      <button class="vs-btn is-active" data-view="day"      role="radio" aria-checked="true"  title="Day (D)">Day</button>
+      <button class="vs-btn"           data-view="week"     role="radio" aria-checked="false" title="Week (W)">Week</button>
+      <button class="vs-btn"           data-view="month"    role="radio" aria-checked="false" title="Month (M)">Month</button>
+      <button class="vs-btn"           data-view="schedule" role="radio" aria-checked="false" title="Schedule (A)">Schedule</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== Body: sidebar + calendar ===================== -->
+<div class="shell">
+
+  <aside id="sidebar" class="sidebar" aria-label="Calendar navigation">
+    <!-- Brand header (shown only when the appbar drops the logo on phones) -->
+    <div class="sidebar-brand">
+      <img class="brand-logo-img" src="assets/logo.png" alt="Wholesale Payments">
+      <span class="sidebar-brand-team">Team&nbsp;Maverick</span>
+    </div>
+
+    <!-- Mini month -->
+    <div class="mini">
+      <div class="mini-head">
+        <span id="mini-label" class="mini-label">—</span>
+        <div class="mini-nav">
+          <button id="mini-prev" class="icon-btn small" aria-label="Previous month">
+            <svg viewBox="0 0 24 24" class="ic"><path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button id="mini-next" class="icon-btn small" aria-label="Next month">
+            <svg viewBox="0 0 24 24" class="ic"><path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="mini-grid" class="mini-grid"></div>
+    </div>
+
+    <!-- Agents ("My calendars") -->
+    <div class="side-section">
+      <div class="side-title">
+        <span>My agents</span>
+        <button id="agents-all" class="link-btn tiny">Select all</button>
+      </div>
+      <div id="agent-list" class="agent-list"></div>
+    </div>
+
+    <div class="side-section">
+      <div class="side-title"><span id="glance-title">Today at a glance</span></div>
+      <div id="side-stats" class="side-stats"></div>
+    </div>
+  </aside>
+
+  <div id="sidebar-scrim" class="sidebar-scrim" hidden></div>
+
+  <main class="content">
+    <div id="banner" class="banner" hidden></div>
+    <div id="view-host" class="view-host"></div>
+  </main>
+</div>
+
+<!-- ===================== Overlays ===================== -->
+<div id="popover-layer"></div>
+
+<div id="settings-backdrop" class="backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="modal-head">
+      <h2 id="settings-title">Settings</h2>
+      <button id="settings-close" class="icon-btn" aria-label="Close settings">
+        <svg viewBox="0 0 24 24" class="ic"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <label class="field-label" for="url-input">Google Apps Script Web App URL</label>
+    <input id="url-input" class="field" type="url" inputmode="url" autocomplete="off" spellcheck="false"
+           placeholder="https://script.google.com/macros/s/…/exec">
+    <p class="field-hint">Deploy your Apps Script as a <strong>Web app</strong> — Execute as: <em>Me</em>, Who has access: <strong>Anyone</strong> (not “Anyone with Google account”). After any change, <strong>deploy a new version</strong>, then paste the <code>/exec</code> URL here. Seeing “Failed to fetch”? That almost always means the access isn’t set to <em>Anyone</em>.</p>
+
+    <label class="field-label" for="vol-input">Merchant volume feed URL <span style="font-weight:500;opacity:.65">(optional)</span></label>
+    <input id="vol-input" class="field" type="url" inputmode="url" autocomplete="off" spellcheck="false"
+           placeholder="https://script.google.com/macros/s/…/exec">
+    <p class="field-hint">An Apps Script that returns Team Maverick merchant volume (it can pull from
+      <code>sales.wholesalepayments.org</code> server-side, or read your exported merchants sheet). When a merchant
+      crosses <strong>$1,000</strong> or <strong>$5,000</strong>, a 💰 payout event is added to the calendar for that
+      day under the agent's name. Skip this if your main script already returns a <code>merchants</code> list.</p>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-title">Team setup link</div>
+        <div class="settings-row-sub">Copies a link that connects any phone or computer to this live calendar — send it to the team once</div>
+      </div>
+      <button id="copy-setup" class="ghost-btn">Copy link</button>
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-title">Demo data</div>
+        <div class="settings-row-sub">Preview the calendar with sample appointments</div>
+      </div>
+      <button id="demo-toggle" class="switch" role="switch" aria-checked="false" aria-label="Use demo data"><span class="knob"></span></button>
+    </div>
+
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-title">Appearance</div>
+        <div class="settings-row-sub">Follows your device by default</div>
+      </div>
+      <div class="seg mini-seg" role="radiogroup" aria-label="Theme">
+        <button class="seg-btn" data-theme-pick="system">Auto</button>
+        <button class="seg-btn" data-theme-pick="light">Light</button>
+        <button class="seg-btn" data-theme-pick="dark">Dark</button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <span id="settings-status" class="settings-status"></span>
+      <button id="settings-close-m" class="ghost-btn settings-close-mobile">Close</button>
+      <button id="settings-save" class="primary-btn">Save &amp; Test</button>
+    </div>
+    <p id="conn-status" class="conn-status"></p>
+  </div>
+</div>
+
+<div id="shortcuts-backdrop" class="backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="sc-title">
+    <div class="modal-head">
+      <h2 id="sc-title">Keyboard shortcuts</h2>
+      <button id="shortcuts-close" class="icon-btn" aria-label="Close">
+        <svg viewBox="0 0 24 24" class="ic"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <dl class="sc-list">
+      <div><dt><kbd>D</kbd></dt><dd>Day view</dd></div>
+      <div><dt><kbd>W</kbd></dt><dd>Week view</dd></div>
+      <div><dt><kbd>M</kbd></dt><dd>Month view</dd></div>
+      <div><dt><kbd>A</kbd></dt><dd>Schedule view</dd></div>
+      <div><dt><kbd>T</kbd></dt><dd>Jump to today</dd></div>
+      <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Previous / next period</dd></div>
+      <div><dt><kbd>R</kbd></dt><dd>Refresh from Apps Script</dd></div>
+      <div><dt><kbd>/</kbd></dt><dd>Search appointments</dd></div>
+      <div><dt><kbd>?</kbd></dt><dd>This help</dd></div>
+      <div><dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd></div>
+    </dl>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').then(function (reg) {
+        if (reg.update) reg.update();          // check for a new build on every launch
+      }).catch(function () {});
+      // When a NEW service worker replaces an old one, reload once so the fresh
+      // build runs. (Skipped on first install — the page wasn't controlled yet.)
+      var hadController = !!navigator.serviceWorker.controller;
+      var reloaded = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (!hadController || reloaded) return;
+        reloaded = true;
+        location.reload();
+      });
+    });
+  }
+</script>
+</body>
+</html>

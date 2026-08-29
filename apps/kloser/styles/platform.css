@@ -1,0 +1,357 @@
+/* =============================================================================
+   Kloser CRM — platform layer
+
+   Adaptations for touch input, notched displays and the installed (standalone)
+   app. Loaded last so it can override the base rules without editing them.
+   ========================================================================== */
+
+:root {
+  /* Real height of the fixed tab bar, home indicator included. Anything that
+     has to clear the tab bar subtracts this rather than guessing. */
+  --tabbar-h: calc(68px + env(safe-area-inset-bottom, 0px));
+  /* Set by js/core/pwa.js from visualViewport: how much of the screen the
+     software keyboard is currently covering. */
+  --kb: 0px;
+  --sa-t: env(safe-area-inset-top, 0px);
+  --sa-b: env(safe-area-inset-bottom, 0px);
+  --sa-l: env(safe-area-inset-left, 0px);
+  --sa-r: env(safe-area-inset-right, 0px);
+}
+
+/* --------------------------------------------------------------------------
+   1. Overscroll
+
+   In a browser tab the rubber-band is hidden by Safari's own chrome. In a
+   standalone app it peels the whole interface off the top of the screen, and a
+   downward drag at the top can trigger pull-to-refresh, destroying app state.
+   -------------------------------------------------------------------------- */
+html, body { overscroll-behavior-y: none; }
+
+/* Inner scrollers stop chaining but keep their own bounce. */
+.modal-body,
+.drawer-body,
+.palette-results,
+.table-wrap,
+.matrix-wrap,
+.activity-feed,
+.mail-list,
+.kanban-body,
+.kanban { overscroll-behavior: contain; }
+
+/* --------------------------------------------------------------------------
+   2. Tap highlight
+
+   Only <button> was covered. Most tappable surfaces here are anchors, and the
+   default gray rectangle ignores their border radius.
+   -------------------------------------------------------------------------- */
+a, button, summary,
+[role="button"], [role="tab"], [role="switch"],
+[role="checkbox"], [role="menuitem"], [role="option"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   3. Safe areas
+
+   env() only resolves to anything once the viewport meta carries
+   viewport-fit=cover — which it does. Every value is wrapped in max() so
+   non-notched devices keep the design's own spacing.
+   -------------------------------------------------------------------------- */
+.topbar {
+  padding-left: max(var(--s-6), var(--sa-l));
+  padding-right: max(var(--s-6), var(--sa-r));
+}
+
+.content {
+  padding-left: max(var(--s-6), var(--sa-l));
+  padding-right: max(var(--s-6), var(--sa-r));
+}
+
+.rail-foot { padding-bottom: calc(var(--s-3) + var(--sa-b)); }
+.rail-head { padding-top: var(--sa-t); height: calc(var(--topbar-h) + var(--sa-t)); }
+
+.drawer-foot { padding-bottom: calc(var(--s-4) + var(--sa-b)); }
+.drawer-head { padding-top: calc(var(--s-5) + var(--sa-t)); }
+.drawer { padding-right: var(--sa-r); }
+
+.modal-foot { padding-bottom: calc(var(--s-4) + var(--sa-b)); }
+
+.toast-host {
+  bottom: calc(var(--s-5) + var(--sa-b));
+  right: calc(var(--s-5) + var(--sa-r));
+}
+
+.map-legendbar { bottom: calc(var(--s-4) + var(--sa-b)); }
+
+@media (max-width: 1024px) {
+  .topbar {
+    padding-left: max(var(--s-4), var(--sa-l));
+    padding-right: max(var(--s-4), var(--sa-r));
+  }
+  .content {
+    padding-left: max(var(--s-4), var(--sa-l));
+    padding-right: max(var(--s-4), var(--sa-r));
+    /* Clear the tab bar AND the home indicator underneath it. */
+    padding-bottom: calc(var(--tabbar-h) + var(--s-5));
+  }
+  .tabbar {
+    padding-left: max(var(--s-2), var(--sa-l));
+    padding-right: max(var(--s-2), var(--sa-r));
+    padding-bottom: calc(6px + var(--sa-b));
+  }
+  .toast-host {
+    left: max(var(--s-4), var(--sa-l));
+    right: max(var(--s-4), var(--sa-r));
+    bottom: calc(var(--tabbar-h) + var(--s-3));
+  }
+}
+
+@media (max-width: 720px) {
+  .content {
+    padding-left: max(var(--s-3), var(--sa-l));
+    padding-right: max(var(--s-3), var(--sa-r));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Form controls must not trigger zoom
+
+   iOS zooms the whole viewport when a focused control's text is under 16px,
+   and it does not zoom back out on blur. Raising the type is the only fix that
+   does not also disable pinch-zoom for everyone.
+   -------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .input, .select, .textarea,
+  .input.sm, .select.sm,
+  input, select, textarea {
+    font-size: 16px;
+  }
+  /* Give the larger type room rather than letting it crowd the box. */
+  .input, .select { height: 42px; }
+  .input.sm, .select.sm { height: 38px; }
+  .textarea { min-height: 104px; }
+  .palette-input { font-size: 17px; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Touch targets
+
+   Apple's floor is 44pt. The painted control can stay small — the hit area is
+   what has to grow — so the visual design is unchanged.
+   -------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .icon-btn,
+  .btn.sm.icon-only,
+  .btn.icon-only,
+  .page-btn,
+  .map-zoom button,
+  .checkbox,
+  .switch { position: relative; }
+
+  .icon-btn::after,
+  .btn.sm.icon-only::after,
+  .btn.icon-only::after,
+  .page-btn::after,
+  .map-zoom button::after,
+  .checkbox::before,
+  .switch::before {
+    content: "";
+    position: absolute; top: 50%; left: 50%;
+    translate: -50% -50%;
+    min-width: 44px; min-height: 44px;
+    width: 100%; height: 100%;
+  }
+  /* The tick lives on ::after, so the checkbox takes its hit area from
+     ::before. Setting ::after to `content: none` — as this used to — removed
+     the expander and left a 24px target. */
+  .checkbox { min-width: 24px; min-height: 24px; }
+
+  /* An expander is a pseudo-element, so anything that clips its own overflow
+     clips the hit area back to the visual box. .btn sets overflow:hidden to
+     contain the ripple, which left icon-only buttons at 30px. Let the expander
+     out and drop the ripple for these — the ripple is what needed the clip. */
+  .btn.icon-only,
+  .btn.icon-only.ripple-host { overflow: visible; }
+  .btn.icon-only .ripple { display: none; }
+
+  .input-icon .clear { width: 40px; height: 40px; }
+  .tabbar-item { min-height: 48px; }
+  .nav-item { padding-block: 11px; }
+  .menu-item { padding-block: 11px; }
+  .list-row { min-height: 52px; }
+  .segmented button { height: 34px; padding-inline: var(--s-4); }
+}
+
+/* --------------------------------------------------------------------------
+   6. Hover-only affordances need a touch equivalent
+
+   `tr:hover` never matches on a finger. Anything whose only reveal is hover
+   has to be permanently visible on a touch device.
+   -------------------------------------------------------------------------- */
+@media (hover: none) {
+  .row-actions { opacity: 1; }
+
+  /* Tooltips are unreachable without a pointer — suppress rather than tease. */
+  .tooltip-host[data-tip]::after,
+  .app[data-rail="collapsed"] .nav-item::after { content: none; display: none; }
+
+  /* Hover lifts read as stuck states after a tap. */
+  .lift:hover { transform: none; box-shadow: var(--shadow-sm); }
+  .card.interactive:hover { transform: none; }
+}
+
+/* Keep the affordance for keyboard users on touch devices. */
+.row-actions:focus-within { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   7. Gestures
+
+   The map owns vertical drags; without this the document scroller takes them
+   and iOS cancels the pointer stream mid-pan.
+   -------------------------------------------------------------------------- */
+.map-shell, .map-layers, .map-canvas { touch-action: none; }
+.kanban, .table-wrap, .matrix-wrap, .tabs, .map-legend-items { touch-action: pan-x pan-y; }
+
+/* --------------------------------------------------------------------------
+   8. Software keyboard
+
+   iOS shrinks the visual viewport, not the layout viewport, so a fixed panel
+   keeps its full height and its input slides underneath the keyboard.
+   -------------------------------------------------------------------------- */
+.palette-host { padding-bottom: calc(var(--s-4) + var(--kb)); }
+.palette { max-height: min(62vh, calc(100vh - var(--kb) - 140px)); }
+
+:root[data-keyboard="open"] .tabbar { transform: translateY(120%); }
+.tabbar { transition: transform var(--t-base) var(--ease-out); }
+
+:root[data-keyboard="open"] .toast-host { bottom: calc(var(--kb) + var(--s-3)); }
+
+/* --------------------------------------------------------------------------
+   9. Installed-app chrome
+
+   Text selection and the callout menu on the app's own furniture read as bugs
+   once there is no browser UI around it. Content stays selectable.
+   -------------------------------------------------------------------------- */
+:root[data-standalone="true"] .rail,
+:root[data-standalone="true"] .topbar,
+:root[data-standalone="true"] .tabbar,
+:root[data-standalone="true"] .segmented,
+:root[data-standalone="true"] .tabs {
+  -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* --------------------------------------------------------------------------
+   10. Offline state
+   -------------------------------------------------------------------------- */
+/* Global sync status — the original app carries one on every page. */
+.sync-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 28px; padding-inline: 10px; flex: none;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  font-size: var(--fs-11); font-weight: 600; white-space: nowrap;
+  color: var(--text-muted);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.sync-status:hover { background: var(--surface); border-color: var(--line-strong); color: var(--text-strong); }
+.sync-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--good); }
+.sync-status[data-state="ok"] .sync-dot { background: var(--good); }
+.sync-status[data-state="offline"] {
+  background: var(--warn-tint); border-color: color-mix(in srgb, var(--warn) 30%, transparent); color: var(--warn-ink);
+}
+.sync-status[data-state="offline"] .sync-dot { background: var(--warn); }
+.sync-status[data-state="syncing"] { color: var(--accent-ink); }
+.sync-status[data-state="syncing"] .sync-dot {
+  background: var(--accent);
+  animation: pulse-ring 1.2s var(--ease-out) infinite;
+}
+:root[data-offline="true"] .live-dot { background: var(--text-subtle); animation: none; }
+
+/* The label would squeeze the page title on a narrow bar; the dot still reads
+   and the button keeps its accessible name via title. */
+@media (max-width: 700px) {
+  .sync-status { padding-inline: 8px; }
+  .sync-status .sync-label { display: none; }
+}
+
+/* Filters toggle — collapses every page's filter toolbar. */
+.app[data-filters="hidden"] .toolbar { display: none; }
+.app[data-filters="hidden"] #routes-toolbar,
+.app[data-filters="hidden"] .selection-bar { display: none; }
+
+/* --------------------------------------------------------------------------
+   11. Add-to-Home-Screen coach mark
+
+   WebKit has no install prompt, so the only way in is to show the user where
+   the Share button is.
+   -------------------------------------------------------------------------- */
+.install-hint {
+  position: fixed; z-index: var(--z-toast);
+  left: max(var(--s-4), var(--sa-l));
+  right: max(var(--s-4), var(--sa-r));
+  bottom: calc(var(--s-4) + var(--sa-b));
+  max-width: 420px; margin-inline: auto;
+  padding: var(--s-4) var(--s-4) var(--s-3);
+  border-radius: var(--r-xl);
+  background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-xl);
+  animation: sheet-up var(--t-slow) var(--ease-spring) both;
+}
+.install-hint.is-leaving { animation: toast-out 200ms var(--ease-in-out) both; }
+
+.install-close {
+  position: absolute; top: 10px; right: 10px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border-radius: var(--r-sm); color: var(--text-subtle);
+}
+.install-close:hover { background: var(--surface-hover); color: var(--text); }
+
+.install-row { display: flex; align-items: center; gap: var(--s-3); }
+.install-icon { border-radius: 12px; box-shadow: var(--shadow-sm); flex: none; }
+.install-copy { min-width: 0; padding-right: var(--s-6); }
+.install-copy b { display: block; font-size: var(--fs-14); color: var(--text-strong); letter-spacing: var(--tr-title); }
+.install-copy span { display: block; font-size: var(--fs-12); color: var(--text-muted); line-height: var(--lh-snug); margin-top: 2px; }
+
+.install-steps {
+  display: flex; flex-direction: column; gap: 7px;
+  margin-top: var(--s-4); padding-top: var(--s-3);
+  border-top: 1px solid var(--line-soft);
+}
+.install-steps li {
+  display: flex; align-items: center; gap: 7px;
+  font-size: var(--fs-12); color: var(--text-muted);
+}
+.install-steps b { color: var(--text-strong); font-weight: 620; }
+.install-steps .step-n {
+  width: 18px; height: 18px; flex: none;
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--accent-tint); color: var(--accent-ink);
+  font-size: 10px; font-weight: 700;
+}
+.install-steps .share-glyph { color: var(--accent-ink); vertical-align: -3px; }
+
+/* The little tail pointing down at Safari's Share button. */
+.install-arrow {
+  position: absolute; left: 50%; bottom: -9px; translate: -50% 0;
+  width: 18px; height: 18px; rotate: 45deg;
+  background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-bottom-right-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   12. Print — the one place a field rep still uses paper
+   -------------------------------------------------------------------------- */
+@media print {
+  .rail, .topbar, .tabbar, .toast-host, .install-hint, .rail-scrim { display: none !important; }
+  .app { grid-template-columns: 1fr !important; }
+  .content { padding: 0 !important; max-width: none !important; }
+  .card { break-inside: avoid; box-shadow: none; border-color: #ccc; }
+  body { background: #fff !important; }
+}

@@ -1,0 +1,190 @@
+{
+  "note": "City centers for every city in the lead book. The original export carried street addresses but no coordinates, and no geocoding service is reachable from this build, so pins sit at city level, spread deterministically around the center.",
+  "precision": "city",
+  "cities": {
+    "Antelope, CA": [
+      38.7124,
+      -121.3608
+    ],
+    "Ashland City, TN": [
+      36.2745,
+      -87.0642
+    ],
+    "Bigfork, MT": [
+      48.0633,
+      -114.073
+    ],
+    "Blessing, TX": [
+      28.8727,
+      -96.2151
+    ],
+    "Bryan, TX": [
+      30.6744,
+      -96.37
+    ],
+    "Carlsbad, NM": [
+      32.4207,
+      -104.2288
+    ],
+    "Carmichael, CA": [
+      38.6171,
+      -121.3283
+    ],
+    "Citrus Heights, CA": [
+      38.7071,
+      -121.2811
+    ],
+    "Clemmons, NC": [
+      36.0215,
+      -80.382
+    ],
+    "Coeur d'Alene, ID": [
+      47.6777,
+      -116.7805
+    ],
+    "College Station, TX": [
+      30.628,
+      -96.3344
+    ],
+    "Columbia Falls, MT": [
+      48.3722,
+      -114.1817
+    ],
+    "Fair Oaks, CA": [
+      38.6446,
+      -121.2719
+    ],
+    "Gardiner, MT": [
+      45.033,
+      -110.7055
+    ],
+    "Grand Rapids, MI": [
+      42.9634,
+      -85.6681
+    ],
+    "Hendersonville, TN": [
+      36.3048,
+      -86.62
+    ],
+    "Houston, TX": [
+      29.7604,
+      -95.3698
+    ],
+    "Jackson, MI": [
+      42.2459,
+      -84.4013
+    ],
+    "Kalamazoo, MI": [
+      42.2917,
+      -85.5872
+    ],
+    "Kalispell, MT": [
+      48.1958,
+      -114.3129
+    ],
+    "Katy, TX": [
+      29.7858,
+      -95.8245
+    ],
+    "Kernersville, NC": [
+      36.1199,
+      -80.0737
+    ],
+    "La Grange, TX": [
+      29.9052,
+      -96.8766
+    ],
+    "MISSOULA, MT": [
+      46.8721,
+      -113.994
+    ],
+    "Mesa, AZ": [
+      33.4152,
+      -111.8315
+    ],
+    "Missoula, MT": [
+      46.8721,
+      -113.994
+    ],
+    "Monterey, CA": [
+      36.6002,
+      -121.8947
+    ],
+    "Nashville, TN": [
+      36.1627,
+      -86.7816
+    ],
+    "North Highlands, CA": [
+      38.6857,
+      -121.3722
+    ],
+    "Pioneer, OH": [
+      41.6792,
+      -84.5539
+    ],
+    "Pittsford, MI": [
+      41.8489,
+      -84.4656
+    ],
+    "Rancho Cordova, CA": [
+      38.5891,
+      -121.3027
+    ],
+    "Rosenberg, TX": [
+      29.5572,
+      -95.8085
+    ],
+    "Roseville, CA": [
+      38.7521,
+      -121.288
+    ],
+    "Sacramento, CA": [
+      38.5816,
+      -121.4944
+    ],
+    "Salinas, CA": [
+      36.6777,
+      -121.6555
+    ],
+    "Soledad, CA": [
+      36.4247,
+      -121.3263
+    ],
+    "Springfield, TN": [
+      36.5092,
+      -86.885
+    ],
+    "Stafford, TX": [
+      29.6161,
+      -95.5577
+    ],
+    "Stevensville, MT": [
+      46.5097,
+      -114.0937
+    ],
+    "Sugar Land, TX": [
+      29.6197,
+      -95.6349
+    ],
+    "Trinity, TX": [
+      30.9477,
+      -95.3763
+    ],
+    "West Sacramento, CA": [
+      38.5805,
+      -121.5302
+    ],
+    "Winston-Salem, NC": [
+      36.0999,
+      -80.2442
+    ],
+    "Wyoming, MI": [
+      42.9134,
+      -85.7053
+    ],
+    "Zeeland, MI": [
+      42.8125,
+      -86.0192
+    ]
+  }
+}

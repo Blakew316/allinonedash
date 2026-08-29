@@ -1,0 +1,185 @@
+{
+  "remitAddress": [
+    "PO Box 246",
+    "Alpharetta, GA, 30024",
+    "United States"
+  ],
+  "coverNotice": "Your account will be automatically charged for the amount due. No action is required on your part.",
+  "notices": "We have updated the Program Guide to add Section 32.9 (Clover Equipment Services), Section 32.10 (Supplemental Services), and to update Section 24.5 (Survival). These changes introduce terms governing Clover equipment usage (applicable only to merchants using Clover point-of-sale equipment and/or Clover services), enrollment and fees for Supplemental Services, and clarify that Supplemental Services enrollment and associated fees survive termination of the agreement unless canceled per Section 32.10.5. In addition, Citizens Bank, NA is now the sponsor bank for merchants formerly sponsored by Wells Fargo Bank, NA. These updates are effective as of July 1, 2026. Your continued use of the services constitutes acceptance of the updated terms.\n\nAmerican Express OptBlue update: Effective April 17, 2026, U.S. merchant processing limits increase to $3,000,000 annually and $300,000 over 3 months (previously $1,000,000 / $100,000). This allows for greater growth flexibility with no action required. Note: limits for Puerto Rico and the U.S. Virgin Islands remain unchanged.\n\nEffective July 2026, Mastercard is revising the rate for the existing Mastercard Dispute Image Fee from $0.20 to $0.23. Effective July 2026, Mastercard is revising the rate for the existing Mastercard Dispute Case Fee from $1.35 to $1.55. Effective April 2026, Mastercard is introducing a new Fallback Avoidance Fee on transactions in which a card bearing both a chip and a magnetic stripe is used at a chip-enabled terminal, and the resulting transaction is completed with the magnetic stripe instead of with the chip. These transaction types will be assessed a 0.10% fee as applicable. Effective April 2026, Visa will assess a Card- Not Present Token Fee on all domestic and cross border approved Visa card-not-present token authorizations. Merchants will incur a fee of 0.015% with a minimum of $0.01. Effective April 2026, Visa will assess a Card Present Token Fee on all domestic and cross border approved Visa card-present token authorizations. Merchants will incur a fee of 0.01% for card present and 0.05% for cross border transactions. Effective April 2026, Interlink will assess a Card- Not Present Token Fee on all domestic and cross border approved Interlink card not-present token authorizations. Merchants will incur a fee of 0.015% with a minimum of $0.01 per transaction. Effective April 2026, Interlink will assess a Card-Present Token Fee on all domestic and cross border approved Interlink card-present token authorizations. Merchants will incur a fee of 0.01% for card-present transactions and a fee of 0.05% for cross border transactions. Effective April 2026, Visa is revising the rate on the existing Digital Commerce Service Fee from 0.0075% to 0.035% on all card-not-present transactions performed at a U.S. merchant with a foreign card and update the minimum fee from $0.0075 to $0.01 per transaction. Effective April 2026, Interlink is revising the rate on the existing Digital Commerce Service Fee from 0.0075% to 0.035% on all card-not-present transactions performed at a U.S. merchant with a foreign card, and update the minimum fee from $0.0075 to $0.01 per transaction. Continuing your merchant account with us or use of your merchant account after 30 days will represent your acceptance of these terms.",
+  "billTo": [
+    "HOUSE OF BOOM",
+    "20255 Texas 110",
+    "Whitehouse, TX, 75791",
+    "United States"
+  ],
+  "details": {
+    "statementNumber": "",
+    "issueDate": "Pending",
+    "paymentTerms": "Auto-Draft",
+    "billingId": "e90fbdf3-b58b-5b36-b2f8-31d7acc6fdd1",
+    "billingAccountNumber": "815230777881",
+    "productId": "6"
+  },
+  "periodStart": "2026-05-01",
+  "periodEnd": "2026-05-31",
+  "totalSales": 1925.59,
+  "transactionCount": 21,
+  "currency": "USD",
+  "taxRate": 0,
+  "feesCollected": 74.05,
+  "categories": {
+    "transaction": {
+      "included": true,
+      "items": [
+        {
+          "description": "Authorization: ECI CPU, Pin Debit, IP",
+          "count": 2,
+          "volume": 0.02,
+          "rate": "",
+          "fee": "0.1",
+          "amount": 0.2
+        },
+        {
+          "description": "Sale: Mid-Qualified, MasterCard, Credit",
+          "count": 3,
+          "volume": 654.65,
+          "rate": "3.85%",
+          "fee": "",
+          "amount": 25.18
+        },
+        {
+          "description": "Sale: Mid-Qualified, Visa, Credit",
+          "count": 1,
+          "volume": 13.51,
+          "rate": "3.85%",
+          "fee": "",
+          "amount": 0.52
+        },
+        {
+          "description": "Sale: Qualified, Visa, Credit",
+          "count": 2,
+          "volume": 91.48,
+          "rate": "3.85%",
+          "fee": "",
+          "amount": 3.52
+        },
+        {
+          "description": "Sale: Qualified, MasterCard, Debit",
+          "count": 9,
+          "volume": 495.1,
+          "rate": "3.85%",
+          "fee": "",
+          "amount": 19.04
+        },
+        {
+          "description": "Sale: Qualified, Visa, Debit",
+          "count": 5,
+          "volume": 670.84,
+          "rate": "3.85%",
+          "fee": "",
+          "amount": 25.8
+        }
+      ]
+    },
+    "cardNetwork": {
+      "included": true,
+      "items": [
+        {
+          "description": "Debit Network Fees: Interchange, Pin Debit, Pulse",
+          "count": 1,
+          "volume": 0.01,
+          "rate": "",
+          "fee": "",
+          "amount": 0.15
+        },
+        {
+          "description": "Debit Network Fees: Network Security, Pin Debit, Pulse",
+          "count": 1,
+          "volume": 0.01,
+          "rate": "",
+          "fee": "",
+          "amount": 0.01
+        },
+        {
+          "description": "Debit Network Fees: Switch, Pin Debit, Pulse",
+          "count": 1,
+          "volume": 0.01,
+          "rate": "",
+          "fee": "",
+          "amount": 0.09
+        }
+      ]
+    },
+    "otherProcessing": {
+      "included": true,
+      "items": [
+        {
+          "description": "Recurring: Clover Platform Access Monthly Fee",
+          "count": 1,
+          "volume": "",
+          "rate": "",
+          "fee": "",
+          "amount": 5.0
+        },
+        {
+          "description": "Recurring: Clover Transarmor Fee",
+          "count": 1,
+          "volume": "",
+          "rate": "",
+          "fee": "",
+          "amount": 5.0
+        },
+        {
+          "description": "Recurring: Service, Monthly",
+          "count": 1,
+          "volume": "",
+          "rate": "",
+          "fee": "45",
+          "amount": 45.0
+        }
+      ]
+    },
+    "thirdParty": {
+      "included": true,
+      "items": []
+    },
+    "recurring": {
+      "included": true,
+      "items": []
+    }
+  },
+  "batches": [
+    {
+      "date": "2026-05-21",
+      "number": "204500211700",
+      "salesCount": 1,
+      "salesAmount": 0.01,
+      "refundCount": 0,
+      "refundAmount": 0
+    },
+    {
+      "date": "2026-05-22",
+      "number": "152976220001",
+      "salesCount": 1,
+      "salesAmount": 475.15,
+      "refundCount": 0,
+      "refundAmount": 0
+    },
+    {
+      "date": "2026-05-23",
+      "number": "152976230002",
+      "salesCount": 3,
+      "salesAmount": 242.74,
+      "refundCount": 0,
+      "refundAmount": 0
+    },
+    {
+      "date": "2026-05-25",
+      "number": "152976250003",
+      "salesCount": 16,
+      "salesAmount": 1207.69,
+      "refundCount": 0,
+      "refundAmount": 0
+    }
+  ]
+}

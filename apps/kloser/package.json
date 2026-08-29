@@ -1,0 +1,12 @@
+{
+  "name": "kloser-crm",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Kloser CRM — redesigned field CRM for Wholesale Payments",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js 5173"
+  },
+  "engines": { "node": ">=18" }
+}

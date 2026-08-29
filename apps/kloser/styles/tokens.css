@@ -1,0 +1,210 @@
+/* ==========================================================================
+   Kloser CRM — Design Tokens
+   Brand: Wholesale Payments (navy / blue / cyan / green / mint)
+   Color is applied as light hues and hairlines only — never large slabs.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand seeds (sampled from the Wholesale Payments logo) ---- */
+  --wp-navy:      #001160;
+  --wp-navy-deep: #000C42;
+  --wp-blue:      #0090E9;
+  --wp-cyan:      #00BAE6;
+  --wp-green:     #00C271;
+  --wp-mint:      #4FE778;
+  --wp-gray:      #AAAFB5;
+
+  /* ---- Neutral ramp (navy-tinted grays, never pure gray) ---- */
+  --n-0:   #FFFFFF;
+  --n-25:  #FBFCFE;
+  --n-50:  #F6F8FC;
+  --n-100: #EDF1F8;
+  --n-150: #E4EAF4;
+  --n-200: #D8E0EE;
+  --n-300: #BFCADD;
+  --n-400: #96A3BC;
+  --n-500: #6B7A96;
+  --n-600: #4E5C77;
+  --n-700: #36435C;
+  --n-800: #212D44;
+  --n-900: #131C2E;
+  --n-950: #0A1120;
+
+  /* ---- Semantic surfaces ---- */
+  --bg:            var(--n-50);
+  --bg-elevated:   var(--n-0);
+  --bg-sunken:     var(--n-100);
+  --bg-rail:       color-mix(in srgb, var(--wp-navy) 3%, var(--n-0));
+  --surface:       var(--n-0);
+  --surface-2:     var(--n-25);
+  --surface-hover: color-mix(in srgb, var(--wp-blue) 5%, var(--n-0));
+  --surface-active: color-mix(in srgb, var(--wp-blue) 9%, var(--n-0));
+  --scrim:         color-mix(in srgb, var(--n-950) 42%, transparent);
+
+  /* ---- Text ---- */
+  --text:          var(--n-900);
+  --text-strong:   var(--wp-navy);
+  --text-muted:    var(--n-500);
+  --text-subtle:   var(--n-400);
+  --text-invert:   var(--n-0);
+  --text-link:     color-mix(in srgb, var(--wp-blue) 82%, var(--wp-navy));
+
+  /* ---- Lines ---- */
+  --line:          color-mix(in srgb, var(--wp-navy) 10%, transparent);
+  --line-soft:     color-mix(in srgb, var(--wp-navy) 6%, transparent);
+  --line-strong:   color-mix(in srgb, var(--wp-navy) 18%, transparent);
+
+  /* ---- Accents: tints + solids ---- */
+  --accent:        var(--wp-blue);
+  --accent-ink:    color-mix(in srgb, var(--wp-blue) 78%, var(--wp-navy));
+  --accent-tint:   color-mix(in srgb, var(--wp-blue) 9%, var(--n-0));
+  --accent-tint-2: color-mix(in srgb, var(--wp-blue) 16%, var(--n-0));
+
+  --good:          var(--wp-green);
+  --good-ink:      color-mix(in srgb, var(--wp-green) 68%, var(--n-900));
+  --good-tint:     color-mix(in srgb, var(--wp-green) 11%, var(--n-0));
+
+  --info:          var(--wp-cyan);
+  --info-ink:      color-mix(in srgb, var(--wp-cyan) 62%, var(--n-900));
+  --info-tint:     color-mix(in srgb, var(--wp-cyan) 12%, var(--n-0));
+
+  --warn:          #E8A317;
+  --warn-ink:      #8A5D00;
+  --warn-tint:     color-mix(in srgb, #E8A317 14%, var(--n-0));
+
+  --bad:           #E5484D;
+  --bad-ink:       #9E1D22;
+  --bad-tint:      color-mix(in srgb, #E5484D 10%, var(--n-0));
+
+  --neutral-tint:  color-mix(in srgb, var(--wp-navy) 6%, var(--n-0));
+
+  /* ---- Brand gradients (used sparingly, at low intensity) ---- */
+  --grad-brand:  linear-gradient(120deg, var(--wp-blue), var(--wp-cyan) 42%, var(--wp-green) 78%, var(--wp-mint));
+  --grad-cool:   linear-gradient(120deg, var(--wp-blue), var(--wp-cyan));
+  --grad-warmup: linear-gradient(120deg, var(--wp-green), var(--wp-mint));
+  --grad-hairline: linear-gradient(90deg,
+      transparent,
+      color-mix(in srgb, var(--wp-blue) 42%, transparent) 22%,
+      color-mix(in srgb, var(--wp-green) 42%, transparent) 68%,
+      transparent);
+  /* Whole-page ambient wash — extremely light, no color slabs */
+  --wash:
+    radial-gradient(1100px 620px at 8% -8%,  color-mix(in srgb, var(--wp-blue) 8%, transparent), transparent 62%),
+    radial-gradient(920px 560px at 96% 4%,   color-mix(in srgb, var(--wp-green) 7%, transparent), transparent 60%),
+    radial-gradient(880px 700px at 52% 108%, color-mix(in srgb, var(--wp-cyan) 6%, transparent), transparent 64%);
+
+  /* ---- Elevation: soft, navy-tinted, Apple-like ---- */
+  --shadow-xs: 0 1px 2px color-mix(in srgb, var(--wp-navy) 6%, transparent);
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--wp-navy) 5%, transparent),
+               0 2px 8px color-mix(in srgb, var(--wp-navy) 5%, transparent);
+  --shadow-md: 0 2px 4px color-mix(in srgb, var(--wp-navy) 5%, transparent),
+               0 8px 24px color-mix(in srgb, var(--wp-navy) 8%, transparent);
+  --shadow-lg: 0 4px 8px color-mix(in srgb, var(--wp-navy) 5%, transparent),
+               0 18px 48px color-mix(in srgb, var(--wp-navy) 12%, transparent);
+  --shadow-xl: 0 8px 16px color-mix(in srgb, var(--wp-navy) 6%, transparent),
+               0 32px 80px color-mix(in srgb, var(--wp-navy) 16%, transparent);
+  --ring: 0 0 0 3px color-mix(in srgb, var(--wp-blue) 26%, transparent);
+  --ring-good: 0 0 0 3px color-mix(in srgb, var(--wp-green) 26%, transparent);
+
+  /* ---- Radii — Apple's continuous-corner feel ---- */
+  --r-xs: 6px;
+  --r-sm: 9px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-2xl: 28px;
+  --r-pill: 999px;
+
+  /* ---- Spacing scale ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px;
+  --s-9: 48px; --s-10: 64px;
+
+  /* ---- Typography: Apple system stack, Inter as the cross-platform twin ---- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "Inter var", Inter, "Helvetica Neue", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, "JetBrains Mono",
+               "Roboto Mono", Menlo, Consolas, monospace;
+
+  --fs-11: 0.6875rem; --fs-12: 0.75rem;  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;  --fs-15: 0.9375rem; --fs-16: 1rem;
+  --fs-18: 1.125rem;  --fs-20: 1.25rem;  --fs-24: 1.5rem;
+  --fs-30: 1.875rem;  --fs-38: 2.375rem; --fs-48: 3rem;
+
+  --lh-tight: 1.15; --lh-snug: 1.3; --lh-normal: 1.5; --lh-loose: 1.65;
+  /* Apple tightens tracking as type grows */
+  --tr-display: -0.028em;
+  --tr-title:   -0.021em;
+  --tr-body:    -0.011em;
+  --tr-caps:     0.06em;
+
+  /* ---- Motion ---- */
+  --ease-out:    cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 140ms;
+  --t-base: 220ms;
+  --t-slow: 380ms;
+  --t-page: 460ms;
+
+  /* ---- Layout metrics ---- */
+  --rail-w: 264px;
+  --rail-w-collapsed: 76px;
+  --topbar-h: 64px;
+  --content-max: 1560px;
+  --z-rail: 60; --z-topbar: 70; --z-drawer: 90; --z-modal: 100; --z-toast: 110; --z-palette: 120;
+}
+
+/* ==========================================================================
+   Dark theme — the same brand hues, dimmed and desaturated for night use
+   ========================================================================== */
+:root[data-theme="dark"] {
+  --bg:            #0B1220;
+  --bg-elevated:   #111A2B;
+  --bg-sunken:     #080E19;
+  --bg-rail:       #0D1424;
+  --surface:       #111A2B;
+  --surface-2:     #151F33;
+  --surface-hover: color-mix(in srgb, var(--wp-blue) 12%, #111A2B);
+  --surface-active: color-mix(in srgb, var(--wp-blue) 18%, #111A2B);
+  --scrim:         rgba(3, 7, 15, 0.66);
+
+  --text:          #E8EDF7;
+  --text-strong:   #F5F8FF;
+  --text-muted:    #93A2BE;
+  --text-subtle:   #6B7B99;
+  --text-invert:   #0B1220;
+  --text-link:     #63C0FF;
+
+  --line:        rgba(150, 175, 220, 0.14);
+  --line-soft:   rgba(150, 175, 220, 0.08);
+  --line-strong: rgba(150, 175, 220, 0.24);
+
+  --accent-ink:    #6FC4FF;
+  --accent-tint:   color-mix(in srgb, var(--wp-blue) 16%, #111A2B);
+  --accent-tint-2: color-mix(in srgb, var(--wp-blue) 26%, #111A2B);
+
+  --good-ink:  #57DFA4;
+  --good-tint: color-mix(in srgb, var(--wp-green) 18%, #111A2B);
+  --info-ink:  #62D8F2;
+  --info-tint: color-mix(in srgb, var(--wp-cyan) 18%, #111A2B);
+  --warn:      #F0B429;
+  --warn-ink:  #F5CE68;
+  --warn-tint: color-mix(in srgb, #F0B429 16%, #111A2B);
+  --bad:       #FF6369;
+  --bad-ink:   #FF9498;
+  --bad-tint:  color-mix(in srgb, #FF6369 15%, #111A2B);
+  --neutral-tint: rgba(150, 175, 220, 0.08);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.34);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.32), 0 2px 8px rgba(0,0,0,.28);
+  --shadow-md: 0 2px 4px rgba(0,0,0,.30), 0 8px 24px rgba(0,0,0,.40);
+  --shadow-lg: 0 4px 8px rgba(0,0,0,.32), 0 18px 48px rgba(0,0,0,.48);
+  --shadow-xl: 0 8px 16px rgba(0,0,0,.34), 0 32px 80px rgba(0,0,0,.56);
+
+  --wash:
+    radial-gradient(1100px 620px at 8% -8%,  color-mix(in srgb, var(--wp-blue) 13%, transparent), transparent 62%),
+    radial-gradient(920px 560px at 96% 4%,   color-mix(in srgb, var(--wp-green) 10%, transparent), transparent 60%),
+    radial-gradient(880px 700px at 52% 108%, color-mix(in srgb, var(--wp-cyan) 9%, transparent), transparent 64%);
+}

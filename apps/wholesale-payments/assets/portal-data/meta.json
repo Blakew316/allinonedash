@@ -1,0 +1,1 @@
+{"v": 1, "kdf": "PBKDF2-SHA256", "iter": 100000, "salt": "bcb31bf01cd54f080e69f1c6a221fd0e", "idHex": 24, "count": 32255, "shards": 256}
