@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Offline · WPI University</title>
+<meta name="description" content="You are offline.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="dashboard">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap" style="max-width:640px">
+  <div class="empty" style="padding-top:14vh">
+    <span data-mark="40"></span>
+    <h1 class="h1" style="margin-top:22px">You're offline</h1>
+    <p class="lede" style="max-width:44ch">
+      This page hasn't been saved to your device. Courses you downloaded are still
+      available — everything else needs a connection.
+    </p>
+    <div class="row" style="margin-top:26px;flex-wrap:wrap;justify-content:center">
+      <a class="btn btn-primary" href="training.html">Downloaded courses</a>
+      <button class="btn btn-secondary" onclick="location.reload()">Try again</button>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/media.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

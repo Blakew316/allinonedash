@@ -1,0 +1,44 @@
+name: Merchant Processing Alerts
+
+on:
+  schedule:
+    - cron: '0 13 * * *' # 8:00 AM Central (30 min after data sync)
+  workflow_dispatch: {}   # Manual trigger from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: scripts
+        run: npm ci
+
+      - name: Check merchants and send alerts
+        run: node scripts/merchant-alerts.js
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+
+      - name: Commit tracking updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/merchant-tracking.json
+          if git diff --staged --quiet; then
+            echo "No tracking changes"
+          else
+            git commit -m "chore: update merchant tracking state $(date -u +'%Y-%m-%d')"
+            git push
+          fi

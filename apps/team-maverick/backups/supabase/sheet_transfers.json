@@ -1,0 +1,767 @@
+[
+  {
+    "id": 254,
+    "row_number": 1,
+    "row_data": {
+      "DATE": "3/23/26",
+      "NAME": "Amit Vyas",
+      "EMAIL": "amit_vyas71@yahoo.com",
+      "NUMBER": "(835) 245-9243",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": "interested in salary only"
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 255,
+    "row_number": 2,
+    "row_data": {
+      "DATE": "3/23/26",
+      "NAME": "Stacy Louis",
+      "EMAIL": "sclouis9375@yahoo.com",
+      "NUMBER": "(678)-656-1078",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "SUMMER B.",
+      "FOLLOW UP NOTES": "Ready to go. Sent docs"
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 256,
+    "row_number": 3,
+    "row_data": {
+      "DATE": "3/23/26",
+      "NAME": "Joshua Chase",
+      "EMAIL": "not on indeed",
+      "NUMBER": "859 551 1470",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 257,
+    "row_number": 4,
+    "row_data": {
+      "DATE": "3/24/26",
+      "NAME": "Jesse Atkinson",
+      "EMAIL": "dynacoconsulting@gmail.com",
+      "NUMBER": "(281) 384-2694",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": "Ready to go. Sent docs"
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 258,
+    "row_number": 5,
+    "row_data": {
+      "DATE": "3/24/26",
+      "NAME": "Kathleen Grosser-Trahan",
+      "EMAIL": "Kzookjun58@icloud.com",
+      "NUMBER": "(504) 400-2142",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 259,
+    "row_number": 6,
+    "row_data": {
+      "DATE": "3/25/26",
+      "NAME": "Bassem Ghonie",
+      "EMAIL": "bassemghoniem@gmail.com",
+      "NUMBER": "(201) 887-3273",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 260,
+    "row_number": 7,
+    "row_data": {
+      "DATE": "3/25/26",
+      "NAME": "Ryan Lasley",
+      "EMAIL": "not on indeed",
+      "NUMBER": "502 953 7150",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 261,
+    "row_number": 8,
+    "row_data": {
+      "DATE": "3/31/26",
+      "NAME": "Jose D. Gonzalez",
+      "EMAIL": "josedgonzalez2502@gmail.com",
+      "NUMBER": "(856) 776-3833",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": "ready to go. sent docs"
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 262,
+    "row_number": 9,
+    "row_data": {
+      "DATE": "3/31/26",
+      "NAME": "Christopher Foxx",
+      "EMAIL": "foxxcj117@gmail.com",
+      "NUMBER": "607-760-0686",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "DEJA E.",
+      "FOLLOW UP NOTES": "ready to go. sent docs"
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 263,
+    "row_number": 10,
+    "row_data": {
+      "DATE": "4/1/26",
+      "NAME": "VIRIDIANA INIGUEZ",
+      "EMAIL": "viridianainiguez@yahoo.com",
+      "NUMBER": "(310) 714-5240",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 264,
+    "row_number": 11,
+    "row_data": {
+      "DATE": "4/6/26",
+      "NAME": "Andrew Haley",
+      "EMAIL": "ahaley2469@gmail.com",
+      "NUMBER": "(781) 724-7451",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 265,
+    "row_number": 12,
+    "row_data": {
+      "DATE": "4/7/26",
+      "NAME": "Tim VanSkiver",
+      "EMAIL": "vanskivert@gmail.com",
+      "NUMBER": "(616) 560-6356",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 266,
+    "row_number": 13,
+    "row_data": {
+      "DATE": "4/8/26",
+      "NAME": "Manny Roldan",
+      "EMAIL": "manny.roldan28@gmail.com",
+      "NUMBER": "(513)-479-7374",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "SUMMER B.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 267,
+    "row_number": 14,
+    "row_data": {
+      "DATE": "4/13/26",
+      "NAME": "Ronnie\tStarlings",
+      "EMAIL": "rstarlings@yshoo.com",
+      "NUMBER": "(772) 618-5010",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 268,
+    "row_number": 15,
+    "row_data": {
+      "DATE": "4/13/26",
+      "NAME": "Ashmad Session",
+      "EMAIL": "sessionashmad575@gmail.com",
+      "NUMBER": "(806) 802-8321",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 269,
+    "row_number": 16,
+    "row_data": {
+      "DATE": "4/14/26",
+      "NAME": "Jasmine Clark",
+      "EMAIL": "clarkjasmine69@yahoo.com",
+      "NUMBER": "(985) 516-9130",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 270,
+    "row_number": 17,
+    "row_data": {
+      "DATE": "4/14/26",
+      "NAME": "Dustin\tFinley",
+      "EMAIL": "nativednf@gmail.com",
+      "NUMBER": "(509)-690-7576",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 271,
+    "row_number": 18,
+    "row_data": {
+      "DATE": "4/15/26",
+      "NAME": "Michael Rasgorshek",
+      "EMAIL": "Nobodywinns@gmail.com",
+      "NUMBER": "(480) 913-9016",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 272,
+    "row_number": 19,
+    "row_data": {
+      "DATE": "4/15/26",
+      "NAME": "Abbey Weksler",
+      "EMAIL": "AbbeyWeksler@gmail.com",
+      "NUMBER": "(678) 870-5593",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 273,
+    "row_number": 20,
+    "row_data": {
+      "DATE": "4/20/26",
+      "NAME": "Myreon Williams",
+      "EMAIL": "myreon7788@gmail.com",
+      "NUMBER": "(214) 226-4752",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 274,
+    "row_number": 21,
+    "row_data": {
+      "DATE": "4/21/26",
+      "NAME": "Charles  Matthews",
+      "EMAIL": "rodneycmatt@gmail.com",
+      "NUMBER": "(334) 318-3236",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 275,
+    "row_number": 22,
+    "row_data": {
+      "DATE": "4/21/26",
+      "NAME": "Steven Forsyth",
+      "EMAIL": "Not on Indeed",
+      "NUMBER": "(706) 402-2154",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 276,
+    "row_number": 23,
+    "row_data": {
+      "DATE": "4/22/26",
+      "NAME": "Kali\tMckibben",
+      "EMAIL": "kalimckibben@gmail.com",
+      "NUMBER": "404-414-7748",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 277,
+    "row_number": 24,
+    "row_data": {
+      "DATE": "4/27/26",
+      "NAME": "Charles Tarsky",
+      "EMAIL": "Not on Indeed",
+      "NUMBER": "615 476 1129",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 278,
+    "row_number": 25,
+    "row_data": {
+      "DATE": "4/28/26",
+      "NAME": "Randy\tBunton",
+      "EMAIL": "rabunton61@gmail.com",
+      "NUMBER": "(430)-200-9133",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MADDISON S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 279,
+    "row_number": 26,
+    "row_data": {
+      "DATE": "4/28/26",
+      "NAME": "Hermela Tesfaye",
+      "EMAIL": "hermelat94@gmail.com",
+      "NUMBER": "469-939-9937",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "SUMMER B.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 280,
+    "row_number": 27,
+    "row_data": {
+      "DATE": "5/11/26",
+      "NAME": "Rashad Zayed",
+      "EMAIL": "rzayed@gmail.com",
+      "NUMBER": "(630) 478-6767",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 281,
+    "row_number": 28,
+    "row_data": {
+      "DATE": "5/12/26",
+      "NAME": "Dylan Cruze",
+      "EMAIL": "cruze.dylan@yahoo.com",
+      "NUMBER": "(478) 397-2224",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 282,
+    "row_number": 29,
+    "row_data": {
+      "DATE": "5/19/26",
+      "NAME": "DeAndre Jefferson",
+      "EMAIL": "productsthathelp19@gmail.com",
+      "NUMBER": "(504) 965-0655",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 283,
+    "row_number": 30,
+    "row_data": {
+      "DATE": "5/20/26",
+      "NAME": "Jeremy Stephens",
+      "EMAIL": "jstephens3382@gmail.com",
+      "NUMBER": "(678)-372-3521",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 284,
+    "row_number": 31,
+    "row_data": {
+      "DATE": "5/20/26",
+      "NAME": "Ryan Murphy",
+      "EMAIL": "ryanmurphyofficial@gmail.com",
+      "NUMBER": "310-997-5479",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "DEJA E.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 285,
+    "row_number": 32,
+    "row_data": {
+      "DATE": "5/26/26",
+      "NAME": "Grayson Burt",
+      "EMAIL": "stn205@gmail.com",
+      "NUMBER": "(929) 277-7035",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 286,
+    "row_number": 33,
+    "row_data": {
+      "DATE": "5/27/26",
+      "NAME": "Timothy Constenius",
+      "EMAIL": "not on indeed",
+      "NUMBER": "406 885 2568",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 287,
+    "row_number": 34,
+    "row_data": {
+      "DATE": "5/27/26",
+      "NAME": "Caleb Alexander",
+      "EMAIL": "not on indeed",
+      "NUMBER": "337 450 8700",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 288,
+    "row_number": 35,
+    "row_data": {
+      "DATE": "6/1/26",
+      "NAME": "Biannel Vidal",
+      "EMAIL": "not on indeed",
+      "NUMBER": "929 398 9899",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "SUMMER B.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 289,
+    "row_number": 36,
+    "row_data": {
+      "DATE": "6/1/26",
+      "NAME": "Kendell Ogilvie",
+      "EMAIL": "kenogilvie4@gmail.com",
+      "NUMBER": "516-469-0983",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 290,
+    "row_number": 37,
+    "row_data": {
+      "DATE": "6/2/26",
+      "NAME": "Jason McAuliff",
+      "EMAIL": "jmcauliff@desertpeakenterprises.com",
+      "NUMBER": "(602) 488-3098",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 291,
+    "row_number": 38,
+    "row_data": {
+      "DATE": "6/2/26",
+      "NAME": "Michael Colina",
+      "EMAIL": "mjlcolina@gmail.com",
+      "NUMBER": "812 592 9412",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 292,
+    "row_number": 39,
+    "row_data": {
+      "DATE": "6/3/26",
+      "NAME": "Teddy Cloyd",
+      "EMAIL": "tnc_motors@yahoo.com",
+      "NUMBER": "217-597-8575",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "SUMMER B.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 293,
+    "row_number": 40,
+    "row_data": {
+      "DATE": "6/3/26",
+      "NAME": "Ryan Shindler",
+      "EMAIL": "not on indeed - az",
+      "NUMBER": "717 873 5781",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "DEJA E.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 294,
+    "row_number": 41,
+    "row_data": {
+      "DATE": "6/8/26",
+      "NAME": "CANDICE RINGO",
+      "EMAIL": "Candicecoggin35@gmail.com",
+      "NUMBER": "765 823 8267",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 295,
+    "row_number": 42,
+    "row_data": {
+      "DATE": "6/8/26",
+      "NAME": "James McLaney",
+      "EMAIL": "not on indeed",
+      "NUMBER": "770 572 6152",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 296,
+    "row_number": 43,
+    "row_data": {
+      "DATE": "6/9/26",
+      "NAME": "Hugo Bustillo",
+      "EMAIL": "hugobustillojr@gmail.com",
+      "NUMBER": "(240) 970-0143",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 297,
+    "row_number": 44,
+    "row_data": {
+      "DATE": "6/9/26",
+      "NAME": "Joe Lowden",
+      "EMAIL": "josephlowden@hotmail.com",
+      "NUMBER": "517 937 4401",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 298,
+    "row_number": 45,
+    "row_data": {
+      "DATE": "6/10/26",
+      "NAME": "Glen Byers",
+      "EMAIL": "Not Provided",
+      "NUMBER": "614-397-0646",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 299,
+    "row_number": 46,
+    "row_data": {
+      "DATE": "6/10/26",
+      "NAME": "chasity Meachem",
+      "EMAIL": "jacam1999@gmail.com",
+      "NUMBER": "2144494808",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "CAMERON H.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 300,
+    "row_number": 47,
+    "row_data": {
+      "DATE": "6/15/26",
+      "NAME": "Jeffrey Bryan",
+      "EMAIL": "jeffbryan7@gmail.com",
+      "NUMBER": "(240) 698-8474",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MIKAYLA S.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 301,
+    "row_number": 48,
+    "row_data": {
+      "DATE": "6/16/26",
+      "NAME": "Victoria Anderson",
+      "EMAIL": "Not on Indeed",
+      "NUMBER": "(779) 262-5635",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "MICKINZIE P.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 302,
+    "row_number": 49,
+    "row_data": {
+      "DATE": "6/17/26",
+      "NAME": "Devin Vaughan",
+      "EMAIL": "devinwv@optonline.net",
+      "NUMBER": "6314387410",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "IRES R.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 303,
+    "row_number": 50,
+    "row_data": {
+      "DATE": "6/17/26",
+      "NAME": "Evan Kwan",
+      "EMAIL": "evankwan9@gmail.com",
+      "NUMBER": "484-832-5182",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  },
+  {
+    "id": 304,
+    "row_number": 51,
+    "row_data": {
+      "DATE": "6/22/26",
+      "NAME": "Ryan Maletta",
+      "EMAIL": "RMCast54@gmail.com",
+      "NUMBER": "862 282 3710",
+      "MANAGER": "BLAKE WOODRUFF",
+      "RECRUITER": "BONNIE J.",
+      "FOLLOW UP NOTES": ""
+    },
+    "synced_at": "2026-06-23T00:18:33.970255+00:00",
+    "notes": ""
+  }
+]

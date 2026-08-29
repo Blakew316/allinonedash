@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Course · WPI University</title>
+<meta name="description" content="Course detail, lesson list and progress.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="training">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<div id="courseRoot"></div>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/media.js"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+  var c = A.course(A.param('c')) || D.courses[0];
+  document.title = c.title + ' · WPI University';
+
+  /* Real watched progress, written by the lesson player. */
+  var watched = A.progress.course(c.slug);
+  var doneCount = A.progress.doneCount(c.slug);
+  var pct = c.lessons.length ? Math.round(doneCount / c.lessons.length * 100) : 0;
+
+  /* First lesson not yet finished — where "Resume" should land. */
+  var resumeAt = 0;
+  for (var n = 0; n < c.lessons.length; n++) {
+    if (!(watched[n] && watched[n].done)) { resumeAt = n; break; }
+    resumeAt = Math.min(n + 1, c.lessons.length - 1);
+  }
+  var mapped = c.lessons.filter(function (x, n) { return !!A.media(c.slug, n, x.t); }).length;
+
+  var siblings = D.courses.filter(function (x) { return x.track === c.track; });
+  var idx = siblings.indexOf(c);
+  var prev = siblings[idx - 1], next = siblings[idx + 1];
+
+  var kindIcon = { video: 'play', quiz: 'quiz', download: 'download', text: 'doc' };
+  var kindWord = { video: 'Video', quiz: 'Quiz', download: 'Resource' };
+
+  var lessonRows = c.lessons.map(function (l, i) {
+    var rec = watched[i] || {};
+    var current = i === resumeAt;
+    var has = !!A.media(c.slug, i, l.t);
+    return '<a class="lesson-row' + (rec.done ? ' done' : '') + '" href="lesson.html?c=' + c.slug + '&l=' + i + '">' +
+        '<span class="lesson-index">' + (rec.done ? '✓' : (i + 1)) + '</span>' +
+        '<span class="lesson-title truncate">' + esc(l.t) + '</span>' +
+        (current ? '<span class="chip chip-blue">Up next</span>' : '') +
+        (!has ? '<span class="chip" title="No video source mapped yet">No source</span>' : '') +
+        '<span class="chip">' + kindWord[l.k] + '</span>' +
+        '<span class="tiny faint numeric" style="width:52px;text-align:right">' + l.m + ' min</span>' +
+        '<span class="tiny faint" data-icon="chevron" style="display:inline-flex;width:14px;opacity:.5"></span>' +
+      '</a>';
+  }).join('');
+
+  var kinds = c.lessons.reduce(function (m, l) { m[l.k] = (m[l.k] || 0) + 1; return m; }, {});
+  var kindChips = Object.keys(kinds).map(function (k) {
+    return '<span class="chip">' + App.icon(kindIcon[k]) + kinds[k] + ' ' + kindWord[k].toLowerCase() +
+           (kinds[k] === 1 ? '' : 's') + '</span>';
+  }).join('');
+
+  document.getElementById('courseRoot').innerHTML =
+    '<section class="hero gridlines" style="padding-block:32px 28px">' +
+      '<div class="wrap wrap-wide">' +
+        '<nav class="crumbs enter" aria-label="Breadcrumb">' +
+          '<a href="index.html">Dashboard</a><span data-icon="chevron"></span>' +
+          '<a href="training.html">Training</a><span data-icon="chevron"></span>' +
+          '<a href="training.html?track=' + encodeURIComponent(c.track) + '">' + esc(c.track) + '</a>' +
+          '<span data-icon="chevron"></span><span aria-current="page">' + esc(c.title) + '</span>' +
+        '</nav>' +
+        '<div class="row-between" style="margin-top:22px;align-items:flex-start;gap:32px">' +
+          '<div class="enter" style="--enter-delay:60ms;max-width:660px">' +
+            '<div class="row gap-sm">' +
+              '<span class="tile tile-' + A.trackTile(c.track) + ' tile-lg" data-icon="' + A.trackIcon(c.track) + '"></span>' +
+              '<div><div class="eyebrow">' + esc(c.track) + '</div>' +
+              '<div class="tiny faint" style="margin-top:2px">' + esc(c.level) + '</div></div>' +
+            '</div>' +
+            '<h1 class="h1" style="margin-top:18px">' + esc(c.title) + '</h1>' +
+            '<p class="lede" style="margin-top:14px">' + esc(c.blurb) + '</p>' +
+            '<div class="row gap-sm" style="margin-top:20px;flex-wrap:wrap">' + kindChips +
+              '<span class="chip">' + App.icon('clock') + A.fmtMinutes(c.minutes) + '</span>' +
+              '<span class="chip">' + App.icon('users') + c.enrolled + ' enrolled</span>' +
+            '</div>' +
+            '<div class="row" style="margin-top:26px;flex-wrap:wrap">' +
+              '<a class="btn btn-primary btn-lg" href="lesson.html?c=' + c.slug + '&l=' + resumeAt + '">' +
+                (doneCount ? 'Resume lesson ' + (resumeAt + 1) : 'Start course') + '</a>' +
+              '<button class="btn btn-secondary btn-lg" data-assign>Assign to a team</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card enter" style="--enter-delay:140ms;min-width:250px;flex:0 0 auto">' +
+            '<div class="row" style="gap:16px">' +
+              A.ring(pct, 78, 7) +
+              '<div>' +
+                '<div class="h4">Your progress</div>' +
+                '<div class="small muted">' + doneCount + ' of ' + c.lessons.length + ' lessons</div>' +
+              '</div>' +
+            '</div>' +
+            '<hr class="hairline" style="margin:18px 0">' +
+            '<div class="col" style="gap:10px">' +
+              '<div class="row-between small"><span class="muted">Team completion</span>' +
+                '<span class="strong numeric">' + c.completion + '%</span></div>' +
+              '<div class="bar"><i data-grow="' + c.completion + '"></i></div>' +
+              '<div class="tiny faint">' + Math.round(c.enrolled * c.completion / 100) +
+                ' of ' + c.enrolled + ' assigned reps have finished.</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</section>' +
+
+    '<section class="wrap wrap-wide section-tight">' +
+      '<div class="grid" style="grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);align-items:start">' +
+        '<div class="panel" data-reveal>' +
+          '<div class="panel-head">' +
+            '<span class="tile tile-blue" data-icon="layers"></span>' +
+            '<div><div class="h4">Lessons</div>' +
+              '<div class="tiny faint">' + c.lessons.length + ' lessons · ' + A.fmtMinutes(c.minutes) +
+                ' · ' + mapped + ' with video</div></div>' +
+            '<span class="spacer"></span>' +
+            '<span class="chip chip-green">' + pct + '% complete</span>' +
+          '</div>' +
+          '<div class="panel-body panel-body-flush">' + lessonRows + '</div>' +
+        '</div>' +
+
+        '<div class="col gap-lg" data-reveal style="--reveal-delay:120ms">' +
+          '<div class="card">' +
+            '<div class="h4">What a rep walks away with</div>' +
+            '<ul class="col" style="gap:10px;margin-top:14px">' +
+              c.lessons.slice(0, 5).map(function (l) {
+                return '<li class="row small" style="align-items:flex-start;gap:10px">' +
+                  '<span class="pi-icon green" style="width:20px;height:20px;border-radius:6px;flex:none">' +
+                    App.icon('check') + '</span>' +
+                  '<span class="muted">' + esc(l.t) + '</span></li>';
+              }).join('') +
+            '</ul>' +
+          '</div>' +
+          '<div class="card" id="offlineCard"></div>' +
+          '<div class="card">' +
+            '<div class="h4">Assigned to</div>' +
+            '<div class="col" style="gap:12px;margin-top:14px">' +
+              D.teams.slice(3, 7).map(function (t, i) {
+                var p = [88, 64, 41, 73][i];
+                return '<div><div class="row-between tiny"><span class="muted">' + esc(t) + '</span>' +
+                  '<span class="strong numeric">' + p + '%</span></div>' +
+                  '<div class="bar thin" style="margin-top:6px"><i data-grow="' + p + '"></i></div></div>';
+              }).join('') +
+            '</div>' +
+            '<a class="btn btn-ghost btn-sm w-full" href="teams.html" style="margin-top:16px">All sales teams →</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="row-between" style="margin-top:34px;gap:16px" data-reveal>' +
+        (prev ? '<a class="card card-hover" href="course.html?c=' + prev.slug + '" style="flex:1 1 260px">' +
+            '<div class="tiny faint">← Previous</div>' +
+            '<div class="h4 clamp-2" style="margin-top:6px">' + esc(prev.title) + '</div></a>' : '<span style="flex:1"></span>') +
+        (next ? '<a class="card card-hover text-right" href="course.html?c=' + next.slug + '" style="flex:1 1 260px">' +
+            '<div class="tiny faint">Next →</div>' +
+            '<div class="h4 clamp-2" style="margin-top:6px">' + esc(next.title) + '</div></a>' : '<span style="flex:1"></span>') +
+      '</div>' +
+    '</section>';
+
+  /* ---------------------------------------------------------- offline */
+
+  var sources = A.courseSources(c);
+  var embedOnly = c.lessons.filter(function (l, n) {
+    var e = A.media(c.slug, n, l.t);
+    return e && !A.isCacheable(e);
+  }).length;
+
+  var card = document.getElementById('offlineCard');
+
+  function estimateBytes() {
+    /* Roughly 0.9 MB per minute at the bitrate these lessons are encoded at.
+       Only ever shown as an approximation. */
+    var secs = 0;
+    c.lessons.forEach(function (l, n) {
+      var e = A.media(c.slug, n, l.t);
+      if (A.isCacheable(e)) secs += (e && e.duration) || l.m * 60;
+    });
+    return secs / 60 * 0.9 * 1048576;
+  }
+
+  function renderOffline(state) {
+    if (!A.offline.supported) {
+      card.innerHTML = '<div class="h4">Offline</div>' +
+        '<p class="small muted" style="margin-top:8px">This browser cannot store lessons for offline use.</p>';
+      return;
+    }
+    if (!sources.length) {
+      card.innerHTML = '<div class="row" style="align-items:flex-start;gap:12px">' +
+          '<span class="pi-icon" data-icon="download"></span>' +
+          '<div><div class="h4">Not available offline</div>' +
+          '<p class="small muted" style="margin-top:5px">' +
+            (embedOnly
+              ? 'These lessons stream from Vimeo, which needs a connection every time. ' +
+                'Self-host the files to make them downloadable.'
+              : 'No video sources are mapped for this course yet.') +
+          '</p></div></div>';
+      A.refresh();
+      return;
+    }
+
+    var have = state.have || 0;
+    var all = have === sources.length;
+    card.innerHTML = '<div class="row-between" style="align-items:flex-start">' +
+        '<div class="row gap-sm">' +
+          '<span class="pi-icon ' + (all ? 'green' : '') + '" data-icon="' + (all ? 'check' : 'download') + '"></span>' +
+          '<div><div class="h4">' + (all ? 'Saved offline' : 'Watch offline') + '</div>' +
+          '<div class="tiny faint">' + have + ' of ' + sources.length + ' lessons stored</div></div>' +
+        '</div>' +
+      '</div>' +
+      (state.busy
+        ? '<div class="bar" style="margin-top:16px"><i style="width:' +
+            Math.round((state.done || 0) / sources.length * 100) + '%"></i></div>' +
+          '<div class="tiny faint" style="margin-top:8px">Downloading ' +
+            (state.done || 0) + ' of ' + sources.length + ' · ' + A.fmtBytes(state.bytes || 0) + '</div>'
+        : '<p class="small muted" style="margin-top:12px">' +
+            (all
+              ? 'Every downloadable lesson in this course plays with no connection.'
+              : 'Keep this course on your device — roughly ' + A.fmtBytes(estimateBytes()) + '.') +
+          '</p>' +
+          (embedOnly ? '<p class="tiny faint" style="margin-top:6px">' + embedOnly +
+            ' lesson' + (embedOnly === 1 ? '' : 's') + ' stream from Vimeo and stay online-only.</p>' : '') +
+          '<div class="row gap-sm" style="margin-top:14px">' +
+            (all
+              ? '<button class="btn btn-secondary btn-sm w-full" data-offline-remove>Remove download</button>'
+              : '<button class="btn btn-primary btn-sm w-full" data-offline-get>Download course</button>') +
+          '</div>');
+    A.refresh();
+  }
+
+  function syncOffline() {
+    A.offline.cached().then(function (urls) {
+      var set = {};
+      urls.forEach(function (u) { set[u] = true; });
+      renderOffline({ have: sources.filter(function (u) { return set[u]; }).length });
+    });
+  }
+  syncOffline();
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-assign]')) {
+      A.toast('Course assigned to 4 sales teams', 'check');
+      return;
+    }
+    if (e.target.closest('[data-offline-get]')) {
+      renderOffline({ busy: true, done: 0, bytes: 0 });
+      A.offline.persist();
+      A.offline.download(sources, function (p) {
+        renderOffline({ busy: true, done: p.done, bytes: p.bytes });
+      }).then(function (r) {
+        syncOffline();
+        A.toast(r.failed && r.failed.length
+          ? (r.total - r.failed.length) + ' of ' + r.total + ' lessons saved'
+          : 'Course saved for offline viewing');
+      }).catch(function (err) {
+        syncOffline();
+        A.toast(err.message || 'Download failed');
+      });
+      return;
+    }
+    if (e.target.closest('[data-offline-remove]')) {
+      A.offline.remove(sources).then(function () {
+        setTimeout(function () { syncOffline(); A.toast('Download removed'); }, 250);
+      });
+    }
+  });
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

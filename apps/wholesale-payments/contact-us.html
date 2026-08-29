@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Contact Us — Wholesale Payments</title>
+  <meta name="description" content="Reach out to save your business money. Call (806) 698-0625 or send us a note — a local Wholesale Payments specialist will follow up with a free savings estimate." />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Wholesale Payments home">
+        <img src="assets/logo.png" alt="Wholesale Payments" />
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="about.html">About</a>
+        <a href="processing-solutions.html">Solutions</a>
+        <a href="wholesale-advantage.html">Wholesale Advantage</a>
+        <a href="products.html">Equipment &amp; Technology</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact-us.html" aria-current="page">Contact</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="tel:+18066980625" class="nav__phone">(806)&nbsp;698-0625</a>
+        <a href="#form" class="btn btn--small">Talk to us today</a>
+      </div>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="nav__mobile" id="navMobile" aria-label="Mobile">
+      <a href="about.html">About</a>
+      <a href="processing-solutions.html">Solutions</a>
+      <a href="wholesale-advantage.html">Wholesale Advantage</a>
+      <a href="products.html">Equipment &amp; Technology</a>
+      <a href="careers.html">Careers</a>
+      <a href="contact-us.html" aria-current="page">Contact</a>
+      <a href="#form" class="btn">Talk to us today</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Page hero -->
+    <section class="page-hero">
+      <p class="kicker reveal">Contact Us</p>
+      <h1 class="reveal" style="--d:.08s"><span class="grad">Reach out to save</span><br />your business money.</h1>
+      <p class="reveal" style="--d:.16s">We're all about no fees, local reps, high-end tech, and one-stop shopping. Say yes to personalized payment processing services!</p>
+    </section>
+
+    <!-- Form -->
+    <section class="cta" id="form" style="padding-top:36px">
+      <div class="wrap">
+        <div class="cta__card reveal">
+          <h2>Tell us about your business.</h2>
+          <p class="cta__lead">A local specialist will follow up with a free, no-pressure savings estimate.</p>
+
+          <form class="cta__form" id="quoteForm" novalidate>
+            <div class="field">
+              <input type="text" id="name" name="name" placeholder=" " required autocomplete="name" />
+              <label for="name">Full name</label>
+            </div>
+            <div class="field">
+              <input type="text" id="business" name="business" placeholder=" " required autocomplete="organization" />
+              <label for="business">Business name</label>
+            </div>
+            <div class="field">
+              <input type="email" id="email" name="email" placeholder=" " required autocomplete="email" />
+              <label for="email">Email address</label>
+            </div>
+            <div class="field">
+              <input type="tel" id="phone" name="phone" placeholder=" " required autocomplete="tel" />
+              <label for="phone">Phone number</label>
+            </div>
+            <div class="field field--full">
+              <textarea id="message" name="message" placeholder=" "></textarea>
+              <label for="message">How do you take payments today? (optional)</label>
+            </div>
+            <button type="submit" class="btn btn--lg">Talk to us today</button>
+            <p class="cta__formnote" id="formNote" role="status" hidden>Thanks! A local specialist will reach out shortly.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact details -->
+    <section class="content-section content-section--tint">
+      <div class="section__head reveal">
+        <p class="kicker">Direct lines</p>
+        <h2>Talk to a real person.</h2>
+        <p class="section__lead">Award-winning, 24/7 customer service and technical support.</p>
+      </div>
+      <div class="value-grid">
+        <article class="card reveal">
+          <h3>Call us</h3>
+          <p style="margin-top:10px"><a class="textlink" href="tel:+18066980625">Main line — (806) 698-0625</a></p>
+          <p style="margin-top:6px"><a class="textlink" href="tel:+18064514863">Customer service — (806) 451-4863</a></p>
+          <p style="margin-top:6px"><a class="textlink" href="tel:+18063000182">Technical support — (806) 300-0182</a></p>
+          <p style="margin-top:6px"><a class="textlink" href="tel:+18069055297">Terminal installation — (806) 905-5297</a></p>
+        </article>
+        <article class="card reveal" style="--d:.08s">
+          <h3>Headquarters</h3>
+          <p style="margin-top:10px">7602 University Ave<br />Lubbock, TX 79423</p>
+          <p style="margin-top:10px; color:var(--ink-3); font-size:0.9rem">Fax: 1-888-977-6410</p>
+        </article>
+        <article class="card reveal" style="--d:.16s">
+          <h3>Office locations</h3>
+          <p style="margin-top:10px">Lubbock, TX<br />Dallas, TX<br />Fort Worth, TX<br />San Antonio, TX</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="assets/logo.png" alt="Wholesale Payments" />
+        <p>No-fee payment processing, modern point-of-sale, and local support — helping businesses nationwide keep more of every sale since 2007.</p>
+        <a class="footer__rating" href="https://www.trustpilot.com/review/wholesalepayments.com" rel="noopener" target="_blank">
+          <span class="footer__stars" aria-hidden="true">★★★★★</span>
+          <span class="footer__rating-text"><strong>Excellent</strong> · Rated by merchants on Trustpilot</span>
+        </a>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <h4>Company</h4>
+          <a href="about.html">About</a>
+          <a href="processing-solutions.html">Processing Solutions</a>
+          <a href="wholesale-advantage.html">Wholesale Advantage</a>
+          <a href="products.html">Equipment &amp; Technology</a>
+          <a href="careers.html">Careers</a>
+          <a href="contact-us.html">Contact Us</a>
+        </div>
+        <div>
+          <h4>Office Locations</h4>
+          <span>Lubbock, TX</span>
+          <span>Dallas, TX</span>
+          <span>Fort Worth, TX</span>
+          <span>San Antonio, TX</span>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <a href="tel:+18066980625">Main: (806) 698-0625</a>
+          <a href="tel:+18064514863">Service: (806) 451-4863</a>
+          <a href="tel:+18063000182">Tech: (806) 300-0182</a>
+          <a href="tel:+18069055297">Installs: (806) 905-5297</a>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <a href="https://www.merchantoverview.com/v2" rel="noopener" target="_blank">Merchant Overview</a>
+          <a href="https://customerconnectwp.com/" rel="noopener" target="_blank">Customer Connect</a>
+          <a href="https://wholesalepayments.com/resource-bank" rel="noopener" target="_blank">Agent Portal</a>
+          <a href="merchant-portal.html">Merchant Portal</a>
+          <a href="https://www.trustpilot.com/review/wholesalepayments.com" rel="noopener" target="_blank">Trustpilot Reviews</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>© <span id="year">2026</span> Wholesale Payments, Inc. All rights reserved. · <a href="privacy-policy.html">Privacy Policy</a> · <a href="terms-and-conditions.html">Terms &amp; Conditions</a></p>
+      <p>The Credit Wholesale Company, Inc. is a registered Independent Sales Organization of Wells Fargo Bank, N.A., Concord, CA. and Merrick Bank, South Jordan, UT.</p>
+    </div>
+  </footer>
+
+
+  <!-- Live chat -->
+  <button class="chat-launcher" id="chatLauncher" aria-label="Open live chat" aria-expanded="false">
+    <svg class="chat-launcher__open" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3c5.2 0 9.4 3.5 9.4 7.9 0 4.3-4.2 7.8-9.4 7.8-.9 0-1.8-.1-2.6-.3l-4.5 2.2a.7.7 0 0 1-1-.8l.9-3.6C3 14.8 2.6 12.9 2.6 11 2.6 6.5 6.8 3 12 3Z"/></svg>
+    <svg class="chat-launcher__close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+
+  <section class="chat-panel" id="chatPanel" aria-label="Live chat" hidden>
+    <div class="chat-panel__head">
+      <img src="assets/logo.png" alt="Wholesale Payments" />
+      <p>We're offline right now. Leave us a message and a local specialist will follow up.</p>
+    </div>
+    <form class="chat-panel__form" id="chatForm" novalidate>
+      <div class="field">
+        <input type="text" id="chatName" name="name" placeholder=" " required autocomplete="name" />
+        <label for="chatName">Your name</label>
+      </div>
+      <div class="field">
+        <input type="email" id="chatEmail" name="email" placeholder=" " required autocomplete="email" />
+        <label for="chatEmail">Your email</label>
+      </div>
+      <div class="field">
+        <input type="tel" id="chatPhone" name="phone" placeholder=" " autocomplete="tel" />
+        <label for="chatPhone">Your phone</label>
+      </div>
+      <div class="field">
+        <input type="text" id="chatBusiness" name="business" placeholder=" " autocomplete="organization" />
+        <label for="chatBusiness">Business name or MID</label>
+      </div>
+      <div class="field field--select">
+        <select id="chatDept" name="department">
+          <option value="sales">Sales &amp; pricing</option>
+          <option value="support">Customer service</option>
+          <option value="tech">Technical support</option>
+          <option value="install">Terminal installation</option>
+        </select>
+      </div>
+      <div class="field">
+        <textarea id="chatQuestion" name="question" placeholder=" " required></textarea>
+        <label for="chatQuestion">Your question</label>
+      </div>
+      <button type="submit" class="btn btn--full">Send message</button>
+      <p class="chat-panel__note" id="chatNote" role="status" hidden>Thanks! We'll be in touch shortly.</p>
+    </form>
+  </section>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

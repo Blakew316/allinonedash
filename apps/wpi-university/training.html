@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Training · WPI University</title>
+<meta name="description" content="Thirty courses across certification, foundations, selling and tools.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="training">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a>
+      <span data-icon="chevron"></span>
+      <span aria-current="page">Training</span>
+    </nav>
+    <div class="row-between">
+      <div class="enter" style="--enter-delay:60ms">
+        <h1 class="h1">Training <span class="grad-text">catalog</span></h1>
+        <p class="lede" style="margin-top:8px;max-width:58ch">
+          Every course available to a Wholesale Payments rep, grouped by the track it belongs to.
+        </p>
+      </div>
+      <div class="row gap-sm enter" style="--enter-delay:120ms">
+        <a class="btn btn-secondary" href="reports.html">View reports</a>
+        <a class="btn btn-primary" href="course.html?c=wpi-rep-certification-program">Start certification</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- filters -->
+  <div class="card card-pad-sm enter" style="--enter-delay:180ms;margin-top:22px;position:sticky;top:calc(var(--nav-h) + 10px);z-index:30">
+    <div class="row-between toolbar-row" style="gap:12px">
+      <div class="search-field" style="flex:1 1 260px;max-width:380px">
+        <span data-icon="search"></span>
+        <input class="input" id="courseSearch" type="search" placeholder="Filter courses and lessons…" aria-label="Filter courses">
+      </div>
+      <div class="segmented" id="trackFilter" role="tablist" aria-label="Filter by track">
+        <button role="tab" data-track="" aria-selected="true">All</button>
+        <button role="tab" data-track="Certification" aria-selected="false">Certification</button>
+        <button role="tab" data-track="Foundations" aria-selected="false">Foundations</button>
+        <button role="tab" data-track="Selling" aria-selected="false">Selling</button>
+        <button role="tab" data-track="Tools" aria-selected="false">Tools</button>
+      </div>
+      <select class="select" id="courseSort" aria-label="Sort courses" style="width:auto;min-width:168px">
+        <option value="track">Sort by track</option>
+        <option value="title">Alphabetical</option>
+        <option value="length">Longest first</option>
+        <option value="enrolled">Most enrolled</option>
+      </select>
+    </div>
+  </div>
+
+  <p class="small faint" id="courseCount" style="margin-top:18px" aria-live="polite"></p>
+  <div id="courseResults" style="margin-top:14px;padding-bottom:24px"></div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+  var TRACKS = ['Certification', 'Foundations', 'Selling', 'Tools'];
+  var state = { q: '', track: A.param('track') || '', sort: 'track' };
+
+  function cardHTML(c) {
+    var lessonNames = c.lessons.slice(0, 3).map(function (l) { return l.t; }).join(' · ');
+    return '<a class="card card-accent" href="course.html?c=' + c.slug + '" data-reveal>' +
+        '<div class="row gap-sm">' +
+          '<span class="tile tile-' + A.trackTile(c.track) + '" data-icon="' + A.trackIcon(c.track) + '"></span>' +
+          '<span class="spacer"></span>' +
+          '<span class="chip">' + esc(c.track) + '</span>' +
+          (c.level === 'Required' ? '<span class="chip chip-navy">Required</span>' : '') +
+        '</div>' +
+        '<h3 class="h3 clamp-2" style="margin-top:14px">' + esc(c.title) + '</h3>' +
+        '<p class="small muted clamp-3" style="margin-top:9px">' + esc(c.blurb) + '</p>' +
+        '<p class="tiny faint clamp-2" style="margin-top:10px">' + esc(lessonNames) +
+          (c.lessons.length > 3 ? ' · +' + (c.lessons.length - 3) + ' more' : '') + '</p>' +
+        '<div class="card-foot">' +
+          '<hr class="hairline" style="margin-bottom:12px">' +
+          '<div class="row-between tiny faint">' +
+            '<span>' + c.lessons.length + ' lessons</span>' +
+            '<span>' + A.fmtMinutes(c.minutes) + '</span>' +
+            '<span>' + c.enrolled + ' enrolled</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function matches(c, q) {
+    if (!q) return true;
+    if (c.title.toLowerCase().indexOf(q) >= 0) return true;
+    if (c.blurb.toLowerCase().indexOf(q) >= 0) return true;
+    return c.lessons.some(function (l) { return l.t.toLowerCase().indexOf(q) >= 0; });
+  }
+
+  function render() {
+    var q = state.q.trim().toLowerCase();
+    var list = D.courses.filter(function (c) {
+      return (!state.track || c.track === state.track) && matches(c, q);
+    });
+
+    if (state.sort === 'title')    list = list.slice().sort(function (a, b) { return a.title.localeCompare(b.title); });
+    if (state.sort === 'length')   list = list.slice().sort(function (a, b) { return b.lessons.length - a.lessons.length; });
+    if (state.sort === 'enrolled') list = list.slice().sort(function (a, b) { return b.enrolled - a.enrolled; });
+
+    var lessonTotal = list.reduce(function (a, c) { return a + c.lessons.length; }, 0);
+    document.getElementById('courseCount').textContent =
+      list.length + (list.length === 1 ? ' course' : ' courses') + ' · ' + lessonTotal + ' lessons' +
+      (q ? ' matching “' + state.q.trim() + '”' : '');
+
+    var box = document.getElementById('courseResults');
+
+    if (!list.length) {
+      box.innerHTML = '<div class="empty card card-flat">' +
+        '<span class="tile tile-blue" data-icon="search"></span>' +
+        '<div class="h3">No courses match that</div>' +
+        '<p class="small muted">Try a shorter search, or clear the track filter.</p>' +
+        '<button class="btn btn-secondary btn-sm" onclick="document.getElementById(\'courseSearch\').value=\'\';' +
+          'document.getElementById(\'courseSearch\').dispatchEvent(new Event(\'input\'))">Clear search</button>' +
+      '</div>';
+      A.refresh();
+      return;
+    }
+
+    if (state.sort === 'track' && !state.track) {
+      box.innerHTML = TRACKS.map(function (t) {
+        var group = list.filter(function (c) { return c.track === t; });
+        if (!group.length) return '';
+        return '<section style="margin-bottom:38px">' +
+            '<div class="row gap-sm" data-reveal style="margin-bottom:14px">' +
+              '<span class="dot dot-' + ({ Certification: 'navy', Foundations: 'blue', Selling: 'green', Tools: 'mint' })[t] + '"></span>' +
+              '<h2 class="h3">' + esc(t) + '</h2>' +
+              '<span class="tiny faint">' + group.length + ' courses</span>' +
+            '</div>' +
+            '<div class="grid grid-cards" data-stagger="55">' + group.map(cardHTML).join('') + '</div>' +
+          '</section>';
+      }).join('');
+    } else {
+      box.innerHTML = '<div class="grid grid-cards" data-stagger="45">' + list.map(cardHTML).join('') + '</div>';
+    }
+    A.refresh();
+  }
+
+  var input = document.getElementById('courseSearch');
+  input.addEventListener('input', function () { state.q = input.value; render(); });
+
+  document.getElementById('trackFilter').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-track]');
+    if (!btn) return;
+    this.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', String(b === btn)); });
+    state.track = btn.getAttribute('data-track');
+    render();
+  });
+
+  document.getElementById('courseSort').addEventListener('change', function () {
+    state.sort = this.value; render();
+  });
+
+  if (state.track) {
+    document.querySelectorAll('#trackFilter button').forEach(function (b) {
+      b.setAttribute('aria-selected', String(b.getAttribute('data-track') === state.track));
+    });
+  }
+  render();
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

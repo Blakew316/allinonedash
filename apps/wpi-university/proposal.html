@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Proposal generator · WPI University</title>
+<meta name="description" content="Build a merchant savings proposal from their current statement.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="admin">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head no-print">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a><span data-icon="chevron"></span>
+      <a href="admin.html">Admin</a><span data-icon="chevron"></span>
+      <span aria-current="page">Proposal generator</span>
+    </nav>
+    <div class="row-between">
+      <div class="enter" style="--enter-delay:60ms">
+        <h1 class="h1">Proposal <span class="grad-text">generator</span></h1>
+      </div>
+      <div class="row gap-sm enter" style="--enter-delay:120ms">
+        <button class="btn btn-secondary" data-reset>Clear</button>
+        <button class="btn btn-primary" data-print>Print / save PDF</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:start;margin-top:22px;padding-bottom:32px;gap:24px">
+    <div class="col gap-lg no-print" id="proposalForm"></div>
+    <div id="proposalOutput"></div>
+  </div>
+</section>
+
+</main>
+<div id="shellFooter" class="no-print"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/interchange.js"></script>
+<script src="assets/js/pricing.js"></script>
+<script src="assets/js/quote.js"></script>
+<script>
+window.pageInit = function () {
+  var A = window.App, esc = A.esc, P = window.WPI_PRICING, Q = window.WPI_QUOTE;
+
+  var usd = function (n) {
+    return (n < 0 ? '-$' : '$') + Math.abs(n).toLocaleString('en-US',
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+  var usd0 = function (n) {
+    return (n < 0 ? '-$' : '$') + Math.abs(n).toLocaleString('en-US', { maximumFractionDigits: 0 });
+  };
+
+  var KEY = 'wpi-proposal';
+  var state;
+  try { state = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { state = null; }
+  state = state || {
+    merchant: '', contact: '', type: 'retail', model: 'icplus',
+    volume: 50000, txns: 900, actualCost: '',
+    currentFees: 1650, currentMonthly: 45,
+    adjustments: P.marginAdjustments.filter(function (m) { return m.on; }).map(function (m) { return m.id; })
+  };
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  /* ------------------------------------------------------------ the maths */
+  /* All of it lives in assets/js/quote.js, so the pricing screens and this
+     sheet can never disagree about what a merchant type costs. */
+  function compute() {
+    return Q.quote({
+      type: state.type,
+      model: state.model,
+      volume: Math.max(0, +state.volume || 0),
+      txns: Math.max(0, +state.txns || 0),
+      adjustments: state.adjustments,
+      actualCost: state.actualCost,
+      currentFees: Math.max(0, +state.currentFees || 0),
+      currentMonthly: Math.max(0, +state.currentMonthly || 0)
+    });
+  }
+
+  /* --------------------------------------------------------------- inputs */
+  function field(label, id, value, opts) {
+    opts = opts || {};
+    return '<div class="field">' +
+      '<label class="label" for="' + id + '">' + esc(label) + '</label>' +
+      '<input class="input" id="' + id + '" data-bind="' + id + '"' +
+        (opts.type ? ' type="' + opts.type + '"' : '') +
+        ' value="' + esc(String(value)) + '"' +
+        (opts.placeholder ? ' placeholder="' + esc(opts.placeholder) + '"' : '') + '>' +
+      (opts.hint ? '<span class="hint">' + esc(opts.hint) + '</span>' : '') +
+    '</div>';
+  }
+
+  function renderForm() {
+    document.getElementById('proposalForm').innerHTML =
+      '<div class="panel">' +
+        '<div class="panel-head"><span class="tile tile-blue" data-icon="storefront"></span>' +
+          '<div class="h4">Merchant</div></div>' +
+        '<div class="panel-body col" style="gap:16px">' +
+          field('Business name', 'merchant', state.merchant, { placeholder: 'Acme Hardware' }) +
+          field('Contact', 'contact', state.contact, { placeholder: 'Owner or decision maker' }) +
+          '<div class="field"><label class="label" for="type">Business type</label>' +
+            '<select class="select" id="type" data-bind="type">' +
+              P.merchantTypes.map(function (m) {
+                return '<option value="' + m.id + '"' + (m.id === state.type ? ' selected' : '') + '>' +
+                  esc(m.name) + '</option>';
+              }).join('') +
+            '</select>' +
+            '<span class="hint">Sets which interchange programs the quote is blended from.</span></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="panel">' +
+        '<div class="panel-head"><span class="tile tile-green" data-icon="receipt"></span>' +
+          '<div class="h4">Their statement</div></div>' +
+        '<div class="panel-body col" style="gap:16px">' +
+          '<div class="grid grid-2">' +
+            field('Monthly card volume', 'volume', state.volume, { type: 'number' }) +
+            field('Transactions a month', 'txns', state.txns, { type: 'number' }) +
+          '</div>' +
+          '<div class="grid grid-2">' +
+            field('Processing fees a month', 'currentFees', state.currentFees, { type: 'number',
+              hint: 'Everything charged against volume' }) +
+            field('Other monthly fees', 'currentMonthly', state.currentMonthly, { type: 'number',
+              hint: 'Statement, PCI, minimums, gateway' }) +
+          '</div>' +
+          '<hr class="hairline">' +
+          field('Interchange on their statement', 'actualCost', state.actualCost, { type: 'number',
+            placeholder: 'Optional',
+            hint: 'If the statement itemises interchange and assessments, put the total here and ' +
+                  'the quote uses it instead of the blend for this business type.' }) +
+        '</div>' +
+      '</div>' +
+
+      '<div class="panel">' +
+        '<div class="panel-head"><span class="tile tile-mint" data-icon="tag"></span>' +
+          '<div class="h4">What we would do</div></div>' +
+        '<div class="panel-body col" style="gap:16px">' +
+          '<div class="col" style="gap:10px">' +
+            P.models.map(function (m) {
+              return '<label class="model-option' + (m.id === state.model ? ' is-on' : '') + '">' +
+                '<input type="radio" name="model" value="' + m.id + '" data-bind="model"' +
+                  (m.id === state.model ? ' checked' : '') + '>' +
+                '<span><span class="strong small">' + esc(m.name) + '</span>' +
+                '<span class="tiny faint" style="display:block;margin-top:3px">' + esc(m.blurb) + '</span></span>' +
+              '</label>';
+            }).join('') +
+          '</div>' +
+          '<hr class="hairline">' +
+          '<div id="feesBlock"></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div id="icPanel"></div>';
+    renderFees();
+    renderInterchange();
+    A.refresh();
+  }
+
+  /* The blended rate is only as good as the programs behind it, so the rep can
+     see exactly which ones, and what each contributes. Rep-facing: this panel
+     is part of the form column and never prints. */
+  /* The fee list depends on the pricing model: dual pricing bundles the
+     statement and PCI lines into its service fee, so those toggles are not
+     shown at all rather than shown switched off. Its own container, so
+     switching model refreshes it without rebuilding the inputs above. */
+  /* Lower-casing a fee name to sit mid-sentence must not eat an acronym:
+     "Statement fee" becomes lower case, "PCI compliance" stays as written. */
+  function sentenceCase(name) {
+    return /[A-Z]{2,}/.test(name) ? name : name.charAt(0).toLowerCase() + name.slice(1);
+  }
+
+  function renderFees() {
+    var host = document.getElementById('feesBlock');
+    if (!host) return;
+    var model = Q.model(state.model);
+    var rows = P.marginAdjustments.filter(function (m) { return Q.allows(model, m.id); });
+    host.innerHTML =
+      '<div class="label">Fees included</div>' +
+      '<div class="col" style="gap:11px;margin-top:11px">' +
+        rows.map(function (m) {
+          var on = state.adjustments.indexOf(m.id) >= 0;
+          return '<label class="switch"><input type="checkbox" data-adj="' + m.id + '"' +
+            (on ? ' checked' : '') + '><span class="switch-track"></span>' +
+            '<span class="small">' + esc(m.name) + ' · ' + usd(m.amount) +
+            (m.unit === 'perItem' ? ' each' : m.unit === 'monthly' ? '/mo' : '%') + '</span></label>';
+        }).join('') +
+      '</div>' +
+      (model && model.excludes && model.excludes.length
+        ? '<p class="tiny faint" style="margin-top:11px">' +
+          esc(model.name) + ' includes ' +
+          esc(P.marginAdjustments.filter(function (m) { return model.excludes.indexOf(m.id) >= 0; })
+                .map(function (m) { return sentenceCase(m.name); }).join(' and ')) +
+          ', so they are not billed separately.</p>'
+        : '');
+    A.refresh();
+  }
+
+  function renderInterchange() {
+    var host = document.getElementById('icPanel');
+    if (host) { host.innerHTML = interchangePanel(); A.refresh(); }
+  }
+
+  function interchangePanel() {
+    var r = compute();
+    var b = r.mix;
+    if (r.usingActual) {
+      return '<div class="panel">' +
+        '<div class="panel-head"><span class="tile" data-icon="receipt"></span>' +
+          '<div class="h4">Interchange detail</div></div>' +
+        '<div class="panel-body">' +
+          '<p class="small muted">Using the interchange total from the merchant\'s own ' +
+          'statement — ' + usd(r.cost) + ' a month. Clear that field to blend it from the ' +
+          esc(r.type.name.toLowerCase()) + ' card mix instead.</p>' +
+        '</div></div>';
+    }
+    return '<div class="panel">' +
+      '<div class="panel-head"><span class="tile" data-icon="receipt"></span>' +
+        '<div><div class="h4">Interchange detail</div>' +
+        '<div class="tiny faint">' + b.rows.length + ' programs · blended ' +
+          b.rate.toFixed(3) + '% + ' + perItem(b.item) + '</div></div>' +
+        '<span class="spacer"></span>' +
+        '<a class="btn btn-ghost btn-sm" href="pricing.html#schedule">Full schedule</a>' +
+      '</div>' +
+      '<div class="table-scroll"><table class="table table-tight"><thead><tr>' +
+        '<th>Program</th><th class="num">Rate</th><th class="num">Per item</th>' +
+        '<th class="num">Share</th></tr></thead><tbody>' +
+        b.rows.map(function (row) {
+          return '<tr><td><span class="mono tiny faint">' + esc(row.code) + '</span> ' +
+              esc(row.name) + '</td>' +
+            '<td class="num numeric">' + row.rate.toFixed(2) + '%</td>' +
+            '<td class="num numeric">' + perItem(row.item) + '</td>' +
+            '<td class="num numeric strong">' + (row.weight * 100).toFixed(1) + '%</td></tr>';
+        }).join('') +
+        (b.missing.length
+          ? '<tr><td colspan="4" class="tiny mix-warn">Not in the schedule: ' +
+            esc(b.missing.join(', ')) + '</td></tr>'
+          : '') +
+      '</tbody></table></div>' +
+    '</div>';
+  }
+
+  function perItem(n) {
+    return '$' + (Math.abs(n) < 1 ? n.toFixed(4).replace(/(\.\d\d)0+$/, '$1') : n.toFixed(2));
+  }
+
+  /* --------------------------------------------------------------- output */
+  function renderOutput() {
+    var r = compute();
+    var better = r.saving > 0;
+
+    document.getElementById('proposalOutput').innerHTML =
+      '<div class="panel proposal-sheet" id="sheet">' +
+        '<div class="proposal-head">' +
+          '<div id="proposalLogo"></div>' +
+          '<div class="text-right">' +
+            '<div class="eyebrow">Savings proposal</div>' +
+            '<div class="tiny faint" style="margin-top:4px">' +
+              new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="panel-body">' +
+          '<h2 class="h2">' + esc(state.merchant || 'Merchant name') + '</h2>' +
+          '<p class="small muted" style="margin-top:4px">' +
+            (state.contact ? esc(state.contact) + ' · ' : '') + esc(r.type.name) + '</p>' +
+
+          '<div class="grid grid-3" style="margin-top:22px">' +
+            ['Monthly volume|' + usd0(r.volume),
+             'Transactions|' + r.txns.toLocaleString(),
+             'Average ticket|' + usd(r.ticket)].map(function (s) {
+              var p = s.split('|');
+              return '<div><div class="tiny faint">' + p[0] + '</div>' +
+                '<div class="h3" style="margin-top:3px">' + p[1] + '</div></div>';
+            }).join('') +
+          '</div>' +
+
+          '<hr class="hairline" style="margin:22px 0">' +
+
+          '<div class="compare">' +
+            '<div class="compare-col">' +
+              '<div class="eyebrow">Paying now</div>' +
+              '<div class="h1" style="margin-top:6px">' + usd(r.current) + '</div>' +
+              '<div class="tiny faint">' + r.currentRate.toFixed(2) + '% effective rate</div>' +
+            '</div>' +
+            '<div class="compare-arrow" data-icon="arrow"></div>' +
+            '<div class="compare-col">' +
+              '<div class="eyebrow">With ' + esc(P.defaults.company) + '</div>' +
+              '<div class="h1" style="margin-top:6px">' + usd(r.proposed) + '</div>' +
+              (r.model.noEffectiveRate ? '' :
+                '<div class="tiny faint">' + r.proposedRate.toFixed(2) + '% effective rate</div>') +
+            '</div>' +
+          '</div>' +
+
+          /* A negative result is signed and named. The band gets screenshotted
+             on its own, and an unsigned figure there reads as a saving. */
+          /* Monthly, a year, and the term. A merchant signs on the monthly
+             figure but decides on the three-year one, so all three sit side by
+             side rather than making anyone multiply. */
+          '<div class="saving-band ' + (better ? 'is-good' : 'is-bad') + '">' +
+            [[1,  better ? 'Monthly saving'  : 'Extra a month'],
+             [12, better ? 'Over 12 months'  : 'Extra over 12 months'],
+             [P.defaults.term, better ? 'Over ' + P.defaults.term + ' months'
+                                      : 'Extra over ' + P.defaults.term + ' months']]
+              .map(function (period) {
+                var amount = Math.abs(r.saving) * period[0];
+                return '<div class="saving-cell">' +
+                    '<div class="eyebrow">' + esc(period[1]) + '</div>' +
+                    '<div class="display saving-figure">' + (better ? '' : '+') +
+                      (period[0] === 1 ? usd(amount) : usd0(amount)) + '</div>' +
+                  '</div>';
+              }).join('') +
+          '</div>' +
+          (better ? '' : '<p class="small muted" style="margin-top:10px">' +
+            'This pricing does not beat what they pay today. Try another model, or check the ' +
+            'statement figures — a rate that looks high often hides fees counted in the wrong box.</p>') +
+
+          '<hr class="hairline" style="margin:22px 0">' +
+
+          '<div class="h4">How the proposed cost breaks down</div>' +
+          '<table class="table" style="margin-top:10px">' +
+            '<tbody>' +
+              r.lines.map(function (l) {
+                return '<tr><td' + (l.cost ? '' : ' class="muted"') + '>' + esc(l.label) +
+                  (l.detail ? '<span class="tiny faint" style="display:block;margin-top:2px">' +
+                    esc(l.detail) + '</span>' : '') + '</td>' +
+                  '<td class="num numeric' + (l.cost ? '' : ' muted') + '">' + usd(l.amount) + '</td></tr>';
+              }).join('') +
+              '<tr><td class="strong">Total a month</td>' +
+                '<td class="num numeric strong">' + usd(r.proposed) + '</td></tr>' +
+            '</tbody>' +
+          '</table>' +
+
+          '<p class="tiny faint" style="margin-top:18px">' +
+            'Prepared by ' + esc(P.defaults.preparedBy) + ' · valid ' + P.defaults.validDays + ' days.' +
+          '</p>' +
+        '</div>' +
+      '</div>';
+
+    document.getElementById('proposalLogo').innerHTML = A.logo(30);
+    A.refresh();
+  }
+
+  function renderAll() { renderOutput(); renderInterchange(); }
+
+  renderForm();
+  renderAll();
+
+  document.addEventListener('input', function (e) {
+    var bind = e.target.getAttribute && e.target.getAttribute('data-bind');
+    if (bind) {
+      state[bind] = e.target.type === 'number' ? +e.target.value : e.target.value;
+      save(); renderAll();
+      if (bind === 'model') renderForm();
+      return;
+    }
+    var adj = e.target.getAttribute && e.target.getAttribute('data-adj');
+    if (adj) {
+      var i = state.adjustments.indexOf(adj);
+      if (e.target.checked && i < 0) state.adjustments.push(adj);
+      if (!e.target.checked && i >= 0) state.adjustments.splice(i, 1);
+      save(); renderAll();
+    }
+  });
+
+  document.addEventListener('change', function (e) {
+    if (e.target.name === 'model') {
+      state.model = e.target.value; save();
+      document.querySelectorAll('.model-option').forEach(function (l) {
+        l.classList.toggle('is-on', l.querySelector('input').checked);
+      });
+      renderFees();
+      renderAll();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-print]')) { window.print(); return; }
+    if (e.target.closest('[data-reset]')) {
+      localStorage.removeItem(KEY);
+      location.reload();
+    }
+  });
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

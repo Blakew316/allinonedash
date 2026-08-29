@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin · WPI University</title>
+<meta name="description" content="Every administrative surface in one place.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="admin">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a><span data-icon="chevron"></span>
+      <span aria-current="page">Admin</span>
+    </nav>
+    <div class="row-between">
+      <div class="enter" style="--enter-delay:60ms">
+        <h1 class="h1">Admin</h1>
+        <p class="lede" style="margin-top:8px">Every administrative surface, grouped the way the platform groups them.</p>
+      </div>
+      <div class="row gap-sm enter" style="--enter-delay:120ms">
+        <a class="btn btn-secondary" href="reports.html">Reports</a>
+        <a class="btn btn-primary" href="proposal.html">New proposal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-top:20px" data-stagger="60" id="adminStats"></div>
+  <div id="adminSections" style="margin-top:28px;padding-bottom:32px"></div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/roster.js" onerror="void 0"></script>
+<script src="assets/js/billing.js" onerror="void 0"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+  var roster = window.WPI_ROSTER, billing = window.WPI_BILLING;
+
+  var people = roster ? roster.totals.people : D.people.length;
+  var teams = roster ? roster.totals.teams : D.teams.length;
+
+  document.getElementById('adminStats').innerHTML = [
+    ['users', 'blue',  people, 'People on the platform'],
+    ['flag',  'green', teams,  'Sales teams'],
+    ['book',  'navy',  D.stats.courses, 'Courses published'],
+    ['check', 'mint',  D.stats.lessonsCompleted, 'Lessons completed · 30 days']
+  ].map(function (s) {
+    return '<div class="card card-hover" data-reveal>' +
+        '<span class="tile tile-' + s[1] + '" data-icon="' + s[0] + '"></span>' +
+        '<div class="stat" style="margin-top:14px">' +
+          '<span class="stat-value" style="font-size:1.9rem" data-count="' + s[2] + '">0</span>' +
+          '<span class="stat-label">' + esc(s[3]) + '</span></div></div>';
+  }).join('');
+
+  /* Mirrors the section order the platform's own admin page uses, so anyone
+     moving across from it lands on the same shape. */
+  var SECTIONS = [
+    ['users', 'Users', 'Invite, add, manage and remove users.', [
+      ['Invite user', 'invite.html'],
+      ['Manage users', 'people.html'],
+      ['Manage sales teams', 'teams.html'],
+      ['Self sign-up settings', 'settings.html#signup']
+    ]],
+    ['chart', 'Quoting and proposals', 'Build a merchant proposal and set the rates behind it.', [
+      ['New proposal', 'proposal.html'],
+      ['Margin adjustment types', 'pricing.html#margins'],
+      ['Merchant type passthrough rates', 'pricing.html#passthrough']
+    ]],
+    ['book', 'Training', 'View courses and decide which are available to your sales agents.', [
+      ['Manage courses', 'training.html'],
+      ['Create custom courses', 'learning-plans.html#courses'],
+      ['Manage learning plans', 'learning-plans.html']
+    ]],
+    ['sparkles', 'Appearance', 'Logos and colours for this site, the quote site and proposal PDFs.', [
+      ['Change colours', 'settings.html#appearance'],
+      ['Change logos', 'settings.html#appearance'],
+      ['Manage assets', 'settings.html#assets']
+    ]],
+    ['doc', 'Account', 'Company, subscription, invoice and payment information.', [
+      ['Manage billing', 'settings.html#billing']
+    ]],
+    ['key', 'Developer', 'Single sign-on, API integration and event webhooks.', [
+      ['API keys', 'settings.html#api'],
+      ['Data retention policy', 'settings.html#retention'],
+      ['Single sign-on', 'settings.html#sso'],
+      ['System notifications', 'settings.html#notifications'],
+      ['Training event webhooks', 'settings.html#webhooks']
+    ]],
+    ['clock', 'Activity', 'What your reps have been doing.', [
+      ['Daily user activity', 'reports.html'],
+      ['Lessons completed', 'reports.html'],
+      ['Course completion', 'reports.html']
+    ]]
+  ];
+
+  document.getElementById('adminSections').innerHTML =
+    '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))" data-stagger="55">' +
+    SECTIONS.map(function (s) {
+      return '<div class="card card-accent" data-reveal>' +
+          '<div class="row" style="align-items:flex-start;gap:13px">' +
+            '<span class="tile" data-icon="' + s[0] + '"></span>' +
+            '<div style="min-width:0">' +
+              '<div class="h4">' + esc(s[1]) + '</div>' +
+              '<p class="small muted" style="margin-top:5px">' + esc(s[2]) + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<hr class="hairline" style="margin:16px 0 12px">' +
+          '<div class="col" style="gap:2px">' +
+            s[3].map(function (l) {
+              return '<a class="admin-link" href="' + l[1] + '">' +
+                App.icon('chevron') + '<span>' + esc(l[0]) + '</span></a>';
+            }).join('') +
+          '</div>' +
+        '</div>';
+    }).join('') + '</div>' +
+
+    (billing ? '<div class="card card-pad-sm" style="margin-top:22px" data-reveal>' +
+        '<div class="row-between" style="gap:16px;flex-wrap:wrap">' +
+          '<div class="row gap-sm">' +
+            '<span class="pi-icon green" data-icon="check"></span>' +
+            '<div><div class="h4">Account in good standing</div>' +
+            '<div class="tiny faint">' + billing.totals.invoices + ' invoices · nothing outstanding · ' +
+              esc(billing.account.plan) + '</div></div>' +
+          '</div>' +
+          '<a class="btn btn-ghost btn-sm" href="settings.html#billing">Billing →</a>' +
+        '</div></div>' : '');
+  A.refresh();
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

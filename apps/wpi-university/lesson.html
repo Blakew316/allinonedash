@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson · WPI University</title>
+<meta name="description" content="Lesson player with course outline and progress.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="training">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<div id="lessonRoot"></div>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/media.js"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+  var c = A.course(A.param('c')) || D.courses[0];
+  var i = Math.max(0, Math.min(c.lessons.length - 1, parseInt(A.param('l'), 10) || 0));
+  var l = c.lessons[i];
+  document.title = l.t + ' · ' + c.title;
+
+  var kindWord = { video: 'Video lesson', quiz: 'Knowledge check', download: 'Downloadable resource' };
+  var kindIcon = { video: 'play', quiz: 'quiz', download: 'download', text: 'doc' };
+  /* Course progress is what has actually been watched, matching the ring on
+     the course page — not simply how far down the list this lesson sits. */
+  var pct = c.lessons.length
+    ? Math.round(A.progress.doneCount(c.slug) / c.lessons.length * 100) : 0;
+
+  var courseProgress = A.progress.course(c.slug);
+
+  function outlineHTML() {
+    return c.lessons.map(function (x, n) {
+      var rec = courseProgress[n] || {};
+      var has = !!A.media(c.slug, n, x.t);
+      return '<a class="lesson-row' + (rec.done ? ' done' : '') + '" href="lesson.html?c=' + c.slug + '&l=' + n + '"' +
+          (n === i ? ' style="background:rgba(0,163,230,.07)"' : '') + '>' +
+          '<span class="lesson-index">' + (rec.done ? '✓' : (n + 1)) + '</span>' +
+          '<span class="lesson-title truncate"' + (n === i ? ' style="font-weight:600"' : '') + '>' + esc(x.t) + '</span>' +
+          (has || x.k !== 'video' ? ''
+            : '<span class="tiny faint" title="No source mapped">○</span>') +
+          '<span class="tiny faint numeric">' + x.m + 'm</span>' +
+        '</a>';
+    }).join('');
+  }
+  var outline = outlineHTML();
+
+  /* The lesson's source, if one has been mapped in assets/js/media.js. */
+  var entry = A.media(c.slug, i, l.t);
+  var stage = A.player(entry, { slug: c.slug, index: i, title: l.t, kind: l.k });
+
+  /* Progress is per lesson and persisted, so the outline, the ring on the
+     course page and the resume button all agree with what was watched. */
+  var saved = A.progress.get(c.slug, i) || {};
+
+  document.getElementById('lessonRoot').innerHTML =
+    '<section class="wrap wrap-wide" style="padding-top:22px">' +
+      '<nav class="crumbs enter" aria-label="Breadcrumb">' +
+        '<a href="training.html">Training</a><span data-icon="chevron"></span>' +
+        '<a href="course.html?c=' + c.slug + '">' + esc(c.title) + '</a>' +
+        '<span data-icon="chevron"></span><span aria-current="page">' + esc(l.t) + '</span>' +
+      '</nav>' +
+
+      '<div class="grid" style="grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);align-items:start;margin-top:18px">' +
+        '<div class="col gap-lg">' +
+          '<div class="enter" style="--enter-delay:60ms">' + stage + '</div>' +
+
+          '<div class="card enter" style="--enter-delay:120ms">' +
+            '<div class="row-between">' +
+              '<div>' +
+                '<div class="eyebrow">Lesson ' + (i + 1) + ' of ' + c.lessons.length + '</div>' +
+                '<h1 class="h2" style="margin-top:8px">' + esc(l.t) + '</h1>' +
+              '</div>' +
+              '<span class="chip chip-blue">' + esc(kindWord[l.k]) + '</span>' +
+            '</div>' +
+            '<div class="bar" style="margin-top:18px"><i data-grow="' + pct + '"></i></div>' +
+            '<div class="row-between tiny faint" style="margin-top:8px">' +
+              '<span>' + pct + '% of ' + esc(c.title) + ' complete</span>' +
+              '<span>' + A.fmtMinutes(c.minutes) + ' total</span>' +
+            '</div>' +
+            '<hr class="hairline" style="margin:20px 0">' +
+            '<p class="body">' + esc(l.t) + ' is part of the ' + esc(c.track).toLowerCase() +
+              ' track. ' + esc(c.blurb) + '</p>' +
+            '<div class="row" style="margin-top:22px;flex-wrap:wrap">' +
+              (i > 0 ? '<a class="btn btn-secondary" href="lesson.html?c=' + c.slug + '&l=' + (i - 1) + '">← Previous</a>' : '') +
+              '<button class="btn btn-primary" data-complete>Mark complete' +
+                (i < c.lessons.length - 1 ? ' and continue' : '') + '</button>' +
+              '<span class="spacer"></span>' +
+              '<a class="btn btn-ghost" href="course.html?c=' + c.slug + '">Course outline</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="panel enter" style="--enter-delay:180ms;position:sticky;top:calc(var(--nav-h) + 16px);max-height:calc(100vh - var(--nav-h) - 40px);display:flex;flex-direction:column">' +
+          '<div class="panel-head">' +
+            '<span class="tile tile-' + A.trackTile(c.track) + '" data-icon="' + A.trackIcon(c.track) + '"></span>' +
+            '<div style="min-width:0"><div class="h4 truncate">' + esc(c.title) + '</div>' +
+            '<div class="tiny faint">' + c.lessons.length + ' lessons</div></div>' +
+          '</div>' +
+          '<div class="panel-body panel-body-flush" style="overflow-y:auto">' + outline + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</section>';
+
+  var nextHref = i < c.lessons.length - 1 ? 'lesson.html?c=' + c.slug + '&l=' + (i + 1) : null;
+
+  function markDone(announce) {
+    A.progress.set(c.slug, i, { done: true, t: 0 });
+    courseProgress = A.progress.course(c.slug);
+    var body = document.querySelector('.panel-body-flush');
+    if (body) { body.innerHTML = outlineHTML(); A.refresh(); }
+    if (announce) A.toast('“' + l.t + '” marked complete');
+  }
+
+  /* Tell the rep whether this lesson will work without a connection. */
+  var badge = document.createElement('div');
+  badge.className = 'row gap-sm';
+  badge.style.marginTop = '14px';
+  var titleCard = document.querySelector('.card .row-between');
+  if (titleCard && entry) {
+    if (A.isCacheable(entry)) {
+      A.offline.cached().then(function (urls) {
+        var here = new URL(entry.src, location.href).href;
+        var saved = urls.indexOf(here) >= 0;
+        badge.innerHTML = '<span class="chip ' + (saved ? 'chip-green' : '') + '">' +
+          App.icon(saved ? 'check' : 'download') +
+          (saved ? 'Saved offline' : 'Not downloaded') + '</span>';
+        titleCard.parentNode.insertBefore(badge, titleCard.nextSibling);
+        A.refresh();
+      });
+    } else {
+      badge.innerHTML = '<span class="chip">' + App.icon('play') + 'Streams from Vimeo · needs a connection</span>';
+      titleCard.parentNode.insertBefore(badge, titleCard.nextSibling);
+    }
+  }
+
+  var video = document.getElementById('lessonVideo');
+
+  if (video) {
+    /* Resume where the lesson was left, unless it already finished.
+       Thresholds are proportional: a fixed "more than 5s in, more than 5s
+       from the end" window is meaningless on a short clip. */
+    if (saved.t > 2 && !saved.done) {
+      video.addEventListener('loadedmetadata', function () {
+        var d = video.duration;
+        if (isFinite(d) && saved.t < d * 0.97) {
+          video.currentTime = saved.t;
+          A.toast('Resumed at ' + fmtTime(saved.t), 'clock');
+        }
+      }, { once: true });
+    }
+
+    /* Save position at most once a second rather than on every tick. */
+    var lastSave = 0;
+    video.addEventListener('timeupdate', function () {
+      var now = Date.now();
+      if (now - lastSave < 1000) return;
+      lastSave = now;
+      A.progress.set(c.slug, i, { t: video.currentTime });
+      /* Treat 95% as finished — most videos have credits or a sign-off.
+         Streams report a non-finite duration, where this cannot apply and
+         the ended event is the only completion signal. */
+      var d = video.duration;
+      if (isFinite(d) && d > 0 && video.currentTime / d > 0.95 &&
+          !A.progress.get(c.slug, i).done) {
+        markDone(false);
+      }
+    });
+
+    video.addEventListener('ended', function () {
+      markDone(true);
+      if (nextHref) setTimeout(function () { location.href = nextHref; }, 1200);
+    });
+
+    /* An HLS source only plays natively in Safari; say so rather than
+       showing an empty frame everywhere else. */
+    var note = document.querySelector('[data-hls-note]');
+    if (note) {
+      video.addEventListener('error', function () { note.hidden = false; }, { once: true });
+    }
+
+    /* Player keyboard shortcuts, skipped while typing in a field. */
+    document.addEventListener('keydown', function (e) {
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      var handled = true;
+      switch (e.key) {
+        case ' ': case 'k': video.paused ? video.play() : video.pause(); break;
+        case 'ArrowLeft':  video.currentTime = Math.max(0, video.currentTime - 10); break;
+        case 'ArrowRight':
+          var end = isFinite(video.duration) ? video.duration : Infinity;
+          video.currentTime = Math.min(end, video.currentTime + 10);
+          break;
+        case 'ArrowUp':    video.volume = Math.min(1, video.volume + 0.1); break;
+        case 'ArrowDown':  video.volume = Math.max(0, video.volume - 0.1); break;
+        case 'm': video.muted = !video.muted; break;
+        case 'f':
+          if (document.fullscreenElement) document.exitFullscreen();
+          else if (video.requestFullscreen) video.requestFullscreen();
+          break;
+        default: handled = false;
+      }
+      if (handled) e.preventDefault();
+    });
+
+    /* Playback speed, remembered across lessons. */
+    var speeds = [0.75, 1, 1.25, 1.5, 1.75, 2];
+    var stored = parseFloat(localStorage.getItem('wpi-speed') || '1');
+    video.playbackRate = speeds.indexOf(stored) >= 0 ? stored : 1;
+
+    var bar = document.createElement('div');
+    bar.className = 'stage-controls';
+    bar.innerHTML = '<button class="btn btn-ghost btn-sm" data-speed>' +
+      video.playbackRate + '×</button>' +
+      '<span class="tiny faint">Space play · ← → 10s · F fullscreen</span>';
+    video.parentNode.appendChild(bar);
+
+    bar.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-speed]')) return;
+      var next = speeds[(speeds.indexOf(video.playbackRate) + 1) % speeds.length];
+      video.playbackRate = next;
+      localStorage.setItem('wpi-speed', String(next));
+      bar.querySelector('[data-speed]').textContent = next + '×';
+    });
+  }
+
+  function fmtTime(s) {
+    s = Math.floor(s || 0);
+    var m = Math.floor(s / 60);
+    return m + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-complete]')) {
+      markDone(true);
+      if (nextHref) setTimeout(function () { location.href = nextHref; }, 650);
+    }
+  });
+
+  /* Reflect what has already been watched on the button. */
+  if (saved.done) {
+    var btn = document.querySelector('[data-complete]');
+    if (btn) {
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-secondary');
+      btn.textContent = nextHref ? 'Completed · next lesson' : 'Completed';
+    }
+  }
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

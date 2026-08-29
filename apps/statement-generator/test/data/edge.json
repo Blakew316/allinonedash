@@ -1,0 +1,529 @@
+{
+ "remitAddress": [
+  "PO Box 246",
+  "Alpharetta, GA, 30024",
+  "United States"
+ ],
+ "coverNotice": "Your account will be automatically charged for the amount due. No action is required on your part.",
+ "notices": "We have updated the Program Guide to add Section 32.9 (Clover Equipment Services), Section 32.10 (Supplemental Services), and to update Section 24.5 (Survival). These changes introduce terms governing Clover equipment usage (applicable only to merchants using Clover point-of-sale equipment and/or Clover services), enrollment and fees for Supplemental Services, and clarify that Supplemental Services enrollment and associated fees survive termination of the agreement unless canceled per Section 32.10.5. In addition, Citizens Bank, NA is now the sponsor bank for merchants formerly sponsored by Wells Fargo Bank, NA. These updates are effective as of July 1, 2026. Your continued use of the services constitutes acceptance of the updated terms.\nAmerican Express OptBlue update: Effective April 17, 2026, U.S. merchant processing limits increase to $3,000,000 annually and $300,000 over 3 months (previously $1,000,000 / $100,000). This allows for greater growth flexibility with no action required. Note: limits for Puerto Rico and the U.S. Virgin Islands remain unchanged.\nEffective July 2026, Mastercard is revising the rate for the existing Mastercard Dispute Image Fee from $0.20 to $0.23. Effective July 2026, Mastercard is revising the rate for the existing Mastercard Dispute Case Fee from $1.35 to $1.55. Effective April 2026, Mastercard is introducing a new Fallback Avoidance Fee on transactions in which a card bearing both a chip and a magnetic stripe is used at a chip-enabled terminal, and the resulting transaction is completed with the magnetic stripe instead of with the chip. These transaction types will be assessed a 0.10% fee as applicable. Effective April 2026, Visa will assess a Card- Not Present Token Fee on all domestic and cross border approved Visa card-not-present token authorizations. Merchants will incur a fee of 0.015% with a minimum of $0.01. Effective April 2026, Visa will assess a Card Present Token Fee on all domestic and cross border approved Visa card-present token authorizations. Merchants will incur a fee of 0.01% for card present and 0.05% for cross border transactions. Effective April 2026, Interlink will assess a Card- Not Present Token Fee on all domestic and cross border approved Interlink card not-present token authorizations. Merchants will incur a fee of 0.015% with a minimum of $0.01 per transaction. Effective April 2026, Interlink will assess a Card-Present Token Fee on all domestic and cross border approved Interlink card-present token authorizations. Merchants will incur a fee of 0.01% for card-present transactions and a fee of 0.05% for cross border transactions. Effective April 2026, Visa is revising the rate on the existing Digital Commerce Service Fee from 0.0075% to 0.035% on all card-not-present transactions performed at a U.S. merchant with a foreign card and update the minimum fee from $0.0075 to $0.01 per transaction. Effective April 2026, Interlink is revising the rate on the existing Digital Commerce Service Fee from 0.0075% to 0.035% on all card-not-present transactions performed at a U.S. merchant with a foreign card, and update the minimum fee from $0.0075 to $0.01 per transaction. Continuing your merchant account with us or use of your merchant account after 30 days will represent your acceptance of these terms.",
+ "billTo": [
+  "HOUSE OF BOOM",
+  "20255 Texas 110",
+  "Whitehouse, TX, 75791",
+  "United States"
+ ],
+ "details": {
+  "statementNumber": "",
+  "issueDate": "Pending",
+  "paymentTerms": "Auto-Draft",
+  "billingId": "e90fbdf3-b58b-5b36-b2f8-31d7acc6fdd1",
+  "billingAccountNumber": "815230777881",
+  "productId": "6"
+ },
+ "periodStart": "2026-05-01",
+ "periodEnd": "2026-05-31",
+ "totalSales": 1925.59,
+ "transactionCount": 21,
+ "currency": "USD",
+ "taxRate": 0,
+ "feesCollected": 74.05,
+ "categories": {
+  "transaction": {
+   "included": true,
+   "items": [
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 1",
+     "count": 1234,
+     "volume": 100.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.85
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 2",
+     "count": 2,
+     "volume": 101.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.86
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 3",
+     "count": 3,
+     "volume": 102.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.87
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 4",
+     "count": 4,
+     "volume": 103.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.88
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 5",
+     "count": 5,
+     "volume": 104.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.89
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 6",
+     "count": 6,
+     "volume": 105.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.9
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 7",
+     "count": 7,
+     "volume": 106.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.91
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 8",
+     "count": 8,
+     "volume": 107.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.92
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 9",
+     "count": 9,
+     "volume": 108.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.93
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 10",
+     "count": 10,
+     "volume": 109.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.94
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 11",
+     "count": 11,
+     "volume": 110.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.95
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 12",
+     "count": 12,
+     "volume": 111.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.96
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 13",
+     "count": 13,
+     "volume": 112.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.97
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 14",
+     "count": 14,
+     "volume": 113.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.98
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 15",
+     "count": 15,
+     "volume": 114.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 3.99
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 16",
+     "count": 16,
+     "volume": 115.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.0
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 17",
+     "count": 17,
+     "volume": 116.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.01
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 18",
+     "count": 18,
+     "volume": 117.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.0200000000000005
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 19",
+     "count": 19,
+     "volume": 118.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.03
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 20",
+     "count": 20,
+     "volume": 119.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.04
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 21",
+     "count": 21,
+     "volume": 120.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.05
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 22",
+     "count": 22,
+     "volume": 121.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.0600000000000005
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 23",
+     "count": 23,
+     "volume": 122.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.07
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 24",
+     "count": 24,
+     "volume": 123.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.08
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 25",
+     "count": 25,
+     "volume": 124.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.09
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 26",
+     "count": 26,
+     "volume": 125.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.1
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 27",
+     "count": 27,
+     "volume": 126.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.11
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 28",
+     "count": 28,
+     "volume": 127.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.12
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 29",
+     "count": 29,
+     "volume": 128.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.13
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 30",
+     "count": 30,
+     "volume": 129.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.14
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 31",
+     "count": 31,
+     "volume": 130.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.15
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 32",
+     "count": 32,
+     "volume": 131.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.16
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 33",
+     "count": 33,
+     "volume": 132.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.17
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 34",
+     "count": 34,
+     "volume": 133.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.18
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 35",
+     "count": 35,
+     "volume": 134.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.19
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 36",
+     "count": 36,
+     "volume": 135.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.2
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 37",
+     "count": 37,
+     "volume": 136.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.21
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 38",
+     "count": 38,
+     "volume": 137.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.22
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 39",
+     "count": 39,
+     "volume": 138.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.23
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 40",
+     "count": 40,
+     "volume": 139.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.24
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 41",
+     "count": 41,
+     "volume": 140.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.25
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 42",
+     "count": 42,
+     "volume": 141.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.26
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 43",
+     "count": 43,
+     "volume": 142.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.2700000000000005
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 44",
+     "count": 44,
+     "volume": 143.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.28
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 45",
+     "count": 45,
+     "volume": 144.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.29
+    },
+    {
+     "description": "Sale: Qualified, Visa, Credit Group 46",
+     "count": 46,
+     "volume": 145.0,
+     "rate": "3.85%",
+     "fee": "",
+     "amount": 4.3
+    }
+   ]
+  },
+  "cardNetwork": {
+   "included": true,
+   "items": [
+    {
+     "description": "Debit Network Fees: Zone Test 1",
+     "count": 1,
+     "volume": 0.01,
+     "rate": "",
+     "fee": "",
+     "amount": 0.05
+    },
+    {
+     "description": "Debit Network Fees: Zone Test 2",
+     "count": 2,
+     "volume": 0.01,
+     "rate": "",
+     "fee": "",
+     "amount": 0.05
+    },
+    {
+     "description": "Debit Network Fees: Zone Test 3",
+     "count": 3,
+     "volume": 0.01,
+     "rate": "",
+     "fee": "",
+     "amount": 0.05
+    },
+    {
+     "description": "Debit Network Fees: Zone Test 4",
+     "count": 4,
+     "volume": 0.01,
+     "rate": "",
+     "fee": "",
+     "amount": 0.05
+    },
+    {
+     "description": "Debit Network Fees: Zone Test 5",
+     "count": 5,
+     "volume": 0.01,
+     "rate": "",
+     "fee": "",
+     "amount": 0.05
+    }
+   ]
+  },
+  "otherProcessing": {
+   "included": true,
+   "items": [
+    {
+     "description": "Recurring: Clover Platform Access Monthly Fee",
+     "count": 1,
+     "volume": "",
+     "rate": "",
+     "fee": "",
+     "amount": 5.0
+    },
+    {
+     "description": "Recurring: Clover Transarmor Fee",
+     "count": 1,
+     "volume": "",
+     "rate": "",
+     "fee": "",
+     "amount": 5.0
+    },
+    {
+     "description": "Recurring: Service, Monthly",
+     "count": 1,
+     "volume": "",
+     "rate": "",
+     "fee": "45",
+     "amount": 45.0
+    },
+    {
+     "description": "Adjustment: Pending review",
+     "count": "",
+     "volume": "",
+     "rate": "",
+     "fee": "",
+     "amount": ""
+    }
+   ]
+  },
+  "thirdParty": {
+   "included": true,
+   "items": []
+  },
+  "recurring": {
+   "included": true,
+   "items": []
+  }
+ },
+ "batches": [
+  {
+   "date": "2026-05-21",
+   "number": "204500211700",
+   "salesCount": 2500,
+   "salesAmount": 0.01,
+   "refundCount": 0,
+   "refundAmount": 0
+  },
+  {
+   "date": "2026-05-22",
+   "number": "152976220001",
+   "salesCount": 1,
+   "salesAmount": 475.15,
+   "refundCount": 0,
+   "refundAmount": 0
+  },
+  {
+   "date": "2026-05-23",
+   "number": "152976230002",
+   "salesCount": 3,
+   "salesAmount": 242.74,
+   "refundCount": 0,
+   "refundAmount": 0
+  },
+  {
+   "date": "2026-05-25",
+   "number": "152976250003",
+   "salesCount": 16,
+   "salesAmount": 1207.69,
+   "refundCount": 0,
+   "refundAmount": 0
+  }
+ ]
+}

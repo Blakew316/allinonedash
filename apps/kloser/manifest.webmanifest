@@ -1,0 +1,38 @@
+{
+  "id": "/",
+  "name": "WPI Kloser CRM — Wholesale Payments",
+  "short_name": "WPI Kloser CRM",
+  "description": "Field CRM for Wholesale Payments: leads, activities, routes, booking and GPS-verified visits — built to keep working with no signal.",
+  "lang": "en-US",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#0B1220",
+  "theme_color": "#001160",
+  "categories": ["business", "productivity", "finance"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "./assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "./assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "./assets/screenshots/wide-dashboard.jpg", "sizes": "1280x800", "type": "image/jpeg", "form_factor": "wide", "label": "Dashboard — pipeline health at a glance" },
+    { "src": "./assets/screenshots/wide-map.jpg", "sizes": "1280x800", "type": "image/jpeg", "form_factor": "wide", "label": "Territory map with clustered leads" },
+    { "src": "./assets/screenshots/wide-leads.jpg", "sizes": "1280x800", "type": "image/jpeg", "form_factor": "wide", "label": "The full lead list" },
+    { "src": "./assets/screenshots/narrow-dashboard.jpg", "sizes": "540x1169", "type": "image/jpeg", "form_factor": "narrow", "label": "Dashboard on a phone" },
+    { "src": "./assets/screenshots/narrow-leads.jpg", "sizes": "540x1169", "type": "image/jpeg", "form_factor": "narrow", "label": "Leads on a phone" }
+  ],
+  "shortcuts": [
+    { "name": "Territory map", "short_name": "Map", "url": "./#/map", "description": "Open the lead map", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "My schedule", "short_name": "Schedule", "url": "./#/schedule", "description": "Today, overdue and upcoming", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Leads", "short_name": "Leads", "url": "./#/list", "description": "The full lead list", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "BCL queue", "short_name": "BCL", "url": "./#/bcl-queue", "description": "Business card leads awaiting follow-up", "icons": [{ "src": "./assets/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 146 217" role="img" aria-label="Wholesale Payments mark">
+  <defs>
+    <linearGradient id="km-blue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0089E8"/><stop offset="1" stop-color="#00A6E6"/>
+    </linearGradient>
+    <linearGradient id="km-cyan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#008CE6"/><stop offset="1" stop-color="#00BAE6"/>
+    </linearGradient>
+    <linearGradient id="km-green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00BC66"/><stop offset="1" stop-color="#00D68E"/>
+    </linearGradient>
+    <linearGradient id="km-mint" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4DE05E"/><stop offset="1" stop-color="#51EA82"/>
+    </linearGradient>
+  </defs>
+  <rect x="0"   y="0"   width="25" height="169" rx="3" fill="url(#km-blue)"/>
+  <rect x="40"  y="0"   width="65" height="49"  rx="3" fill="url(#km-cyan)"/>
+  <rect x="40"  y="51"  width="65" height="113"        fill="url(#km-green)"/>
+  <rect x="40"  y="166" width="65" height="51"  rx="3" fill="url(#km-mint)"/>
+  <rect x="120" y="48"  width="26" height="169" rx="3" fill="url(#km-mint)"/>
+</svg>

@@ -1,0 +1,2724 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MAVERICK — Team Dashboard</title>
+<style>
+:root{
+  --bg:#F5F6F8; --panel:#FFFFFF; --panel2:#F0F2F5; --line:rgba(0,0,0,0.08);
+  --text:#1A1D23; --muted:#6B7280; --muted2:#4B5563; --accent:#2563EB;
+  --red:#DC2626; --yellow:#D97706; --green:#16A34A; --white:#6B7280;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.topbar{display:flex;align-items:center;gap:26px;padding:0 22px;height:76px;border-bottom:1px solid var(--line);background:#FFFFFF;position:sticky;top:0;z-index:5;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.brand{display:flex;align-items:center}
+.nav{display:flex;gap:0;color:var(--muted2);font-size:13px}
+.nav a{cursor:pointer;padding:0 14px;height:76px;display:flex;align-items:center;border-bottom:2px solid transparent;margin-bottom:-1px}
+.nav a.active{color:var(--accent);font-weight:600;border-bottom-color:var(--accent)}
+.nav a:hover{color:var(--text)}
+.wrap{max-width:1120px;margin:0 auto;padding:22px 22px 60px}
+.head{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin:6px 0 18px}
+.head h1{font-size:22px;margin:0;font-weight:700}
+.badge{background:none;border:none;color:#2563EB;
+  padding:0;font-size:25px;font-weight:700;letter-spacing:.4px}
+.months{margin-left:auto;display:flex;gap:6px;align-items:center}
+.months select,.rfilter-select{appearance:none;-webkit-appearance:none;background:var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E") no-repeat right 10px center;border:1px solid var(--line);border-radius:8px;padding:7px 28px 7px 12px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;outline:none}
+.months select:focus,.rfilter-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:15px 16px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.kpi .lab{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.kpi .val{font-size:28px;font-weight:700;line-height:1}
+.kpi .sub{color:var(--muted2);font-size:12px;margin-top:6px}
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.card.full{grid-column:1/-1}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);margin:0;padding:14px 16px;border-bottom:1px solid var(--line);font-weight:700}
+table{width:100%;border-collapse:collapse}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);text-align:left;padding:9px 16px;font-weight:600;border-bottom:1px solid var(--line)}
+td{padding:10px 16px;border-bottom:1px solid rgba(72,110,149,.10);font-size:13px}
+tr:last-child td{border-bottom:0}
+.rank{color:var(--muted2);font-weight:700;width:34px}
+.rank.top{color:#D97706}
+.repname{font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.dot.green{background:var(--green)} .dot.yellow{background:var(--yellow)} .dot.red{background:var(--red)} .dot.white{background:#9CA3AF}
+.pct{font-weight:700} .pct.green{color:var(--green)} .pct.yellow{color:var(--yellow)} .pct.red{color:var(--red)}
+.chips{display:flex;gap:6px;padding:12px 16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.chip{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--muted2);border-radius:18px;padding:4px 11px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
+.chip.active{color:var(--text);border-color:transparent}
+.chip.active[data-t=White]{background:rgba(107,114,128,.15);color:#374151} .chip.active[data-t=Green]{background:rgba(22,163,74,.12);color:#16A34A}
+.chip.active[data-t=Yellow]{background:rgba(217,119,6,.12);color:#D97706} .chip.active[data-t=Red]{background:rgba(220,38,38,.12);color:#DC2626}
+.chip.active[data-t=All]{background:var(--accent);color:#FFFFFF}
+.merch-search-wrap{padding:12px 16px 0}
+.merch-search-box{position:relative;display:block;width:100%;max-width:420px}
+.merch-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted2);pointer-events:none}
+.merch-search{width:100%;padding:8px 30px 8px 33px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--text);font-size:13px;outline:none;box-sizing:border-box}
+.merch-search::placeholder{color:var(--muted2)}
+.merch-search:focus{border-color:var(--accent)}
+.merch-search-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted2);font-size:18px;line-height:1;cursor:pointer;display:none;padding:2px 6px;border-radius:6px}
+.merch-search-clear:hover{color:var(--text)}
+.merch-search-clear.show{display:block}
+.mlist{max-height:560px;overflow:auto}
+.merch-scroll{max-height:480px;overflow-x:auto;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:auto;scrollbar-color:#2563EB rgba(72,110,149,.14)}
+.merch-scroll::-webkit-scrollbar{height:14px;width:12px;-webkit-appearance:none}
+.merch-scroll::-webkit-scrollbar-track{background:rgba(72,110,149,.12);border-radius:8px}
+.merch-scroll::-webkit-scrollbar-thumb{background:#2563EB;border-radius:8px;border:3px solid #FFFFFF}
+.merch-scroll::-webkit-scrollbar-thumb:hover{background:#1d4ed8}
+.merch-scroll::-webkit-scrollbar-corner{background:transparent}
+/* Custom always-visible horizontal slider (plain divs — no native scrollbar
+   dependency, so it renders the same on every browser/OS). */
+.merch-slider{position:relative;height:16px;background:rgba(72,110,149,.16);border-radius:8px;margin:2px 0 8px;display:none;touch-action:none;user-select:none}
+.merch-slider-thumb{position:absolute;top:0;left:0;height:16px;min-width:48px;width:90px;background:#2563EB;border-radius:8px;cursor:grab;transition:background .12s}
+.merch-slider-thumb:hover{background:#1d4ed8}
+.merch-slider-thumb:active{cursor:grabbing;background:#1d4ed8}
+.pended-table{width:100%;border-collapse:collapse;font-size:13px}
+.pended-table th{text-align:left;padding:8px 10px;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);border-bottom:2px solid rgba(72,110,149,.15);white-space:nowrap}
+.pended-table td{padding:8px 10px;border-bottom:1px solid rgba(72,110,149,.08);vertical-align:top}
+.pended-table tr:last-child td{border-bottom:0}
+.pended-table tr:hover td{background:rgba(72,110,149,.04)}
+.pended-table td:nth-child(5),.pended-table td:nth-child(6),.pended-table td:nth-child(7){font-size:12px;color:var(--muted);max-width:220px;white-space:normal;line-height:1.4}
+.pended-table td:nth-child(8){white-space:nowrap;font-variant-numeric:tabular-nums}
+.pended-empty{padding:22px 16px;text-align:center;color:var(--muted2);font-size:13px}
+.merch-scroll table{min-width:1200px;width:100%}
+.merch-scroll thead th{position:sticky;top:0;background:var(--panel);z-index:1;white-space:nowrap}
+.merch-scroll td{white-space:nowrap}
+.merch-scroll td:nth-child(3){white-space:normal;min-width:180px}
+.m{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid rgba(72,110,149,.10);border-left:3px solid transparent}
+.m:last-child{border-bottom:0}
+.m.White{border-left-color:#9CA3AF;background:rgba(107,114,128,.04)}
+.m.Green{border-left-color:var(--green);background:rgba(22,163,74,.04)}
+.m.Yellow{border-left-color:var(--yellow);background:rgba(217,119,6,.04)}
+.m.Red{border-left-color:var(--red);background:rgba(220,38,38,.04)}
+.m .info{min-width:0;flex:1}
+.m .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m .meta{color:var(--muted);font-size:11.5px;margin-top:2px}
+.m .stat{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.m .stat .v{font-weight:700}.m .stat .l{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px}
+.tierbadge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:4px}
+.tierbadge.White{background:rgba(107,114,128,.12);color:#4B5563}.tierbadge.Green{background:rgba(22,163,74,.1);color:var(--green)}
+.tierbadge.Yellow{background:rgba(217,119,6,.1);color:var(--yellow)}.tierbadge.Red{background:rgba(220,38,38,.1);color:var(--red)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:12px;color:var(--muted2);box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.legend .it{display:flex;align-items:center;gap:8px}
+.foot{color:var(--muted);font-size:11.5px;margin-top:20px;text-align:center;line-height:1.6}
+.page{display:none}
+.page.active{display:block}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.empty .icon{font-size:36px;margin-bottom:12px}
+.empty .title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.rep-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.rep-card .rc-name{font-size:15px;font-weight:700;margin-bottom:4px}
+.rep-card .rc-sub{color:var(--muted);font-size:12px;margin-bottom:12px}
+.rep-card .rc-stats{display:flex;gap:16px}
+.rep-card .rc-stat{text-align:center;flex:1}
+.rep-card .rc-stat .v{font-size:20px;font-weight:700}
+.rep-card .rc-stat .l{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:2px}
+.bar-wrap{height:6px;background:var(--panel2);border-radius:3px;margin-top:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+/* Recruiting page styles */
+.stage-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.stage-badge.sb-applied{background:rgba(220,38,38,.10);color:var(--red)}
+.stage-badge.sb-interview{background:rgba(37,99,235,.12);color:var(--accent)}
+.stage-badge.sb-hired{background:rgba(22,163,74,.12);color:var(--green)}
+.source-tag{font-size:10px;font-weight:600;color:var(--muted2);background:var(--panel2);padding:2px 7px;border-radius:10px}
+.notes-cell{max-width:320px;white-space:pre-wrap;word-break:break-word;color:var(--muted2);font-size:12.5px;line-height:1.45}
+.recruit-section-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);font-weight:700;margin:18px 0 10px;padding-left:2px}
+.rfilter-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 18px}
+.rfilter-bar .rflabel{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700;margin-right:4px}
+.rfilter{background:var(--panel);border:1px solid var(--line);color:var(--muted2);padding:6px 13px;border-radius:18px;font-size:12px;font-weight:600;cursor:pointer}
+.rfilter:hover{color:var(--text)}
+.rfilter.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-edit{background:var(--panel2);border:1px solid var(--line);color:var(--muted2);padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+.btn-edit:hover{color:var(--accent);border-color:var(--accent)}
+.btn-add-team{background:var(--accent);border:1px solid var(--accent);color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+.btn-add-team:hover{opacity:.85}
+.btn-add-team.added{background:rgba(22,163,74,.12);border-color:transparent;color:var(--green);cursor:default}
+.scroll-table{max-height:380px;overflow:auto}
+.scroll-table thead th{position:sticky;top:0;background:var(--panel);z-index:1}
+.team-list{max-height:340px;overflow:auto}
+.tmember{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(72,110,149,.10)}
+.tmember:last-child{border-bottom:0}
+.tm-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tm-info{flex:1;min-width:0}
+.tm-name{font-weight:600}
+.tm-meta{color:var(--muted);font-size:12px;margin-top:2px;line-height:1.5;word-break:break-word}
+.contact-link{color:var(--accent);text-decoration:none;font-weight:500;cursor:pointer}
+.contact-link:hover{text-decoration:underline}
+.contact-phone{display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap;vertical-align:middle}
+.cp-num{white-space:nowrap}
+.contact-act{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:5px;color:var(--accent);background:rgba(37,99,235,.09);flex-shrink:0}
+.contact-act:hover{background:rgba(37,99,235,.18)}
+.contact-act svg{display:block}
+.tm-date{color:var(--muted2);font-size:11.5px;white-space:nowrap;margin-right:4px}
+.tm-merchants{font-size:12px;color:var(--muted2);white-space:nowrap;margin-right:8px;display:flex;align-items:center;gap:4px}
+.tm-mc{font-weight:700;font-size:16px;color:var(--accent)}
+.tm-remove{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:2px 8px;line-height:1;border-radius:4px}
+.tm-remove:hover{color:var(--red);background:var(--panel2)}
+.field select{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:6px;font-size:13px;color:var(--text);background:var(--bg);outline:none;cursor:pointer}
+.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.sync-bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding:12px 16px;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.sync-bar .sync-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.sync-bar .sync-label{font-size:12px;font-weight:600;color:var(--muted2);display:flex;align-items:center;gap:6px}
+.sync-bar .sync-label svg{flex-shrink:0}
+.sync-bar .sync-status{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sync-bar .sync-status.syncing{color:var(--accent)}
+.sync-bar .sync-status.error{color:var(--red)}
+.sync-bar .sync-status.success{color:var(--green)}
+.btn-sync{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn-sync:disabled{opacity:.5;cursor:not-allowed}
+.btn-sync.primary{background:var(--accent);color:#fff}
+.btn-sync.primary:hover:not(:disabled){opacity:.85}
+.btn-sync.secondary{background:var(--panel2);color:var(--muted2);border:1px solid var(--line)}
+.btn-sync.secondary:hover:not(:disabled){color:var(--text)}
+.btn-sync .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--panel);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.15);width:460px;max-width:92vw;overflow:hidden}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+.modal-head h3{margin:0;font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;padding:4px 8px;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:20px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.field input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:6px;font-size:13px;color:var(--text);background:var(--bg);outline:none}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.field textarea{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:6px;font-size:13px;color:var(--text);background:var(--bg);outline:none;resize:vertical;min-height:60px;font-family:inherit}
+.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.field .hint{font-size:11px;color:var(--muted);margin-top:4px}
+.modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:16px 20px;border-top:1px solid var(--line);background:var(--bg)}
+/* Merchant detail modal */
+.modal.mdet{width:960px;max-height:90vh;display:flex;flex-direction:column}
+.modal.mdet .modal-body{overflow:auto}
+.merch-name-cell{cursor:pointer}
+.merch-name-cell:hover strong{text-decoration:underline;color:var(--accent)}
+.mdet-status{font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.mdet-status .sd{width:8px;height:8px;border-radius:50%;display:inline-block}
+.mdet-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.mdet-card{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--panel)}
+.mdet-card .top{display:flex;align-items:center;justify-content:space-between}
+.mdet-card .sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.mdet-card .proj{font-size:11px;color:var(--muted2)}
+.mdet-card .big{font-size:24px;font-weight:700;margin-top:4px}
+.mdet-spark{height:38px;width:100%;display:block;margin-top:8px}
+.mdet-grid{display:grid;grid-template-columns:290px 1fr;gap:16px}
+.mdet-info{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--panel);align-self:start}
+.mdet-info h4{margin:0 0 10px;font-size:14px;font-weight:700}
+.mdet-info .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin-bottom:4px}
+.mdet-lbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.mdet-val{font-size:13px;font-weight:600;color:var(--text);word-break:break-word}
+.mdet-val a{color:var(--accent);text-decoration:none}
+.mdet-val a:hover{text-decoration:underline}
+.mdet-sep{border:none;border-top:1px solid var(--line);margin:12px 0}
+.mdet-ct{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:8px}
+.mdet-line{font-size:13px;margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.mdet-line .k{color:var(--muted2);font-size:11px;min-width:26px;text-transform:uppercase;letter-spacing:.4px}
+.mdet-icons a{font-size:17px;text-decoration:none;margin-right:4px}
+.mdet-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.mdet-tab{padding:8px 14px;font-size:13px;font-weight:600;color:var(--muted2);cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:7px 7px 0 0;margin-bottom:-1px}
+.mdet-tab.active{color:var(--text);background:var(--panel);border-color:var(--line)}
+.mdet-tabpanel{border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;max-height:360px;overflow:auto}
+.mdet-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.mdet-table th{position:sticky;top:0;background:var(--panel2);text-align:left;padding:8px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);white-space:nowrap}
+.mdet-table td{padding:7px 12px;border-top:1px solid var(--line);white-space:nowrap}
+.mdet-table tr.empty td{color:var(--muted2);font-style:italic}
+.mdet-table a{color:var(--accent);text-decoration:none}
+.mdet-table a:hover{text-decoration:underline}
+.mdet-empty{padding:28px 16px;text-align:center;color:var(--muted2);font-size:13px}
+.mdet-stamp{font-size:11px;color:var(--muted2);margin-top:12px;text-align:right}
+.mdet-spin{display:inline-block;width:22px;height:22px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+.note-badge{font-size:13px;cursor:help;margin-left:2px}
+.mdet-notes{font-size:13px;line-height:1.5;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;white-space:pre-wrap;word-break:break-word}
+.mdet-editnotes{font-size:11px;font-weight:600;color:var(--accent);background:none;border:none;cursor:pointer;padding:0 0 0 6px}
+.mdet-editnotes:hover{text-decoration:underline}
+@media(max-width:760px){.mdet-grid{grid-template-columns:1fr}.mdet-metrics{grid-template-columns:1fr}}
+.btn-edit-merch{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:4px;line-height:1}
+.btn-edit-merch:hover{color:var(--accent);background:rgba(37,99,235,.08)}
+.bulk-bar{display:none;align-items:center;gap:12px;padding:10px 16px;background:rgba(37,99,235,.06);border-bottom:1px solid var(--line)}
+.bulk-bar.show{display:flex}
+.bulk-bar .bulk-count{font-size:13px;font-weight:600;color:var(--accent)}
+.bulk-bar .btn-bulk{background:var(--accent);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+.bulk-bar .btn-bulk:hover{opacity:.85}
+.bulk-bar .btn-bulk-cancel{background:none;border:1px solid var(--line);color:var(--muted2);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+.bulk-bar .btn-bulk-cancel:hover{color:var(--text);border-color:var(--muted)}
+.bulk-cb{width:16px;height:16px;cursor:pointer;accent-color:var(--accent)}
+.conn-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.conn-dot.connected{background:var(--green)}
+.conn-dot.disconnected{background:var(--muted)}
+/* ===== Tabler-style Team Dashboard (Rankings tab) — mirrors sales.wholesalepayments.org ===== */
+.tdash{--t-green:#2fb344;--t-orange:#f76707;--t-blue:#206bc4;--t-red:#d63939;--t-yellow:#f59f00;--t-muted:#667382;--t-line:rgba(4,32,69,.09);--t-body:#1d273b}
+.tdash *{box-sizing:border-box}
+.tdash-header{margin:2px 0 14px}
+.tdash-title{font-size:21px;font-weight:600;margin:0;display:flex;align-items:center;gap:10px;color:var(--t-body)}
+.rep-metrics{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.rep-left{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:16px}
+.rep-right{flex:0 1 33.333%;min-width:300px;display:flex;flex-direction:column;gap:16px}
+.tcard{background:#fff;border:1px solid var(--t-line);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.04);overflow:hidden}
+.tcard-header{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--t-line)}
+.tcard-title{font-size:14px;font-weight:600;margin:0;color:var(--t-body)}
+.tcard-body{padding:14px 16px}
+.tsubheader{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--t-muted)}
+.t-muted{color:var(--t-muted)}
+.t-sm{font-size:12px}
+.rep-rank-head{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--t-line);font-size:11px;font-weight:600;color:var(--t-muted);text-transform:uppercase;letter-spacing:.03em}
+.rep-rank-list{max-height:360px;overflow:auto}
+.rep-row{display:flex;align-items:center;gap:10px;padding:6px 16px;border-top:1px solid var(--t-line)}
+.rep-row:first-child{border-top:0}
+.rr-rank{width:22px;text-align:center;font-weight:700;color:var(--t-muted);flex-shrink:0}
+.rr-rank.top{color:#d9890a}
+.rr-name{flex:1;min-width:0;font-weight:600;color:var(--t-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rr-deals{width:62px;flex-shrink:0;text-align:right}
+.rr-vol{width:120px;flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;gap:1px}
+.rep-cur{color:var(--t-muted);font-size:13px}
+.rep-in{border:1px solid transparent;background:transparent;border-radius:5px;font:inherit;font-size:13px;color:var(--t-body);text-align:right;padding:3px 6px;font-variant-numeric:tabular-nums;cursor:pointer}
+.rr-deals .rep-in{width:54px}
+.rr-vol .rep-in{width:94px}
+.rep-in:hover{border-color:var(--t-line);background:#fff;cursor:text}
+.rep-in:focus{outline:none;border-color:var(--accent);background:#fff;box-shadow:0 0 0 2px rgba(37,99,235,.12);cursor:text}
+.rep-in::-webkit-outer-spin-button,.rep-in::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.rep-in[type=number]{-moz-appearance:textfield}
+.t-list{display:flex;flex-direction:column}
+#tdash-nonproc{max-height:280px;overflow:auto}
+.t-np{display:flex;align-items:center;gap:12px;padding:9px 16px;border-top:1px solid var(--t-line)}
+.t-np:first-child{border-top:0}
+.t-np-main{flex:1;min-width:0}
+.t-np-name{font-size:13px;font-weight:500;color:var(--t-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t-np-sub{font-size:11px;color:var(--t-muted);margin-top:1px}
+.t-np-steps{width:42%;min-width:130px}
+.t-np-sl{display:flex;text-align:center;font-size:10.5px}
+.t-np-sl>div{flex:1}
+.t-np-sl .v{font-weight:500;color:var(--t-body)}
+.t-np-sl .v.off{color:var(--t-muted)}
+.t-steps{display:flex;gap:4px;margin-top:5px}
+.t-step{flex:1;height:5px;border-radius:3px;background:rgba(4,32,69,.10)}
+.t-step.on{background:var(--t-green)}
+.t-np-right{text-align:center;min-width:40px}
+.t-np-right .n{font-size:19px;font-weight:700;line-height:1.05}
+.t-np-right .n.warn{color:var(--t-yellow)}
+.t-np-right .n.mut{color:var(--t-muted)}
+.t-np-right .l{font-size:10px;color:var(--t-muted)}
+.t-mom{padding:18px 16px;border-top:1px solid var(--t-line);border-left:3px solid var(--t-green);display:flex;gap:16px;justify-content:space-between;align-items:center;min-height:64px}
+.t-mom:first-child{border-top:0}
+.t-mom .fw{font-weight:600;color:var(--t-body)}
+.t-mom .r{text-align:right}
+.t-mom .r .big{font-size:19px;font-weight:700;color:var(--t-body);line-height:1.1;margin-bottom:3px}
+.t-mom .r .t-sm{margin-top:1px}
+.t-badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px;line-height:1.5}
+.t-badge.green{background:rgba(47,179,68,.14);color:#258a37}
+.t-badge.orange{background:rgba(247,103,7,.14);color:#bd5404}
+.t-badge.blue{background:rgba(32,107,196,.14);color:var(--t-blue)}
+.t-badge.red{background:rgba(214,57,57,.14);color:var(--t-red)}
+.tcard table{width:100%;border-collapse:collapse}
+.tcard th{font-size:11.5px;color:var(--t-muted);text-transform:none;font-weight:600;text-align:left;padding:7px 8px;border-bottom:1px solid var(--t-line);letter-spacing:0}
+.tcard td{padding:8px 8px;font-size:13px;border-bottom:1px solid var(--t-line);color:var(--t-body)}
+.tcard tr:last-child td{border-bottom:0}
+.tcard .tnum{text-align:right;font-variant-numeric:tabular-nums}
+.t-striped tbody tr:nth-child(odd) td{background:rgba(4,32,69,.022)}
+.t-mrow .mn{font-weight:500}
+.t-mrow .mid{color:var(--t-muted);font-size:11px}
+.t-red{color:var(--t-red)} .t-green2{color:#258a37}
+@media(max-width:767px){.rep-right{flex:0 0 100%;min-width:0;width:100%}.rep-left{flex:0 0 100%}}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.nav{display:none}.stat-row{grid-template-columns:1fr}.metrics-grid{grid-template-columns:1fr}}
+
+/* ===== Mobile / iOS responsive ===== */
+.mobile-menu-btn{display:none;background:none;border:none;padding:10px;cursor:pointer;color:var(--muted2);-webkit-tap-highlight-color:transparent;line-height:0}
+.mobile-menu-btn svg{display:block}
+.mobile-nav-overlay{display:none;position:fixed;inset:0;z-index:50}
+.mobile-nav-overlay.open{display:block}
+.mobile-nav-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.mobile-nav-panel{position:absolute;top:0;right:0;width:260px;max-width:80vw;height:100%;background:#fff;box-shadow:-4px 0 20px rgba(0,0,0,.12);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.mobile-nav-overlay.open .mobile-nav-panel{transform:translateX(0)}
+.mobile-nav-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.mobile-nav-head span{font-size:14px;font-weight:700;color:var(--text)}
+.mobile-nav-close{background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;padding:4px 8px;line-height:1}
+.mobile-nav-links a{display:block;padding:16px 24px;font-size:15px;font-weight:500;color:var(--muted2);border-bottom:1px solid var(--line);-webkit-tap-highlight-color:transparent}
+.mobile-nav-links a.active{color:var(--accent);font-weight:600;background:rgba(37,99,235,.04)}
+
+@media(max-width:860px){
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center;margin-left:auto}
+  .topbar{padding:0 14px;gap:10px;height:58px}
+  .brand img{height:52px}
+  .wrap{padding:14px 12px 40px}
+  .head{gap:8px;margin:4px 0 14px}
+  .head h1{font-size:18px}
+  .badge{font-size:20px}
+  .months select{font-size:12px;padding:6px 24px 6px 10px}
+  .kpis{gap:10px}
+  .kpi{padding:12px 14px}
+  .kpi .val{font-size:22px}
+  .card h2{padding:12px 14px;font-size:11px}
+  td{padding:8px 12px}
+  th{padding:7px 12px}
+  .stat-row{gap:10px}
+  .rep-card{padding:12px}
+  .rep-card .rc-stat .v{font-size:16px}
+  .tcard-header{padding:10px 14px}
+  .tcard-body{padding:12px 14px}
+  .modal{max-width:95vw;margin:10px}
+  .rfilter-bar{gap:5px}
+  .rfilter{padding:6px 12px;font-size:11px}
+  .sync-bar{flex-wrap:wrap;padding:10px 14px;gap:8px}
+  .t-np{padding:9px 12px;gap:8px}
+  .t-np-steps{width:38%;min-width:90px}
+  .tmember{padding:10px 12px;gap:10px}
+  .legend{padding:10px 12px;gap:12px;font-size:11px}
+  .rep-row{padding:6px 12px;gap:8px}
+  .rep-rank-head{padding:8px 12px;gap:8px}
+  .rr-vol{width:100px}
+  .rr-vol .rep-in{width:78px}
+  .t-mom{padding:14px 12px}
+  .chips{padding:10px 14px}
+  .m{padding:10px 12px}
+  .merch-search-wrap{padding:10px 14px 0}
+  .bulk-bar{flex-wrap:wrap;padding:8px 12px}
+  /* iOS: prevent zoom on input focus */
+  .merch-search,.field input,.field textarea,.field select,.rep-in{font-size:16px}
+  /* iOS: smooth momentum scrolling */
+  .rep-rank-list,.merch-scroll,.scroll-table,.team-list,.mlist,#tdash-nonproc{-webkit-overflow-scrolling:touch}
+}
+
+@media(max-width:480px){
+  .topbar{padding:0 10px;height:52px}
+  .brand img{height:46px}
+  .wrap{padding:10px 8px 32px}
+  .head{flex-direction:column;align-items:flex-start;gap:6px}
+  .months{margin-left:0;width:100%}
+  .months select{flex:1;min-width:0}
+  .kpis{gap:8px}
+  .kpi{padding:10px 12px}
+  .kpi .val{font-size:19px}
+  .kpi .lab{font-size:10px;letter-spacing:.4px}
+  .kpi .sub{font-size:11px}
+  .rep-metrics{gap:12px}
+  .rr-vol{width:88px}
+  .rr-vol .rep-in{width:68px}
+  .rr-deals .rep-in{width:46px}
+  .rr-name{font-size:13px}
+  .tcard table{font-size:12px}
+  .tcard th{font-size:10.5px;padding:6px 6px}
+  .tcard td{padding:7px 6px;font-size:12px}
+  .tm-avatar{width:30px;height:30px;font-size:11px}
+  .t-np-steps{width:36%;min-width:80px}
+  .t-mom .r .big{font-size:17px}
+  .modal-body{padding:16px}
+  .modal-head{padding:14px 16px}
+  .modal-foot{padding:14px 16px}
+  .sync-bar .sync-left{flex-wrap:wrap}
+  .legend{flex-direction:column;gap:8px}
+}
+</style></head>
+<body>
+<div class="topbar">
+  <div class="brand"><img src="logo.png" alt="Wholesale Payments" height="78"></div>
+  <nav class="nav" id="nav">
+    <a data-page="rankings" class="active">Rankings</a>
+    <a data-page="merchants">Merchants</a>
+    <a data-page="recruiting">Recruiting</a>
+    <a data-page="transfers">RGA's</a>
+  </nav>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</div>
+<div class="mobile-nav-overlay" id="mobile-nav">
+  <div class="mobile-nav-backdrop" id="mobile-nav-close-backdrop"></div>
+  <div class="mobile-nav-panel">
+    <div class="mobile-nav-head"><span>Menu</span><button class="mobile-nav-close" id="mobile-nav-close-btn">&times;</button></div>
+    <div class="mobile-nav-links" id="mobile-nav-links">
+      <a data-page="rankings" class="active">Rankings</a>
+      <a data-page="merchants">Merchants</a>
+      <a data-page="recruiting">Recruiting</a>
+      <a data-page="transfers">RGA's</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <span class="badge">TEAM MAVERICK</span>
+    <span id="synced-stamp" style="margin-left:10px;font-size:11px;color:var(--muted,#8a93a6);white-space:nowrap">Data synced Jun 30, 2026 · 8:44 AM CT</span>
+    <div class="months" id="months"></div>
+  </div>
+
+  <div id="page-rankings" class="page active">
+    <div class="tdash">
+      <div class="tdash-header">
+        <h2 class="tdash-title">Sales Dashboard</h2>
+      </div>
+      <div class="rep-metrics">
+        <div class="rep-left">
+          <div class="tcard">
+            <div class="tcard-header"><h3 class="tcard-title">Sales Rep Rankings</h3>
+            </div>
+            <div class="rep-rank-head">
+              <div class="rr-rank">#</div><div class="rr-name">Sales Rep</div>
+              <div class="rr-deals">Deals</div><div class="rr-vol">Volume</div>
+            </div>
+            <div class="rep-rank-list" id="rep-rankings"></div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-header"><h3 class="tcard-title">Nonprocessing Merchants</h3>
+              <span class="t-badge orange" id="tdash-np-count" style="margin-left:auto"></span>
+            </div>
+            <div class="t-list" id="tdash-nonproc"></div>
+          </div>
+        </div>
+        <div class="rep-right">
+          <div class="tcard">
+            <div class="tcard-body" style="padding-bottom:10px"><div class="tsubheader">This Month vs Last Month</div></div>
+            <div class="t-list" id="tdash-momentum"></div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-header"><h3 class="tcard-title">Top 5 Merchants by Volume</h3></div>
+            <div class="tcard-body" style="padding:6px 12px">
+              <table class="t-striped"><thead><tr><th>Merchant</th><th class="tnum">Volume</th><th class="tnum">Txns</th><th class="tnum">Tier</th></tr></thead>
+              <tbody id="tdash-top"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card full" style="margin-top:18px">
+      <h2>Team Maverick &middot; <span id="team-count">0</span> members</h2>
+      <div class="team-list" id="team-list"></div>
+    </div>
+  </div>
+
+  <div id="page-merchants" class="page">
+    <div class="kpis" id="merch-kpis"></div>
+    <div class="card full">
+      <h2>All Merchants</h2>
+      <div class="merch-search-wrap">
+        <div class="merch-search-box">
+          <svg class="merch-search-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input type="text" id="merch-search" class="merch-search" placeholder="Search by merchant, rep, owner, MID, email…" oninput="setMerchSearch(this.value)" autocomplete="off">
+          <button class="merch-search-clear" id="merch-search-clear" onclick="clearMerchSearch()" title="Clear search" type="button">&times;</button>
+        </div>
+      </div>
+      <div class="chips" id="merch-chips"></div>
+      <div class="bulk-bar" id="merch-bulk-bar"><span class="bulk-count" id="merch-bulk-count">0 selected</span><button class="btn-bulk" onclick="openBulkMerchEdit()">Bulk Edit</button><button class="btn-bulk-cancel" onclick="clearMerchSelection()">Clear</button></div>
+      <div class="merch-slider" id="merch-slider"><div class="merch-slider-thumb" id="merch-slider-thumb"></div></div>
+      <div class="merch-scroll" id="merch-scroll">
+      <table>
+        <thead><tr><th style="width:32px"><input type="checkbox" class="bulk-cb" id="merch-select-all" onchange="toggleAllMerch(this.checked)"></th><th>MID</th><th>Merchant</th><th>Sales Rep</th><th>Owner</th><th>Phone</th><th>Email</th><th>Equipment</th><th>Status</th><th class="num">Volume</th><th class="num">Txns</th><th>Tier</th><th style="width:40px"></th></tr></thead>
+        <tbody id="merch-table"></tbody>
+      </table>
+      </div>
+    </div>
+    <div class="card full" id="pended-card" style="margin-top:24px">
+      <h2>Pended Deals</h2>
+      <div class="scroll-table">
+      <table class="pended-table">
+        <thead><tr><th>DBA</th><th>GM</th><th>Team</th><th>Sales Rep</th><th>Pend Category</th><th>Sub-Category</th><th>Comment</th><th>Pend Date</th></tr></thead>
+        <tbody id="pended-table"></tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-transfers" class="page">
+    <div class="sync-bar">
+      <div class="sync-left">
+        <div class="sync-label">RingCentral Transfers</div>
+        <span class="sync-status" id="transfers-sync-status"></span>
+      </div>
+      <button class="btn-sync primary" onclick="syncTransfers()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right:4px"><path d="M1 8a7 7 0 0 1 13-3.5M15 8a7 7 0 0 1-13 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 1v4h-4M2 15v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Sync Transfers
+      </button>
+    </div>
+    <div class="rfilter-bar" id="transfers-filter"></div>
+    <div class="kpis" id="transfers-kpis"></div>
+    <div class="card full">
+      <h2>Transfers</h2>
+      <div class="scroll-table">
+      <table>
+        <thead><tr><th>Date / Time</th><th>Direction</th><th>From</th><th>To</th><th class="num">Duration</th><th>Result</th><th>Notes</th><th style="width:40px"></th></tr></thead>
+        <tbody id="transfers-table"></tbody>
+      </table>
+      </div>
+    </div>
+    <div style="margin-top:28px">
+      <div class="sync-bar">
+        <div class="sync-left">
+          <div class="sync-label">GMASS Email Replies</div>
+          <span class="sync-status" id="gmass-sync-status"></span>
+        </div>
+        <button class="btn-sync primary" id="btn-sync-gmass" onclick="syncGmassEmails()">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right:4px"><path d="M1 8a7 7 0 0 1 13-3.5M15 8a7 7 0 0 1-13 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 1v4h-4M2 15v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Sync Emails
+        </button>
+      </div>
+      <div class="rfilter-bar" id="gmass-filter"></div>
+      <div class="kpis" id="gmass-kpis"></div>
+      <div class="card full">
+        <h2>Account Manager Position &mdash; Replies</h2>
+        <div class="scroll-table">
+        <table>
+          <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Snippet</th></tr></thead>
+          <tbody id="gmass-table"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-recruiting" class="page">
+    <div class="sync-bar">
+      <div class="sync-left">
+        <div class="sync-label">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3h12v2H2V3zm0 4h12v2H2V7zm0 4h8v2H2v-2z" fill="currentColor"/></svg>
+          BambooHR
+          <span class="conn-dot disconnected" id="bhr-conn"></span>
+        </div>
+        <div class="sync-status" id="sync-status">Not connected</div>
+      </div>
+      <button class="btn-sync secondary" onclick="openBhrSettings()">Settings</button>
+      <button class="btn-sync primary" id="btn-sync" onclick="syncBambooHR()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.2 2.8A5.25 5.25 0 002.63 7H1L3.5 9.5 6 7H4.38a3.5 3.5 0 016.09-2.33l1.06-1.06A5.22 5.22 0 0011.2 2.8zM10.5 4.5L8 7h1.62a3.5 3.5 0 01-6.09 2.33L2.47 10.4A5.25 5.25 0 0013 7h1.63L12.13 4.5 10.5 4.5z" fill="currentColor"/></svg>
+        Sync Now
+      </button>
+    </div>
+    <div class="kpis" id="recruit-kpis"></div>
+    <div class="rfilter-bar" id="recruit-filter"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px">
+      <div class="recruit-section-label" style="margin:0">New Hires</div>
+      <button class="btn-sync primary" onclick="openAddHire()" style="padding:6px 14px;font-size:12px">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-right:4px"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Add New Hire
+      </button>
+    </div>
+    <div class="card full" style="margin-bottom:16px">
+      <div class="bulk-bar" id="hire-bulk-bar"><span class="bulk-count" id="hire-bulk-count">0 selected</span><button class="btn-bulk" onclick="openBulkHireEdit()">Bulk Edit</button><button class="btn-bulk-cancel" onclick="clearHireSelection()">Clear</button></div>
+      <div class="scroll-table">
+      <table>
+        <thead><tr><th style="width:32px"><input type="checkbox" class="bulk-cb" id="hire-select-all" onchange="toggleAllHires(this.checked)"></th><th>Name</th><th>Home Email</th><th>Work Phone</th><th>Hire Date</th><th>Notes</th><th style="text-align:right">Actions</th></tr></thead>
+        <tbody id="recruit-hires"></tbody>
+      </table>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>Training</h2>
+        <div class="scroll-table">
+        <table>
+          <thead><tr><th>Name</th><th>Status</th></tr></thead>
+          <tbody id="recruit-training"></tbody>
+        </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Paperwork Sent</h2>
+        <div class="scroll-table">
+        <table>
+          <thead><tr><th>Name</th><th>Status</th></tr></thead>
+          <tbody id="recruit-paperwork"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:28px">
+      <div class="sync-bar">
+        <div class="sync-left">
+          <div class="sync-label">Transfers</div>
+          <span class="sync-status" id="sheet-sync-status"></span>
+        </div>
+        <button class="btn-sync primary" id="btn-sync-sheet" onclick="syncSheetTransfers()">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right:4px"><path d="M1 8a7 7 0 0 1 13-3.5M15 8a7 7 0 0 1-13 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 1v4h-4M2 15v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Sync Sheet
+        </button>
+      </div>
+      <div class="rfilter-bar" id="sheet-filter"></div>
+      <div class="card full">
+        <h2>Transfers</h2>
+        <div class="scroll-table">
+        <table>
+          <thead id="sheet-transfers-head"><tr><th>Loading...</th></tr></thead>
+          <tbody id="sheet-transfers-body"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="bhr-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>BambooHR Settings</h3>
+      <button class="modal-close" onclick="closeBhrSettings()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Worker URL</label>
+        <input type="text" id="bhr-worker" placeholder="https://your-worker.workers.dev">
+        <div class="hint">Your Cloudflare Worker URL that proxies BambooHR. Your API key and subdomain are stored securely in the worker — not in this browser.</div>
+      </div>
+      <div id="bhr-test-result" style="font-size:12px;margin-top:4px"></div>
+      <div style="margin-top:16px;padding:14px;background:var(--bg);border-radius:8px;font-size:12px;color:var(--muted2);line-height:1.6">
+        <strong style="color:var(--text)">Setup (one time):</strong><br>
+        1. Go to <strong>dash.cloudflare.com</strong> &rarr; Workers &amp; Pages &rarr; Create Worker<br>
+        2. Paste the worker code (see docs), replacing <code>YOUR_SUBDOMAIN</code> and <code>YOUR_API_KEY</code><br>
+        3. Click Deploy, then paste your worker URL above
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="testBhrConnection()">Test Connection</button>
+      <button class="btn-sync primary" onclick="saveBhrSettings()">Save &amp; Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="hire-modal">
+  <div class="modal" style="width:520px">
+    <div class="modal-head"><h3>Edit Hire</h3><button class="modal-close" onclick="closeHireEdit()">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>First Name</label><input type="text" id="hire-edit-fname"></div>
+        <div class="field"><label>Last Name</label><input type="text" id="hire-edit-lname"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Home Email</label><input type="email" id="hire-edit-email"></div>
+        <div class="field"><label>Work Phone</label><input type="tel" id="hire-edit-phone"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Hire Date</label><input type="date" id="hire-edit-date"></div>
+        <div class="field"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Training</label>
+          <select id="hire-edit-training">
+            <option value="Complete">Completed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Not Started">Not Completed</option>
+          </select>
+        </div>
+        <div class="field"><label>Paperwork</label>
+          <select id="hire-edit-paperwork">
+            <option value="Complete">Completed</option>
+            <option value="Sent">Sent — awaiting return</option>
+            <option value="Not Returned">Not Returned</option>
+            <option value="Not Sent">Not Sent</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0"><label>Notes</label><textarea id="hire-edit-notes" placeholder="Notes about this hire..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeHireEdit()">Cancel</button>
+      <button class="btn-sync primary" onclick="saveHireEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="add-hire-modal">
+  <div class="modal" style="width:520px">
+    <div class="modal-head"><h3>Add New Hire</h3><button class="modal-close" onclick="closeAddHire()">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>First Name</label><input type="text" id="add-hire-fname"></div>
+        <div class="field"><label>Last Name</label><input type="text" id="add-hire-lname"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Home Email</label><input type="email" id="add-hire-email"></div>
+        <div class="field"><label>Work Phone</label><input type="tel" id="add-hire-phone"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Hire Date</label><input type="date" id="add-hire-date"></div>
+        <div class="field"></div>
+      </div>
+      <div class="field" style="margin-bottom:0"><label>Conversation Notes</label><textarea id="add-hire-notes" placeholder="Notes about the conversation..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeAddHire()">Cancel</button>
+      <button class="btn-sync primary" onclick="saveAddHire()">Add Hire</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="merch-modal">
+  <div class="modal" style="width:520px">
+    <div class="modal-head"><h3 id="merch-modal-title">Edit Merchant</h3><button class="modal-close" onclick="closeMerchEdit()">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="merch-edit-key">
+      <div class="field"><label>Owner Name</label><input type="text" id="merch-edit-owner" placeholder="e.g. John Smith"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Phone</label><input type="tel" id="merch-edit-phone" placeholder="e.g. (555) 123-4567"></div>
+        <div class="field"><label>Email</label><input type="email" id="merch-edit-email" placeholder="e.g. owner@business.com"></div>
+      </div>
+      <div class="field"><label>Equipment</label><input type="text" id="merch-edit-equip" placeholder="e.g. Clover Flex, Dejavoo Z11"></div>
+      <div class="field" style="margin-bottom:0"><label>Notes</label><textarea id="merch-edit-notes" rows="4" placeholder="Track updates, follow-ups, conversations…"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeMerchEdit()">Cancel</button>
+      <button class="btn-sync primary" onclick="saveMerchEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="merch-detail-modal" onclick="if(event.target===this)closeMerchDetail()">
+  <div class="modal mdet">
+    <div class="modal-head"><h3 id="mdet-title">Merchant Detail</h3><button class="modal-close" onclick="closeMerchDetail()">&times;</button></div>
+    <div class="modal-body" id="mdet-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="bulk-merch-modal">
+  <div class="modal" style="width:520px">
+    <div class="modal-head"><h3>Bulk Edit Merchants</h3><button class="modal-close" onclick="closeBulkMerchEdit()">&times;</button></div>
+    <div class="modal-body">
+      <p style="color:var(--muted);font-size:13px;margin:0 0 12px">Leave fields blank to keep existing values. Only filled fields will be updated.</p>
+      <div class="field"><label>Owner Name</label><input type="text" id="bulk-merch-owner" placeholder="Leave blank to keep current"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Phone</label><input type="tel" id="bulk-merch-phone" placeholder="Leave blank to keep current"></div>
+        <div class="field"><label>Email</label><input type="email" id="bulk-merch-email" placeholder="Leave blank to keep current"></div>
+      </div>
+      <div class="field" style="margin-bottom:0"><label>Equipment</label><input type="text" id="bulk-merch-equip" placeholder="Leave blank to keep current"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeBulkMerchEdit()">Cancel</button>
+      <button class="btn-sync primary" id="bulk-merch-save" onclick="saveBulkMerchEdit()">Update All</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="bulk-hire-modal">
+  <div class="modal" style="width:520px">
+    <div class="modal-head"><h3>Bulk Edit Hires</h3><button class="modal-close" onclick="closeBulkHireEdit()">&times;</button></div>
+    <div class="modal-body">
+      <p style="color:var(--muted);font-size:13px;margin:0 0 12px">Leave fields blank to keep existing values. Only filled fields will be updated.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px">
+        <div class="field"><label>Training</label><select id="bulk-hire-training"><option value="">— Keep current —</option><option>Not Started</option><option>In Progress</option><option>Complete</option></select></div>
+        <div class="field"><label>Paperwork</label><select id="bulk-hire-paperwork"><option value="">— Keep current —</option><option>Not Sent</option><option>Sent</option><option>Not Returned</option><option>Complete</option></select></div>
+      </div>
+      <div class="field" style="margin-bottom:0"><label>Notes</label><input type="text" id="bulk-hire-notes" placeholder="Leave blank to keep current"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeBulkHireEdit()">Cancel</button>
+      <button class="btn-sync primary" onclick="saveBulkHireEdit()">Update All</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="sheet-note-modal">
+  <div class="modal" style="width:440px">
+    <div class="modal-head"><h3 id="sheet-note-title">Transfer Notes</h3><button class="modal-close" onclick="closeSheetNote()">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="sheet-note-row">
+      <div class="field" style="margin-bottom:0"><label>Notes</label><textarea id="sheet-note-text" rows="4" style="width:100%;resize:vertical;font-family:inherit;font-size:13px;padding:8px;border:1px solid var(--line);border-radius:6px" placeholder="Add notes about this transfer..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeSheetNote()">Cancel</button>
+      <button class="btn-sync primary" onclick="saveSheetNote()">Save</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="call-note-modal">
+  <div class="modal" style="width:440px">
+    <div class="modal-head"><h3 id="call-note-title">Call Notes</h3><button class="modal-close" onclick="closeCallNote()">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="call-note-id">
+      <div class="field" style="margin-bottom:0"><label>Notes</label><textarea id="call-note-text" rows="4" style="width:100%;resize:vertical;font-family:inherit;font-size:13px;padding:8px;border:1px solid var(--line);border-radius:6px" placeholder="Add notes about this call..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sync secondary" onclick="closeCallNote()">Cancel</button>
+      <button class="btn-sync primary" onclick="saveCallNote()">Save</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL='https://xeevmevxjuawskugedds.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlZXZtZXZ4anVhd3NrdWdlZGRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODU1NzQsImV4cCI6MjA5NzU2MTU3NH0.-it_zqeDlzybZ1GL4swcWTL_MmhGnNG971i_x_burIw';
+var supaClient=(function(){
+  if(window.supabase&&window.supabase.createClient) return window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  /* supabase-js failed to load (offline/CDN blocked) — fall back to a chainable stub so the embedded data still renders; live sync features simply report no data */
+  var offlineErr={message:'Supabase unavailable — supabase-js failed to load'};
+  function offlineQuery(){
+    var b={};
+    ['select','eq','neq','in','limit','order','upsert','update','insert','delete','single','maybeSingle'].forEach(function(m){b[m]=function(){return b;};});
+    b.then=function(onOk,onErr){return Promise.resolve({data:null,error:offlineErr}).then(onOk,onErr);};
+    b.catch=function(onErr){return Promise.resolve({data:null,error:offlineErr}).catch(onErr);};
+    return b;
+  }
+  return {from:function(){return offlineQuery();}};
+})();
+var _merchCache=null;
+var _merchDetailsCache=null;
+
+var DATA = {"April 2026":{"totals":{"approved":10,"proc":6,"not":4,"ratio":60},"reps":[{"rank":1,"rep":"Jaden Dufek","approved":6,"proc":5,"not":1,"ratio":"83.3%","ratioNum":83.3,"cat":"Partially Processing","catColor":"yellow","priority":"High"},{"rank":2,"rep":"Justin Woodruff","approved":3,"proc":1,"not":2,"ratio":"33.3%","ratioNum":33.3,"cat":"Partially Processing","catColor":"yellow","priority":"Medium"},{"rank":3,"rep":"Adam Drexler","approved":1,"proc":0,"not":1,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"}],"deals":[{"rep":"Jaden Dufek","name":"MALIBU BARBER SHOP","vip":"1","vol":"$2,032","volN":2032,"txn":30,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059899955","ownerName":"JENNIFER LEE TALLEY","ownerPhone":"559-798-8826","ownerEmail":"THEHUBRETREAT@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Jaden Dufek","name":"OXNARD CAR REPAIR","vip":"3","vol":"$8,665","volN":8665,"txn":65,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059873208","ownerName":"BAUDELIO TRAJILLO LOPEZ","ownerPhone":"805-342-6261","ownerEmail":"OXCARTOWING25@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"MALIBU CAR WASH","vip":"3","vol":"$1,083","volN":1083,"txn":4,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"554402059890210","ownerName":"JUSTIN MICHAEL SILVERS","ownerPhone":"310-880-2719","ownerEmail":"MALIBUCARZ1@GMAIL.COM","equipment":"Clover Flex (Wifi only)"},{"rep":"Justin Woodruff","name":"HOUSE OF BOOM","vip":"2","vol":"$1,926","volN":1926,"txn":21,"proc":"Yes","status":"Processing","tier":"Green","mid":"815230777881","ownerName":"JOSH DAVIS","ownerPhone":"903-241-2002","ownerEmail":"HOUSEOFBLOOMLLC@GMAIL.COM","equipment":"Clover Flex (Wifi only)"},{"rep":"Jaden Dufek","name":"RUDY'S TIRE","vip":"2","vol":"$1,637","volN":1637,"txn":25,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059871343","ownerName":"EDWARD VEGA PEREZ","ownerPhone":"805-487-5657","ownerEmail":"TROUBLEPEREZ@YAHOO.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jaden Dufek","name":"ROYAL TOBACCO","vip":"2","vol":"$1,228","volN":1228,"txn":34,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059827006","ownerName":"MUTAZ W ALQAISI","ownerPhone":"623-444-0866","ownerEmail":"ROYALTOBACCOANDCIGAR@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Justin Woodruff","name":"HOUSE OF BOOM 2","vip":"2","vol":"$224","volN":224,"txn":2,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"815230545882","ownerName":"JOSH DAVIS","ownerPhone":"903-241-2002","ownerEmail":"HOUSEOFBOOMLLC@GMAIL.COM","equipment":"Clover Pocket"},{"rep":"Adam Drexler","name":"THE NEXT STEP DANCIN WITH MAREN","vip":"2","vol":"$25","volN":25,"txn":3,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059812206","ownerName":"MAREN HAAS","ownerPhone":"402-212-8807","ownerEmail":"XMARENHAASX@AOL.COM","equipment":"Valor VL550 (handheld)"},{"rep":"Jaden Dufek","name":"DURAN AUTO","vip":"1","vol":"$0","volN":0,"txn":2,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059879338","ownerName":"ROSALINDA CORTES DURAN","ownerPhone":"805-443-9662","ownerEmail":"DURANAUTO1983@YAHOO.COM","equipment":"Dejavoo P1 (countertop)"}],"tiers":{"White":1,"Green":4,"Yellow":4,"Red":0}},"May 2026":{"totals":{"approved":12,"proc":6,"not":6,"ratio":50},"reps":[{"rank":1,"rep":"Jaden Dufek","approved":4,"proc":2,"not":2,"ratio":"50.0%","ratioNum":50,"cat":"Partially Processing","catColor":"yellow","priority":"Medium"},{"rank":2,"rep":"Gabriel Craft","approved":3,"proc":1,"not":2,"ratio":"33.3%","ratioNum":33.3,"cat":"Partially Processing","catColor":"yellow","priority":"Medium"},{"rank":3,"rep":"Max Alperstein","approved":1,"proc":0,"not":1,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"},{"rank":4,"rep":"Timothy Constenius","approved":1,"proc":1,"not":0,"ratio":"100.0%","ratioNum":100,"cat":"Fully Processing","catColor":"green","priority":"None"},{"rank":5,"rep":"Adam Drexler","approved":1,"proc":0,"not":1,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"},{"rank":6,"rep":"Isaac Jenkins","approved":1,"proc":1,"not":0,"ratio":"100.0%","ratioNum":100,"cat":"Fully Processing","catColor":"green","priority":"None"},{"rank":7,"rep":"Judah Steelman","approved":1,"proc":1,"not":0,"ratio":"100.0%","ratioNum":100,"cat":"Fully Processing","catColor":"green","priority":"None"},{"rank":8,"rep":"Justin Woodruff","approved":0,"proc":0,"not":0,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"}],"deals":[{"rep":"Timothy Constenius","name":"WILD GEESE GARDENS","vip":"3","vol":"$71,456","volN":71456,"txn":687,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059880468","ownerName":"KEVIN MORIN","ownerPhone":"406-249-4269","ownerEmail":"WILDGEESEGARDENS@GMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Gabriel Craft","name":"PALETERIA ARCOIRIS","vip":"3","vol":"$10,189","volN":10189,"txn":131,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059820720","ownerName":"ORLANDO","ownerPhone":"936-827-8361","ownerEmail":"PALETERIAARCOIRIS12@YAHOO.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"H AND R AUTO REPAIR","vip":"2","vol":"$16,451","volN":16451,"txn":21,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059861872","ownerName":"HAYK POGOSYAN","ownerPhone":"623-555-5555","ownerEmail":"HNRAUTO@ATT.NET","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"OXNARD TIRES AND WHEELS","vip":"2","vol":"$2,258","volN":2258,"txn":14,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059862664","ownerName":"BAUDELIO TRUJILIO LOPEZ","ownerPhone":"805-485-4242","ownerEmail":"oxnardwheels@yahoo.com","equipment":"Dejavoo P8 (handheld)"},{"rep":"Judah Steelman","name":"MARINA AUTO STEREO","vip":"3","vol":"$2,331","volN":2331,"txn":12,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059872630","ownerName":"DALI HOLMAN","ownerPhone":"831-384-9600","ownerEmail":"DALIHOLMAN75@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Max Alperstein","name":"MWI USA LLC","vip":"2","vol":"$357","volN":357,"txn":2,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059891739","ownerName":"STEVE ALMARAZ","ownerPhone":"805-331-8069","ownerEmail":"STEVE@MAD-INTERNATIONAL.ORG","equipment":"Clover Go NFC (Bluetooth)"},{"rep":"Adam Drexler","name":"PRECISION AUTO WASH INC","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059849968","ownerName":"AJ LEE BROWN","ownerPhone":"818-203-6198","ownerEmail":"ajbrown.ams@gmail.com","equipment":"Valor VP100 (countertop)"},{"rep":"Gabriel Craft","name":"BIG TEX AUTO SALES","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059811695","ownerName":"ZAKARIA ABURABIE","ownerPhone":"409-466-1571","ownerEmail":"BIGTEXTIRES@GMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Gabriel Craft","name":"BIG TEX TIRES","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059886135","ownerName":"ZAKARIA ABURABIE","ownerPhone":"409-466-1571","ownerEmail":"BIGTEXTIRES@GMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Isaac Jenkins","name":"Gettysburg Performance Gym","vip":"3","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Awaiting Delivery","tier":"Red","mid":"554402059846527","ownerName":"GETTYSBURG PERFORMANCE GYM LLC","ownerPhone":"717-398-6612","ownerEmail":"PHIL@GETTYSBURGPERFORMANCE.COM","equipment":"Auth.net"},{"rep":"Jaden Dufek","name":"MISFIT MAMAS CHAOS & CAFFEINE","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059849505","ownerName":"BROOK LOOCK","ownerPhone":"708-701-0270","ownerEmail":"MISFITMOMAS@GMAIL.COM","equipment":"Dejavoo P18"},{"rep":"Jaden Dufek","name":"ZATA","vip":"3","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059890780","ownerName":"HARRY MEAGER","ownerPhone":"909-964-4101","ownerEmail":"HARRY7421@GMAIL.COM","equipment":"Clover Duo Bundle w/ CD"},{"rep":"Jaden Dufek","name":"MALIBU BARBER SHOP","vip":"","vol":"$5,439","volN":5439,"txn":76,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059899955","ownerName":"JENNIFER LEE TALLEY","ownerPhone":"559-798-8826","ownerEmail":"THEHUBRETREAT@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Jaden Dufek","name":"ROYAL TOBACCO","vip":"","vol":"$173","volN":173,"txn":3,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"554402059827006","ownerName":"MUTAZ W ALQAISI","ownerPhone":"623-444-0866","ownerEmail":"ROYALTOBACCOANDCIGAR@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Jaden Dufek","name":"OXNARD CAR REPAIR","vip":"","vol":"$4,531","volN":4531,"txn":32,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059873208","ownerName":"BAUDELIO TRAJILLO LOPEZ","ownerPhone":"805-342-6261","ownerEmail":"OXCARTOWING25@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"RUDY'S TIRE","vip":"","vol":"$1,507","volN":1507,"txn":20,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059871343","ownerName":"EDWARD VEGA PEREZ","ownerPhone":"805-487-5657","ownerEmail":"TROUBLEPEREZ@YAHOO.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jaden Dufek","name":"MALIBU CAR WASH","vip":"","vol":"$4,221","volN":4221,"txn":19,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059890210","ownerName":"JUSTIN MICHAEL SILVERS","ownerPhone":"310-880-2719","ownerEmail":"MALIBUCARZ1@GMAIL.COM","equipment":"Clover Flex (Wifi only)"},{"rep":"Justin Woodruff","name":"HOUSE OF BOOM","vip":"","vol":"$1,926","volN":1926,"txn":21,"proc":"Yes","status":"Processing","tier":"Green","mid":"815230777881","ownerName":"JOSH DAVIS","ownerPhone":"903-241-2002","ownerEmail":"HOUSEOFBLOOMLLC@GMAIL.COM","equipment":"Clover Flex (Wifi only)"},{"rep":"Justin Woodruff","name":"HOUSE OF BOOM 2","vip":"","vol":"$224","volN":224,"txn":2,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"815230545882","ownerName":"JOSH DAVIS","ownerPhone":"903-241-2002","ownerEmail":"HOUSEOFBOOMLLC@GMAIL.COM","equipment":"Clover Pocket"}],"tiers":{"White":4,"Green":6,"Yellow":3,"Red":6}},"June 2026":{"totals":{"approved":36,"proc":10,"not":26,"ratio":27.8},"reps":[{"rank":1,"rep":"Sadie Scoville","approved":9,"proc":2,"not":7,"ratio":"22.2%","ratioNum":22.2,"cat":"Partially Processing","catColor":"yellow","priority":"High"},{"rank":2,"rep":"Jaden Dufek","approved":6,"proc":0,"not":6,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"High"},{"rank":3,"rep":"Timothy Constenius","approved":6,"proc":3,"not":3,"ratio":"50.0%","ratioNum":50,"cat":"Partially Processing","catColor":"yellow","priority":"High"},{"rank":4,"rep":"Judah Steelman","approved":4,"proc":1,"not":3,"ratio":"25.0%","ratioNum":25,"cat":"Partially Processing","catColor":"yellow","priority":"Medium"},{"rank":5,"rep":"Gabriel Craft","approved":3,"proc":1,"not":2,"ratio":"33.3%","ratioNum":33.3,"cat":"Partially Processing","catColor":"yellow","priority":"Medium"},{"rank":6,"rep":"Jason Coutcher","approved":3,"proc":0,"not":3,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Medium"},{"rank":7,"rep":"Lloyd Cruz","approved":2,"proc":1,"not":1,"ratio":"50.0%","ratioNum":50,"cat":"Partially Processing","catColor":"yellow","priority":"Low"},{"rank":8,"rep":"Seth Manshum","approved":1,"proc":0,"not":1,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"},{"rank":9,"rep":"Jabe Schoenrock","approved":1,"proc":1,"not":0,"ratio":"100.0%","ratioNum":100,"cat":"Fully Processing","catColor":"green","priority":"None"},{"rank":10,"rep":"Walter Smith","approved":1,"proc":1,"not":0,"ratio":"100.0%","ratioNum":100,"cat":"Fully Processing","catColor":"green","priority":"None"},{"rank":11,"rep":"Isaac Jenkins","approved":0,"proc":0,"not":0,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"},{"rank":12,"rep":"Max Alperstein","approved":0,"proc":0,"not":0,"ratio":"0.0%","ratioNum":0,"cat":"Not Processing","catColor":"red","priority":"Low"}],"deals":[{"rep":"Judah Steelman","name":"CLEARY'S AUTO","vip":"2","vol":"$21,182","volN":21182,"txn":64,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059802330","ownerName":"AMERICA","ownerPhone":"831-238-3400","ownerEmail":"CLEARYSAUTOANDSMOG@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Timothy Constenius","name":"HART JEWELERS LLC","vip":"2","vol":"$4,698","volN":4698,"txn":12,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059823526","ownerName":"WESLEY HART","ownerPhone":"406-862-6252","ownerEmail":"HART-WESLEY@HOTMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Timothy Constenius","name":"TRIPLE J TRUCK REPAIR & SERVICE","vip":"2","vol":"$1,937","volN":1937,"txn":6,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059820704","ownerName":"RYAN","ownerPhone":"406-756-0860","ownerEmail":"THEMASINC@YAHOO.COM","equipment":"Valor VL550 (handheld)"},{"rep":"Lloyd Cruz","name":"CAPITAL TRANSMISSIONS SERVICE CENTER","vip":"2","vol":"$13,004","volN":13004,"txn":15,"proc":"Yes","status":"Processing","tier":"White","mid":"719070000047244","ownerName":"BRANDIE TIFFANY","ownerPhone":"916-725-1866","ownerEmail":"BTIFFANY8@GMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jabe Schoenrock","name":"28TH STREET PARTY STORE","vip":"3","vol":"$1,077","volN":1077,"txn":66,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059879551","ownerName":"YOUHANNA HABIB","ownerPhone":"616-685-9660","ownerEmail":"CELLDEPOT262@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Sadie Scoville","name":"Fix Phone Zone","vip":"2","vol":"$1,553","volN":1553,"txn":23,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059899179","ownerName":"YOUHANNA HABIB","ownerPhone":"615-853-7899","ownerEmail":"HELLO.FIXPHONEZONE@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Timothy Constenius","name":"MAMA B'S JUBILEE","vip":"1","vol":"$380","volN":380,"txn":11,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"719070000047137","ownerName":"BRENDA KOCH","ownerPhone":"406-212-9792","ownerEmail":"MAMABJUBILEE@YAHOO.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Timothy Constenius","name":"BLAINE MOUNTAIN SALSA","vip":"2","vol":"$3,469","volN":3469,"txn":124,"proc":"Yes","status":"Processing","tier":"Green","mid":"719070000047178","ownerName":"BRENDA KOCH","ownerPhone":"406-212-9792","ownerEmail":"BLAINEMTNSALSAWORKS@GMAIL.COM","equipment":"Dejavoo P18"},{"rep":"Gabriel Craft","name":"Z AUTO MUFFLER SHOP #1","vip":"2","vol":"$0","volN":0,"txn":2,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059856344","ownerName":"ZANDAS VARELA","ownerPhone":"713-697-4818","ownerEmail":"ZSAUTOSHOP2409@GMAIL.COM","equipment":"Clover Compact"},{"rep":"Sadie Scoville","name":"EXPRESS TOWING","vip":"1","vol":"$2,237","volN":2237,"txn":10,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059840785","ownerName":"MAHMOUD MAKAHAL","ownerPhone":"615-293-6819","ownerEmail":"MAMUK3848@GMAIL.COM","equipment":"Clover Compact"},{"rep":"Sadie Scoville","name":"R1 TOWING","vip":"1","vol":"$0","volN":0,"txn":1,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059805390","ownerName":"MAHMOUD MUKAHAL","ownerPhone":"615-293-6819","ownerEmail":"MOMUK3848@GMAIL.COM","equipment":"Clover Compact"},{"rep":"Gabriel Craft","name":"FIVE CITIES CO BRAND INC","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Awaiting Delivery","tier":"Red","mid":"554402059824037","ownerName":"JERETT WAYNE TACHOVSKY","ownerPhone":"805-434-8253","ownerEmail":"JERETTTACHOVSKY@GMAIL.COM","equipment":"Dejavoo QD3 (pinpad)"},{"rep":"Gabriel Craft","name":"HOUSE OF INK","vip":"1","vol":"$3,933","volN":3933,"txn":11,"proc":"Yes","status":"Processing","tier":"Green","mid":"719070000048911","ownerName":"AMANDA LUERA","ownerPhone":"806-577-1533","ownerEmail":"HOFINK77@YAHOO.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"BOTAS EL BANDIDO","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Awaiting Delivery","tier":"Red","mid":"554402059897918","ownerName":"LEOBARDO ESPINOZA","ownerPhone":"480-280-3823","ownerEmail":"ELBANDIDODOWW@GMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jaden Dufek","name":"CHEAP THRILLZ","vip":"4","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059817239","ownerName":"JEANNE WIESLEY","ownerPhone":"602-318-2931","ownerEmail":"JWIESLEY602@GMAIL.COM","equipment":"Dejavoo P5 (wireless/pinpad)"},{"rep":"Jaden Dufek","name":"L & J COFFEE CO","vip":"2","vol":"$202","volN":202,"txn":20,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"554402059893735","ownerName":"LUKE ABDEL-SAYED","ownerPhone":"949-344-4464","ownerEmail":"INFO@LANDJCOFFEE.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jaden Dufek","name":"S & O CARIBBEAN GROCERY STORE","vip":"5","vol":"$0","volN":0,"txn":5,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059871145","ownerName":"STACEY ANN TANESE TAYLOR","ownerPhone":"602-551-3930","ownerEmail":"SOBEAUTYSUPPLYSTORE@YAHOO.COM","equipment":"Dejavoo P18"},{"rep":"Jaden Dufek","name":"TONE TOWN GUITARS","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"719070000047897","ownerName":"DAVID FRAZER","ownerPhone":"480-773-5111","ownerEmail":"INFO@TONETOWNGUITARS.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jason Coutcher","name":"KAPOLEI KOREAN BAR-B-Q","vip":"3","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Awaiting Delivery","tier":"Red","mid":"554402059890509","ownerName":"JOSEPH PARK","ownerPhone":"808-282-1983","ownerEmail":"KAPOLEIKOREANBBQ@GMAIL.COM","equipment":"Clover Duo W/O CD"},{"rep":"Jason Coutcher","name":"LEGACY GRINDZ","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059841916","ownerName":"JAYNA GUALDARAMA","ownerPhone":"808-330-9019","ownerEmail":"LEGACYGRINDZFOODTRUCK@GMAIL.COM","equipment":"Clover Go NFC (Bluetooth)"},{"rep":"Sadie Scoville","name":"BAZOOKA FOOD TRUCK","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059868182","ownerName":"YOUHANNA HABIB","ownerPhone":"315-853-7899","ownerEmail":"BAZOOKAFOODTRUCK262@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Sadie Scoville","name":"FIX PHONE ZONE MJ","vip":"2","vol":"$0","volN":0,"txn":1,"proc":"No","status":"Delivered – Not Processing","tier":"Yellow","mid":"554402059844464","ownerName":"PAUL BURRIS JR","ownerPhone":"615-853-7899","ownerEmail":"PAULBURRIS67@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Seth Manshum","name":"BOXCAR BARGAINS","vip":"1","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Delivered – Not Processing","tier":"Red","mid":"554402059839225","ownerName":"TAMMI HEPINSTALL","ownerPhone":"616-719-9423","ownerEmail":"TAMMIBINGLEY@YAHOO.COM","equipment":"Dejavoo P18"},{"rep":"Timothy Constenius","name":"FALCON METALS","vip":"1","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Awaiting Delivery","tier":"Red","mid":"719070000048788","ownerName":"JON CAMPBELL","ownerPhone":"701-535-0206","ownerEmail":"BIRDOFPREY2685@GMAIL.COM","equipment":"Valor VP800 (handheld)"},{"rep":"Timothy Constenius","name":"JJ'S DRYWALLING","vip":"2","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Awaiting Delivery","tier":"Red","mid":"719070000049273","ownerName":"JAVIEN","ownerPhone":"406-309-4826","ownerEmail":"JJSDRYWALLING@GMAIL.COM","equipment":"Dejavoo P5 (wireless/pinpad)"},{"rep":"Walter Smith","name":"JB's Country Store","vip":"2","vol":"$5,832","volN":5832,"txn":350,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059876094","ownerName":"MICHAEL HICKS","ownerPhone":"989-334-1166","ownerEmail":"MIKEBEGOOD53@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Gabriel Craft","name":"PALETERIA ARCOIRIS","vip":"","vol":"$22,870","volN":22870,"txn":244,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059820720","ownerName":"ORLANDO","ownerPhone":"936-827-8361","ownerEmail":"PALETERIAARCOIRIS12@YAHOO.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Isaac Jenkins","name":"GETTYSBURG PERFORMANCE GYM","vip":"","vol":"$10,402","volN":10402,"txn":166,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059846527","ownerName":"GETTYSBURG PERFORMANCE GYM LLC","ownerPhone":"717-398-6612","ownerEmail":"PHIL@GETTYSBURGPERFORMANCE.COM","equipment":"Auth.net"},{"rep":"Jaden Dufek","name":"MALIBU BARBER SHOP","vip":"","vol":"$5,397","volN":5397,"txn":73,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059899955","ownerName":"JENNIFER LEE TALLEY","ownerPhone":"559-798-8826","ownerEmail":"THEHUBRETREAT@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Jaden Dufek","name":"ROYAL TOBACCO","vip":"","vol":"$6,158","volN":6158,"txn":144,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059827006","ownerName":"MUTAZ W ALQAISI","ownerPhone":"623-444-0866","ownerEmail":"ROYALTOBACCOANDCIGAR@GMAIL.COM","equipment":"Valor VP100 (countertop)"},{"rep":"Jaden Dufek","name":"OXNARD CAR REPAIR","vip":"","vol":"$5,598","volN":5598,"txn":50,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059873208","ownerName":"BAUDELIO TRAJILLO LOPEZ","ownerPhone":"805-342-6261","ownerEmail":"OXCARTOWING25@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"RUDY'S TIRE","vip":"","vol":"$422","volN":422,"txn":8,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"554402059871343","ownerName":"EDWARD VEGA PEREZ","ownerPhone":"805-487-5657","ownerEmail":"TROUBLEPEREZ@YAHOO.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jaden Dufek","name":"OXNARD TIRES AND WHEELS","vip":"","vol":"$16,674","volN":16674,"txn":95,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059862664","ownerName":"BAUDELIO TRUJILIO LOPEZ","ownerPhone":"805-485-4242","ownerEmail":"oxnardwheels@yahoo.com","equipment":"Dejavoo P8 (handheld)"},{"rep":"Jaden Dufek","name":"H AND R AUTO REPAIR","vip":"","vol":"$22,542","volN":22542,"txn":32,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059861872","ownerName":"HAYK POGOSYAN","ownerPhone":"623-555-5555","ownerEmail":"HNRAUTO@ATT.NET","equipment":"Dejavoo P8 (handheld)"},{"rep":"Judah Steelman","name":"MARINA AUTO STEREO","vip":"","vol":"$2,868","volN":2868,"txn":15,"proc":"Yes","status":"Processing","tier":"Green","mid":"554402059872630","ownerName":"DALI HOLMAN","ownerPhone":"831-384-9600","ownerEmail":"DALIHOLMAN75@GMAIL.COM","equipment":"Dejavoo P8 (handheld)"},{"rep":"Max Alperstein","name":"MWI USA LLC","vip":"","vol":"$357","volN":357,"txn":2,"proc":"Yes","status":"Processing","tier":"Yellow","mid":"554402059891739","ownerName":"STEVE ALMARAZ","ownerPhone":"805-331-8069","ownerEmail":"STEVE@MAD-INTERNATIONAL.ORG","equipment":"Clover Go NFC (Bluetooth)"},{"rep":"Timothy Constenius","name":"WILD GEESE GARDENS","vip":"","vol":"$113,071","volN":113071,"txn":1048,"proc":"Yes","status":"Processing","tier":"White","mid":"554402059880468","ownerName":"KEVIN MORIN","ownerPhone":"406-249-4269","ownerEmail":"WILDGEESEGARDENS@GMAIL.COM","equipment":"Dejavoo P1 (countertop)"},{"rep":"Jaden Dufek","name":"HELPING HAND AUTO","mid":"554402059875534","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Lloyd Cruz","name":"RANCHO CORDOVA AUTO DISMANTLING","mid":"719070000049638","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red","ownerName":"DMITRY YAKUBOVICH","ownerPhone":"9168649005","ownerEmail":"RCADISMANTLING@YAHOO.COM"},{"rep":"Sadie Scoville","name":"HUBCAP HEAVEN AND WHEELS","mid":"554402059814343","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Sadie Scoville","name":"DEALS FURNITURE & MATTRESS OUTLET","mid":"554402059825133","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Sadie Scoville","name":"MEGA FURNITURE CITY OUTLET","mid":"554402059853135","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Sadie Scoville","name":"TARA INTERNATIONAL MARKET INC","mid":"554402059877100","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Judah Steelman","name":"DREAMWORKZ GARAGE","mid":"719070000050487","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red","ownerName":"NICHOLAS MUNOZ","ownerPhone":"8312588569","ownerEmail":"DREAMWORKZGARAGE@YAHOO.COM"},{"rep":"Justin Woodruff","name":"HOUSE OF BOOM","vip":"","vol":"$1,515","volN":1515,"txn":9,"mid":"815230777881","proc":"Yes","status":"Processing","tier":"Green","ownerName":"JOSH DAVIS","ownerPhone":"903-241-2002","ownerEmail":"HOUSEOFBLOOMLLC@GMAIL.COM","equipment":"Clover Flex (Wifi only)"},{"rep":"Justin Woodruff","name":"HOUSE OF BOOM 2","vip":"","vol":"$274","volN":274,"txn":2,"mid":"815230545882","proc":"Yes","status":"Processing","tier":"Yellow","ownerName":"JOSH DAVIS","ownerPhone":"903-241-2002","ownerEmail":"HOUSEOFBOOMLLC@GMAIL.COM","equipment":"Clover Pocket"},{"rep":"Jason Coutcher","name":"LUAU MOTORS","mid":"554402059881078","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Judah Steelman","name":"MIKES TOWING CA 2","mid":"554402059868190","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"},{"rep":"Judah Steelman","name":"MIKES TOWING CA INC","mid":"554402059809855","vip":"","vol":"$0","volN":0,"txn":0,"proc":"No","status":"Approved","tier":"Red"}],"tiers":{"White":11,"Green":9,"Yellow":9,"Red":20},"teamRank":{"rank":4,"of":20}},"March 2026":{"totals":{"approved":0,"proc":0,"not":0,"ratio":0},"reps":[],"deals":[]}};
+var PENDED_DEALS = [{"dba":"Rhythm & Blues BarberShop","gm":"Ice","team":"Maverick","rep":"GABRIEL CRAFT","category":"Banking & Financial Issues","subCategory":"Voided Check or Bank Letter Missing/Incorrect","comment":"negative data - need negative balance remedied.","pendDate":"Jun 17, 2026"},{"dba":"TRACY PARK GALLERY","gm":"Ice","team":"Maverick","rep":"Max Alperstein","category":"Banking & Financial Issues; Processing & Risk Concerns","subCategory":"High Average Ticket Size Needs Justification; Voided Check or Bank Letter Missing/Incorrect","comment":"BANKING - NEGATIVE DATA | 11k high ticket - Need 3mo bank stmts 3k average ticket- Need April processing stmt","pendDate":"May 4, 2026"}];
+var MONTHS = Object.keys(DATA).sort(function(a,b){ return new Date('1 '+a) - new Date('1 '+b); });
+var _initPage = (location.hash.replace('#','') || 'rankings');
+if(!document.getElementById('page-'+_initPage)) _initPage='rankings';
+var state = { month: MONTHS[MONTHS.length-1], tier: "All", merchTier: "All", merchSearch: "", page: _initPage,
+  recruitFilter: "0", recruitFrom: "", recruitTo: "",
+  transfersFilter: "0", transfersFrom: "", transfersTo: "",
+  gmassFilter: "0", gmassFrom: "", gmassTo: "",
+  sheetFilter: "0", sheetFrom: "", sheetTo: "" };
+
+function ratioClass(v){ return v>=50?"green":(v>=25?"yellow":"red"); }
+function fmtMoney(n){ return "$"+n.toLocaleString(); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// Only allow safe URL schemes into an href so scraped links can never carry
+// javascript:/data:/vbscript: (defense-in-depth; the scraper also filters).
+function safeHref(u){ u=String(u==null?'':u).trim(); return /^(https?:|mailto:|tel:|sms:)/i.test(u)?u:''; }
+// ---- Clickable contact links (tap to email / call / text) ----
+var ICON_CALL='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg>';
+var ICON_TEXT='<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12"/></svg>';
+function firstNameOf(name){ var p=String(name||'').trim().split(/\s+/); return p[0]||'them'; }
+function emailLink(email, name){
+  if(!email) return '—';
+  var e=esc(email);
+  return '<a class="contact-link" href="mailto:'+e+'" title="Email '+esc(firstNameOf(name))+'">'+e+'</a>';
+}
+function phoneLink(phone, name){
+  if(!phone) return '—';
+  var digits=String(phone).replace(/[^0-9+]/g,'');
+  if(!digits) return esc(phone);
+  var fn=esc(firstNameOf(name)), d=esc(digits);
+  return '<span class="contact-phone"><span class="cp-num">'+esc(phone)+'</span>'+
+    '<a class="contact-act" href="tel:'+d+'" title="Call '+fn+'" aria-label="Call '+fn+'">'+ICON_CALL+'</a>'+
+    '<a class="contact-act" href="sms:'+d+'" title="Text '+fn+'" aria-label="Text '+fn+'">'+ICON_TEXT+'</a></span>';
+}
+
+function assignTier(d){
+  if(d.txn>=11 && d.volN>=5000) return "White";
+  if(d.txn>=6 && d.volN>=1000) return "Green";
+  if(d.txn>=1 || d.volN>0) return "Yellow";
+  return "Red";
+}
+MONTHS.forEach(function(m){
+  var month=DATA[m];
+  month.tiers={White:0,Green:0,Yellow:0,Red:0};
+  month.deals.forEach(function(d){
+    d.tier=assignTier(d);
+    month.tiers[d.tier]++;
+  });
+});
+
+// Tab navigation
+document.getElementById('nav').addEventListener('click',function(e){
+  var a=e.target.closest('a[data-page]');
+  if(!a) return;
+  state.page=a.getAttribute('data-page');
+  location.hash=state.page;
+  document.querySelectorAll('.nav a').forEach(function(x){x.classList.remove('active');});
+  a.classList.add('active');
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('page-'+state.page).classList.add('active');
+  document.querySelectorAll('.mobile-nav-links a').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-page')===state.page);});
+  renderPage();
+});
+
+// Mobile menu
+(function(){
+  var overlay=document.getElementById('mobile-nav');
+  var btn=document.getElementById('mobile-menu-btn');
+  function openMenu(){overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeMenu(){overlay.classList.remove('open');document.body.style.overflow='';}
+  btn.addEventListener('click',openMenu);
+  document.getElementById('mobile-nav-close-backdrop').addEventListener('click',closeMenu);
+  document.getElementById('mobile-nav-close-btn').addEventListener('click',closeMenu);
+  document.getElementById('mobile-nav-links').addEventListener('click',function(e){
+    var a=e.target.closest('a[data-page]');
+    if(!a) return;
+    state.page=a.getAttribute('data-page');
+    location.hash=state.page;
+    document.querySelectorAll('.nav a,.mobile-nav-links a').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-page')===state.page);});
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+    document.getElementById('page-'+state.page).classList.add('active');
+    closeMenu();
+    renderPage();
+  });
+})();
+
+var MONTH_NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function renderMonths(){
+  var el=document.getElementById('months');
+  var parts=state.month.split(' '), curMonth=parts[0], curYear=parts[1];
+  var years={}; MONTHS.forEach(function(m){ years[m.split(' ')[1]]=true; });
+  var yearList=Object.keys(years).sort();
+  var html='<select id="month-select" onchange="setMonthFromDropdowns()">';
+  MONTH_NAMES.forEach(function(mn){ html+='<option value="'+mn+'"'+(mn===curMonth?' selected':'')+'>'+mn+'</option>'; });
+  html+='</select><select id="year-select" onchange="setMonthFromDropdowns()">';
+  yearList.forEach(function(y){ html+='<option value="'+y+'"'+(y===curYear?' selected':'')+'>'+y+'</option>'; });
+  html+='</select>';
+  el.innerHTML=html;
+}
+function setMonthFromDropdowns(){
+  state.month=document.getElementById('month-select').value+' '+document.getElementById('year-select').value;
+  state.tier='All'; state.merchTier='All'; render();
+}
+
+// ===== Team Maverick Dashboard (Rankings tab) — mirrors sales.wholesalepayments.org/?v=dash =====
+function monthVolume(m){ var v=0; DATA[m].deals.forEach(function(d){v+=d.volN;}); return v; }
+// ---- Editable per-rep deal count & volume (persisted per month) ----
+function loadRepOverrides(){ try { return JSON.parse(localStorage.getItem('rep_overrides')||'{}'); } catch(e){ return {}; } }
+function saveRepOverride(month, rep, field, value){
+  var ov = loadRepOverrides();
+  if(!ov[month]) ov[month] = {};
+  if(!ov[month][rep]) ov[month][rep] = {};
+  ov[month][rep][field] = value;
+  localStorage.setItem('rep_overrides', JSON.stringify(ov));
+  supaClient.from('app_settings')
+    .upsert({ key:'rep_overrides', value:ov, updated_at:new Date().toISOString() }, { onConflict:'key' })
+    .then(function(r){ if(r.error) console.warn('rep_overrides save failed:', r.error.message); });
+}
+// Normalise a rep name for matching across data sources. The rankings report
+// gives Title Case ("Jaden Dufek") while the volume report gives UPPERCASE
+// ("JADEN DUFEK") — without this they'd never match and volume would show $0.
+var REP_ALIASES={'TIMOTHY CANSTENIVS':'TIMOTHY CONSTENIUS'};
+function repKey(s){ var k=String(s||'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim(); return REP_ALIASES[k]||k; }
+function computeRepList(month){
+  var mo = DATA[month]; if(!mo) return [];
+  var volByRep = {};
+  mo.deals.forEach(function(d){ var k=repKey(d.rep); volByRep[k] = (volByRep[k]||0) + (d.volN||0); });
+  var ov = (loadRepOverrides()[month]) || {};
+  var list = mo.reps.map(function(r){
+    var o = ov[r.rep] || {};
+    return {
+      name: r.rep,
+      deals: (o.deals!=null ? o.deals : r.approved),
+      volume: (o.volume!=null ? o.volume : (volByRep[repKey(r.rep)]||0))
+    };
+  });
+  list.sort(function(a,b){ return (b.deals-a.deals) || (b.volume-a.volume); });
+  return list;
+}
+function renderRepRankings(){
+  var el = document.getElementById('rep-rankings'); if(!el) return;
+  var list = computeRepList(state.month);
+  if(!list.length){ el.innerHTML='<div style="padding:24px;color:var(--muted);text-align:center">No reps this month.</div>'; return; }
+  el.innerHTML = list.map(function(r, i){
+    var rank = i+1;
+    return '<div class="rep-row">'+
+      '<div class="rr-rank'+(rank===1?' top':'')+'">'+rank+'</div>'+
+      '<div class="rr-name">'+esc(r.name)+'</div>'+
+      '<div class="rr-deals"><input class="rep-in" type="number" min="0" inputmode="numeric" value="'+r.deals+'" '+
+        'data-rep="'+esc(r.name)+'" data-field="deals" title="Deals for '+esc(r.name)+' — edit"></div>'+
+      '<div class="rr-vol"><span class="rep-cur">$</span><input class="rep-in rep-in-vol" type="text" inputmode="numeric" value="'+Number(r.volume||0).toLocaleString()+'" '+
+        'data-rep="'+esc(r.name)+'" data-field="volume" title="Volume for '+esc(r.name)+' — edit"></div>'+
+    '</div>';
+  }).join('');
+}
+function onRepEdit(inp){
+  var rep = inp.getAttribute('data-rep'), field = inp.getAttribute('data-field');
+  var num = parseInt(String(inp.value).replace(/[^0-9]/g,''), 10);
+  if(isNaN(num) || num<0) num = 0;
+  saveRepOverride(state.month, rep, field, num);
+  renderRepRankings();
+  renderTeamRoster();
+}
+function tdashSteps(status){
+  var s=(status||'').toLowerCase();
+  return { approved:true, delivered:(s.indexOf('deliver')>-1 || s.indexOf('process')>-1), installed:(s.indexOf('process')>-1) };
+}
+
+function renderTeamDashboard(){
+  var m=state.month, month=DATA[m];
+  if(!month){
+    document.getElementById('rep-rankings').innerHTML='<div style="padding:24px;color:var(--t-muted);text-align:center">No data for '+esc(m)+'.</div>';
+    document.getElementById('tdash-np-count').textContent='0 open';
+    document.getElementById('tdash-nonproc').innerHTML='<div style="padding:22px 16px;color:var(--t-muted);font-size:13px;text-align:center">No data for this month.</div>';
+    document.getElementById('tdash-momentum').innerHTML='';
+    document.getElementById('tdash-top').innerHTML='';
+    return;
+  }
+  var idx=MONTHS.indexOf(m), prev=idx>0?DATA[MONTHS[idx-1]]:null, prevKey=idx>0?MONTHS[idx-1]:null;
+  var deals=month.deals;
+  var vol=monthVolume(m), prevVol=prev?monthVolume(prevKey):0;
+
+  // --- Sales rep rankings (editable, sorted by most merchants) ---
+  renderRepRankings();
+
+  // --- Nonprocessing merchants list ---
+  var np=deals.filter(function(d){return d.proc==='No';});
+  document.getElementById('tdash-np-count').textContent=np.length+' open';
+  document.getElementById('tdash-nonproc').innerHTML = np.length ? np.map(function(d){
+    var st=tdashSteps(d.status), dlv=st.delivered, inst=st.installed;
+    return '<div class="t-np">'+
+      '<div class="t-np-main"><div class="t-np-name">'+esc(d.name)+'</div>'+
+        '<div class="t-np-sub">'+esc(d.rep)+' &middot; '+esc(d.status)+'</div></div>'+
+      '<div class="t-np-steps">'+
+        '<div class="t-np-sl">'+
+          '<div><div class="t-muted">Approved</div><div class="v">&#10003;</div></div>'+
+          '<div><div class="t-muted">Delivered</div><div class="v'+(dlv?'':' off')+'">'+(dlv?'&#10003;':'&#8212;')+'</div></div>'+
+          '<div><div class="t-muted">Installed</div><div class="v'+(inst?'':' off')+'">'+(inst?'&#10003;':'&#8212;')+'</div></div>'+
+        '</div>'+
+        '<div class="t-steps"><span class="t-step on"></span>'+
+          '<span class="t-step'+(dlv?' on':'')+'"></span>'+
+          '<span class="t-step'+(inst?' on':'')+'"></span></div>'+
+      '</div>'+
+      '<div class="t-np-right"><div class="n '+(d.txn>0?'warn':'mut')+'">'+d.txn+'</div><div class="l">txns</div></div>'+
+    '</div>';
+  }).join('') : '<div style="padding:22px 16px;color:var(--t-muted);font-size:13px;text-align:center">All approved merchants are processing.</div>';
+
+  // --- This month vs last month ---
+  var momHtml='';
+  momHtml+='<div class="t-mom"><div><div class="fw">New Approvals</div>'+
+    '<div style="margin-top:7px"><span class="t-badge green">'+month.totals.proc+' proc</span> '+
+    '<span class="t-badge orange">'+month.totals.not+' not yet</span></div></div>'+
+    '<div class="r"><div class="big">'+month.totals.approved+'</div><div class="t-muted t-sm">'+(prev?'vs '+prev.totals.approved+' last mo':'&#8212;')+'</div></div></div>';
+  momHtml+='<div class="t-mom"><div><div class="fw">Started Processing</div>'+
+    '<div style="margin-top:7px"><span class="t-badge orange">'+month.totals.not+' nonprocessing</span></div></div>'+
+    '<div class="r"><div class="big">'+month.totals.proc+'</div><div class="t-muted t-sm">'+(prev?'vs '+prev.totals.proc+' last mo':'&#8212;')+'</div></div></div>';
+  var volPct=(prev&&prevVol>0)?Math.round((vol-prevVol)/prevVol*100):null;
+  momHtml+='<div class="t-mom" style="border-left-color:var(--t-blue)"><div><div class="fw">Volume</div>'+
+    '<div class="t-muted t-sm" style="margin-top:7px">Processing ratio '+month.totals.ratio.toFixed(1)+'%</div></div>'+
+    '<div class="r"><div class="big">'+fmtMoney(Math.round(vol))+'</div>'+
+    '<div class="t-muted t-sm">'+(prev?'vs '+fmtMoney(Math.round(prevVol))+' last mo':'&#8212;')+'</div>'+
+    (volPct!==null?' <span class="t-badge '+(volPct>=0?'green':'red')+'" style="margin-top:4px">'+(volPct>=0?'+':'')+volPct+'%</span>':'')+
+    '</div></div>';
+  if(month.teamRank){
+    momHtml+='<div class="t-mom"><div class="fw">Team Rank</div>'+
+      '<span class="t-badge green">#'+month.teamRank.rank+' of '+month.teamRank.of+'</span></div>';
+  }
+  document.getElementById('tdash-momentum').innerHTML=momHtml;
+
+  // --- Top 5 merchants by volume ---
+  var top=deals.slice().sort(function(a,b){return b.volN-a.volN;}).slice(0,5);
+  document.getElementById('tdash-top').innerHTML=top.map(function(d){
+    return '<tr class="t-mrow"><td><div class="mn">'+esc(d.name)+'</div><div class="mid">'+esc(d.rep)+'</div></td>'+
+      '<td class="tnum">'+d.vol+'</td><td class="tnum">'+d.txn+'</td>'+
+      '<td class="tnum"><span class="tierbadge '+d.tier+'">'+d.tier+'</span></td></tr>';
+  }).join('');
+}
+
+// Merchant overrides (Supabase)
+// Normalised key so deal names join to the override table regardless of case
+// or punctuation ("FIX PHONE ZONE" === "Fix Phone Zone", "JB'S COUNTRY STORE"
+// === "JB's Country Store"). Prevents blank owner/MID rows after a rename.
+function merchKey(s){ return String(s||'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim(); }
+function getMerchOverrides(){
+  if(_merchCache) return Promise.resolve(_merchCache);
+  return supaClient.from('merchant_overrides').select('*').then(function(res){
+    var map={};
+    (res.data||[]).forEach(function(r){
+      var rec={ownerName:r.owner_name,ownerPhone:r.owner_phone,ownerEmail:r.owner_email,equipment:r.equipment,notes:r.notes||'',mid:r.mid||''};
+      map[r.merchant_name]=rec;
+      var nk=merchKey(r.merchant_name);
+      if(nk && !map[nk]) map[nk]=rec; // case/punctuation-insensitive alias
+      if(r.mid) map['MID:'+r.mid]=rec; // match by MID — survives any rename
+    });
+    _merchCache=map;
+    return map;
+  });
+}
+
+function getMerchDetails(){
+  if(_merchDetailsCache) return Promise.resolve(_merchDetailsCache);
+  return supaClient.from('merchant_details').select('mid,name,contact').then(function(res){
+    var map={};
+    (res.data||[]).forEach(function(r){
+      var c=r.contact||{};
+      var rec={ownerName:c.owner||'',ownerPhone:c.phone||'',ownerEmail:c.email||''};
+      if(r.mid) map['MID:'+r.mid]=rec;
+      if(r.name){ map[r.name]=rec; var nk=merchKey(r.name); if(nk) map[nk]=rec; }
+    });
+    _merchDetailsCache=map;
+    return map;
+  });
+}
+function openMerchEdit(name){
+  getMerchOverrides().then(function(overrides){
+    var data = overrides[name] || overrides[merchKey(name)] || {};
+    document.getElementById('merch-edit-key').value = name;
+    document.getElementById('merch-edit-owner').value = data.ownerName || '';
+    document.getElementById('merch-edit-phone').value = data.ownerPhone || '';
+    document.getElementById('merch-edit-email').value = data.ownerEmail || '';
+    document.getElementById('merch-edit-equip').value = data.equipment || '';
+    document.getElementById('merch-edit-notes').value = data.notes || '';
+    document.getElementById('merch-modal-title').textContent = name;
+    document.getElementById('merch-modal').classList.add('open');
+  });
+}
+function closeMerchEdit(){
+  document.getElementById('merch-modal').classList.remove('open');
+}
+function saveMerchEdit(){
+  var key = document.getElementById('merch-edit-key').value;
+  var row = {
+    merchant_name: key,
+    owner_name: document.getElementById('merch-edit-owner').value.trim(),
+    owner_phone: document.getElementById('merch-edit-phone').value.trim(),
+    owner_email: document.getElementById('merch-edit-email').value.trim(),
+    equipment: document.getElementById('merch-edit-equip').value.trim(),
+    notes: document.getElementById('merch-edit-notes').value.trim(),
+    updated_at: new Date().toISOString()
+  };
+  supaClient.from('merchant_overrides').upsert(row,{onConflict:'merchant_name'}).then(function(){
+    _merchCache=null;
+    closeMerchEdit();
+    renderMerchPage();
+  });
+}
+
+// Merchant bulk selection
+function getSelectedMerchNames(){
+  return Array.prototype.slice.call(document.querySelectorAll('.merch-cb:checked')).map(function(cb){return cb.dataset.name;});
+}
+function updateMerchBulkBar(){
+  var sel=getSelectedMerchNames();
+  var bar=document.getElementById('merch-bulk-bar');
+  document.getElementById('merch-bulk-count').textContent=sel.length+' selected';
+  bar.classList.toggle('show',sel.length>0);
+  var all=document.getElementById('merch-select-all');
+  var total=document.querySelectorAll('.merch-cb').length;
+  all.checked=sel.length===total&&total>0;
+  all.indeterminate=sel.length>0&&sel.length<total;
+}
+function toggleAllMerch(checked){
+  document.querySelectorAll('.merch-cb').forEach(function(cb){cb.checked=checked;});
+  updateMerchBulkBar();
+}
+function clearMerchSelection(){
+  document.querySelectorAll('.merch-cb').forEach(function(cb){cb.checked=false;});
+  document.getElementById('merch-select-all').checked=false;
+  updateMerchBulkBar();
+}
+function openBulkMerchEdit(){
+  document.getElementById('bulk-merch-owner').value='';
+  document.getElementById('bulk-merch-phone').value='';
+  document.getElementById('bulk-merch-email').value='';
+  document.getElementById('bulk-merch-equip').value='';
+  var n=getSelectedMerchNames().length;
+  document.getElementById('bulk-merch-save').textContent='Update '+n+' Merchant'+(n>1?'s':'');
+  document.getElementById('bulk-merch-modal').classList.add('open');
+}
+function closeBulkMerchEdit(){ document.getElementById('bulk-merch-modal').classList.remove('open'); }
+function saveBulkMerchEdit(){
+  var names=getSelectedMerchNames();
+  if(!names.length) return;
+  var owner=document.getElementById('bulk-merch-owner').value.trim();
+  var phone=document.getElementById('bulk-merch-phone').value.trim();
+  var email=document.getElementById('bulk-merch-email').value.trim();
+  var equip=document.getElementById('bulk-merch-equip').value.trim();
+  if(!owner&&!phone&&!email&&!equip){ closeBulkMerchEdit(); return; }
+  var promises=names.map(function(name){
+    var row={merchant_name:name,updated_at:new Date().toISOString()};
+    if(owner) row.owner_name=owner;
+    if(phone) row.owner_phone=phone;
+    if(email) row.owner_email=email;
+    if(equip) row.equipment=equip;
+    return supaClient.from('merchant_overrides').upsert(row,{onConflict:'merchant_name'});
+  });
+  Promise.all(promises).then(function(){
+    _merchCache=null;
+    closeBulkMerchEdit();
+    clearMerchSelection();
+    renderMerchPage();
+  });
+}
+
+// Hire bulk selection
+function getSelectedHireIdxs(){
+  return Array.prototype.slice.call(document.querySelectorAll('.hire-cb:checked')).map(function(cb){return parseInt(cb.dataset.idx,10);});
+}
+function updateHireBulkBar(){
+  var sel=getSelectedHireIdxs();
+  var bar=document.getElementById('hire-bulk-bar');
+  document.getElementById('hire-bulk-count').textContent=sel.length+' selected';
+  bar.classList.toggle('show',sel.length>0);
+  var all=document.getElementById('hire-select-all');
+  var total=document.querySelectorAll('.hire-cb').length;
+  all.checked=sel.length===total&&total>0;
+  all.indeterminate=sel.length>0&&sel.length<total;
+}
+function toggleAllHires(checked){
+  document.querySelectorAll('.hire-cb').forEach(function(cb){cb.checked=checked;});
+  updateHireBulkBar();
+}
+function clearHireSelection(){
+  document.querySelectorAll('.hire-cb').forEach(function(cb){cb.checked=false;});
+  document.getElementById('hire-select-all').checked=false;
+  updateHireBulkBar();
+}
+function openBulkHireEdit(){
+  document.getElementById('bulk-hire-training').value='';
+  document.getElementById('bulk-hire-paperwork').value='';
+  document.getElementById('bulk-hire-notes').value='';
+  var n=getSelectedHireIdxs().length;
+  document.getElementById('bulk-hire-modal').querySelector('.btn-sync.primary').textContent='Update '+n+' Hire'+(n>1?'s':'');
+  document.getElementById('bulk-hire-modal').classList.add('open');
+}
+function closeBulkHireEdit(){ document.getElementById('bulk-hire-modal').classList.remove('open'); }
+function saveBulkHireEdit(){
+  var idxs=getSelectedHireIdxs();
+  if(!idxs.length) return;
+  var training=document.getElementById('bulk-hire-training').value;
+  var paperwork=document.getElementById('bulk-hire-paperwork').value;
+  var notes=document.getElementById('bulk-hire-notes').value.trim();
+  if(!training&&!paperwork&&!notes){ closeBulkHireEdit(); return; }
+  idxs.forEach(function(i){
+    var t=RECRUIT_DATA.team[i];
+    if(training) t.training=training;
+    if(paperwork) t.paperwork=paperwork;
+    if(notes) t.notes=notes;
+    saveRecruitOverride(t.name,{training:t.training,paperwork:t.paperwork,email:t.email,phone:t.phone,hireDate:t.hireDate,source:t.source,notes:t.notes});
+  });
+  saveTeamToCloud(RECRUIT_DATA.team);
+  closeBulkHireEdit();
+  clearHireSelection();
+  renderRecruitPage();
+}
+
+// Merchants page
+function setMerchTier(t){ state.merchTier=t; renderMerchPage(); }
+function setMerchSearch(v){
+  state.merchSearch=v;
+  var c=document.getElementById('merch-search-clear');
+  if(c) c.classList.toggle('show', !!v);
+  renderMerchPage();
+}
+function clearMerchSearch(){
+  state.merchSearch='';
+  var i=document.getElementById('merch-search'); if(i){ i.value=''; i.focus(); }
+  var c=document.getElementById('merch-search-clear'); if(c) c.classList.remove('show');
+  renderMerchPage();
+}
+function merchMatchesSearch(d,q){
+  if(!q) return true;
+  var hay=[d.name,d.rep,d.ownerName,d.mid,d.ownerEmail,d.ownerPhone,d.equipment,d.status,d.tier]
+    .filter(Boolean).join(' ').toLowerCase();
+  return hay.indexOf(q)!==-1;
+}
+function getAllMerchants(overrides,details){
+  details=details||{};
+  var map={};
+  MONTHS.forEach(function(m){
+    var mo=DATA[m]; if(!mo) return;
+    (mo.deals||[]).forEach(function(d){
+      var key=d.mid?('MID:'+String(d.mid)):merchKey(d.name);
+      var cur=map[key];
+      if(!cur){ map[key]=Object.assign({},d); return; }
+      var dProc=d.proc==='Yes', cProc=cur.proc==='Yes';
+      var better=(dProc&&!cProc) || (dProc===cProc && (d.volN||0)>(cur.volN||0));
+      if(better) map[key]=Object.assign({},d);
+    });
+  });
+  var list=Object.keys(map).map(function(k){
+    var d = map[k];
+    var ov = (d.mid && overrides['MID:'+d.mid]) || overrides[d.name] || overrides[merchKey(d.name)];
+    var det = (d.mid && details['MID:'+d.mid]) || details[d.name] || details[merchKey(d.name)];
+    if(ov){
+      if(ov.ownerName) d.ownerName = ov.ownerName;
+      if(ov.ownerPhone) d.ownerPhone = ov.ownerPhone;
+      if(ov.ownerEmail) d.ownerEmail = ov.ownerEmail;
+      if(ov.equipment) d.equipment = ov.equipment;
+      if(ov.notes) d.notes = ov.notes;
+      if(ov.mid) d.mid = ov.mid;
+    }
+    if(det){
+      if(!d.ownerName && det.ownerName) d.ownerName = det.ownerName;
+      if(!d.ownerPhone && det.ownerPhone) d.ownerPhone = det.ownerPhone;
+      if(!d.ownerEmail && det.ownerEmail) d.ownerEmail = det.ownerEmail;
+    }
+    if(!d.ownerName && d.owner) d.ownerName = d.owner;
+    if(!d.ownerPhone && d.phone) d.ownerPhone = d.phone;
+    if(!d.ownerEmail && d.email) d.ownerEmail = d.email;
+    if(!d.equipment && d.equip) d.equipment = d.equip;
+    return d;
+  });
+  // Group by tier color (White → Green → Yellow → Red), highest volume first
+  // within each color, so the list reads cleanly top-to-bottom by color.
+  var tierRank={White:0,Green:1,Yellow:2,Red:3};
+  list.sort(function(a,b){
+    var ra=tierRank[a.tier]!=null?tierRank[a.tier]:9, rb=tierRank[b.tier]!=null?tierRank[b.tier]:9;
+    if(ra!==rb) return ra-rb;
+    return (b.volN||0)-(a.volN||0);
+  });
+  return list;
+}
+function renderMerchPage(){
+  Promise.all([getMerchOverrides(),getMerchDetails()]).then(function(res){ renderMerchPageInner(res[0],res[1]); });
+  renderPendedDeals();
+}
+function renderMerchPageInner(overrides,details){
+  var deals=getAllMerchants(overrides,details);
+  var t={White:0,Green:0,Yellow:0,Red:0};
+  var totalVol=0;
+  deals.forEach(function(d){totalVol+=d.volN;if(t.hasOwnProperty(d.tier))t[d.tier]++;});
+  var procCount=deals.filter(function(d){return d.proc==="Yes";}).length;
+  document.getElementById('merch-kpis').innerHTML=
+    '<div class="kpi"><div class="lab">Total Merchants</div><div class="val">'+deals.length+'</div><div class="sub">all time</div></div>'+
+    '<div class="kpi"><div class="lab">Total Volume</div><div class="val">'+fmtMoney(totalVol)+'</div><div class="sub">lifetime</div></div>'+
+    '<div class="kpi"><div class="lab">Processing</div><div class="val" style="color:var(--green)">'+procCount+'</div><div class="sub">active merchants</div></div>'+
+    '<div class="kpi"><div class="lab">Not Processing</div><div class="val" style="color:var(--red)">'+(deals.length-procCount)+'</div><div class="sub">need attention</div></div>';
+  // Search narrows the working set; tier chips + table reflect the matches.
+  var q=(state.merchSearch||'').trim().toLowerCase();
+  var searched=q?deals.filter(function(d){return merchMatchesSearch(d,q);}):deals;
+  var st={White:0,Green:0,Yellow:0,Red:0};
+  searched.forEach(function(d){if(st.hasOwnProperty(d.tier))st[d.tier]++;});
+  var order=[["All",searched.length],["White",st.White],["Green",st.Green],["Yellow",st.Yellow],["Red",st.Red]];
+  document.getElementById('merch-chips').innerHTML=order.map(function(pair){
+    return '<span class="chip '+(state.merchTier===pair[0]?'active':'')+'" data-t="'+pair[0]+'" onclick="setMerchTier(\''+pair[0]+'\')">'+pair[0]+' <b>'+pair[1]+'</b></span>';
+  }).join('');
+  var filtered=searched;
+  if(state.merchTier!=='All') filtered=searched.filter(function(d){return d.tier===state.merchTier;});
+  if(!filtered.length){
+    var msg=q?('No merchants match “'+esc(state.merchSearch.trim())+'”'):'No merchants found.';
+    document.getElementById('merch-table').innerHTML='<tr><td colspan="13" style="padding:22px 16px;text-align:center;color:var(--muted2);font-size:13px">'+msg+'</td></tr>';
+    syncMerchScrollbar();
+    return;
+  }
+  document.getElementById('merch-table').innerHTML=filtered.map(function(d){
+    var ph=d.ownerPhone||'',em=d.ownerEmail||'';
+    var phoneIcons=ph?'<a href="tel:'+esc(ph)+'" title="Call '+esc(ph)+'" style="font-size:20px;text-decoration:none">&#x1F4DE;</a>&nbsp;&nbsp;<a href="sms:'+esc(ph)+'" title="Text '+esc(ph)+'" style="font-size:20px;text-decoration:none">&#x1F4AC;</a>':'';
+    var emailIcon=em?'<a href="mailto:'+esc(em)+'" title="Email '+esc(em)+'" style="font-size:20px;text-decoration:none">&#x2709;&#xFE0F;</a>':'';
+    var editBtn='<button class="btn-edit-merch" data-name="'+esc(d.name)+'" onclick="openMerchEdit(this.dataset.name)" title="Edit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>';
+    return '<tr><td><input type="checkbox" class="bulk-cb merch-cb" data-name="'+esc(d.name)+'" onchange="updateMerchBulkBar()"></td><td style="font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted2)">'+esc(d.mid||'')+'</td><td class="merch-name-cell" data-mid="'+esc(d.mid||'')+'" data-name="'+esc(d.name)+'" onclick="openMerchDetail(this.dataset.mid,this.dataset.name)" title="View deposits & detail"><span class="dot '+d.tier.toLowerCase()+'"></span><strong>'+esc(d.name)+'</strong>'+(d.notes?' <span class="note-badge" title="'+esc(d.notes)+'">&#x1F4DD;</span>':'')+'</td>'+
+      '<td>'+esc(d.rep)+'</td>'+
+      '<td>'+esc(d.ownerName||'')+'</td>'+
+      '<td style="white-space:nowrap">'+phoneIcons+'</td>'+
+      '<td>'+emailIcon+'</td>'+
+      '<td>'+esc(d.equipment||'')+'</td>'+
+      '<td>'+esc(d.status)+'</td>'+
+      '<td class="num">'+d.vol+'</td><td class="num">'+d.txn+'</td>'+
+      '<td><span class="tierbadge '+d.tier+'">'+d.tier+'</span></td>'+
+      '<td>'+editBtn+'</td></tr>';
+  }).join('');
+  syncMerchScrollbar();
+}
+function renderPendedDeals(){
+  var deals=PENDED_DEALS||[];
+  var tbody=document.getElementById('pended-table');
+  if(!tbody) return;
+  if(!deals.length){
+    tbody.innerHTML='<tr><td colspan="8" class="pended-empty">No pended deals found</td></tr>';
+    return;
+  }
+  tbody.innerHTML=deals.map(function(d){
+    return '<tr><td><strong>'+esc(d.dba||'')+'</strong></td>'+
+      '<td>'+esc(d.gm||'')+'</td>'+
+      '<td>'+esc(d.team||'')+'</td>'+
+      '<td>'+esc(d.rep||'')+'</td>'+
+      '<td>'+esc(d.category||'')+'</td>'+
+      '<td>'+esc(d.subCategory||'')+'</td>'+
+      '<td>'+esc(d.comment||'')+'</td>'+
+      '<td>'+esc(d.pendDate||'')+'</td></tr>';
+  }).join('');
+}
+// Keep an always-visible horizontal slider above the table in sync with it,
+// so every column is reachable even where the OS hides native scrollbars.
+function syncMerchScrollbar(){
+  var scroll=document.getElementById('merch-scroll');
+  var slider=document.getElementById('merch-slider');
+  var thumb=document.getElementById('merch-slider-thumb');
+  if(!scroll||!slider||!thumb) return;
+  function update(){
+    var sw=scroll.scrollWidth, cw=scroll.clientWidth;
+    if(cw<=0) return;                       // not laid out yet (tab hidden)
+    if(sw-cw<=1){ slider.style.display='none'; return; }
+    slider.style.display='block';
+    var trackW=slider.clientWidth;
+    var thumbW=Math.max(48, Math.round(trackW*cw/sw));
+    var maxThumb=trackW-thumbW, maxScroll=sw-cw;
+    thumb.style.width=thumbW+'px';
+    thumb.style.left=(maxScroll>0?Math.round((scroll.scrollLeft/maxScroll)*maxThumb):0)+'px';
+  }
+  if(!slider._wired){
+    slider._wired=true;
+    var dragging=false, startX=0, startLeft=0;
+    function cx(e){ return (e.touches&&e.touches[0])?e.touches[0].clientX:e.clientX; }
+    function scrollTo(left){
+      var trackW=slider.clientWidth, thumbW=thumb.offsetWidth, maxThumb=trackW-thumbW;
+      var maxScroll=scroll.scrollWidth-scroll.clientWidth;
+      left=Math.max(0,Math.min(maxThumb,left));
+      scroll.scrollLeft=(maxThumb>0?(left/maxThumb)*maxScroll:0);
+    }
+    thumb.addEventListener('mousedown',function(e){ dragging=true; startX=cx(e); startLeft=parseFloat(thumb.style.left)||0; document.body.style.userSelect='none'; e.preventDefault(); });
+    thumb.addEventListener('touchstart',function(e){ dragging=true; startX=cx(e); startLeft=parseFloat(thumb.style.left)||0; },{passive:true});
+    document.addEventListener('mousemove',function(e){ if(dragging) scrollTo(startLeft+(cx(e)-startX)); });
+    document.addEventListener('touchmove',function(e){ if(dragging) scrollTo(startLeft+(cx(e)-startX)); },{passive:true});
+    document.addEventListener('mouseup',function(){ dragging=false; document.body.style.userSelect=''; });
+    document.addEventListener('touchend',function(){ dragging=false; });
+    // Click anywhere on the track to jump there.
+    slider.addEventListener('mousedown',function(e){ if(e.target===thumb) return; var r=slider.getBoundingClientRect(); scrollTo((e.clientX-r.left)-thumb.offsetWidth/2); });
+    // Keep the thumb in sync when scrolled via trackpad / shift-wheel.
+    scroll.addEventListener('scroll',update);
+    window.addEventListener('resize',update);
+  }
+  update();
+  if(window.requestAnimationFrame) requestAnimationFrame(update); // re-measure after layout settles
+}
+
+// ── Merchant detail modal ──────────────────────────────────────────
+function mdetSum(a){ return (a||[]).reduce(function(s,v){ return s+(Number(v)||0); },0); }
+function mdetMoney(n){ return '$'+Math.round(Number(n)||0).toLocaleString(); }
+// Tiny inline-SVG sparkline (line) — no chart library needed.
+function mdetSparkline(vals,color){
+  vals=(vals||[]).map(Number); var n=vals.length; if(!n) return '';
+  var w=100,h=30,max=Math.max.apply(null,vals.concat([0])),min=Math.min.apply(null,vals.concat([0]));
+  var span=(max-min)||1;
+  var pts=vals.map(function(v,i){var x=n>1?(i/(n-1))*w:w/2;var y=h-((v-min)/span)*h;return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
+  return '<svg class="mdet-spark" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>';
+}
+// Tiny inline-SVG bar chart.
+function mdetBars(vals,color){
+  vals=(vals||[]).map(Number); var n=vals.length; if(!n) return '';
+  var max=Math.max.apply(null,vals.concat([1])); var bw=100/n;
+  var bars=vals.map(function(v,i){var bh=Math.max(0,(v/max)*30);var x=i*bw;return '<rect x="'+(x+bw*0.18).toFixed(1)+'" y="'+(30-bh).toFixed(1)+'" width="'+(bw*0.64).toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="'+color+'" rx="0.6"/>';}).join('');
+  return '<svg class="mdet-spark" viewBox="0 0 100 30" preserveAspectRatio="none">'+bars+'</svg>';
+}
+// Find the local DATA deal for fallback info when detail isn't scraped yet.
+function findLocalDeal(mid,name){
+  var byMid=null,byName=null,nk=merchKey(name||'');
+  MONTHS.forEach(function(m){
+    var mo=DATA[m]; if(!mo) return;
+    (mo.deals||[]).forEach(function(d){
+      if(mid&&String(d.mid)===String(mid)){ if(!byMid||d.proc==='Yes') byMid=d; }
+      if(!byName&&nk&&merchKey(d.name)===nk) byName=d;
+    });
+  });
+  return byMid||byName||null;
+}
+function openMerchDetail(mid,name){
+  var modal=document.getElementById('merch-detail-modal');
+  document.getElementById('mdet-title').textContent=name||'Merchant Detail';
+  document.getElementById('mdet-body').innerHTML='<div class="mdet-empty"><div class="mdet-spin"></div><div style="margin-top:8px">Loading merchant detail…</div></div>';
+  modal.classList.add('open'); document.body.style.overflow='hidden';
+  // Monotonic request token so a slow response for an earlier click can never
+  // overwrite a newer one (even if two merchants share a name/blank mid).
+  var token=(state.mdetSeq=(state.mdetSeq||0)+1);
+  state.mdetMid=token;
+  // Look up by MID (exact). Fall back to an EXACT name match — never .ilike,
+  // whose %/_ in a merchant name would act as wildcards.
+  var q=mid?supaClient.from('merchant_details').select('*').eq('mid',String(mid)).limit(1)
+          :supaClient.from('merchant_details').select('*').eq('name',String(name||'')).limit(1);
+  q.then(function(res){
+    if(state.mdetMid!==token) return;
+    renderMerchDetail(mid,name,(res&&res.data&&res.data[0])||null);
+  }).catch(function(){ if(state.mdetMid===token) renderMerchDetail(mid,name,null); });
+}
+function closeMerchDetail(){
+  document.getElementById('merch-detail-modal').classList.remove('open');
+  document.body.style.overflow=''; state.mdetMid=null;
+}
+// Jump from the read-only detail view straight into the editable notes field.
+function mdetEditNotes(name){ closeMerchDetail(); openMerchEdit(name); }
+function mdetTab(el,which){
+  ['deposits','auths','statements'].forEach(function(k){
+    var p=document.getElementById('mdet-'+k); if(p) p.style.display=(k===which)?'':'none';
+  });
+  var tabs=el.parentNode.querySelectorAll('.mdet-tab');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
+  el.classList.add('active');
+}
+function mdetRenderTab(tab){
+  if(!tab||!tab.tables||!tab.tables.length) return '<div class="mdet-empty">No records for this merchant.</div>';
+  return tab.tables.map(function(t){
+    var head=(t.headers&&t.headers.length)?'<thead><tr>'+t.headers.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+'</tr></thead>':'';
+    var body=(t.rows||[]).map(function(cells,ri){
+      var links=(t.cellLinks&&t.cellLinks[ri])||[];
+      var isEmpty=/^no\b.*(deposit|record|data|result|auth|statement|transaction)/i.test(cells.join(' '));
+      var tds=cells.map(function(c,ci){
+        var href=safeHref(links[ci]);
+        if(href) return '<td><a href="'+esc(href)+'" target="_blank" rel="noopener noreferrer">'+esc(c)+'</a></td>';
+        return '<td>'+esc(c)+'</td>';
+      }).join('');
+      return '<tr'+(isEmpty?' class="empty"':'')+'>'+tds+'</tr>';
+    }).join('');
+    return '<table class="mdet-table">'+head+'<tbody>'+(body||'')+'</tbody></table>';
+  }).join('');
+}
+function renderMerchDetail(mid,name,row){
+  var local=findLocalDeal(mid,name);
+  var m=(row&&row.metrics)||null;
+  var contact=(row&&row.contact)||{};
+  var info=(contact.info)||{};
+  var team=(row&&row.sales_team)||{};
+  // Metric values
+  var mtd=m?mdetSum(m.currentMonthDaily):(local?local.volN:0);
+  var quarter=m?mdetSum(m.quarterValues):mtd;
+  var year=m?mdetSum(m.twelveMonthValues):mtd;
+  var proj=(m&&m.dayOfMonth)?Math.round(mtd/m.dayOfMonth*30):0;
+  var qLab=(m&&m.quarterLabels)?m.quarterLabels.join(' – '):'';
+  var yLab=(m&&m.twelveMonthLabels&&m.twelveMonthLabels.length)?(m.twelveMonthLabels[0]+' – '+m.twelveMonthLabels[m.twelveMonthLabels.length-1]):'';
+  var metricsHtml=
+    '<div class="mdet-metrics">'+
+      '<div class="mdet-card"><div class="top"><span class="sub">Volume MTD</span>'+(proj?'<span class="proj">Proj: '+mdetMoney(proj)+'</span>':'')+'</div><div class="big">'+mdetMoney(mtd)+'</div>'+mdetSparkline(m?m.currentMonthDaily:[],'#16A34A')+'</div>'+
+      '<div class="mdet-card"><div class="top"><span class="sub">Last 3 Months</span><span class="proj">'+esc(qLab)+'</span></div><div class="big">'+mdetMoney(quarter)+'</div>'+mdetBars(m?m.quarterValues:[],'#2563EB')+'</div>'+
+      '<div class="mdet-card"><div class="top"><span class="sub">12-Month Total</span><span class="proj">'+esc(yLab)+'</span></div><div class="big">'+mdetMoney(year)+'</div>'+mdetSparkline(m?m.twelveMonthValues:[],'#2563EB')+'</div>'+
+    '</div>';
+  // Info / contact / team card
+  var midV=info['MID']||mid||(local&&local.mid)||'—';
+  var proc=info['Processor']||'—';
+  var sic=info['SIC / MCC']||info['SIC/MCC']||'—';
+  var statusV=info['Status']||(local?local.status:'')||'—';
+  var owner=contact.owner||(local&&local.ownerName)||'';
+  var phone=contact.phone||(local&&local.ownerPhone)||'';
+  var email=contact.email||(local&&local.ownerEmail)||'';
+  var addr=contact.address||'';
+  var rep=team['Rep']||(local?local.rep:'')||'';
+  var gm=team['GM']||'', sm=team['SM']||'';
+  // Notes live in merchant_overrides; read them from the (already-loaded) cache.
+  var ovNote='';
+  try{ var _oc=(typeof _merchCache!=='undefined')?_merchCache:null; if(_oc){ var _ovr=(mid&&_oc['MID:'+mid])||_oc[name]||_oc[merchKey(name||'')]; if(_ovr&&_ovr.notes) ovNote=_ovr.notes; } }catch(e){}
+  var phoneIcons=phone?'<a href="tel:'+esc(phone)+'" title="Call">&#x1F4DE;</a><a href="sms:'+esc(phone)+'" title="Text">&#x1F4AC;</a> '+esc(phone):'';
+  var infoHtml=
+    '<div class="mdet-info">'+
+      '<h4>'+esc(name||(local&&local.name)||'Merchant')+'</h4>'+
+      '<div class="row2">'+
+        '<div><div class="mdet-lbl">MID</div><div class="mdet-val">'+esc(midV)+'</div></div>'+
+        '<div><div class="mdet-lbl">Processor</div><div class="mdet-val">'+esc(proc)+'</div></div>'+
+        '<div><div class="mdet-lbl">SIC / MCC</div><div class="mdet-val">'+esc(sic)+'</div></div>'+
+        '<div><div class="mdet-lbl">Status</div><div class="mdet-val">'+esc(statusV)+'</div></div>'+
+      '</div>'+
+      '<hr class="mdet-sep">'+
+      '<div class="mdet-ct">Contact</div>'+
+      (owner?'<div class="mdet-line">&#x1F464; '+esc(owner)+'</div>':'')+
+      (phone?'<div class="mdet-line mdet-icons">'+phoneIcons+'</div>':'')+
+      (email?'<div class="mdet-line">&#x2709;&#xFE0F; <a href="mailto:'+esc(email)+'">'+esc(email)+'</a></div>':'')+
+      (addr?'<div class="mdet-line">&#x1F4CD; '+esc(addr)+'</div>':'')+
+      ((owner||phone||email||addr)?'':'<div class="mdet-val" style="color:var(--muted2)">No contact on file</div>')+
+      '<hr class="mdet-sep">'+
+      '<div class="mdet-ct">Sales Team</div>'+
+      (gm?'<div class="mdet-line"><span class="k">GM</span>'+esc(gm)+'</div>':'')+
+      (sm?'<div class="mdet-line"><span class="k">SM</span>'+esc(sm)+'</div>':'')+
+      (rep?'<div class="mdet-line"><span class="k">Rep</span>'+esc(rep)+'</div>':'')+
+      '<hr class="mdet-sep">'+
+      '<div class="mdet-ct">Notes <button class="mdet-editnotes" data-name="'+esc(name||(local&&local.name)||'')+'" onclick="mdetEditNotes(this.dataset.name)">&#x270E; Edit</button></div>'+
+      (ovNote?'<div class="mdet-notes">'+esc(ovNote).replace(/\n/g,'<br>')+'</div>':'<div class="mdet-val" style="color:var(--muted2)">No notes yet</div>')+
+    '</div>';
+  // Tabs
+  var dep=row&&row.deposits, auth=row&&row.authorizations, stm=row&&row.statements;
+  var tabsHtml=
+    '<div>'+
+      '<div class="mdet-tabs">'+
+        '<div class="mdet-tab active" onclick="mdetTab(this,\'deposits\')">Deposits</div>'+
+        '<div class="mdet-tab" onclick="mdetTab(this,\'auths\')">Authorizations</div>'+
+        '<div class="mdet-tab" onclick="mdetTab(this,\'statements\')">Statements</div>'+
+      '</div>'+
+      '<div class="mdet-tabpanel" id="mdet-deposits">'+mdetRenderTab(dep)+'</div>'+
+      '<div class="mdet-tabpanel" id="mdet-auths" style="display:none">'+mdetRenderTab(auth)+'</div>'+
+      '<div class="mdet-tabpanel" id="mdet-statements" style="display:none">'+mdetRenderTab(stm)+'</div>'+
+    '</div>';
+  var stamp=(row&&row.updated_at)?'<div class="mdet-stamp">Detail synced '+esc(new Date(row.updated_at).toLocaleString())+'</div>':'<div class="mdet-stamp">No sales-portal detail page for this merchant — showing dashboard summary only.</div>';
+  document.getElementById('mdet-body').innerHTML=metricsHtml+'<div class="mdet-grid">'+infoHtml+tabsHtml+'</div>'+stamp;
+}
+
+// BambooHR Team Recruiting Data
+var RECRUIT_DATA = {
+  team: [
+    {name:"Jaden Dufek",hireDate:"Mar 10, 2026",source:"Referral",training:"Complete",paperwork:"Complete",email:"",phone:"",notes:""},
+    {name:"Gabriel Craft",hireDate:"Apr 1, 2026",source:"Indeed",training:"Complete",paperwork:"Complete",email:"",phone:"",notes:""},
+    {name:"Judah Steelman",hireDate:"Apr 15, 2026",source:"LinkedIn",training:"Complete",paperwork:"Complete",email:"",phone:"",notes:""},
+    {name:"Timothy Constenius",hireDate:"May 5, 2026",source:"Referral",training:"Complete",paperwork:"Complete",email:"",phone:"",notes:""},
+    {name:"Sadie Scoville",hireDate:"May 20, 2026",source:"Indeed",training:"In Progress",paperwork:"Complete",email:"",phone:"",notes:""},
+    {name:"Jason Coutcher",hireDate:"Jun 2, 2026",source:"LinkedIn",training:"In Progress",paperwork:"Complete",email:"",phone:"",notes:""},
+    {name:"Jaden Schoenrock",hireDate:"Jun 8, 2026",source:"Career Page",training:"Not Started",paperwork:"Sent",email:"",phone:"",notes:""},
+    {name:"Lloyd Cruz",hireDate:"Jun 10, 2026",source:"Indeed",training:"Not Started",paperwork:"Sent",email:"",phone:"",notes:""},
+    {name:"Seth Manshum",hireDate:"Jun 14, 2026",source:"Referral",training:"Not Started",paperwork:"Sent",email:"",phone:"",notes:""},
+    {name:"Walter Smith",hireDate:"Jun 16, 2026",source:"LinkedIn",training:"Not Started",paperwork:"Not Returned",email:"",phone:"",notes:""}
+  ]
+};
+
+// BambooHR API Integration
+var BHR = {
+  // In-memory config cache so the many synchronous callers (updateSyncUI,
+  // apiCall, syncBambooHR…) always have an immediate value. It is seeded from
+  // localStorage instantly and refreshed from Supabase via loadRemote(), so the
+  // Worker URL persists across devices/browsers — not just on this one machine.
+  _cfg: null,
+  _localGet: function(){
+    try {
+      var c = JSON.parse(localStorage.getItem('bhr_config') || '{}');
+      return { workerUrl: c.workerUrl||'', lastSync: c.lastSync||null };
+    } catch(e) { return { workerUrl:'', lastSync:null }; }
+  },
+  _localSet: function(cfg){
+    try { localStorage.setItem('bhr_config', JSON.stringify(cfg)); } catch(e){}
+  },
+  _remoteSet: function(cfg){
+    supaClient.from('app_settings')
+      .upsert({ key:'bhr_config', value:cfg, updated_at:new Date().toISOString() }, { onConflict:'key' })
+      .then(function(res){
+        if(res.error) console.warn('app_settings save failed:', res.error.message);
+      });
+  },
+  getConfig: function(){
+    if(!this._cfg) this._cfg = this._localGet();
+    return this._cfg;
+  },
+  // Pull the shared config from Supabase. If the cloud has one it wins (and we
+  // mirror it to localStorage). If the cloud is empty but THIS device has a URL
+  // saved locally, push it up so every other device inherits it automatically.
+  loadRemote: function(){
+    var self = this;
+    var local = this._localGet();
+    self._cfg = local;
+    return supaClient.from('app_settings').select('value').eq('key','bhr_config').limit(1)
+      .then(function(res){
+        var rows = (res && res.data) || [];
+        var remote = rows.length ? rows[0].value : null;
+        if(remote && remote.workerUrl){
+          var merged = { workerUrl: remote.workerUrl, lastSync: remote.lastSync || local.lastSync || null };
+          self._cfg = merged; self._localSet(merged);
+        } else if(local.workerUrl){
+          self._remoteSet(local);
+          self._cfg = local;
+        }
+        return self._cfg;
+      })
+      .catch(function(){ self._cfg = local; return self._cfg; });
+  },
+  saveConfig: function(workerUrl){
+    var cfg = { workerUrl: workerUrl, lastSync: this.getConfig().lastSync || null };
+    this._cfg = cfg;
+    this._localSet(cfg);
+    return this._remoteSet(cfg);
+  },
+  updateLastSync: function(){
+    var cfg = { workerUrl: this.getConfig().workerUrl, lastSync: new Date().toISOString() };
+    this._cfg = cfg;
+    this._localSet(cfg);
+    this._remoteSet(cfg);
+  },
+  isConfigured: function(){
+    return !!this.getConfig().workerUrl;
+  },
+  apiCall: function(endpoint){
+    var c = this.getConfig();
+    var url = c.workerUrl.replace(/\/+$/, '') + '/' + endpoint;
+    return fetch(url).then(function(r){
+      if (!r.ok) return r.text().then(function(body){
+        var detail = '';
+        try { var j = JSON.parse(body); detail = j.message || j.error || ''; } catch(e){ detail = body.substring(0,150); }
+        throw new Error('HTTP ' + r.status + (detail ? ' — ' + detail : ''));
+      });
+      return r.json();
+    });
+  },
+  extractVal: function(field){
+    if (!field) return '';
+    if (typeof field === 'string') return field;
+    if (field.value) return field.value;
+    if (field.label) return field.label;
+    if (field.name) return field.name;
+    if (field.city) return field.city + (field.state ? ', ' + field.state : '');
+    return String(field);
+  },
+  mapTrainingStatus: function(val){
+    if (!val) return 'Not Started';
+    var s = (typeof val === 'string' ? val : BHR.extractVal(val)).toLowerCase();
+    if (s.indexOf('complete') > -1 || s.indexOf('done') > -1 || s.indexOf('passed') > -1) return 'Complete';
+    if (s.indexOf('progress') > -1 || s.indexOf('started') > -1 || s.indexOf('active') > -1) return 'In Progress';
+    return 'Not Started';
+  },
+  mapPaperworkStatus: function(val){
+    if (!val) return 'Not Sent';
+    var s = (typeof val === 'string' ? val : BHR.extractVal(val)).toLowerCase();
+    if (s.indexOf('complete') > -1 || s.indexOf('returned') > -1 || s.indexOf('received') > -1 || s.indexOf('done') > -1) return 'Complete';
+    if (s.indexOf('sent') > -1 || s.indexOf('pending') > -1 || s.indexOf('waiting') > -1) return 'Sent';
+    if (s.indexOf('not returned') > -1 || s.indexOf('missing') > -1 || s.indexOf('outstanding') > -1) return 'Not Returned';
+    return 'Not Sent';
+  }
+};
+
+function updateSyncUI(){
+  var cfg = BHR.getConfig();
+  var conn = document.getElementById('bhr-conn');
+  var status = document.getElementById('sync-status');
+  var btn = document.getElementById('btn-sync');
+  if (BHR.isConfigured()){
+    conn.className = 'conn-dot connected';
+    btn.disabled = false;
+    if (cfg.lastSync){
+      var d = new Date(cfg.lastSync);
+      status.textContent = 'Last synced: ' + d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+      status.className = 'sync-status success';
+    } else {
+      status.textContent = 'Connected — ready to sync';
+      status.className = 'sync-status';
+    }
+  } else {
+    conn.className = 'conn-dot disconnected';
+    btn.disabled = false;
+    status.textContent = 'Not connected — click Settings to add your Worker URL, then Sync Now';
+    status.className = 'sync-status error';
+  }
+}
+
+function openBhrSettings(){
+  var cfg = BHR.getConfig();
+  document.getElementById('bhr-worker').value = cfg.workerUrl;
+  document.getElementById('bhr-test-result').innerHTML = '';
+  document.getElementById('bhr-modal').classList.add('open');
+}
+function closeBhrSettings(){
+  document.getElementById('bhr-modal').classList.remove('open');
+}
+function saveBhrSettings(){
+  var url = document.getElementById('bhr-worker').value.trim();
+  BHR.saveConfig(url);
+  closeBhrSettings();
+  updateSyncUI();
+}
+function testBhrConnection(){
+  var url = document.getElementById('bhr-worker').value.trim();
+  var el = document.getElementById('bhr-test-result');
+  if (!url){ el.innerHTML = '<span style="color:var(--red)">Please enter your Worker URL.</span>'; return; }
+  el.innerHTML = '<span style="color:var(--accent)">Testing connection to worker...</span>';
+  fetch(url.replace(/\/+$/, '') + '/meta/fields/')
+    .then(function(r){
+      return r.text().then(function(body){
+        if (r.ok) {
+          el.innerHTML = '<span style="color:var(--green)">Connection successful! BambooHR is reachable via your worker.</span>';
+        } else {
+          var detail = '';
+          try { var j = JSON.parse(body); detail = j.message || j.error || body; } catch(e){ detail = body; }
+          if (detail.length > 200) detail = detail.substring(0, 200) + '...';
+          el.innerHTML = '<span style="color:var(--red)">HTTP ' + r.status + ': ' + detail + '</span>';
+        }
+      });
+    })
+    .catch(function(err){
+      el.innerHTML = '<span style="color:var(--red)">Connection failed: ' + (err.message||'network error') + '. Check your Worker URL is correct and deployed.</span>';
+    });
+}
+
+var SYNC_BTN_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.2 2.8A5.25 5.25 0 002.63 7H1L3.5 9.5 6 7H4.38a3.5 3.5 0 016.09-2.33l1.06-1.06A5.22 5.22 0 0011.2 2.8zM10.5 4.5L8 7h1.62a3.5 3.5 0 01-6.09 2.33L2.47 10.4A5.25 5.25 0 0013 7h1.63L12.13 4.5 10.5 4.5z" fill="currentColor"/></svg>';
+
+function syncBambooHR(){
+  if (!BHR.isConfigured()){
+    openBhrSettings();
+    var s = document.getElementById('sync-status');
+    if(s){ s.textContent = 'Please enter your Worker URL in Settings first.'; s.className = 'sync-status error'; }
+    return;
+  }
+  var btn = document.getElementById('btn-sync');
+  var status = document.getElementById('sync-status');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Syncing...';
+  status.textContent = 'Fetching your team from BambooHR...';
+  status.className = 'sync-status syncing';
+
+  var cfg = BHR.getConfig();
+  var url = cfg.workerUrl.replace(/\/+$/, '') + '/employees/directory';
+  fetch(url).then(function(r){
+    return r.text().then(function(body){ return { status: r.status, ok: r.ok, body: body }; });
+  }).then(function(res){
+    if (!res.ok) {
+      var detail = res.body || '';
+      try { var ej = JSON.parse(res.body); detail = ej.error || ej.message || res.body; } catch(e){}
+      if (res.status === 403 && !detail) detail = 'Access denied — the BambooHR API key lacks permission to view the employee directory. Regenerate the key from a Full Admin account.';
+      status.textContent = 'Sync failed: HTTP ' + res.status + ' — ' + (detail || '(no details returned)').substring(0, 240);
+      status.className = 'sync-status error';
+      return;
+    }
+
+    var dir;
+    try { dir = JSON.parse(res.body); } catch(e) {
+      status.textContent = 'Sync failed: BambooHR returned invalid JSON — ' + res.body.substring(0, 150);
+      status.className = 'sync-status error';
+      return;
+    }
+
+    var employees = dir.employees || dir || [];
+    if (!Array.isArray(employees)){
+      var vals = Object.values(employees);
+      if (vals.length && typeof vals[0] === 'object') employees = vals;
+      else employees = [];
+    }
+
+    status.textContent = 'Processing ' + employees.length + ' employees...';
+
+    var team = [];
+    for (var i = 0; i < employees.length; i++){
+      var emp = employees[i];
+      if (!emp || typeof emp !== 'object') continue;
+      var keys = Object.keys(emp);
+      var firstName = '', lastName = '', displayName = '', hireDate = '', dept = '', email = '', phone = '';
+      for (var k = 0; k < keys.length; k++){
+        var key = keys[k].toLowerCase();
+        var val = BHR.extractVal(emp[keys[k]]);
+        if (key === 'firstname' || key === 'first_name') firstName = val;
+        else if (key === 'lastname' || key === 'last_name') lastName = val;
+        else if (key === 'displayname' || key === 'display_name' || key === 'name') displayName = val;
+        else if (key === 'hiredate' || key === 'hire_date' || key === 'originalhiredate' || key === 'dateofhire') hireDate = hireDate || val;
+        else if (key === 'department') dept = val;
+        else if (key === 'homeemail' || key === 'home_email' || key === 'email' || key === 'workemail') email = email || val;
+        else if (key === 'workphone' || key === 'work_phone' || key === 'phone' || key === 'mobilephone') phone = phone || val;
+      }
+      var name = (firstName + ' ' + lastName).trim() || displayName || '';
+      if (!name) continue;
+      team.push({
+        name: name,
+        hireDate: hireDate || '—',
+        source: dept || '—',
+        training: 'Not Started',
+        paperwork: 'Not Sent',
+        email: email,
+        phone: phone,
+        notes: ''
+      });
+    }
+
+    if (team.length) {
+      // Build lookup of existing team members by name.
+      var existingByName = {};
+      RECRUIT_DATA.team.forEach(function(t){ existingByName[t.name] = t; });
+
+      // Merge: preserve all existing members' edits, only ADD new names.
+      var newCount = 0;
+      team.forEach(function(t){
+        var prev = existingByName[t.name];
+        if(prev){
+          // Existing member — update email/phone from BambooHR but keep
+          // training, paperwork, notes, source, and hireDate edits.
+          if(t.email && !prev.email) prev.email = t.email;
+          if(t.phone && !prev.phone) prev.phone = t.phone;
+        } else {
+          // Brand-new hire from BambooHR — add them.
+          RECRUIT_DATA.team.push(t);
+          newCount++;
+        }
+      });
+
+      // Append manual hires that aren't already present.
+      loadManualHires().forEach(function(h){
+        if(!RECRUIT_DATA.team.some(function(t){ return t.name === h.name; }))
+          RECRUIT_DATA.team.push(h);
+      });
+
+      // Apply any field-level overrides saved by the user.
+      applyRecruitOverrides(RECRUIT_DATA.team);
+
+      // Persist the full team to Supabase so it survives across browsers.
+      saveTeamToCloud(RECRUIT_DATA.team);
+      BHR.updateLastSync();
+      renderRecruitPage();
+      var msg = newCount > 0
+        ? 'Synced ' + team.length + ' employees — ' + newCount + ' new hire' + (newCount > 1 ? 's' : '') + ' added'
+        : 'Synced ' + team.length + ' employees — team is up to date';
+      status.textContent = msg;
+      status.className = 'sync-status success';
+      setTimeout(function(){ status.textContent=''; status.className='sync-status'; },5000);
+    } else {
+      status.textContent = 'API returned ' + employees.length + ' records but 0 had names. Raw keys: ' + (employees[0] ? Object.keys(employees[0]).join(', ') : 'empty response');
+      status.className = 'sync-status error';
+    }
+  }).catch(function(err){
+    status.textContent = 'Sync failed: ' + (err.message || String(err));
+    status.className = 'sync-status error';
+  }).finally(function(){
+    btn.disabled = false;
+    btn.innerHTML = SYNC_BTN_SVG + ' Sync Now';
+    // NOTE: do NOT call updateSyncUI() here — it overwrites the success/error
+    // message set above. The connection dot is already set correctly on load.
+  });
+}
+
+// Initialize sync UI on load (instant from local cache), then refresh once the
+// shared config loads from Supabase so a Worker URL saved on any device appears.
+updateSyncUI();
+BHR.loadRemote().then(function(){ updateSyncUI(); });
+
+// Load the persisted BambooHR team from Supabase so the recruiting page shows
+// the last-synced data on every device — not just the hardcoded seed list.
+// Also pulls recruit_overrides and manual_hires from the cloud.
+(function(){
+  // Instant: use localStorage cache while waiting for Supabase.
+  try {
+    var cached = JSON.parse(localStorage.getItem('bhr_synced_team') || '[]');
+    if(cached.length){
+      RECRUIT_DATA.team = cached;
+      loadManualHires().forEach(function(h){
+        if(!RECRUIT_DATA.team.some(function(t){ return t.name === h.name; }))
+          RECRUIT_DATA.team.push(h);
+      });
+      applyRecruitOverrides(RECRUIT_DATA.team);
+    }
+  } catch(e){}
+  // Then refresh from cloud (authoritative source).
+  loadAllFromCloud().then(function(){ render(); });
+})();
+
+function statusBadgeClass(val){
+  if (val==='Complete') return 'sb-hired';
+  if (val==='In Progress' || val==='Sent') return 'sb-interview';
+  return 'sb-applied';
+}
+
+// ---- Hire date parsing & formatting ----
+function parseHireDate(str){
+  if(!str || str==='—') return null;
+  var iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(str);
+  if(iso) return new Date(+iso[1], +iso[2]-1, +iso[3]);
+  var d = new Date(str);
+  return isNaN(d.getTime()) ? null : d;
+}
+function fmtHireDate(str){
+  var d = parseHireDate(str);
+  if(!d) return str || '—';
+  return d.toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'});
+}
+
+// ---- Saved edits (persist by name across reloads & syncs) ----
+function loadRecruitOverrides(){
+  try { return JSON.parse(localStorage.getItem('recruit_overrides') || '{}'); } catch(e){ return {}; }
+}
+function applyRecruitOverrides(team){
+  var ov = loadRecruitOverrides();
+  team.forEach(function(t){
+    if(ov[t.name]){
+      var o = ov[t.name];
+      if(o.training) t.training = o.training;
+      if(o.paperwork) t.paperwork = o.paperwork;
+      if(o.email !== undefined) t.email = o.email;
+      if(o.phone !== undefined) t.phone = o.phone;
+      if(o.hireDate !== undefined) t.hireDate = o.hireDate;
+      if(o.source !== undefined) t.source = o.source;
+      if(o.notes !== undefined) t.notes = o.notes;
+    }
+  });
+}
+function saveRecruitOverride(name, data){
+  var ov = loadRecruitOverrides();
+  ov[name] = data;
+  localStorage.setItem('recruit_overrides', JSON.stringify(ov));
+  supaClient.from('app_settings')
+    .upsert({ key:'recruit_overrides', value:ov, updated_at:new Date().toISOString() }, { onConflict:'key' })
+    .then(function(r){ if(r.error) console.warn('recruit_overrides save failed:', r.error.message); });
+}
+
+// ---- Manually-added hires (persisted to Supabase) ----
+function loadManualHires(){
+  try { return JSON.parse(localStorage.getItem('manual_hires') || '[]'); } catch(e){ return []; }
+}
+function saveManualHires(hires){
+  localStorage.setItem('manual_hires', JSON.stringify(hires));
+  supaClient.from('app_settings')
+    .upsert({ key:'manual_hires', value:hires, updated_at:new Date().toISOString() }, { onConflict:'key' })
+    .then(function(r){ if(r.error) console.warn('manual_hires save failed:', r.error.message); });
+}
+
+// ---- Persist synced BambooHR team to Supabase so it survives across browsers ----
+function saveTeamToCloud(team){
+  localStorage.setItem('bhr_synced_team', JSON.stringify(team));
+  supaClient.from('app_settings')
+    .upsert({ key:'bhr_synced_team', value:team, updated_at:new Date().toISOString() }, { onConflict:'key' })
+    .then(function(r){ if(r.error) console.warn('bhr_synced_team save failed:', r.error.message); });
+}
+function loadAllFromCloud(){
+  return supaClient.from('app_settings').select('key,value')
+    .then(function(res){
+      var rows = (res && res.data) || [];
+      rows.forEach(function(row){
+        if(row.key === 'bhr_synced_team' && Array.isArray(row.value) && row.value.length){
+          RECRUIT_DATA.team = row.value;
+          try { localStorage.setItem('bhr_synced_team', JSON.stringify(row.value)); } catch(e){}
+        }
+        if(row.key === 'recruit_overrides' && row.value && typeof row.value === 'object'){
+          try { localStorage.setItem('recruit_overrides', JSON.stringify(row.value)); } catch(e){}
+        }
+        if(row.key === 'manual_hires' && Array.isArray(row.value)){
+          try { localStorage.setItem('manual_hires', JSON.stringify(row.value)); } catch(e){}
+          row.value.forEach(function(h){
+            var exists = RECRUIT_DATA.team.some(function(t){ return t.name === h.name; });
+            if(!exists) RECRUIT_DATA.team.push(h);
+          });
+        }
+        if(row.key === 'rep_overrides' && row.value && typeof row.value === 'object'){
+          try { localStorage.setItem('rep_overrides', JSON.stringify(row.value)); } catch(e){}
+        }
+        if(row.key === 'team_maverick_roster' && Array.isArray(row.value)){
+          try { localStorage.setItem('team_maverick_roster', JSON.stringify(row.value)); } catch(e){}
+        }
+        if(row.key === 'team_removed' && Array.isArray(row.value)){
+          try { localStorage.setItem('team_removed', JSON.stringify(row.value)); } catch(e){}
+        }
+      });
+      applyRecruitOverrides(RECRUIT_DATA.team);
+    })
+    .catch(function(e){ console.warn('Could not load settings from Supabase:', e); });
+}
+
+// ---- Team Maverick roster (localStorage) ----
+function loadTeamRoster(){
+  try { return JSON.parse(localStorage.getItem('team_maverick_roster') || '[]'); } catch(e){ return []; }
+}
+function saveTeamRoster(r){
+  localStorage.setItem('team_maverick_roster', JSON.stringify(r));
+  supaClient.from('app_settings')
+    .upsert({ key:'team_maverick_roster', value:r, updated_at:new Date().toISOString() }, { onConflict:'key' })
+    .then(function(res){ if(res.error) console.warn('team_roster save failed:', res.error.message); });
+}
+function loadTeamRemoved(){
+  try { return JSON.parse(localStorage.getItem('team_removed') || '[]'); } catch(e){ return []; }
+}
+function saveTeamRemoved(a){
+  localStorage.setItem('team_removed', JSON.stringify(a));
+  supaClient.from('app_settings')
+    .upsert({ key:'team_removed', value:a, updated_at:new Date().toISOString() }, { onConflict:'key' })
+    .then(function(res){ if(res.error) console.warn('team_removed save failed:', res.error.message); });
+}
+function makeWorkEmail(name){
+  var parts = String(name||'').trim().split(/\s+/).filter(Boolean);
+  if(!parts.length) return '';
+  var first = parts[0];
+  var last = parts.length > 1 ? parts[parts.length-1] : '';
+  var local = (last ? first + '.' + last : first).toLowerCase().replace(/[^a-z0-9.]/g, '');
+  return local ? local + '@wholesalepayments.com' : '';
+}
+// Every sales rep who has a deal in any month (i.e. appears in the rankings)
+function getAllRepNames(){
+  var set = {};
+  MONTHS.forEach(function(m){
+    var mo = DATA[m]; if(!mo) return;
+    (mo.reps||[]).forEach(function(r){ if(r && r.rep) set[r.rep] = true; });
+    (mo.deals||[]).forEach(function(dl){ if(dl && dl.rep) set[dl.rep] = true; });
+  });
+  return Object.keys(set);
+}
+// Total deal count per rep across all months. Uses the SAME source of truth as
+// the rankings table (each month's approved count + any manual per-rep override),
+// so the roster order always matches the deal numbers shown above it.
+function getRepDealCounts(){
+  var result = {};
+  var ov = loadRepOverrides();
+  MONTHS.forEach(function(m){
+    var mo = DATA[m]; if(!mo) return;
+    var movr = ov[m] || {};
+    (mo.reps||[]).forEach(function(r){
+      if(!r || !r.rep) return;
+      var o = movr[r.rep] || {};
+      var n = (o.deals != null ? o.deals : r.approved);
+      n = parseInt(n, 10); if(isNaN(n) || n < 0) n = 0;
+      result[r.rep] = (result[r.rep] || 0) + n;
+    });
+  });
+  return result;
+}
+// Final roster = manually-added members + every rep with a deal, minus removals
+function buildFullRoster(){
+  var removed = {}; loadTeamRemoved().forEach(function(n){ removed[n] = true; });
+  var have = {};
+  var list = [];
+  loadTeamRoster().forEach(function(m){
+    if(removed[m.name] || have[m.name]) return;
+    have[m.name] = true; list.push(m);
+  });
+  getAllRepNames().forEach(function(name){
+    if(removed[name] || have[name]) return;
+    have[name] = true;
+    list.push({ name:name, workEmail:makeWorkEmail(name), phone:'', hireDate:'', _auto:true });
+  });
+  var dc = getRepDealCounts();
+  list.forEach(function(m){ m.dealCount = dc[m.name] || 0; });
+  list.sort(function(a,b){ return (b.dealCount - a.dealCount) || a.name.localeCompare(b.name); });
+  return list;
+}
+function addToTeam(i){
+  var t = RECRUIT_DATA.team[i];
+  if(!t) return;
+  var roster = loadTeamRoster();
+  if(!roster.some(function(m){ return m.name === t.name; })){
+    roster.push({name:t.name, workEmail:makeWorkEmail(t.name), homeEmail:t.email||'', phone:t.phone||'', hireDate:t.hireDate||''});
+    saveTeamRoster(roster);
+  }
+  // adding clears any prior removal so they're not blocked
+  saveTeamRemoved(loadTeamRemoved().filter(function(n){ return n !== t.name; }));
+  // Moving to Team Maverick removes the hire from the recruiting section
+  renderRecruitPage();
+  renderTeamRoster();
+}
+function removeFromTeam(name){
+  // drop any manual entry and remember the removal so reps don't auto-reappear
+  saveTeamRoster(loadTeamRoster().filter(function(m){ return m.name !== name; }));
+  var removed = loadTeamRemoved();
+  if(removed.indexOf(name) === -1){ removed.push(name); saveTeamRemoved(removed); }
+  renderTeamRoster();
+  if(state.page === 'recruiting') renderRecruitPage();
+}
+function renderTeamRoster(){
+  var el = document.getElementById('team-list');
+  if(!el) return;
+  var roster = buildFullRoster();
+  var countEl = document.getElementById('team-count');
+  if(countEl) countEl.textContent = roster.length;
+  if(!roster.length){
+    el.innerHTML = '<div class="empty" style="padding:34px 20px"><div class="title">No team members yet</div><div>Sales reps with deals appear here automatically, or add a hire from the Recruiting tab.</div></div>';
+    return;
+  }
+  el.innerHTML = roster.map(function(m){
+    var initials = m.name.split(' ').map(function(p){ return p[0]||''; }).join('').substring(0,2).toUpperCase();
+    var workEmail = m.workEmail || makeWorkEmail(m.name);
+    var meta = [];
+    if(workEmail) meta.push(emailLink(workEmail, m.name));
+    if(m.phone) meta.push(phoneLink(m.phone, m.name));
+    var dc = m.dealCount || 0;
+    return '<div class="tmember">'+
+      '<div class="tm-avatar">'+esc(initials||'?')+'</div>'+
+      '<div class="tm-info"><div class="tm-name">'+esc(m.name)+'</div>'+
+      '<div class="tm-meta">'+(meta.join(' &middot; ')||'&mdash;')+'</div></div>'+
+      '<div class="tm-merchants"><span class="tm-mc">'+dc+'</span> deal'+(dc!==1?'s':'')+'</div>'+
+      ((m.hireDate && m.hireDate!=='—') ? '<div class="tm-date">Hired '+fmtHireDate(m.hireDate)+'</div>' : '')+
+      '<button class="tm-remove" title="Remove from Team Maverick" data-name="'+esc(m.name)+'">&times;</button>'+
+    '</div>';
+  }).join('');
+}
+
+// ---- Date filter ----
+function getWeekRange(weeksAgo){
+  var now=new Date();now.setHours(0,0,0,0);
+  var day=now.getDay();
+  var diffToFri=day>=5?day-5:day+2;
+  var fri=new Date(now);fri.setDate(fri.getDate()-diffToFri-(weeksAgo*7));
+  var thu=new Date(fri);thu.setDate(thu.getDate()+6);thu.setHours(23,59,59,999);
+  return {start:fri,end:thu};
+}
+// ---- Shared week-based date filter (used independently by Recruiting, RGA's calls, GMASS) ----
+// filterVal: '0'..'5' (weeks ago, Fri–Thu), 'all', or 'custom'
+function weekFilterOptionsHTML(cur){
+  var fmt=function(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});};
+  var html='';
+  for(var w=0;w<6;w++){
+    var wk=getWeekRange(w);
+    var label=(w===0?'This Week':'Week of '+fmt(wk.start))+' ('+fmt(wk.start)+' – '+fmt(wk.end)+')';
+    html+='<option value="'+w+'"'+(cur===String(w)?' selected':'')+'>'+label+'</option>';
+  }
+  html+='<option value="all"'+(cur==='all'?' selected':'')+'>All Time</option>';
+  html+='<option value="custom"'+(cur==='custom'?' selected':'')+'>Custom Range</option>';
+  return html;
+}
+function weekCustomInputsHTML(selectId, fromId, toId, fromVal, toVal, onSelect, onCustom, cur){
+  var inp='border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:13px';
+  var lab='font-size:12px;font-weight:600;color:var(--muted2)';
+  var html='<span class="rflabel">Filter</span>';
+  html+='<select class="rfilter-select" id="'+selectId+'" onchange="'+onSelect+'()">'+weekFilterOptionsHTML(cur)+'</select>';
+  html+='<span id="'+selectId+'-custom" style="display:'+(cur==='custom'?'inline-flex':'none')+';align-items:center;gap:8px">';
+  html+='<label style="'+lab+'">From</label><input type="date" id="'+fromId+'" value="'+(fromVal||'')+'" style="'+inp+'" onchange="'+onCustom+'()">';
+  html+='<label style="'+lab+'">To</label><input type="date" id="'+toId+'" value="'+(toVal||'')+'" style="'+inp+'" onchange="'+onCustom+'()">';
+  html+='</span>';
+  return html;
+}
+function weekFilterRange(filterVal, fromStr, toStr){
+  if(filterVal==='all') return null;
+  if(filterVal==='custom'){
+    if(!fromStr && !toStr) return null;
+    return { start: fromStr?new Date(fromStr+'T00:00:00'):null, end: toStr?new Date(toStr+'T23:59:59'):null };
+  }
+  var w=parseInt(filterVal,10);
+  if(isNaN(w)) return null;
+  return getWeekRange(w);
+}
+function inWeekRange(d, range){
+  if(!range) return true;
+  if(range.start && d<range.start) return false;
+  if(range.end && d>range.end) return false;
+  return true;
+}
+function passesRecruitFilter(t){
+  var range=weekFilterRange(state.recruitFilter, state.recruitFrom, state.recruitTo);
+  if(!range) return true;
+  var d=parseHireDate(t.hireDate);
+  if(!d) return false;
+  return inWeekRange(d, range);
+}
+function setRecruitFilter(f){ state.recruitFilter = f; renderRecruitPage(); }
+
+function renderRecruitFilter(){
+  document.getElementById('recruit-filter').innerHTML=weekCustomInputsHTML(
+    'recruit-week-select','recruit-custom-from','recruit-custom-to',
+    state.recruitFrom,state.recruitTo,'setRecruitFilterDD','setRecruitCustom',state.recruitFilter);
+}
+function setRecruitFilterDD(){
+  state.recruitFilter=document.getElementById('recruit-week-select').value;
+  renderRecruitPage();
+}
+function setRecruitCustom(){
+  state.recruitFrom=document.getElementById('recruit-custom-from').value;
+  state.recruitTo=document.getElementById('recruit-custom-to').value;
+  renderRecruitPage();
+}
+
+function renderRecruitPage(){
+  var team = RECRUIT_DATA.team;
+  applyRecruitOverrides(team);
+
+  // Hires already moved to Team Maverick are hidden from the recruiting section
+  var rosterNames = {};
+  loadTeamRoster().forEach(function(m){ rosterNames[m.name] = true; });
+  renderRecruitFilter(rosterNames);
+
+  // Filter while keeping each hire's index in the master team array
+  var filtered = [];
+  team.forEach(function(t, i){
+    if(rosterNames[t.name]) return;
+    if(passesRecruitFilter(t)) filtered.push({t:t, i:i});
+  });
+
+  var totalHires = filtered.length;
+  var trainingDone = filtered.filter(function(f){return f.t.training==='Complete';}).length;
+  var paperworkDone = filtered.filter(function(f){return f.t.paperwork==='Complete';}).length;
+  var pending = filtered.filter(function(f){return f.t.training!=='Complete' || f.t.paperwork!=='Complete';}).length;
+
+  document.getElementById('recruit-kpis').innerHTML=
+    '<div class="kpi"><div class="lab">New Hires</div><div class="val">'+totalHires+'</div><div class="sub">'+(state.recruitFilter==='all'?'all time':state.recruitFilter==='0'?'this week':'in selected range')+'</div></div>'+
+    '<div class="kpi"><div class="lab">Training</div><div class="val" style="color:var(--green)">'+trainingDone+' <span style="font-size:16px;color:var(--muted)">/ '+totalHires+'</span></div><div class="sub">completed</div></div>'+
+    '<div class="kpi"><div class="lab">Paperwork</div><div class="val" style="color:var(--accent)">'+paperworkDone+' <span style="font-size:16px;color:var(--muted)">/ '+totalHires+'</span></div><div class="sub">completed</div></div>'+
+    '<div class="kpi"><div class="lab">Pending Action</div><div class="val" style="color:var(--red)">'+pending+'</div><div class="sub">need attention</div></div>';
+
+  // New Hires table (with Add to Team + Edit buttons)
+  document.getElementById('recruit-hires').innerHTML = filtered.length ? filtered.map(function(f){
+    var t = f.t;
+    var actions = '<button class="btn-add-team" onclick="addToTeam('+f.i+')">Add to Team</button>'
+      + ' <button class="btn-edit" onclick="openHireEdit('+f.i+')">Edit</button>';
+    return '<tr><td><input type="checkbox" class="bulk-cb hire-cb" data-idx="'+f.i+'" onchange="updateHireBulkBar()"></td><td><strong>'+esc(t.name)+'</strong></td><td>'+emailLink(t.email,t.name)+'</td><td>'+phoneLink(t.phone,t.name)+'</td><td>'+fmtHireDate(t.hireDate)+'</td>'+
+      '<td class="notes-cell">'+(t.notes?esc(t.notes):'—')+'</td>'+
+      '<td style="text-align:right;white-space:nowrap">'+actions+'</td></tr>';
+  }).join('') : '<tr><td colspan="7" style="padding:24px;color:var(--muted);text-align:center">No hires in this period.</td></tr>';
+
+  // Training table
+  document.getElementById('recruit-training').innerHTML = filtered.length ? filtered.map(function(f){
+    var t = f.t;
+    return '<tr><td><strong>'+t.name+'</strong></td>'+
+      '<td><span class="stage-badge '+statusBadgeClass(t.training)+'">'+t.training+'</span></td></tr>';
+  }).join('') : '<tr><td colspan="2" style="padding:24px;color:var(--muted);text-align:center">No data.</td></tr>';
+
+  // Paperwork table
+  document.getElementById('recruit-paperwork').innerHTML = filtered.length ? filtered.map(function(f){
+    var t = f.t;
+    return '<tr><td><strong>'+t.name+'</strong></td>'+
+      '<td><span class="stage-badge '+statusBadgeClass(t.paperwork)+'">'+t.paperwork+'</span></td></tr>';
+  }).join('') : '<tr><td colspan="2" style="padding:24px;color:var(--muted);text-align:center">No data.</td></tr>';
+  renderSheetTransfers();
+}
+
+// ---- Edit a single hire (all fields) ----
+var editingHireIdx = null;
+function setSelectValue(id, val, fallback){
+  var s = document.getElementById(id), i;
+  for(i=0;i<s.options.length;i++){ if(s.options[i].value===val){ s.selectedIndex=i; return; } }
+  for(i=0;i<s.options.length;i++){ if(s.options[i].value===fallback){ s.selectedIndex=i; return; } }
+}
+function openHireEdit(i){
+  editingHireIdx = i;
+  var t = RECRUIT_DATA.team[i];
+  var parts = t.name.split(' ');
+  document.getElementById('hire-edit-fname').value = parts[0] || '';
+  document.getElementById('hire-edit-lname').value = parts.slice(1).join(' ') || '';
+  document.getElementById('hire-edit-email').value = t.email || '';
+  document.getElementById('hire-edit-phone').value = t.phone || '';
+  var d = parseHireDate(t.hireDate);
+  document.getElementById('hire-edit-date').value = d ? d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2) : '';
+  setSelectValue('hire-edit-training', t.training, 'Not Started');
+  setSelectValue('hire-edit-paperwork', t.paperwork, 'Not Sent');
+  document.getElementById('hire-edit-notes').value = t.notes || '';
+  document.getElementById('hire-modal').classList.add('open');
+}
+function closeHireEdit(){
+  document.getElementById('hire-modal').classList.remove('open');
+  editingHireIdx = null;
+}
+function saveHireEdit(){
+  if(editingHireIdx === null) return;
+  var t = RECRUIT_DATA.team[editingHireIdx];
+  var oldName = t.name;
+  var fname = document.getElementById('hire-edit-fname').value.trim();
+  var lname = document.getElementById('hire-edit-lname').value.trim();
+  var newName = (fname + ' ' + lname).trim();
+  if(newName) t.name = newName;
+  t.email = document.getElementById('hire-edit-email').value.trim();
+  t.phone = document.getElementById('hire-edit-phone').value.trim();
+  var dateVal = document.getElementById('hire-edit-date').value;
+  if(dateVal) t.hireDate = dateVal;
+  t.training = document.getElementById('hire-edit-training').value;
+  t.paperwork = document.getElementById('hire-edit-paperwork').value;
+  t.notes = document.getElementById('hire-edit-notes').value.trim();
+  saveRecruitOverride(t.name, {training:t.training, paperwork:t.paperwork, email:t.email, phone:t.phone, hireDate:t.hireDate, source:t.source, notes:t.notes});
+  if(t._manual){
+    var manual = loadManualHires();
+    for(var m=0;m<manual.length;m++){
+      if(manual[m].name===oldName){ manual[m]={name:t.name,hireDate:t.hireDate,source:t.source,training:t.training,paperwork:t.paperwork,email:t.email,phone:t.phone,notes:t.notes,_manual:true}; break; }
+    }
+    saveManualHires(manual);
+  }
+  saveTeamToCloud(RECRUIT_DATA.team);
+  closeHireEdit();
+  renderRecruitPage();
+}
+
+// ---- Add new hire manually ----
+function openAddHire(){
+  document.getElementById('add-hire-fname').value = '';
+  document.getElementById('add-hire-lname').value = '';
+  document.getElementById('add-hire-email').value = '';
+  document.getElementById('add-hire-phone').value = '';
+  document.getElementById('add-hire-date').value = '';
+  document.getElementById('add-hire-notes').value = '';
+  document.getElementById('add-hire-modal').classList.add('open');
+}
+function closeAddHire(){
+  document.getElementById('add-hire-modal').classList.remove('open');
+}
+function saveAddHire(){
+  var fname = document.getElementById('add-hire-fname').value.trim();
+  var lname = document.getElementById('add-hire-lname').value.trim();
+  if(!fname && !lname){ alert('Please enter a name.'); return; }
+  var hire = {
+    name: (fname + ' ' + lname).trim(),
+    hireDate: document.getElementById('add-hire-date').value || '—',
+    source: '—',
+    training: 'Not Started',
+    paperwork: 'Not Sent',
+    email: document.getElementById('add-hire-email').value.trim(),
+    phone: document.getElementById('add-hire-phone').value.trim(),
+    notes: document.getElementById('add-hire-notes').value.trim(),
+    _manual: true
+  };
+  var manual = loadManualHires();
+  manual.push(hire);
+  saveManualHires(manual);
+  RECRUIT_DATA.team.push(hire);
+  saveTeamToCloud(RECRUIT_DATA.team);
+  closeAddHire();
+  renderRecruitPage();
+}
+
+
+// ---- Sheet Transfers (Google Sheet on Recruiting page) ----
+var _sheetTransfersCache=null;
+var _sheetHeaders=null;
+function loadSheetTransfers(){
+  if(_sheetTransfersCache) return Promise.resolve(_sheetTransfersCache);
+  return supaClient.from('sheet_transfers').select('*').order('row_number',{ascending:true}).then(function(res){
+    _sheetTransfersCache=res.data||[];
+    return _sheetTransfersCache;
+  });
+}
+function syncSheetTransfers(){
+  var btn=document.getElementById('btn-sync-sheet');
+  var status=document.getElementById('sheet-sync-status');
+  btn.disabled=true; btn.textContent='Syncing...';
+  status.textContent='';
+  fetch(SUPA_URL+'/functions/v1/sync-sheet',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data.error){status.textContent='Error: '+data.error+(data.details?' — '+data.details:'');status.style.color='var(--red)';}
+      else{
+        status.textContent='Synced '+data.synced+' rows';status.style.color='var(--green)';
+        if(data.headers) _sheetHeaders=data.headers;
+        setTimeout(function(){status.textContent='';},3000);
+      }
+      _sheetTransfersCache=null;
+      renderSheetTransfers();
+    })
+    .catch(function(e){status.textContent='Sync failed';status.style.color='var(--red)';})
+    .finally(function(){btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right:4px"><path d="M1 8a7 7 0 0 1 13-3.5M15 8a7 7 0 0 1-13 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 1v4h-4M2 15v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Sync Sheet';});
+}
+function renderSheetFilter(){
+  document.getElementById('sheet-filter').innerHTML=weekCustomInputsHTML(
+    'sheet-week-select','sheet-from','sheet-to',
+    state.sheetFrom,state.sheetTo,'setSheetFilterDD','setSheetCustom',state.sheetFilter);
+}
+function setSheetFilterDD(){
+  state.sheetFilter=document.getElementById('sheet-week-select').value;
+  renderSheetTransfers();
+}
+function setSheetCustom(){
+  state.sheetFrom=document.getElementById('sheet-from').value;
+  state.sheetTo=document.getElementById('sheet-to').value;
+  renderSheetTransfers();
+}
+function findSheetDateCol(headers){
+  for(var i=0;i<headers.length;i++){
+    if(/date/i.test(headers[i])) return headers[i];
+  }
+  return null;
+}
+function parseSheetDate(val){
+  if(!val) return null;
+  var d=new Date(val);
+  if(!isNaN(d.getTime())) return d;
+  var parts=val.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if(parts){
+    var y=parseInt(parts[3],10); if(y<100) y+=2000;
+    d=new Date(y,parseInt(parts[1],10)-1,parseInt(parts[2],10));
+    if(!isNaN(d.getTime())) return d;
+  }
+  return null;
+}
+function renderSheetTransfers(){
+  renderSheetFilter();
+  loadSheetTransfers().then(function(rows){
+    var headEl=document.getElementById('sheet-transfers-head');
+    var bodyEl=document.getElementById('sheet-transfers-body');
+    if(!rows.length){
+      headEl.innerHTML='<tr><th>Transfers</th></tr>';
+      bodyEl.innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--muted)">No data yet. Click Sync Sheet to pull from Google Sheets.</td></tr>';
+      return;
+    }
+    var headers=_sheetHeaders;
+    if(!headers){
+      var first=rows[0].row_data;
+      headers=Object.keys(first);
+    }
+    var dateCol=findSheetDateCol(headers);
+    var range=weekFilterRange(state.sheetFilter,state.sheetFrom,state.sheetTo);
+    var filtered=rows.filter(function(r){
+      if(!range||!dateCol) return true;
+      var d=parseSheetDate(r.row_data[dateCol]);
+      if(!d) return false;
+      return inWeekRange(d,range);
+    });
+    headEl.innerHTML='<tr>'+headers.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+'<th>Notes</th><th style="width:40px"></th></tr>';
+    bodyEl.innerHTML=filtered.length?filtered.map(function(r){
+      var d=r.row_data;
+      var noteBtn='<button class="btn-edit-merch" data-row="'+r.row_number+'" onclick="openSheetNote('+r.row_number+')" title="Notes"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>';
+      return '<tr>'+headers.map(function(h){return '<td>'+esc(d[h]||'')+'</td>';}).join('')+
+        '<td style="max-width:200px;font-size:12px;color:var(--muted2)">'+esc(r.notes||'')+'</td>'+
+        '<td>'+noteBtn+'</td></tr>';
+    }).join(''):'<tr><td colspan="'+(headers.length+2)+'" style="padding:24px;text-align:center;color:var(--muted)">No transfers found.'+(range?' Try a different date range.':' Click Sync Sheet to pull from Google Sheets.')+'</td></tr>';
+  });
+}
+function openSheetNote(rowNum){
+  var row=(_sheetTransfersCache||[]).find(function(r){return r.row_number===rowNum;});
+  document.getElementById('sheet-note-row').value=rowNum;
+  document.getElementById('sheet-note-text').value=(row&&row.notes)||'';
+  var label='Transfer Notes';
+  if(row&&row.row_data){
+    var d=row.row_data;
+    var name=d['Name']||d['name']||d['Agent']||d['agent']||'';
+    if(name) label='Notes — '+name;
+  }
+  document.getElementById('sheet-note-title').textContent=label;
+  document.getElementById('sheet-note-modal').classList.add('open');
+}
+function closeSheetNote(){document.getElementById('sheet-note-modal').classList.remove('open');}
+function saveSheetNote(){
+  var rowNum=parseInt(document.getElementById('sheet-note-row').value,10);
+  var notes=document.getElementById('sheet-note-text').value.trim();
+  supaClient.from('sheet_transfers').update({notes:notes}).eq('row_number',rowNum).then(function(){
+    _sheetTransfersCache=null;
+    closeSheetNote();
+    renderSheetTransfers();
+  });
+}
+
+// ---- Transfers tab (RingCentral) ----
+var _callsCache=null;
+function loadCalls(){
+  if(_callsCache) return Promise.resolve(_callsCache);
+  return supaClient.from('call_logs').select('*').order('start_time',{ascending:false}).then(function(res){
+    _callsCache=res.data||[];
+    return _callsCache;
+  });
+}
+function syncTransfers(){
+  var btn=document.querySelector('#page-transfers .btn-sync.primary');
+  var status=document.getElementById('transfers-sync-status');
+  btn.disabled=true;
+  btn.textContent='Syncing...';
+  status.textContent='';
+  var hasData=_callsCache&&_callsCache.length>0;
+  var body={};
+  if(hasData){
+    var today=new Date();
+    today.setHours(0,0,0,0);
+    body.dateFrom=today.toISOString();
+  }
+  fetch(SUPA_URL+'/functions/v1/sync-calls',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data.error){status.textContent='Error: '+data.error+(data.details?' — '+data.details:'');status.style.color='var(--red)';}
+      else{status.textContent='Synced '+data.synced+' transfers';status.style.color='var(--green)';}
+      _callsCache=null;
+      renderTransfersPage();
+    })
+    .catch(function(e){status.textContent='Sync failed';status.style.color='var(--red)';})
+    .finally(function(){btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right:4px"><path d="M1 8a7 7 0 0 1 13-3.5M15 8a7 7 0 0 1-13 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 1v4h-4M2 15v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Sync Transfers';});
+}
+function renderTransfersFilter(){
+  document.getElementById('transfers-filter').innerHTML=weekCustomInputsHTML(
+    'transfers-week-select','transfers-from','transfers-to',
+    state.transfersFrom,state.transfersTo,'setTransfersFilter','setTransfersCustom',state.transfersFilter);
+}
+function setTransfersFilter(){
+  state.transfersFilter=document.getElementById('transfers-week-select').value;
+  renderTransfersPage();
+}
+function setTransfersCustom(){
+  state.transfersFrom=document.getElementById('transfers-from').value;
+  state.transfersTo=document.getElementById('transfers-to').value;
+  renderTransfersPage();
+}
+function fmtCallTime(iso){
+  if(!iso) return '';
+  var d=new Date(iso);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+function fmtDuration(s){
+  if(!s) return '0s';
+  var m=Math.floor(s/60),sec=s%60;
+  return m>0?(m+'m '+sec+'s'):(sec+'s');
+}
+function getFilteredCalls(calls){
+  var range=weekFilterRange(state.transfersFilter, state.transfersFrom, state.transfersTo);
+  if(!range) return calls;
+  return calls.filter(function(c){
+    if(!c.start_time) return false;
+    return inWeekRange(new Date(c.start_time), range);
+  });
+}
+function renderTransfersPage(){
+  renderTransfersFilter();
+  loadCalls().then(function(allCalls){
+    var calls=getFilteredCalls(allCalls);
+    var hasFilter=state.transfersFilter!=='all';
+    var rangeLabel=hasFilter?'filtered range':'all time';
+    var inbound=0,outbound=0,missed=0;
+    calls.forEach(function(c){
+      if(c.direction==='Inbound') inbound++;
+      else if(c.direction==='Outbound') outbound++;
+      if(c.result==='Missed') missed++;
+    });
+    document.getElementById('transfers-kpis').innerHTML=
+      '<div class="kpi"><div class="lab">Total Calls</div><div class="val">'+calls.length+'</div><div class="sub">'+rangeLabel+'</div></div>'+
+      '<div class="kpi"><div class="lab">Inbound</div><div class="val" style="color:var(--green)">'+inbound+'</div><div class="sub">received</div></div>'+
+      '<div class="kpi"><div class="lab">Outbound</div><div class="val" style="color:var(--accent)">'+outbound+'</div><div class="sub">dialed</div></div>'+
+      '<div class="kpi"><div class="lab">Missed</div><div class="val" style="color:var(--red)">'+missed+'</div><div class="sub">unanswered</div></div>';
+    document.getElementById('transfers-table').innerHTML=calls.length?calls.map(function(c){
+      var dirIcon='';
+      var resultColor=c.result==='Missed'?'var(--red)':(c.result==='Accepted'||c.result==='Call connected'?'var(--green)':'var(--muted2)');
+      var noteBtn='<button class="btn-edit-merch" data-id="'+c.call_id+'" onclick="openCallNote(this.dataset.id)" title="Notes"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>';
+      return '<tr><td style="white-space:nowrap;font-size:12px">'+fmtCallTime(c.start_time)+'</td>'+
+        '<td>'+c.direction+'</td>'+
+        '<td>'+(c.from_name?'<strong>'+esc(c.from_name)+'</strong><br>':'')+esc(c.from_number||'')+'</td>'+
+        '<td>'+(c.to_name?'<strong>'+esc(c.to_name)+'</strong><br>':'')+esc(c.to_number||'')+'</td>'+
+        '<td class="num">'+fmtDuration(c.duration)+'</td>'+
+        '<td style="color:'+resultColor+'">'+esc(c.result)+'</td>'+
+        '<td style="max-width:200px;font-size:12px;color:var(--muted2)">'+esc(c.notes||'')+'</td>'+
+        '<td>'+noteBtn+'</td></tr>';
+    }).join(''):'<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--muted)">No transfers found.'+(hasFilter?' Try a different date range.':' Click Sync Transfers to pull from RingCentral.')+'</td></tr>';
+  });
+  renderGmassSection();
+}
+
+// ---- GMASS Email Replies ----
+var _emailsCache=null;
+function loadEmails(){
+  if(_emailsCache) return Promise.resolve(_emailsCache);
+  return supaClient.from('email_replies').select('*').order('reply_date',{ascending:false}).then(function(res){
+    _emailsCache=res.data||[];
+    return _emailsCache;
+  });
+}
+function syncGmassEmails(){
+  var btn=document.getElementById('btn-sync-gmass');
+  var status=document.getElementById('gmass-sync-status');
+  btn.disabled=true; btn.textContent='Syncing...';
+  status.textContent='';
+  fetch(SUPA_URL+'/functions/v1/sync-gmass',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data.error){status.textContent='Error: '+data.error+(data.details?' — '+data.details:'');status.style.color='var(--red)';}
+      else{status.textContent='Synced '+data.synced+' replies';status.style.color='var(--green)';}
+      _emailsCache=null;
+      renderGmassSection();
+    })
+    .catch(function(e){status.textContent='Sync failed';status.style.color='var(--red)';})
+    .finally(function(){btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right:4px"><path d="M1 8a7 7 0 0 1 13-3.5M15 8a7 7 0 0 1-13 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 1v4h-4M2 15v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Sync Emails';});
+}
+function getFilteredGmass(emails){
+  var range=weekFilterRange(state.gmassFilter, state.gmassFrom, state.gmassTo);
+  if(!range) return emails;
+  return emails.filter(function(e){
+    if(!e.reply_date) return false;
+    return inWeekRange(new Date(e.reply_date), range);
+  });
+}
+function renderGmassFilter(){
+  document.getElementById('gmass-filter').innerHTML=weekCustomInputsHTML(
+    'gmass-week-select','gmass-from','gmass-to',
+    state.gmassFrom,state.gmassTo,'setGmassFilter','setGmassCustom',state.gmassFilter);
+}
+function setGmassFilter(){
+  state.gmassFilter=document.getElementById('gmass-week-select').value;
+  renderGmassSection();
+}
+function setGmassCustom(){
+  state.gmassFrom=document.getElementById('gmass-from').value;
+  state.gmassTo=document.getElementById('gmass-to').value;
+  renderGmassSection();
+}
+function renderGmassSection(){
+  renderGmassFilter();
+  loadEmails().then(function(emails){
+    var filtered=getFilteredGmass(emails);
+    var wk=getWeekRange(0),thisWeek=0;
+    filtered.forEach(function(e){
+      if(e.reply_date){var d=new Date(e.reply_date);if(d>=wk.start&&d<=wk.end) thisWeek++;}
+    });
+    document.getElementById('gmass-kpis').innerHTML=
+      '<div class="kpi"><div class="lab">Total Replies</div><div class="val">'+filtered.length+'</div><div class="sub">'+(state.gmassFilter==='all'?'all time':'filtered')+'</div></div>'+
+      '<div class="kpi"><div class="lab">This Week</div><div class="val" style="color:var(--green)">'+thisWeek+'</div><div class="sub">Fri – Thu</div></div>';
+    document.getElementById('gmass-table').innerHTML=filtered.length?filtered.map(function(e){
+      var emailLink='<a href="mailto:'+esc(e.sender_email)+'" style="white-space:nowrap">&#x2709;&#xFE0F;&nbsp;&nbsp;'+esc(e.sender_email)+'</a>';
+      return '<tr><td style="white-space:nowrap;font-size:12px">'+fmtCallTime(e.reply_date)+'</td>'+
+        '<td><strong>'+esc(e.sender_name||'Unknown')+'</strong></td>'+
+        '<td>'+emailLink+'</td>'+
+        '<td style="max-width:350px;font-size:12px;color:var(--muted2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(e.snippet||'')+'</td></tr>';
+    }).join(''):'<tr><td colspan="4" style="padding:24px;text-align:center;color:var(--muted)">No replies yet. Click Sync Emails to pull from Gmail.</td></tr>';
+  });
+}
+function openCallNote(callId){
+  var call=(_callsCache||[]).find(function(c){return c.call_id===callId;});
+  document.getElementById('call-note-id').value=callId;
+  document.getElementById('call-note-text').value=(call&&call.notes)||'';
+  document.getElementById('call-note-title').textContent='Notes'+(call&&(call.from_name||call.from_number)?' — '+(call.from_name||call.from_number):'');
+  document.getElementById('call-note-modal').classList.add('open');
+}
+function closeCallNote(){document.getElementById('call-note-modal').classList.remove('open');}
+function saveCallNote(){
+  var callId=document.getElementById('call-note-id').value;
+  var notes=document.getElementById('call-note-text').value.trim();
+  supaClient.from('call_logs').update({notes:notes}).eq('call_id',callId).then(function(){
+    _callsCache=null;
+    closeCallNote();
+    renderTransfersPage();
+  });
+}
+
+function renderPage(){
+  var monthsEl = document.getElementById('months');
+  if(monthsEl) monthsEl.style.display = (state.page==='rankings') ? '' : 'none';
+  if(state.page==='rankings'){ renderTeamDashboard(); renderTeamRoster(); }
+  else if(state.page==='merchants'){ renderMerchPage(); }
+  else if(state.page==='transfers'){ renderTransfersPage(); }
+  else if(state.page==='recruiting'){ renderRecruitPage(); }
+}
+function render(){ renderMonths(); renderPage(); }
+// Editable Sales Rep Rankings: commit on change, select-all on focus (delegated)
+(function(){
+  var rr = document.getElementById('rep-rankings');
+  if(!rr) return;
+  rr.addEventListener('change', function(e){
+    var inp = e.target && e.target.closest ? e.target.closest('input[data-rep]') : null;
+    if(inp) onRepEdit(inp);
+  });
+  rr.addEventListener('focusin', function(e){
+    if(e.target && e.target.matches && e.target.matches('input[data-rep]')) e.target.select();
+  });
+})();
+// Team roster remove buttons (delegated; container persists across re-renders)
+(function(){
+  var tl = document.getElementById('team-list');
+  if(!tl) return;
+  tl.addEventListener('click', function(e){
+    var btn = e.target && e.target.closest ? e.target.closest('.tm-remove[data-name]') : null;
+    if(btn) removeFromTeam(btn.getAttribute('data-name'));
+  });
+})();
+getMerchOverrides();
+// Activate correct tab from URL hash on load
+document.querySelectorAll('.nav a').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-page')===state.page);});
+document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+document.getElementById('page-'+state.page).classList.add('active');
+render();
+</script>
+</body></html>

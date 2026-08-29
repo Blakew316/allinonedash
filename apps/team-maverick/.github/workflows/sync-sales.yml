@@ -1,0 +1,75 @@
+name: Sync Sales Data
+
+on:
+  schedule:
+    - cron: '30 12 * * *' # 7:30 AM Central (CDT) / 6:30 AM Mountain
+  workflow_dispatch: {}   # Allow manual trigger from Actions tab
+  push:
+    branches: [main]
+    paths: [scripts/sync-sales.js, scripts/backup-supabase.js, .github/workflows/sync-sales.yml]
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Install script dependencies
+        working-directory: scripts
+        run: npm ci
+
+      - name: Sync from sales site
+        run: node scripts/sync-sales.js
+        continue-on-error: true
+        env:
+          SALES_URL: ${{ secrets.SALES_URL }}
+          SALES_COOKIE: ${{ secrets.SALES_COOKIE }}
+          # Backend service_role key (never shipped to the browser). When set,
+          # the sync writes with it so the public anon key can be locked down
+          # to read-only. Falls back to the anon key if this secret is absent.
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+      - name: Backup Supabase data to git
+        run: node scripts/backup-supabase.js
+        continue-on-error: true
+        env:
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+      - name: Commit and push if data changed
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html backups/supabase/
+          if git diff --staged --quiet; then
+            echo "✓ No data changes detected"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: auto-sync sales data + Supabase backup $(date -u +'%Y-%m-%d')"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # A push made with the default GITHUB_TOKEN does NOT trigger the
+      # pages-build-deployment workflow, so GitHub Pages would otherwise keep
+      # serving the previous commit. Explicitly request a Pages rebuild so the
+      # live site always reflects the freshly-synced data.
+      - name: Trigger GitHub Pages rebuild
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          if curl -sf -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds"; then
+            echo "✓ Requested GitHub Pages rebuild"
+          else
+            echo "⚠ Could not request Pages rebuild (check Pages source = Deploy from a branch)"
+          fi

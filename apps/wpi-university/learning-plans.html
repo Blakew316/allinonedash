@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Learning plans · WPI University</title>
+<meta name="description" content="Learning plans, custom courses and course assignment.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="training">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a><span data-icon="chevron"></span>
+      <a href="admin.html">Admin</a><span data-icon="chevron"></span>
+      <span aria-current="page">Learning plans</span>
+    </nav>
+    <div class="row-between">
+      <div class="enter" style="--enter-delay:60ms">
+        <h1 class="h1">Learning plans</h1>
+        <p class="lede" style="margin-top:8px">
+          Bundles of courses a rep is expected to finish, and who is on each one.
+        </p>
+      </div>
+      <div class="row gap-sm enter" style="--enter-delay:120ms">
+        <a class="btn btn-secondary" href="training.html">All courses</a>
+        <button class="btn btn-primary" data-toast="Plan creation is not wired up in this prototype">New plan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col gap-lg" style="margin-top:22px;padding-bottom:32px" id="lpBody"></div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/roster.js" onerror="void 0"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+  var roster = window.WPI_ROSTER;
+
+  /* Plans are read out of the roster when it is present: the archive records
+     which plan each rep was assigned and whether they completed it, so the
+     membership and completion figures here are real rather than modelled. */
+  var plans = {};
+  if (roster) {
+    roster.people.forEach(function (p) {
+      (p.plans || []).forEach(function (pl) {
+        var e = plans[pl.name] || (plans[pl.name] = { name: pl.name, assigned: 0, complete: 0, dates: [] });
+        e.assigned++;
+        if (pl.status === 'completed') { e.complete++; if (pl.on) e.dates.push(pl.on); }
+      });
+    });
+  }
+  var planList = Object.keys(plans).map(function (k) { return plans[k]; })
+    .sort(function (a, b) { return b.assigned - a.assigned; });
+
+  var byTrack = {};
+  D.courses.forEach(function (c) { (byTrack[c.track] = byTrack[c.track] || []).push(c); });
+
+  document.getElementById('lpBody').innerHTML =
+
+    (planList.length
+      ? '<section class="panel" data-reveal>' +
+          '<div class="panel-head"><span class="tile tile-navy" data-icon="award"></span>' +
+            '<div><div class="h4">Plans in use</div>' +
+            '<div class="tiny faint">Assignment and completion counted from the roster</div></div>' +
+            '<span class="spacer"></span>' +
+            '<span class="chip chip-green">' + planList.length + ' plans</span></div>' +
+          '<div class="table-scroll"><table class="table"><thead><tr>' +
+            '<th>Plan</th><th class="num">Assigned</th><th class="num">Completed</th>' +
+            '<th style="min-width:180px">Completion</th><th></th></tr></thead><tbody>' +
+            planList.map(function (p) {
+              var pct = p.assigned ? Math.round(p.complete / p.assigned * 100) : 0;
+              return '<tr><td class="strong">' + esc(p.name) + '</td>' +
+                '<td class="num numeric">' + p.assigned.toLocaleString() + '</td>' +
+                '<td class="num numeric">' + p.complete.toLocaleString() + '</td>' +
+                '<td><div class="row gap-sm">' +
+                  '<div class="bar thin" style="flex:1;min-width:90px"><i data-grow="' + pct + '"></i></div>' +
+                  '<span class="tiny numeric strong" style="width:34px">' + pct + '%</span></div></td>' +
+                '<td class="num"><button class="btn btn-ghost btn-sm" ' +
+                  'data-toast="Plan editing is not wired up in this prototype">Edit</button></td></tr>';
+            }).join('') + '</tbody></table></div>' +
+        '</section>'
+      : '<section class="panel" data-reveal><div class="panel-head">' +
+          '<span class="tile tile-navy" data-icon="award"></span>' +
+          '<div><div class="h4">Plans in use</div></div></div>' +
+          '<div class="empty" style="padding:34px 20px">' +
+            '<span class="tile tile-blue" data-icon="users"></span>' +
+            '<div class="h3">No roster loaded</div>' +
+            '<p class="small muted" style="max-width:50ch">Plan membership comes from the roster. Generate it with ' +
+              '<code class="key">python3 tools/extract-roster.py path/to/wpiuniversity.com</code> and reload.</p>' +
+          '</div></section>') +
+
+    '<section class="panel" id="courses" data-reveal style="scroll-margin-top:calc(var(--nav-h) + 24px)">' +
+      '<div class="panel-head"><span class="tile tile-green" data-icon="book"></span>' +
+        '<div><div class="h4">Courses available to build with</div>' +
+        '<div class="tiny faint">' + D.courses.length + ' courses · 228 lessons, grouped by track</div></div>' +
+        '<span class="spacer"></span>' +
+        '<button class="btn btn-secondary btn-sm" data-toast="Course creation is not wired up in this prototype">Create a course</button>' +
+      '</div>' +
+      '<div class="panel-body col" style="gap:20px">' +
+        Object.keys(byTrack).map(function (t) {
+          return '<div>' +
+            '<div class="row gap-sm" style="margin-bottom:10px">' +
+              '<span class="dot dot-' + ({Certification:'navy',Foundations:'blue',Selling:'green',Tools:'mint'})[t] + '"></span>' +
+              '<span class="h4">' + esc(t) + '</span>' +
+              '<span class="tiny faint">' + byTrack[t].length + ' courses</span></div>' +
+            '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px">' +
+              byTrack[t].map(function (c) {
+                return '<label class="course-pick">' +
+                  '<input type="checkbox"><span>' +
+                  '<span class="small strong">' + esc(c.title) + '</span>' +
+                  '<span class="tiny faint" style="display:block">' + c.lessons.length + ' lessons · ' +
+                    A.fmtMinutes(c.minutes) + '</span></span></label>';
+              }).join('') +
+            '</div></div>';
+        }).join('') +
+      '</div>' +
+      '<div class="panel-body" style="border-top:1px solid var(--line-faint)">' +
+        '<div class="row gap-sm" style="flex-wrap:wrap">' +
+          '<button class="btn btn-primary" data-toast="Assignment is not wired up in this prototype">Assign selected to a plan</button>' +
+          '<a class="btn btn-ghost" href="people.html">Assign to a rep →</a>' +
+        '</div></div>' +
+    '</section>';
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-toast]');
+    if (t) { e.preventDefault(); A.toast(t.getAttribute('data-toast')); }
+  });
+  A.refresh();
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

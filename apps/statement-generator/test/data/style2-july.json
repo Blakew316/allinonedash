@@ -1,0 +1,730 @@
+{
+ "template": "processing",
+ "processorLine": "ECRYPT, 29899 AGOURA RD #210, AGOURA HILLS, CA 91301",
+ "addressee": [
+  "JUSTIN SILVERS",
+  "MCWD INC",
+  "23410 CIVIC CENTER WAY",
+  "MALIBU CA 90265-5909"
+ ],
+ "location": [
+  "MALIBU CAR WASH & DETAIL",
+  "23410 CIVIC CENTER WAY",
+  "MALIBU CA 90265-5909"
+ ],
+ "merchantNumber": "528414019713593",
+ "customerService": "800-589-8200",
+ "statementSeq": "487845",
+ "periodStart": "2026-07-01",
+ "periodEnd": "2026-07-31",
+ "importantInfo": "",
+ "tinLabel": "XXXXX0360",
+ "ytdReportable": "409990.32",
+ "cardTypes": [
+  {
+   "name": "MASTERCARD",
+   "items": "63",
+   "amount": "7425.65",
+   "refundItems": "0",
+   "refundAmount": "0"
+  },
+  {
+   "name": "AMEXCT043",
+   "items": "155",
+   "amount": "20735.05",
+   "refundItems": "0",
+   "refundAmount": "0"
+  },
+  {
+   "name": "VISA",
+   "items": "127",
+   "amount": "18791.55",
+   "refundItems": "0",
+   "refundAmount": "0"
+  },
+  {
+   "name": "Visa Debit",
+   "items": "108",
+   "amount": "14404.10",
+   "refundItems": "0",
+   "refundAmount": "0"
+  },
+  {
+   "name": "DCVR ACQ",
+   "items": "2",
+   "amount": "442.75",
+   "refundItems": "0",
+   "refundAmount": "0"
+  }
+ ],
+ "thirdParty": [],
+ "adjustments": [],
+ "fees": [
+  {
+   "group": "MASTERCARD",
+   "type": "CF",
+   "description": "DUES & ASSESSMENTS",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$9.65"
+  },
+  {
+   "group": "MASTERCARD",
+   "type": "CF",
+   "description": "DISC 1",
+   "volume": "7425.65",
+   "rate": "0.00200",
+   "total": "-$14.85"
+  },
+  {
+   "group": "MASTERCARD",
+   "type": "CF",
+   "description": "OTHER VOLUME FEES",
+   "volume": "7425.65",
+   "rate": "0.00000",
+   "total": "-$22.28"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CPU GTWY",
+   "volume": "94.00",
+   "rate": "0.1000",
+   "total": "-$9.40"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "LOCATION FEE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$1.25"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "NABU FEES",
+   "volume": "61.00",
+   "rate": "0.01950",
+   "total": "-$1.19"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "ACQ SUPPORT FEE",
+   "volume": "177.25",
+   "rate": "0.00851",
+   "total": "-$1.51"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTERCHANGE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$156.53"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "KILOBYTE CLEARING FEE US",
+   "volume": "46.98",
+   "rate": "0.00229",
+   "total": "-$0.11"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CROSS BORDER FEE",
+   "volume": "177.25",
+   "rate": "0.00598",
+   "total": "-$1.06"
+  },
+  {
+   "group": "AMEXCT043",
+   "type": "CF",
+   "description": "OTHER ITEM FEES",
+   "volume": "155.00",
+   "rate": "0.10000",
+   "total": "-$15.50"
+  },
+  {
+   "group": "AMEXCT043",
+   "type": "CF",
+   "description": "OTHER VOLUME FEES",
+   "volume": "20735.05",
+   "rate": "0.00000",
+   "total": "-$62.21"
+  },
+  {
+   "group": "AMEXCT043",
+   "type": "CF",
+   "description": "DISC 1",
+   "volume": "20735.05",
+   "rate": "0.00200",
+   "total": "-$41.47"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CPU GTWY",
+   "volume": "159.00",
+   "rate": "0.1000",
+   "total": "-$15.90"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "NETWORK FEE",
+   "volume": "20735.05",
+   "rate": "0.00165",
+   "total": "-$34.21"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "PROGRAM FEES",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$394.84"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "RECLASS ADJUSTMENT",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$0.02"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "RECLASS ADJUSTMENT",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "$0.01"
+  },
+  {
+   "group": "VISA",
+   "type": "CF",
+   "description": "OTHER VOLUME FEES",
+   "volume": "18791.55",
+   "rate": "0.00000",
+   "total": "-$56.37"
+  },
+  {
+   "group": "VISA",
+   "type": "CF",
+   "description": "DISC 1",
+   "volume": "18791.55",
+   "rate": "0.00200",
+   "total": "-$37.58"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "DIGITAL COMMERCESERVICE",
+   "volume": "2923.75",
+   "rate": "0.00015",
+   "total": "-$0.44"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTERNTL ACQUIRER FEE",
+   "volume": "71.00",
+   "rate": "0.00450",
+   "total": "-$0.32"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CPU GTWY",
+   "volume": "126.00",
+   "rate": "0.1000",
+   "total": "-$12.60"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTRNTL ACQ PROC FEE CR",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$0.04"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CR DUES AND ASSESS",
+   "volume": "18791.55",
+   "rate": "0.00140",
+   "total": "-$26.31"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CARD PRESENT TOKEN DOM",
+   "volume": "9285.40",
+   "rate": "0.00010",
+   "total": "-$0.93"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTERCHANGE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$439.84"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "ACQ ISA FEE",
+   "volume": "71.00",
+   "rate": "0.01000",
+   "total": "-$0.71"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CARD PRESENT TOKEN XBDR",
+   "volume": "203.25",
+   "rate": "0.00050",
+   "total": "-$0.10"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "FIXED NETWORK CP FEE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$2.00"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "ACQR PROCESSOR FEES",
+   "volume": "126.00",
+   "rate": "0.01950",
+   "total": "-$2.46"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "FILE TRANSMISSIONFEE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$0.59"
+  },
+  {
+   "group": "VS OFLN DB",
+   "type": "CF",
+   "description": "OTHER VOLUME FEES",
+   "volume": "14404.10",
+   "rate": "0.00000",
+   "total": "-$43.21"
+  },
+  {
+   "group": "VS OFLN DB",
+   "type": "CF",
+   "description": "DISC 1",
+   "volume": "14404.10",
+   "rate": "0.00200",
+   "total": "-$28.81"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "DB DUES AND ASSESS",
+   "volume": "14404.10",
+   "rate": "0.00130",
+   "total": "-$18.73"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTRNTL ACQ PROC FEE DB",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$0.16"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CPU GTWY",
+   "volume": "109.00",
+   "rate": "0.1000",
+   "total": "-$10.90"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTERNTL ACQUIRER FEE",
+   "volume": "1103.35",
+   "rate": "0.00450",
+   "total": "-$4.97"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "ACQR PROCESSOR FEES",
+   "volume": "109.00",
+   "rate": "0.01550",
+   "total": "-$1.69"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "TRAN INTEGRITY FEE",
+   "volume": "1.00",
+   "rate": "0.10000",
+   "total": "-$0.10"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTERCHANGE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$64.39"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "ACQ ISA FEE",
+   "volume": "1103.35",
+   "rate": "0.00999",
+   "total": "-$11.03"
+  },
+  {
+   "group": "DCVR ACQ",
+   "type": "CF",
+   "description": "OTHER VOLUME FEES",
+   "volume": "442.75",
+   "rate": "0.00000",
+   "total": "-$1.33"
+  },
+  {
+   "group": "DCVR ACQ",
+   "type": "CF",
+   "description": "DISC 1",
+   "volume": "442.75",
+   "rate": "0.00200",
+   "total": "-$0.89"
+  },
+  {
+   "group": "DCVR ACQ",
+   "type": "CF",
+   "description": "DUES & ASSESSMENTS",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$0.57"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "DISC NETWORK AUTH FEE",
+   "volume": "2.00",
+   "rate": "0.01900",
+   "total": "-$0.04"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "DSCV AUTH FEE",
+   "volume": "2.00",
+   "rate": "0.01500",
+   "total": "-$0.03"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "DSCV DATA USAGE FEE",
+   "volume": "2.00",
+   "rate": "0.00250",
+   "total": "-$0.01"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "CPU GTWY",
+   "volume": "2.00",
+   "rate": "0.1000",
+   "total": "-$0.20"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "CF",
+   "description": "INTERCHANGE",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$7.30"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "MISC",
+   "description": "COMM CARD I/C SAVINGS ADJ",
+   "volume": "4.47",
+   "rate": "0.75000",
+   "total": "-$3.35"
+  },
+  {
+   "group": "AUTHS & AVS",
+   "type": "MISC",
+   "description": "REGULATORY PRODUCT",
+   "volume": "",
+   "rate": "0.00000",
+   "total": "-$3.95"
+  }
+ ],
+ "batches": [
+  {
+   "date": "2026-07-01",
+   "number": "98018211008",
+   "salesCount": "1",
+   "salesAmount": "1812.10",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-02",
+   "number": "98018311011",
+   "salesCount": "1",
+   "salesAmount": "1223.60",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-03",
+   "number": "98018411007",
+   "salesCount": "1",
+   "salesAmount": "2205.10",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-05",
+   "number": "98018611005",
+   "salesCount": "1",
+   "salesAmount": "1637.40",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-05",
+   "number": "98018641092",
+   "salesCount": "1",
+   "salesAmount": "1391.10",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-06",
+   "number": "98018711009",
+   "salesCount": "1",
+   "salesAmount": "1491.50",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-07",
+   "number": "98018811015",
+   "salesCount": "1",
+   "salesAmount": "2478.25",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-08",
+   "number": "98018911009",
+   "salesCount": "1",
+   "salesAmount": "2732.85",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-09",
+   "number": "98019011011",
+   "salesCount": "1",
+   "salesAmount": "1412.10",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-10",
+   "number": "98019111009",
+   "salesCount": "1",
+   "salesAmount": "1663.35",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-12",
+   "number": "98019311005",
+   "salesCount": "1",
+   "salesAmount": "2411.75",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-12",
+   "number": "98019341118",
+   "salesCount": "1",
+   "salesAmount": "2626.60",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-13",
+   "number": "98019411009",
+   "salesCount": "1",
+   "salesAmount": "1295.50",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-14",
+   "number": "98019511010",
+   "salesCount": "1",
+   "salesAmount": "1312.35",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-15",
+   "number": "98019611011",
+   "salesCount": "1",
+   "salesAmount": "1280.75",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-16",
+   "number": "98019711010",
+   "salesCount": "1",
+   "salesAmount": "2017.25",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-17",
+   "number": "98019811006",
+   "salesCount": "1",
+   "salesAmount": "3111.25",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-19",
+   "number": "98020041105",
+   "salesCount": "1",
+   "salesAmount": "1544.35",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-19",
+   "number": "98020011005",
+   "salesCount": "1",
+   "salesAmount": "3704.05",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-20",
+   "number": "98020111008",
+   "salesCount": "1",
+   "salesAmount": "1663.25",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-21",
+   "number": "98020211007",
+   "salesCount": "1",
+   "salesAmount": "469.50",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-22",
+   "number": "98020311010",
+   "salesCount": "1",
+   "salesAmount": "1058.15",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-23",
+   "number": "98020411007",
+   "salesCount": "1",
+   "salesAmount": "2181.50",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-24",
+   "number": "98020511012",
+   "salesCount": "1",
+   "salesAmount": "2772.60",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-26",
+   "number": "98020711004",
+   "salesCount": "1",
+   "salesAmount": "3457.30",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-26",
+   "number": "98020741108",
+   "salesCount": "1",
+   "salesAmount": "2017.75",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-27",
+   "number": "98020811006",
+   "salesCount": "1",
+   "salesAmount": "2354.50",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-28",
+   "number": "98020911014",
+   "salesCount": "1",
+   "salesAmount": "2830.25",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-29",
+   "number": "98021011006",
+   "salesCount": "1",
+   "salesAmount": "2191.50",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-30",
+   "number": "98021111015",
+   "salesCount": "1",
+   "salesAmount": "1756.00",
+   "refundCount": "0",
+   "refundAmount": "0"
+  },
+  {
+   "date": "2026-07-31",
+   "number": "98021211007",
+   "salesCount": "1",
+   "salesAmount": "1695.60",
+   "refundCount": "0",
+   "refundAmount": "0"
+  }
+ ]
+}

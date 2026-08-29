@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard · WPI University</title>
+<meta name="description" content="Training, certification and team progress for every Wholesale Payments rep.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="dashboard">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<!-- ============================================================ hero -->
+<section class="hero gridlines">
+  <div class="wrap">
+    <div style="max-width:760px" data-stagger="90">
+      <div class="row gap-sm enter">
+        <span data-mark="26"></span>
+        <span class="eyebrow">Wholesale&nbsp;Payments&nbsp;·&nbsp;University</span>
+      </div>
+      <h1 class="display enter" style="margin-top:18px">
+        Everything a rep needs<br>to sell, <span class="grad-text">in one place.</span>
+      </h1>
+      <p class="lede enter" style="margin-top:20px;max-width:56ch">
+        Thirty courses, two hundred and twenty-eight lessons and a certification path —
+        built around how merchant services actually get sold.
+      </p>
+      <div class="row enter" style="margin-top:28px;flex-wrap:wrap">
+        <a class="btn btn-primary btn-lg" href="training.html">Browse training</a>
+        <a class="btn btn-secondary btn-lg" href="course.html?c=wpi-rep-certification-program">
+          Resume certification
+        </a>
+      </div>
+      <div class="row enter" style="margin-top:22px;gap:18px;flex-wrap:wrap">
+        <span class="row gap-sm small muted"><span class="dot dot-green dot-live"></span>557 reps active this month</span>
+        <span class="row gap-sm small muted"><span class="dot dot-blue"></span>5,630 lessons completed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ stats -->
+<section class="wrap" style="margin-top:8px">
+  <div class="grid grid-4" data-stagger="70" id="statGrid"></div>
+</section>
+
+<!-- ============================================================ resume -->
+<section class="wrap section-tight">
+  <div class="row-between" data-reveal>
+    <div>
+      <h2 class="h2">Jump back in</h2>
+      <p class="body small" style="margin-top:4px">Courses your team is moving through right now.</p>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="training.html">All courses <span class="row" style="display:inline-flex">→</span></a>
+  </div>
+  <div class="grid grid-cards" style="margin-top:20px" data-stagger="80" id="resumeGrid"></div>
+</section>
+
+<!-- ============================================================ activity + feed -->
+<section class="wrap section-tight">
+  <div class="grid" style="grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)">
+    <div class="panel" data-reveal>
+      <div class="panel-head">
+        <span class="tile tile-blue" data-icon="chart"></span>
+        <div>
+          <div class="h4">Lessons completed</div>
+          <div class="tiny faint">Last seven days across every sales team</div>
+        </div>
+        <span class="spacer"></span>
+        <span class="chip chip-green">+18% vs last week</span>
+      </div>
+      <div class="panel-body">
+        <div class="chart" id="weekChart"></div>
+      </div>
+    </div>
+
+    <div class="panel" data-reveal style="--reveal-delay:120ms">
+      <div class="panel-head">
+        <span class="tile tile-green" data-icon="sparkles"></span>
+        <div>
+          <div class="h4">Live activity</div>
+          <div class="tiny faint">Updated a moment ago</div>
+        </div>
+      </div>
+      <div class="panel-body" style="padding-block:6px">
+        <div class="feed" id="feed"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ tracks -->
+<section class="wrap section-tight">
+  <div data-reveal>
+    <h2 class="h2">Four tracks, one path</h2>
+    <p class="body small" style="margin-top:4px;max-width:60ch">
+      Every course sits on one of four tracks. Certification is the required path;
+      the rest is there when a rep needs it.
+    </p>
+  </div>
+  <div class="grid grid-4" style="margin-top:22px" data-stagger="80" id="trackGrid"></div>
+</section>
+
+<!-- ============================================================ admin -->
+<section class="wrap section-tight" style="padding-bottom:8px">
+  <div data-reveal>
+    <h2 class="h2">Manage</h2>
+    <p class="body small" style="margin-top:4px">Everything an administrator reaches for.</p>
+  </div>
+  <div class="grid" style="margin-top:22px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))" data-stagger="60" id="adminGrid"></div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/media.js"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+
+  /* ------------------------------------------------------------ stat cards */
+  var stats = [
+    { icon: 'users',  tone: 'blue',  value: D.stats.activeUsers,      label: 'Active reps',       sub: 'in the last 30 days', delta: '+12%' },
+    { icon: 'check',  tone: 'green', value: D.stats.lessonsCompleted, label: 'Lessons completed', sub: 'in the last 30 days', delta: '+18%' },
+    { icon: 'book',   tone: 'navy',  value: D.stats.courses,          label: 'Courses published', sub: '228 lessons in total', delta: null },
+    { icon: 'award',  tone: 'mint',  value: D.stats.certRate,         label: 'Certification rate', sub: 'of assigned reps', delta: '+6 pts', suffix: '%' }
+  ];
+  document.getElementById('statGrid').innerHTML = stats.map(function (s) {
+    return '<div class="card card-accent card-hover" data-reveal>' +
+        '<div class="row-between" style="align-items:flex-start">' +
+          '<span class="tile tile-' + s.tone + '" data-icon="' + s.icon + '"></span>' +
+          (s.delta ? '<span class="stat-delta up">↑ ' + esc(s.delta) + '</span>' : '') +
+        '</div>' +
+        '<div class="stat" style="margin-top:16px">' +
+          '<span class="stat-value" data-count="' + s.value + '"' +
+            (s.suffix ? ' data-count-suffix="' + s.suffix + '"' : '') + '>0</span>' +
+          '<span class="stat-label">' + esc(s.label) + '</span>' +
+          '<span class="tiny faint">' + esc(s.sub) + '</span>' +
+        '</div>' +
+      '</div>';
+  }).join('');
+
+  /* ---------------------------------------------------------- resume cards */
+  var picks = ['wpi-rep-certification-program', 'how-to-sell-cash-discounting', 'overcoming-merchant-objections']
+    .map(A.course).filter(Boolean);
+
+  document.getElementById('resumeGrid').innerHTML = picks.map(function (c, i) {
+    var doneCount = A.progress.doneCount(c.slug);
+    var pct = c.lessons.length ? Math.round(doneCount / c.lessons.length * 100) : 0;
+    return '<a class="card card-accent" href="course.html?c=' + c.slug + '" data-reveal>' +
+        '<div class="row-between" style="align-items:flex-start">' +
+          '<span class="chip chip-' + (c.track === 'Certification' ? 'navy' : 'green') + '">' + esc(c.track) + '</span>' +
+          A.ring(pct, 46, 4) +
+        '</div>' +
+        '<h3 class="h3 clamp-2" style="margin-top:16px">' + esc(c.title) + '</h3>' +
+        '<p class="small muted clamp-2" style="margin-top:8px">' + esc(c.blurb) + '</p>' +
+        '<div class="card-foot">' +
+          '<div class="bar thin"><i data-grow="' + pct + '"></i></div>' +
+          '<div class="row-between tiny faint" style="margin-top:10px">' +
+            '<span>' + doneCount + ' of ' + c.lessons.length + ' lessons</span>' +
+            '<span>' + A.fmtMinutes(c.minutes) + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+  }).join('');
+
+  /* --------------------------------------------------------------- chart */
+  var max = Math.max.apply(null, D.activity.map(function (a) { return a.lessons; }));
+  document.getElementById('weekChart').innerHTML = D.activity.map(function (a) {
+    return '<div class="chart-col">' +
+        '<div class="chart-track">' +
+          '<div class="chart-bar" data-value="' + a.lessons.toLocaleString() + ' lessons" ' +
+            'data-grow="' + Math.round(a.lessons / max * 100) + '" data-grow-axis="height"></div>' +
+        '</div>' +
+        '<span class="chart-label">' + esc(a.d) + '</span>' +
+      '</div>';
+  }).join('');
+
+  /* ---------------------------------------------------------------- feed */
+  var verbs = [
+    ['finished', 'green', 'check'], ['passed the quiz in', 'blue', 'quiz'],
+    ['started', 'navy', 'play'], ['finished', 'green', 'check'],
+    ['was certified in', 'mint', 'award'], ['started', 'navy', 'play']
+  ];
+  document.getElementById('feed').innerHTML = D.people.slice(0, 6).map(function (p, i) {
+    var v = verbs[i], c = D.courses[(i * 5 + 2) % D.courses.length];
+    var lesson = c.lessons[(i * 3) % c.lessons.length];
+    return '<div class="feed-item">' +
+        '<div class="feed-rail"><span class="dot dot-' + (v[1] === 'navy' ? 'navy' : v[1]) + '"></span></div>' +
+        '<div style="min-width:0;flex:1">' +
+          '<div class="small"><span class="strong">' + esc(p.name) + '</span> ' + esc(v[0]) +
+            ' <a href="course.html?c=' + c.slug + '" class="strong" style="font-weight:520">' +
+            esc(v[0] === 'was certified in' ? c.title : lesson.t) + '</a></div>' +
+          '<div class="tiny faint">' + esc(p.team) + ' · ' + esc(p.lastSeen) + '</div>' +
+        '</div>' +
+      '</div>';
+  }).join('');
+
+  /* -------------------------------------------------------------- tracks */
+  var tracks = ['Certification', 'Foundations', 'Selling', 'Tools'];
+  var copy = {
+    Certification: 'The required path. Complete it and a rep is cleared to sell.',
+    Foundations: 'How payments actually work — statements, interchange and risk.',
+    Selling: 'Scripts, objections, closes. The day-to-day of the job.',
+    Tools: 'Kloser, Spotio, Iris and Customer Connect, set up properly.'
+  };
+  document.getElementById('trackGrid').innerHTML = tracks.map(function (t) {
+    var list = D.courses.filter(function (c) { return c.track === t; });
+    var mins = list.reduce(function (a, c) { return a + c.minutes; }, 0);
+    return '<a class="card card-accent" href="training.html?track=' + encodeURIComponent(t) + '" data-reveal>' +
+        '<span class="tile tile-' + A.trackTile(t) + ' tile-lg" data-icon="' + A.trackIcon(t) + '"></span>' +
+        '<h3 class="h3" style="margin-top:16px">' + esc(t) + '</h3>' +
+        '<p class="small muted" style="margin-top:8px">' + esc(copy[t]) + '</p>' +
+        '<hr class="hairline" style="margin:16px 0 12px">' +
+        '<div class="row-between tiny faint">' +
+          '<span>' + list.length + ' course' + (list.length === 1 ? '' : 's') + '</span>' +
+          '<span>' + A.fmtMinutes(mins) + '</span>' +
+        '</div>' +
+      '</a>';
+  }).join('');
+
+  /* --------------------------------------------------------------- admin */
+  var admin = [
+    ['users',  'People',        'Invite, assign and manage every rep on the platform.', 'people.html'],
+    ['flag',   'Sales teams',   D.teams.length + ' teams, each with its own learning plan.', 'teams.html'],
+    ['chart',  'Reports',       'Daily activity and a full lessons-completed export.', 'reports.html'],
+    ['book',   'Courses',       'Publish, order and assign courses and learning plans.', 'training.html'],
+    ['gear',   'Appearance',    'Logos and colours for the site, quotes and proposals.', 'settings.html#appearance'],
+    ['key',    'Developer',     'API keys, single sign-on, webhooks and data retention.', 'settings.html#api']
+  ];
+  document.getElementById('adminGrid').innerHTML = admin.map(function (a) {
+    return '<a class="card card-hover" href="' + a[3] + '" data-reveal>' +
+        '<div class="row" style="align-items:flex-start;gap:14px">' +
+          '<span class="tile" data-icon="' + a[0] + '"></span>' +
+          '<div style="min-width:0">' +
+            '<div class="h4">' + esc(a[1]) + '</div>' +
+            '<p class="small muted" style="margin-top:5px">' + esc(a[2]) + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+  }).join('');
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

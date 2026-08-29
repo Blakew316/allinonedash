@@ -1,0 +1,21 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Dependencies (none required, but just in case)
+node_modules/
+
+# Never commit raw or plaintext merchant data — only the encrypted
+# shards under assets/portal-data/ belong in the repo.
+*.xlsx
+*.xls
+*.csv
+merchants_clean.json
+merchants*.json
+*merchant*list*.json

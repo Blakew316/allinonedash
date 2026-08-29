@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
+
+# assets/js/roster.js is NOT ignored, deliberately.
+#
+# It holds 3,703 real names and email addresses and was kept out of the repo
+# for that reason. That turned out to be worse: the deploy builds from this
+# repo, so every published site served synthetic demo names instead of the
+# real roster, and nothing said so. It is tracked now.
+#
+# Regenerate it with tools/extract-roster.py when the roster changes.
+# KEEP THIS REPOSITORY PRIVATE.

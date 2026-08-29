@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-36.5 0 218 218">
+  <!--
+    The logo's bar mark at its own measured geometry, centred in a square.
+    No backing plate: the tab strip shows through, which is how the mark
+    appears in the real product's tabs.
+
+    Colours lift slightly under prefers-color-scheme: dark so the bars keep
+    their weight against a dark tab strip. The hues are the logo's own — the
+    dark variant is a legibility adjustment, not a different mark.
+  -->
+  <style>
+    .b1 { fill: #0095e5 }
+    .bl { fill: #00a1e5 }
+    .gr { fill: #01c271 }
+    .mi { fill: #4fe778 }
+    .b3 { fill: #50e87b }
+    @media (prefers-color-scheme: dark) {
+      .b1 { fill: #29b0f0 }
+      .bl { fill: #33b6f2 }
+      .gr { fill: #17d989 }
+      .mi { fill: #6cf08f }
+      .b3 { fill: #6df092 }
+    }
+  </style>
+  <rect class="b1" x="2"   y="2"   width="22" height="167" rx="3"/>
+  <rect class="bl" x="42"  y="2"   width="62" height="50"  rx="3"/>
+  <rect class="gr" x="42"  y="50"  width="62" height="121"/>
+  <rect class="mi" x="42"  y="169" width="62" height="48"  rx="3"/>
+  <rect class="b3" x="122" y="50"  width="23" height="166" rx="3"/>
+</svg>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sales teams · WPI University</title>
+<meta name="description" content="Forty-eight sales teams and how each one is tracking against its learning plan.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WPI U">
+<link rel="apple-touch-icon" href="assets/img/icon-192.png">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{var t=localStorage.getItem('wpi-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-page="people">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="shell"></div>
+<main id="main">
+
+<section class="wrap wrap-wide">
+  <div class="page-head">
+    <nav class="crumbs enter" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a><span data-icon="chevron"></span>
+      <a href="people.html">People</a><span data-icon="chevron"></span>
+      <span aria-current="page">Sales teams</span>
+    </nav>
+    <div class="row-between">
+      <div class="enter" style="--enter-delay:60ms">
+        <h1 class="h1">Sales <span class="grad-text">teams</span></h1>
+        <p class="lede" style="margin-top:8px">Each team carries its own learning plan. Progress is the team average.</p>
+      </div>
+      <div class="row gap-sm enter" style="--enter-delay:120ms">
+        <div class="search-field" style="width:240px">
+          <span data-icon="search"></span>
+          <input class="input" id="teamSearch" type="search" placeholder="Find a team…" aria-label="Find a team">
+        </div>
+        <button class="btn btn-primary" data-newteam>New team</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rosterNotice" style="margin-top:8px"></div>
+  <p class="small faint" id="teamCount" style="margin-top:8px" aria-live="polite"></p>
+  <div class="grid grid-3" style="margin-top:16px;padding-bottom:32px" id="teamGrid" data-stagger="35"></div>
+</section>
+
+</main>
+<div id="shellFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/roster.js" onerror="void 0"></script>
+<script>
+window.pageInit = function () {
+  var D = window.WPI, A = window.App, esc = A.esc;
+
+  /* Uses the real roster from assets/js/roster.js when it has been generated
+     (see tools/extract-roster.py); otherwise the seeded demo set. Either way
+     the head-count and averages are computed from the members themselves. */
+  var roster = window.WPI_ROSTER || null;
+  var source = roster ? roster.people : D.people;
+  var names  = roster ? roster.teams  : D.teams;
+
+  document.getElementById('rosterNotice').innerHTML = roster ? '' :
+    '<p class="tiny faint">Head-counts below come from the demo roster. Run ' +
+    '<code class="key">python3 tools/extract-roster.py path/to/wpiuniversity.com</code> ' +
+    'to populate them from your archive.</p>';
+
+  var byTeam = {};
+  source.forEach(function (p) {
+    if (!p.team) return;
+    (byTeam[p.team] = byTeam[p.team] || []).push(p);
+  });
+
+  var teams = names.map(function (name, i) {
+    var members = byTeam[name] || [];
+    var progress = members.length
+      ? Math.round(members.reduce(function (a, p) { return a + p.progress; }, 0) / members.length)
+      : 0;
+    return { name: name, size: members.length, progress: progress };
+  }).sort(function (a, b) { return b.size - a.size; });
+
+  function render(q) {
+    q = (q || '').trim().toLowerCase();
+    var list = teams.filter(function (t) { return !q || t.name.toLowerCase().indexOf(q) >= 0; });
+    document.getElementById('teamCount').textContent =
+      list.length + (list.length === 1 ? ' team' : ' teams');
+
+    var box = document.getElementById('teamGrid');
+    if (!list.length) {
+      box.innerHTML = '<div class="empty card card-flat" style="grid-column:1/-1">' +
+        '<span class="tile tile-blue" data-icon="flag"></span>' +
+        '<div class="h3">No team by that name</div></div>';
+      A.refresh(); return;
+    }
+
+    box.innerHTML = list.map(function (t) {
+      var tone = t.progress >= 75 ? 'green' : (t.progress >= 50 ? 'blue' : '');
+      return '<div class="card card-accent card-hover" data-reveal>' +
+          '<div class="row-between" style="align-items:flex-start">' +
+            '<div class="row gap-sm">' +
+              '<span class="tile" data-icon="flag"></span>' +
+              '<div><div class="h4">' + esc(t.name) + '</div>' +
+                '<div class="tiny faint">' + (t.size ? t.size + ' rep' + (t.size === 1 ? '' : 's') : 'No members') + '</div></div>' +
+            '</div>' +
+            A.ring(t.progress, 44, 4) +
+          '</div>' +
+          '<div class="bar thin" style="margin-top:18px"><i data-grow="' + t.progress + '"></i></div>' +
+          '<div class="row-between tiny faint" style="margin-top:10px">' +
+            '<span>Average training progress</span>' +
+            '<span class="chip ' + (tone ? 'chip-' + tone : '') + '">' +
+              (t.progress >= 75 ? 'On track' : (t.progress >= 50 ? 'Catching up' : 'Needs a nudge')) + '</span>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+    A.refresh();
+  }
+
+  var input = document.getElementById('teamSearch');
+  input.addEventListener('input', function () { render(input.value); });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-newteam]')) A.toast('New team form is not wired up in this prototype', 'plus');
+  });
+  render('');
+};
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

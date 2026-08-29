@@ -1,0 +1,653 @@
+{
+  "kpis": [
+    {
+      "label": "Active Pipeline",
+      "value": 666,
+      "spark": [
+        0.0,
+        0.0,
+        0.0,
+        0.083,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.583,
+        0.917,
+        0.833,
+        0.25,
+        0.0
+      ]
+    },
+    {
+      "label": "Appointments",
+      "value": 96,
+      "spark": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Visits",
+      "value": 100,
+      "spark": [
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "label": "Deals Signed",
+      "value": 3,
+      "spark": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "label": "Overdue Activities",
+      "value": 85,
+      "spark": null
+    },
+    {
+      "label": "QA Pending",
+      "value": 0,
+      "spark": null
+    }
+  ],
+  "efficiency": [
+    {
+      "label": "Set to Held",
+      "value": 0
+    },
+    {
+      "label": "Held to Deal",
+      "value": 0
+    },
+    {
+      "label": "Avg Days to Close",
+      "value": 23,
+      "unit": "d"
+    }
+  ],
+  "pipeline": [
+    {
+      "stage": "Prospecting",
+      "pct": 84,
+      "count": 506
+    },
+    {
+      "stage": "Contacted",
+      "pct": 14,
+      "count": 86
+    },
+    {
+      "stage": "Appointment",
+      "pct": 1,
+      "count": 8
+    },
+    {
+      "stage": "Deal Signed",
+      "pct": 1,
+      "count": 5
+    },
+    {
+      "stage": "Customer",
+      "pct": 0,
+      "count": 0
+    }
+  ],
+  "pendingAction": [
+    {
+      "label": "Pending Action",
+      "value": 702
+    },
+    {
+      "label": "Overdue > 3 days",
+      "value": 61
+    },
+    {
+      "label": "No activity > 14d",
+      "value": 624
+    },
+    {
+      "label": "Reps with 0 visits (7d)",
+      "value": 17
+    },
+    {
+      "label": "QA pending",
+      "value": 0,
+      "note": "The original dashboard reported 0 here while its own BCL queue lists 6 cards awaiting QA. Both figures are reproduced as exported rather than reconciled."
+    }
+  ],
+  "territory": {
+    "leads": 666,
+    "territories": 44
+  },
+  "repPerformance": [
+    {
+      "rep": "Harrison Gurash",
+      "leads": 0,
+      "visits": 0,
+      "apptsSet": 0,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Judah Steelman",
+      "leads": 18,
+      "visits": 5,
+      "apptsSet": 12,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Jenn Jackson",
+      "leads": 0,
+      "visits": 0,
+      "apptsSet": 0,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "John Brandon",
+      "leads": 0,
+      "visits": 0,
+      "apptsSet": 0,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Gabriel Craft",
+      "leads": 145,
+      "visits": 9,
+      "apptsSet": 24,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Kyle Pettit",
+      "leads": 7,
+      "visits": 4,
+      "apptsSet": 5,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Musco Adams",
+      "leads": 14,
+      "visits": 13,
+      "apptsSet": 2,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Lloyd Dela Cruz",
+      "leads": 29,
+      "visits": 24,
+      "apptsSet": 13,
+      "apptsHeld": 5
+    },
+    {
+      "rep": "walter smith",
+      "leads": 66,
+      "visits": 1,
+      "apptsSet": 9,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Seth manshym",
+      "leads": 32,
+      "visits": 4,
+      "apptsSet": 3,
+      "apptsHeld": 1
+    },
+    {
+      "rep": "Jabe Schoenrock",
+      "leads": 12,
+      "visits": 2,
+      "apptsSet": 0,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Ruben Alcaraz",
+      "leads": 0,
+      "visits": 0,
+      "apptsSet": 0,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Jordann Pennington",
+      "leads": 25,
+      "visits": 0,
+      "apptsSet": 0,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Timothy Karl Oscar Constenius",
+      "leads": 206,
+      "visits": 36,
+      "apptsSet": 16,
+      "apptsHeld": 13
+    },
+    {
+      "rep": "Sadie Scoville",
+      "leads": 9,
+      "visits": 0,
+      "apptsSet": 9,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Kenneth Jensen",
+      "leads": 2,
+      "visits": 0,
+      "apptsSet": 2,
+      "apptsHeld": 0
+    },
+    {
+      "rep": "Jaden Dufek",
+      "leads": 85,
+      "visits": 1,
+      "apptsSet": 1,
+      "apptsHeld": 1
+    }
+  ],
+  "liveActivity": [
+    {
+      "who": "Lloyd Dela Cruz",
+      "what": "lead created",
+      "when": "31d ago"
+    },
+    {
+      "who": "Kyle Pettit",
+      "what": "lead created",
+      "when": "40d ago"
+    },
+    {
+      "who": "Kyle Pettit",
+      "what": "lead created",
+      "when": "40d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "52d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "52d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "52d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "72d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "72d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "72d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "73d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "73d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "73d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "73d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "73d ago"
+    },
+    {
+      "who": "Jabe Schoenrock",
+      "what": "lead created",
+      "when": "74d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "76d ago"
+    },
+    {
+      "who": "walter smith",
+      "what": "bulk deleted",
+      "when": "78d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "78d ago"
+    },
+    {
+      "who": "Seth manshym",
+      "what": "lead created",
+      "when": "78d ago"
+    },
+    {
+      "who": "walter smith",
+      "what": "bulk deleted",
+      "when": "78d ago"
+    }
+  ],
+  "performance": {
+    "window": {
+      "from": "2026-07-24",
+      "to": "2026-08-22"
+    },
+    "dates": [
+      "2026-07-24",
+      "2026-07-25",
+      "2026-07-26",
+      "2026-07-27",
+      "2026-07-28",
+      "2026-07-29",
+      "2026-07-30",
+      "2026-07-31",
+      "2026-08-01",
+      "2026-08-02",
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-08",
+      "2026-08-09",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-16",
+      "2026-08-17",
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-22"
+    ],
+    "series": [
+      {
+        "key": "visits",
+        "label": "Visits",
+        "source": "Decoded from the original dashboard chart — GPS-verified field visits per day.",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          13,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "appointments",
+        "label": "Appointments",
+        "source": "Appointments with a recorded timestamp, from the activity log and the verification records.",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          12,
+          10,
+          0
+        ]
+      },
+      {
+        "key": "deals",
+        "label": "Deals",
+        "source": "Leads that reached Deal Signed, dated from the lead age the original recorded.",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "appointmentQueue": {
+    "total": 0,
+    "columns": [
+      "Title",
+      "Company",
+      "Rep",
+      "Date",
+      "Status"
+    ],
+    "rows": []
+  },
+  "capture": {
+    "note": "The original snapshot paginates. These are the rows the export actually contained.",
+    "leads": {
+      "captured": 200,
+      "total": 666
+    },
+    "activities": {
+      "captured": 25,
+      "total": 194
+    },
+    "verificationRecords": {
+      "captured": 25,
+      "total": 66
+    }
+  },
+  "stageLadder": {
+    "total": 665,
+    "stages": [
+      {
+        "key": "all",
+        "label": "All",
+        "full": "All",
+        "total": 665
+      },
+      {
+        "key": "Prospecting",
+        "label": "Prospect",
+        "full": "Prospecting",
+        "total": 505
+      },
+      {
+        "key": "Follow Up",
+        "label": "Follow Up",
+        "full": "Follow Up",
+        "total": 40
+      },
+      {
+        "key": "Appointment Set",
+        "label": "Appt Set",
+        "full": "Appointment Set",
+        "total": 86
+      },
+      {
+        "key": "Appointment Held",
+        "label": "Appt Held",
+        "full": "Appointment Held",
+        "total": 8
+      },
+      {
+        "key": "Business Card Lead",
+        "label": "Biz Card",
+        "full": "Business Card Lead",
+        "total": 16
+      },
+      {
+        "key": "WPI Hot Lead",
+        "label": "Hot Lead",
+        "full": "WPI Hot Lead",
+        "total": 0
+      },
+      {
+        "key": "Giving Payments",
+        "label": "Giving Pmts",
+        "full": "Giving Payments",
+        "total": 0
+      },
+      {
+        "key": "Deal Signed",
+        "label": "Signed",
+        "full": "Deal Signed",
+        "total": 5
+      },
+      {
+        "key": "Customer",
+        "label": "Customer",
+        "full": "Customer",
+        "total": 0
+      },
+      {
+        "key": "Lost",
+        "label": "Lost",
+        "full": "Lost",
+        "total": 5
+      }
+    ],
+    "note": "The list screen's own total. The dashboard's Active Pipeline KPI reports 666 for the same book — a one-lead disagreement carried over from the original export, not introduced here."
+  }
+}

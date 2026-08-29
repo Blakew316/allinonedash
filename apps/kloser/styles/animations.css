@@ -1,0 +1,143 @@
+/* ==========================================================================
+   Kloser CRM — Motion system
+   Everything here degrades to "instant" under prefers-reduced-motion.
+   ========================================================================== */
+
+@keyframes fade-in       { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-out      { from { opacity: 1 } to { opacity: 0 } }
+@keyframes rise          { from { opacity: 0; transform: translate3d(0, 14px, 0) } to { opacity: 1; transform: none } }
+@keyframes rise-sm       { from { opacity: 0; transform: translate3d(0, 8px, 0) }  to { opacity: 1; transform: none } }
+@keyframes slide-left    { from { opacity: 0; transform: translate3d(18px, 0, 0) } to { opacity: 1; transform: none } }
+@keyframes slide-right   { from { opacity: 0; transform: translate3d(-18px, 0, 0) } to { opacity: 1; transform: none } }
+@keyframes pop           { from { opacity: 0; transform: scale(.94) } to { opacity: 1; transform: scale(1) } }
+@keyframes pop-out       { from { opacity: 1; transform: scale(1) }  to { opacity: 0; transform: scale(.96) } }
+@keyframes sheet-up      { from { opacity: 0; transform: translate3d(0, 22px, 0) scale(.985) } to { opacity: 1; transform: none } }
+@keyframes drawer-in     { from { transform: translate3d(100%, 0, 0) } to { transform: none } }
+@keyframes spin          { to { transform: rotate(360deg) } }
+@keyframes shimmer       { 0% { background-position: -420px 0 } 100% { background-position: 420px 0 } }
+@keyframes pulse-ring    {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 42%, transparent) }
+  70%  { box-shadow: 0 0 0 8px transparent }
+  100% { box-shadow: 0 0 0 0 transparent }
+}
+@keyframes draw          { to { stroke-dashoffset: 0 } }
+@keyframes grow-y        { from { transform: scaleY(0) } to { transform: scaleY(1) } }
+@keyframes grow-x        { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes sheen {
+  0%   { transform: translateX(-120%) skewX(-18deg) }
+  100% { transform: translateX(320%)  skewX(-18deg) }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0, 0, 0) }
+  50%      { transform: translate3d(0, -10px, 0) }
+}
+@keyframes count-flash {
+  0%   { color: var(--accent-ink) }
+  100% { color: inherit }
+}
+@keyframes ripple {
+  to { transform: scale(2.6); opacity: 0 }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translate3d(0, 16px, 0) scale(.97) }
+  to   { opacity: 1; transform: none }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: none }
+  to   { opacity: 0; transform: translate3d(0, 8px, 0) scale(.98) }
+}
+
+/* ---- Entrance helpers ---- */
+.anim-rise      { animation: rise var(--t-slow) var(--ease-smooth) both; }
+.anim-rise-sm   { animation: rise-sm var(--t-base) var(--ease-out) both; }
+.anim-fade      { animation: fade-in var(--t-base) var(--ease-out) both; }
+.anim-pop       { animation: pop var(--t-base) var(--ease-spring) both; }
+.anim-slide-left{ animation: slide-left var(--t-slow) var(--ease-smooth) both; }
+
+/* Stagger: set --i on the child (the JS reveal helper does this automatically) */
+.stagger > * { animation: rise var(--t-slow) var(--ease-smooth) both; animation-delay: calc(var(--i, 0) * 42ms); }
+
+/* ---- Scroll reveal ---- */
+.reveal { opacity: 0; transform: translate3d(0, 18px, 0); will-change: opacity, transform; }
+.reveal.is-visible {
+  opacity: 1; transform: none;
+  transition: opacity 620ms var(--ease-smooth) var(--reveal-delay, 0ms),
+              transform 620ms var(--ease-smooth) var(--reveal-delay, 0ms);
+}
+
+/* ---- Page transitions ---- */
+.view-enter { animation: rise var(--t-page) var(--ease-smooth) both; }
+.view-leave { animation: fade-out 160ms var(--ease-in-out) both; }
+
+/* ---- Skeleton shimmer ---- */
+.skeleton {
+  position: relative; overflow: hidden;
+  background: var(--bg-sunken);
+  border-radius: var(--r-sm);
+  background-image: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--n-0) 62%, transparent) 50%,
+    transparent 100%);
+  background-size: 420px 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.35s linear infinite;
+}
+:root[data-theme="dark"] .skeleton {
+  background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.06) 50%, transparent 100%);
+}
+.skeleton-text { height: 12px; margin-block: 6px; border-radius: var(--r-pill); }
+.skeleton-text.w-40 { width: 40%; } .skeleton-text.w-60 { width: 60%; }
+.skeleton-text.w-80 { width: 80%; } .skeleton-text.w-100 { width: 100%; }
+
+/* ---- Spinner ---- */
+.spinner {
+  width: 18px; height: 18px; flex: none;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-top-color: var(--accent);
+  animation: spin 720ms linear infinite;
+}
+.spinner.lg { width: 30px; height: 30px; border-width: 2.5px; }
+
+/* ---- Live dot ---- */
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--good); flex: none;
+  animation: pulse-ring 2s var(--ease-out) infinite;
+}
+
+/* ---- Ripple ---- */
+.ripple-host { position: relative; overflow: hidden; }
+.ripple {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: currentColor; opacity: .16;
+  transform: scale(0);
+  animation: ripple 560ms var(--ease-out) forwards;
+}
+
+/* ---- Chart draw-in ---- */
+.draw-path { stroke-dasharray: var(--len, 1200); stroke-dashoffset: var(--len, 1200); animation: draw 1.15s var(--ease-smooth) forwards; }
+.draw-area { opacity: 0; animation: fade-in 700ms var(--ease-out) 380ms forwards; }
+.grow-bar  { transform-origin: bottom; animation: grow-y 720ms var(--ease-smooth) both; }
+.grow-track{ transform-origin: left;   animation: grow-x 820ms var(--ease-smooth) both; }
+
+/* ---- Interaction primitives ---- */
+.lift { transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base) var(--ease-out); }
+.lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.press { transition: transform var(--t-fast) var(--ease-out); }
+.press:active { transform: scale(.975); }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .draw-path { stroke-dashoffset: 0; }
+  .skeleton { animation: none; }
+}

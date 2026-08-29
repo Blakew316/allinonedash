@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AppUpload — Handwritten applications → typed forms</title>
+    <meta name="description" content="Upload a photo of a handwritten merchant application and supporting documents; get the typed application, a pre-filled coversheet, and a Clover menu import." />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand"><span class="brand-mark">📄→🖨</span><span class="brand-name">AppUpload</span></div>
+      <p class="tagline">Photograph a handwritten merchant application and supporting documents — get a clean typed application, a pre-filled coversheet, and a Clover menu import.</p>
+    </header>
+
+    <nav class="mode-tabs" role="tablist" aria-label="Workflow">
+      <button id="tabApp" class="mode-tab active" role="tab" aria-selected="true">Merchant Application</button>
+      <button id="tabMenu" class="mode-tab" role="tab" aria-selected="false">Menu → Clover</button>
+    </nav>
+
+    <main>
+      <div id="statusBanner" class="banner hidden" role="status"></div>
+
+      <!-- ============ APPLICATION MODE ============ -->
+      <div id="appMode">
+        <!-- Step 1: upload -->
+        <section id="appUpload" class="card">
+          <h2 class="step-title"><span class="step-num">1</span> Upload the application &amp; supporting documents</h2>
+          <p class="muted small">
+            Add photos of the handwritten <strong>application pages</strong>, the <strong>voided check</strong>
+            (for bank name, routing &amp; account #), and the owner's <strong>driver's license(s)</strong>
+            (for owner name, address, DOB &amp; license #). The app auto-detects whether it's the Citizens or Merrick form.
+          </p>
+          <div id="appDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload images">
+            <input id="appFileInput" type="file" accept="image/*" multiple capture="environment" hidden />
+            <div class="dropzone-inner">
+              <div class="dropzone-icon">📷</div>
+              <p class="dropzone-primary">Drag &amp; drop photos here</p>
+              <p class="dropzone-secondary">or <button type="button" id="appBrowseBtn" class="link-btn">browse / take a photo</button></p>
+              <p class="dropzone-hint">Application pages + voided check + driver's license · JPEG/PNG/WebP</p>
+            </div>
+          </div>
+          <ul id="appThumbs" class="thumb-list" aria-live="polite"></ul>
+          <div class="actions">
+            <button id="extractBtn" class="btn btn-primary" disabled>Read &amp; detect</button>
+            <button id="appClearBtn" class="btn btn-ghost hidden">Clear all</button>
+          </div>
+        </section>
+
+        <!-- Step 2: processing -->
+        <section id="appProcessing" class="card hidden">
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="appProcessingMsg" class="processing-msg">Reading the application &amp; documents…</p>
+        </section>
+
+        <!-- Step 3: review + generate -->
+        <section id="appReview" class="card hidden">
+          <div class="result-head">
+            <h2 class="step-title"><span class="step-num">2</span> Review &amp; complete</h2>
+            <div id="detectBadge" class="detect-badge"></div>
+          </div>
+          <p class="muted small">
+            Everything the AI read is below — <strong>edit any field, and fill in anything that was blank or
+            unreadable</strong> before generating. Detected document type:
+          </p>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Application form</span>
+              <select id="appTypeSelect">
+                <option value="citizens">Citizens (Priority / Citizens Bank)</option>
+                <option value="merrick">Merrick Bank</option>
+                <option value="unknown">Unknown — coversheet only</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Coversheet date</span>
+              <input id="coverDate" type="text" placeholder="MM/DD/YYYY" />
+            </label>
+          </div>
+
+          <div id="reviewForm"></div>
+
+          <div class="actions wrap generate-actions">
+            <button id="genPacketBtn" class="btn btn-primary">Download packet (coversheet + application)</button>
+            <button id="genAppBtn" class="btn btn-secondary">Application only</button>
+            <button id="genCoverBtn" class="btn btn-secondary">Coversheet only</button>
+            <button id="appRestartBtn" class="btn btn-ghost">Start over</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============ MENU MODE ============ -->
+      <div id="menuMode" class="hidden">
+        <section id="menuUpload" class="card">
+          <h2 class="step-title"><span class="step-num">1</span> Upload the menu</h2>
+          <p class="muted small">Photograph each page of the menu. The AI extracts items, prices and categories and fills the Clover inventory import template.</p>
+          <div id="menuDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload menu photos">
+            <input id="menuFileInput" type="file" accept="image/*" multiple capture="environment" hidden />
+            <div class="dropzone-inner">
+              <div class="dropzone-icon">🍽️</div>
+              <p class="dropzone-primary">Drag &amp; drop menu photos here</p>
+              <p class="dropzone-secondary">or <button type="button" id="menuBrowseBtn" class="link-btn">browse / take a photo</button></p>
+              <p class="dropzone-hint">JPEG/PNG/WebP · multiple pages OK</p>
+            </div>
+          </div>
+          <ul id="menuThumbs" class="thumb-list" aria-live="polite"></ul>
+          <div class="actions">
+            <button id="menuExtractBtn" class="btn btn-primary" disabled>Read menu</button>
+            <button id="menuClearBtn" class="btn btn-ghost hidden">Clear all</button>
+          </div>
+        </section>
+
+        <section id="menuProcessing" class="card hidden">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="processing-msg">Reading the menu…</p>
+        </section>
+
+        <section id="menuReview" class="card hidden">
+          <h2 class="step-title"><span class="step-num">2</span> Review items</h2>
+          <p class="muted small">Edit, add or remove items. Prices are numbers only. Then download the Clover-ready spreadsheet.</p>
+          <label class="field" style="max-width: 320px">
+            <span>Restaurant name (file name)</span>
+            <input id="restaurantName" type="text" placeholder="Restaurant name" />
+          </label>
+          <div class="table-wrap">
+            <table id="menuTable" class="menu-table">
+              <thead><tr><th>Name</th><th>Price</th><th>Category</th><th>Description</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="actions wrap">
+            <button id="addItemBtn" class="btn btn-ghost">+ Add item</button>
+            <button id="genXlsxBtn" class="btn btn-primary">Download Clover .xlsx</button>
+            <button id="menuRestartBtn" class="btn btn-ghost">Start over</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Documents are processed in memory and not stored. <span id="modelInfo"></span></p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

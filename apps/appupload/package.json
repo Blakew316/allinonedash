@@ -1,0 +1,26 @@
+{
+  "name": "appupload",
+  "version": "1.0.0",
+  "description": "Upload photos of a handwritten merchant application + voided check + driver's license; auto-detect the form (Citizens or Merrick), transpose the data onto the typed application, and generate a pre-filled coversheet. Also turns a menu photo into a Clover inventory import.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build:templates": "node scripts/build-templates.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.0",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "multer": "^2.2.0",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^0.1.100",
+    "pdfjs-dist": "^4.10.38",
+    "playwright-core": "^1.61.1"
+  }
+}
