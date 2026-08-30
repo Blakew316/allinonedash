@@ -640,8 +640,11 @@
       <button class="btn primary" id="genGo">Auto-generate list</button>
       <label class="gen-cap">Max reviews <input id="genMax" inputmode="numeric" value="150" autocomplete="off"></label>
     </div>
+    <div class="gen-row">
+      <label class="gen-cap gen-key">Google Places API key <input id="genKey" type="password" placeholder="AIza…" autocomplete="off"></label>
+    </div>
     <div class="gen-status" id="genStatus"></div>
-    <div class="imp-hint">Auto-generate searches this agent’s ZIP for small businesses at or under the review cap, pulls owner contact info from their websites when it’s public, and builds their full 6-day route with up to 25 merchants per day (hosted site only). Or tap a search below and paste one business per line — “owner: Name”, their cell, and email are detected and become tappable on each stop.</div>
+    <div class="imp-hint">Auto-generate searches this agent’s ZIP for small businesses at or under the review cap, pulls owner contact info from their websites when it’s public, and builds their full 6-day route with up to 25 merchants per day. Paste your Google Places API key above once — it’s saved permanently in this browser. Or tap a search below and paste one business per line — “owner: Name”, their cell, and email are detected and become tappable on each stop.</div>
     <div class="sby-row"><span class="sby-lbl">Search near</span>
       <button class="sby" id="sbyZip">75790</button>
       <button class="sby" id="sbyCity">Van, TX</button>
@@ -1801,6 +1804,9 @@ F("pRestore").addEventListener("click",()=>{
 F("sbyZip").addEventListener("click",()=>{ const ag=A(); ag.searchBy="zip"; ag.metaUp=tick(ag.metaUp); save(); updateProf(); });
 F("sbyCity").addEventListener("click",()=>{ const ag=A(); ag.searchBy="city"; ag.metaUp=tick(ag.metaUp); save(); updateProf(); });
 F("impGo").addEventListener("click",runImport);
+const PLACES_KEY="ar-places-key-v1";
+try{ F("genKey").value=localStorage.getItem(PLACES_KEY)||""; }catch(e){}
+F("genKey").addEventListener("input",()=>{ try{ localStorage.setItem(PLACES_KEY, F("genKey").value.trim()); }catch(e){} });
 let genBusy=false;
 F("genGo").addEventListener("click",async ()=>{
   if(genBusy) return;
@@ -1810,7 +1816,8 @@ F("genGo").addEventListener("click",async ()=>{
   const max=Math.max(0, parseInt(F("genMax").value,10)||150);
   btn.textContent="Searching "+zip+"…"; st.textContent="";
   try{
-    const r=await fetch("/.netlify/functions/prospect?zip="+encodeURIComponent(zip)+"&max="+max+"&limit=150", {cache:"no-store"});
+    const gk=(F("genKey").value||"").trim();
+    const r=await fetch("/.netlify/functions/prospect?zip="+encodeURIComponent(zip)+"&max="+max+"&limit=150"+(gk?"&key="+encodeURIComponent(gk):""), {cache:"no-store"});
     let data=null;
     try{ data=await r.json(); }catch(e){}
     if(!r.ok||!data) throw new Error((data&&data.hint)||(data&&data.error)||("HTTP "+r.status));
@@ -1856,7 +1863,7 @@ F("genGo").addEventListener("click",async ()=>{
           : "Raise the review cap (currently "+Math.min(max,100000)+") for fuller days."), true);
   }catch(e){
     st.textContent="";
-    toast("Auto-generate runs on the hosted site with a Google Places key — "+(e&&e.message?e.message:"unavailable here"));
+    toast((F("genKey").value.trim()?"":"Paste your Google Places API key above (saved in this browser). ")+(e&&e.message?e.message:"Auto-generate needs the hosted site."));
   }finally{
     genBusy=false;
     btn.textContent="Auto-generate list";
