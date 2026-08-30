@@ -15,7 +15,7 @@
    them separately.
    ========================================================================== */
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL = `wpi-shell-${VERSION}`;
 const VIDEO = 'wpi-video';           // unversioned on purpose — see above
 
@@ -31,11 +31,19 @@ const SHELL_ASSETS = [
   'invite.html',
   'profile.html',
   'settings.html',
+  'admin.html',
+  'learning-plans.html',
+  'pricing.html',
+  'proposal.html',
   'offline.html',
   'assets/css/app.css',
   'assets/js/app.js',
   'assets/js/data.js',
   'assets/js/media.js',
+  'assets/js/interchange.js',
+  'assets/js/pricing.js',
+  'assets/js/quote.js',
+  'assets/js/billing.js',
   'assets/img/wholesale-payments-mark.png',
   'assets/img/wholesale-payments-wordmark.png',
   'assets/img/favicon.svg',

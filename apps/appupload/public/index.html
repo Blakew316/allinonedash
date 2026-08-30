@@ -10,7 +10,7 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="brand"><span class="brand-mark">📄→🖨</span><span class="brand-name">AppUpload</span></div>
+      <div class="brand"><span class="brand-mark" style="display:inline-flex;align-items:center;gap:3px" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 7 21h10a1.5 1.5 0 0 0 1.5-1.5V7.5L14 3z"/><path d="M14 3v4.5h4.5"/><path d="M9 12.5h6M9 16h6"/></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3.5h10V8"/><path d="M7 17H4.5A1.5 1.5 0 0 1 3 15.5v-6A1.5 1.5 0 0 1 4.5 8h15A1.5 1.5 0 0 1 21 9.5v6a1.5 1.5 0 0 1-1.5 1.5H17"/><rect x="7" y="13.5" width="10" height="7" rx="1"/></svg></span><span class="brand-name">AppUpload</span></div>
       <p class="tagline">Photograph a handwritten merchant application and supporting documents — get a clean typed application, a pre-filled coversheet, and a Clover menu import.</p>
     </header>
 
@@ -35,7 +35,7 @@
           <div id="appDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload images">
             <input id="appFileInput" type="file" accept="image/*" multiple capture="environment" hidden />
             <div class="dropzone-inner">
-              <div class="dropzone-icon">📷</div>
+              <div class="dropzone-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 7.5h2.6l1.5-2.2a1.5 1.5 0 0 1 1.24-.66h4.32a1.5 1.5 0 0 1 1.24.66l1.5 2.2h2.6A1.5 1.5 0 0 1 21 9v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18V9a1.5 1.5 0 0 1 1.5-1.5z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
               <p class="dropzone-primary">Drag &amp; drop photos here</p>
               <p class="dropzone-secondary">or <button type="button" id="appBrowseBtn" class="link-btn">browse / take a photo</button></p>
               <p class="dropzone-hint">Application pages + voided check + driver's license · JPEG/PNG/WebP</p>
@@ -99,7 +99,7 @@
           <div id="menuDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload menu photos">
             <input id="menuFileInput" type="file" accept="image/*" multiple capture="environment" hidden />
             <div class="dropzone-inner">
-              <div class="dropzone-icon">🍽️</div>
+              <div class="dropzone-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V3"/><path d="M8 3v18M8 11v0"/><path d="M19 15V3a4 4 0 0 0-3 3.9V13a2 2 0 0 0 2 2h1zm0 0v6"/></svg></div>
               <p class="dropzone-primary">Drag &amp; drop menu photos here</p>
               <p class="dropzone-secondary">or <button type="button" id="menuBrowseBtn" class="link-btn">browse / take a photo</button></p>
               <p class="dropzone-hint">JPEG/PNG/WebP · multiple pages OK</p>
@@ -144,5 +144,13 @@
     </footer>
 
     <script src="app.js"></script>
-  </body>
+  <!-- wpi-hub-link -->
+<style>
+#wpiHubLink{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:7px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid rgba(0,18,94,.14);box-shadow:0 4px 16px rgba(13,20,64,.18);font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif;color:#00125e !important;text-decoration:none !important;-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);opacity:.94;transition:opacity .2s,box-shadow .2s,transform .2s}
+#wpiHubLink:hover{opacity:1;box-shadow:0 6px 22px rgba(13,20,64,.26);transform:translateY(-1px)}
+@media (max-width:760px){#wpiHubLink{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+@media print{#wpiHubLink{display:none}}
+</style>
+<a id="wpiHubLink" href="../../../index.html" aria-label="Back to the hub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00a3e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>Hub</a>
+</body>
 </html>

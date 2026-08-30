@@ -118,7 +118,7 @@ window.WPI = (function () {
     { q: "When do my points move from Pending to Available?",
       a: "Points earned on recent transactions are held as Pending while the underlying batches settle, then automatically become Available for redemption — typically after the settlement cycle completes." },
     { q: "How do reward goals work?",
-      a: "Add any catalog item as a goal and your dashboard will track your progress toward it as points accrue, so you always know how close you are to the reward you actually want." },
+      a: "Your dashboard projects your balance forward at your current earning pace and shows which catalog rewards you'll unlock in 3, 6 and 12 months, so you always know how close you are to the reward you actually want." },
   ];
 
   const fmt = new Intl.NumberFormat("en-US");

@@ -880,7 +880,7 @@ section { position: relative; }
   transition: box-shadow .3s var(--ease), transform .3s var(--ease);
 }
 .footer__rating:hover { box-shadow: var(--shadow-soft); transform: translateY(-1px); }
-.footer__stars { color: #2e8f3e; font-size: 0.95rem; letter-spacing: 1px; }
+.footer__stars { color: #2e8f3e; font-size: 0.95rem; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 3px; }
 .footer__rating-text { font-size: 0.85rem; color: var(--ink-2); }
 .footer__rating-text strong { color: var(--ink); }
 

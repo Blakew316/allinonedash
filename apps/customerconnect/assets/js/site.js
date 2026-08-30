@@ -28,6 +28,8 @@
     scrollProgress();
     backToTop();
     tocHighlight();
+    resourceSearch();
+    share();
     forms();
     parallax();
     pageExit();
@@ -488,6 +490,106 @@
     targets.forEach(function (t) { io.observe(t); });
   }
 
+  /* ------------------------------------ resource center search + filters */
+  function resourceSearch() {
+    var input = $('.search-field input');
+    if (!input) return;
+    var index = $('[data-blog-index]');
+
+    if (!index) {
+      // Article pages: send the query to the resource index.
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && input.value.trim()) {
+          location.href = 'blog.html?q=' + encodeURIComponent(input.value.trim());
+        }
+      });
+      return;
+    }
+
+    var cards = $$('.article-layout .post-card');
+    var note  = $('[data-filter-note]');
+    var catLinks = $$('.side-list a[href^="blog.html#"]');
+
+    function slug(s) {
+      return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    function apply() {
+      var term = input.value.trim().toLowerCase();
+      var cat  = location.hash.replace('#', '');
+      var shown = 0;
+      cards.forEach(function (c) {
+        var catEl  = $('.post-cat', c);
+        var okCat  = !cat || (catEl && slug(catEl.textContent) === cat);
+        var okTerm = !term || c.textContent.toLowerCase().indexOf(term) > -1;
+        var ok = okCat && okTerm;
+        c.style.display = ok ? '' : 'none';
+        if (ok) shown++;
+      });
+      catLinks.forEach(function (l) {
+        l.classList.toggle('active', !!cat && l.hash.replace('#', '') === cat);
+      });
+      if (note) note.hidden = shown > 0;
+    }
+
+    input.addEventListener('input', apply);
+    window.addEventListener('hashchange', apply);
+
+    // Tag chips act as instant search terms on the index.
+    $$('.side-tags a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+        input.value = a.textContent.trim();
+        apply();
+        input.focus();
+      });
+    });
+
+    var q = /[?&]q=([^&]+)/.exec(location.search);
+    if (q) input.value = decodeURIComponent(q[1].replace(/\+/g, ' '));
+    apply();
+  }
+
+  /* -------------------------------------------------- article share links */
+  function share() {
+    var wrap = $('.share');
+    if (!wrap) return;
+    var check = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+    $$('a', wrap).forEach(function (a) {
+      var kind = (a.getAttribute('aria-label') || '').replace(/^Share on /, '').toLowerCase();
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var u = encodeURIComponent(location.href);
+        var t = encodeURIComponent(document.title);
+        function pop(href) { window.open(href, '_blank', 'noopener,width=640,height=560'); }
+        if (kind === 'x')             pop('https://twitter.com/intent/tweet?url=' + u + '&text=' + t);
+        else if (kind === 'facebook') pop('https://www.facebook.com/sharer/sharer.php?u=' + u);
+        else if (kind === 'linkedin') pop('https://www.linkedin.com/sharing/share-offsite/?url=' + u);
+        else if (kind === 'email')    location.href = 'mailto:?subject=' + t + '&body=' + u;
+        else { // copy link
+          function done() {
+            var old = a.innerHTML;
+            a.innerHTML = check;
+            setTimeout(function () { a.innerHTML = old; }, 1400);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(location.href).then(done, done);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = location.href;
+            ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            document.body.removeChild(ta);
+            done();
+          }
+        }
+      });
+    });
+  }
+
   /* ------------------------------------------------------- form behaviour */
   function forms() {
     // Phone mask: (806) 606-6500
@@ -519,6 +621,25 @@
         }, 700);
       });
     });
+
+    // Merchant sign-in: keep credentials out of the URL and explain that the
+    // portal is not wired up on this static preview build.
+    $$('form[data-auth-form]').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+        var status = $('.form-status', form);
+        var btn = $('button[type="submit"]', form);
+        if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Signing in…'; }
+        setTimeout(function () {
+          if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || 'Sign in'; }
+          if (status) {
+            status.innerHTML = '<strong>The merchant portal isn’t connected on this preview build.</strong><br>Call or text <a href="tel:+18066066500">(806) 606-6500</a> or email <a href="mailto:support@customerconnectwp.com">support@customerconnectwp.com</a> and we’ll get you into your account.';
+            status.classList.add('show');
+          }
+        }, 800);
+      });
+    });
   }
 
   /* ------------------------------------------------------ gentle parallax */
@@ -544,6 +665,7 @@
   function pageExit() {
     if (reduced) return;
     document.addEventListener('click', function (e) {
+      if (e.defaultPrevented) return;
       var a = e.target.closest('a');
       if (!a) return;
       var href = a.getAttribute('href');

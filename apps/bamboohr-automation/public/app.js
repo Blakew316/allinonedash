@@ -912,6 +912,8 @@ $('#packet-form').addEventListener('submit', async (e) => {
 });
 
 // Tests the deployed SMTP login and reports which account it authenticates as.
+const TEST_OK_ICON = '<svg viewBox="0 0 24 24" width="1.1em" height="1.1em" style="display:inline-block;vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+const TEST_FAIL_ICON = '<svg viewBox="0 0 24 24" width="1.1em" height="1.1em" style="display:inline-block;vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>';
 $('#test-email-btn').addEventListener('click', async () => {
   const btn = $('#test-email-btn');
   const out = $('#email-test-result');
@@ -919,12 +921,12 @@ $('#test-email-btn').addEventListener('click', async () => {
   out.textContent = 'Testing…';
   try {
     const res = await api('/api/email/test', { method: 'POST', body: {} });
-    out.textContent = res.ok
-      ? `✓ Login OK — sending as ${res.user} via ${res.host}`
-      : `✗ ${res.host} rejected login as ${res.user}: ${res.error}`;
+    out.innerHTML = res.ok
+      ? `${TEST_OK_ICON}&nbsp;Login OK — sending as ${esc(res.user)} via ${esc(res.host)}`
+      : `${TEST_FAIL_ICON}&nbsp;${esc(res.host)} rejected login as ${esc(res.user)}: ${esc(res.error)}`;
     toast(res.ok ? 'Email login works' : 'Email login failed — details shown below the button', !res.ok);
   } catch (err) {
-    out.textContent = `✗ ${err.message}`;
+    out.innerHTML = `${TEST_FAIL_ICON}&nbsp;${esc(err.message)}`;
     toast(err.message, true);
   } finally {
     btn.disabled = false;
@@ -1039,7 +1041,9 @@ if (isStandalone) document.documentElement.classList.add('standalone');
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(
+    // Relative, so registration works both deployed at the site root and
+    // served under a subpath (e.g. the hub's /apps/bamboohr-automation/public/).
+    navigator.serviceWorker.register('./sw.js').then(
       (reg) => {
         // Pick up a new deploy while the app sits in the background, so it is
         // already there the next time it is opened — no surprise reloads.

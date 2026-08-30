@@ -1552,6 +1552,7 @@ table.compare td:first-child { font-weight: 500; color: var(--ink-soft); }
   transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
 }
 .side-list a:hover { background: var(--wp-50); color: var(--wp-700); transform: translateX(3px); }
+.side-list a.active { background: var(--wp-50); color: var(--wp-700); font-weight: 600; }
 .side-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .side-tags a {
   padding: 7px 13px; border-radius: var(--r-pill);

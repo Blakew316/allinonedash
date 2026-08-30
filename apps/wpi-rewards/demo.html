@@ -195,5 +195,13 @@
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>
+<!-- wpi-hub-link -->
+<style>
+#wpiHubLink{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:7px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid rgba(0,18,94,.14);box-shadow:0 4px 16px rgba(13,20,64,.18);font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif;color:#00125e !important;text-decoration:none !important;-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);opacity:.94;transition:opacity .2s,box-shadow .2s,transform .2s}
+#wpiHubLink:hover{opacity:1;box-shadow:0 6px 22px rgba(13,20,64,.26);transform:translateY(-1px)}
+@media (max-width:760px){#wpiHubLink{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+@media print{#wpiHubLink{display:none}}
+</style>
+<a id="wpiHubLink" href="../../index.html" aria-label="Back to the hub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00a3e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>Hub</a>
 </body>
 </html>

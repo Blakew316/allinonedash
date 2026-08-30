@@ -202,7 +202,7 @@
       a.download = `${currentMid}_statement_${mk}_2026.pdf`;
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
-      btn.textContent = 'Downloaded ✓';
+      btn.innerHTML = 'Downloaded <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
       setTimeout(() => { btn.textContent = label; btn.disabled = false; }, 2200);
     } catch (e) {
       btn.textContent = 'Unavailable';

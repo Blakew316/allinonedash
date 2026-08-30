@@ -191,11 +191,20 @@
     Object.keys(attrs || {}).forEach(function (k) {
       if (k === 'class') node.className = attrs[k];
       else if (k === 'text') node.textContent = attrs[k];
+      else if (k === 'html') node.innerHTML = attrs[k];
       else node.setAttribute(k, attrs[k]);
     });
     (children || []).forEach(function (c) { node.appendChild(c); });
     return node;
   }
+
+  /* Inline SF-style "X" glyph for the small remove buttons (decorative —
+   * each button carries its own aria-label). */
+  var REMOVE_ICON =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"' +
+    ' aria-hidden="true" focusable="false" style="display:block">' +
+    '<path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   function input(cls, value, placeholder) {
     var node = el('input', { type: 'text', class: cls || '', spellcheck: 'false' });
@@ -323,7 +332,7 @@
       syncAmount();
     });
     syncAmount();
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove row', 'aria-label': 'Remove ' + (catName || 'fee') + ' row', text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove row', 'aria-label': 'Remove ' + (catName || 'fee') + ' row', html: REMOVE_ICON });
     rm.addEventListener('click', function () {
       removeRow(tr, tr.closest('.fee-cat').querySelector('.fee-cat-body .btn'));
     });
@@ -360,7 +369,7 @@
       tr.appendChild(el('td', {}, [c]));
     });
     tr.appendChild(el('td', { class: 'cell-net', text: '0.00' }));
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove batch', 'aria-label': 'Remove batch', text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove batch', 'aria-label': 'Remove batch', html: REMOVE_ICON });
     rm.addEventListener('click', function () {
       removeRow(tr, $('batch-add'));
     });
@@ -423,7 +432,7 @@
       tr.appendChild(el('td', {}, [cell]));
     });
     tr.appendChild(el('td', { class: 'cell-net', text: '—' }));
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove card type', 'aria-label': 'Remove card type', text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove card type', 'aria-label': 'Remove card type', html: REMOVE_ICON });
     rm.addEventListener('click', function () { removeRow(tr, $('cardtype-add')); });
     tr.appendChild(el('td', {}, [rm]));
     return tr;
@@ -471,7 +480,7 @@
     });
     syncTotal();
 
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove fee', 'aria-label': 'Remove fee', text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove fee', 'aria-label': 'Remove fee', html: REMOVE_ICON });
     rm.addEventListener('click', function () { removeRow(tr, $('fees2-add')); });
     tr.appendChild(el('td', {}, [rm]));
     return tr;
@@ -486,7 +495,7 @@
     var amount = input('num', r.amount, '0.00');
     amount.setAttribute('aria-label', what + ' amount');
     [date, desc, amount].forEach(function (cell) { tr.appendChild(el('td', {}, [cell])); });
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove row', 'aria-label': 'Remove ' + what, text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove row', 'aria-label': 'Remove ' + what, html: REMOVE_ICON });
     rm.addEventListener('click', function () { removeRow(tr, $(addBtnId)); });
     tr.appendChild(el('td', {}, [rm]));
     return tr;
@@ -521,7 +530,7 @@
     var amount = input('num', r.amount, '0.00');
     amount.setAttribute('aria-label', what + ' amount');
     [date, desc, amount].forEach(function (cell) { tr.appendChild(el('td', {}, [cell])); });
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove row', 'aria-label': 'Remove ' + what, text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove row', 'aria-label': 'Remove ' + what, html: REMOVE_ICON });
     rm.addEventListener('click', function () { removeRow(tr, $(addBtnId)); });
     tr.appendChild(el('td', {}, [rm]));
     return tr;
@@ -536,7 +545,7 @@
     var amount = input('num', r.amount, '0.00');
     amount.setAttribute('aria-label', 'Check amount');
     [date, num, amount].forEach(function (cell) { tr.appendChild(el('td', {}, [cell])); });
-    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove check', 'aria-label': 'Remove check', text: '✕' });
+    var rm = el('button', { type: 'button', class: 'btn-icon', title: 'Remove check', 'aria-label': 'Remove check', html: REMOVE_ICON });
     rm.addEventListener('click', function () { removeRow(tr, $('bk-check-add')); });
     tr.appendChild(el('td', {}, [rm]));
     return tr;

@@ -109,7 +109,7 @@
         return;
       }
       const btn = form.querySelector('button[type="submit"]');
-      if (btn) btn.textContent = 'Request received ✓';
+      if (btn) btn.innerHTML = 'Request received <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
       if (note) note.hidden = false;
       form.reset();
     });
@@ -148,7 +148,7 @@
           return;
         }
         const btn = chatForm.querySelector('button[type="submit"]');
-        if (btn) btn.textContent = 'Message sent ✓';
+        if (btn) btn.innerHTML = 'Message sent <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
         if (chatNote) chatNote.hidden = false;
         chatForm.reset();
       });
