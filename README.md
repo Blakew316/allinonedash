@@ -1,7 +1,7 @@
 # Wholesale Payments — All-In-One Dashboard
 
 A single, self-contained dashboard (`index.html`) gathering every product built for
-Wholesale Payments — nine applications, eighty-eight screens and pages — with each
+Wholesale Payments — thirteen applications, one hundred three screens and pages — with each
 build extracted and live under `apps/`.
 
 The dashboard is themed from the official Wholesale Payments logo (`assets/logo.png`):
@@ -33,6 +33,10 @@ HTTP matters: Kloser CRM loads its datasets with `fetch`, so it won't run from `
 | WPI University | `apps/wpi-university/` | The 30-course training & certification platform, plus proposal tooling |
 | Wholesale Payments | `apps/wholesale-payments/` | The redesigned public site with an encrypted merchant portal |
 | Customer Connect | `apps/customerconnect/` | The 43-page Customer Connect marketing site, zero dependencies |
+| Integration Atlas | `apps/integrations/` | Searchable directory of 624 processing-compatible software brands |
+| Sales Questionnaire | `apps/sales-questionnaire/` | Scored sales-hiring assessment sent to candidates, results emailed to managers |
+| Hiring HQ | `apps/bamboohr-automation/` | BambooHR hiring pipeline + onboarding automation (needs its Node server: `npm install && npm start`) |
+| WPI Rewards | `apps/wpi-rewards/` | Merchant rewards portal — points, catalog, cart and orders |
 
 Each `apps/` directory is the extracted build of the matching `*.zip` archive kept at
 the repo root; the archives are the originals and remain untouched.

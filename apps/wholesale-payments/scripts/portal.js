@@ -34,7 +34,7 @@
 
   const DATA_DIR = 'assets/portal-data';
   const STMT_DIR = 'assets/portal-statements';
-  // SHA-256 of "wholesaleadmin:Tatman!316" (username lower-cased)
+  // SHA-256 of "<username>:<password>" (username lower-cased)
   const ADMIN_HASH = 'bfed70cb7e987334fcc5df68b147f85474a0a9f60788b00c2dc3d128709106a3';
   const MONTH_LABEL = { May: 'May 2026', Jun: 'June 2026', Jul: 'July 2026' };
 

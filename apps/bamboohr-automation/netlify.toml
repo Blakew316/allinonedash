@@ -1,0 +1,39 @@
+[build]
+  publish = "public"
+
+[functions]
+  # nft preserves real file paths (no bundling), which keeps pdfkit's font
+  # data files loadable at runtime.
+  node_bundler = "nft"
+  included_files = [
+    "templates/**",
+    "assets/**",
+    # The company PDFs are read at runtime to build the completed paperwork.
+    "public/documents/**",
+    "node_modules/pdfkit/js/data/*.afm",
+    "node_modules/unpdf/**",
+    # Never ship a local dev data file, even if one exists at build time.
+    "!.data/**",
+  ]
+
+# /api/* routing is declared in-code by the function (netlify/functions/api.mjs
+# exports config.path), so no redirect rule is needed for the API.
+
+# Pretty URL for the new-hire paperwork portal.
+[[redirects]]
+  from = "/paperwork"
+  to = "/paperwork.html"
+  status = 200
+
+# The service worker must be revalidated on every load, or a new deploy sits
+# behind the cached copy of the old one.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=3600"

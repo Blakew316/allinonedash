@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>My Profile — WPI Rewards</title>
+  <meta name="description" content="Review and update your personal details, shipping address and password.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='5' y='13' width='9' height='40' rx='4.5' fill='%231e88f7'/%3E%3Crect x='19' y='5' width='19' height='54' rx='6' fill='%2317b060'/%3E%3Crect x='19' y='5' width='19' height='19' rx='6' fill='%232196f3'/%3E%3Crect x='43' y='17' width='9' height='40' rx='4.5' fill='%2335d07a'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WPI Rewards">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=2">
+  <script>(function () {
+    try {
+      var t = localStorage.getItem("wpi-theme");
+      if (t !== "dark" && t !== "light") {
+        t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
+  })();</script>
+  <link rel="preconnect" href="https://tuzo-django-store.s3.amazonaws.com" crossorigin>
+  <link rel="preconnect" href="https://wpirewards.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="profile">
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <svg class="brand__logo" viewBox="0 0 26 30" fill="none" aria-hidden="true"><defs><linearGradient id="lgGh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14a45a"/><stop offset="1" stop-color="#2ec973"/></linearGradient><clipPath id="lgCh"><rect x="6.8" y="0.8" width="10.6" height="28.4" rx="2.8"/></clipPath></defs><rect x="0.6" y="3.6" width="3.8" height="20" rx="1.9" fill="#1e88f7"/><g clip-path="url(#lgCh)"><rect x="6.8" y="0.8" width="10.6" height="7.4" fill="#2196f3"/><rect x="6.8" y="8.2" width="10.6" height="14.6" fill="url(#lgGh)"/><rect x="6.8" y="22.8" width="10.6" height="6.4" fill="#8ce6a1"/></g><rect x="19.8" y="8" width="3.8" height="20" rx="1.9" fill="#35d07a"/></svg>
+        <span class="brand__word"><b>wholesale</b><span>payments</span></span>
+        <span class="brand__divider" aria-hidden="true"></span>
+        <span class="brand__product">Rewards</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="index.html">Dashboard</a>
+        <a class="nav__link" href="rewards.html">Rewards</a>
+        <a class="nav__link" href="earnings.html">Earnings</a>
+        <a class="nav__link" href="orders.html">Orders</a>
+      </div>
+      <div class="nav__actions">
+        <a class="points-chip" href="earnings.html" data-points-chip title="Available points"></a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+          <svg class="tt-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6z"/></svg>
+          <svg class="tt-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/></svg>
+        </button>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M3 3h2.4l2.2 11.2a1.6 1.6 0 0 0 1.6 1.3h7.9a1.6 1.6 0 0 0 1.6-1.3L20.5 7H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cart-badge" data-cart-badge aria-hidden="true"></span>
+        </a>
+        <button class="account-btn" data-account-btn aria-expanded="false" aria-haspopup="true" aria-label="Account menu">
+          <span class="avatar">CH</span>
+          <span class="account-btn__caret" aria-hidden="true"></span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="account-menu" data-account-menu>
+      <div class="account-menu__head">
+        <b>Colony House Liquor</b>
+        <span>Merchant Admin · MID 554402059848457</span>
+      </div>
+      <a href="profile.html"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4.8 20.2a7.2 7.2 0 0 1 14.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>My Profile</a>
+      <a href="orders.html"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.8h12v18l-2.4-1.6-2.4 1.6-1.2-.9-1.2.9-2.4-1.6L6 20.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8h6M9 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Order History</a>
+      <a href="mailto:support@wholesalepayments.com"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m3.6 6.6 8.4 6.6 8.4-6.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Contact Support</a>
+      <a href="index.html"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h-8v16h8M10 12h11M18 8.5 21.5 12 18 15.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Sign Out</a>
+    </div>
+  </header>
+
+  <div class="menu" id="mobile-menu">
+    <a class="menu__link" style="--i:0" href="index.html">Dashboard</a>
+    <a class="menu__link" style="--i:1" href="rewards.html">Rewards Catalog</a>
+    <a class="menu__link" style="--i:2" href="earnings.html">Earnings</a>
+    <a class="menu__link" style="--i:3" href="orders.html">Order History</a>
+    <a class="menu__link" style="--i:4" href="cart.html">Cart</a>
+    <a class="menu__link" style="--i:5" href="profile.html">My Profile</a>
+  </div>
+
+  <main id="main">
+
+    <div class="container page container--narrow">
+      <div class="page-head" data-reveal>
+        <div>
+          <p class="eyebrow">Account</p>
+          <h1 class="h1" style="margin-top:8px">My Profile</h1>
+          <p class="lead" style="margin-top:10px">Review and update your personal details.</p>
+        </div>
+      </div>
+
+      <form class="card form" data-save-form="Profile updated" data-reveal>
+        <h2 class="h3">General Info</h2>
+        <div class="form__row">
+          <div class="field"><label for="p-first">First name</label><input class="input" id="p-first" type="text" value="Max" autocomplete="given-name"></div>
+          <div class="field"><label for="p-last">Last name</label><input class="input" id="p-last" type="text" value="A." autocomplete="family-name"></div>
+        </div>
+        <div class="form__row">
+          <div class="field"><label for="p-phone">Phone</label><input class="input" id="p-phone" type="tel" value="(555) 013-2400" autocomplete="tel"></div>
+          <div class="field"><label for="p-phone2">Secondary phone</label><input class="input" id="p-phone2" type="tel" placeholder="Optional"></div>
+        </div>
+        <div class="field"><label for="p-email">Email</label><input class="input" id="p-email" type="email" value="owner@colonyhouseliquor.example" autocomplete="email"></div>
+
+        <h2 class="h3" style="margin-top:14px">Shipping Information</h2>
+        <div class="field"><label for="p-addr1">Address line 1</label><input class="input" id="p-addr1" type="text" value="1200 Sample Street" autocomplete="address-line1"></div>
+        <div class="field"><label for="p-addr2">Address line 2</label><input class="input" id="p-addr2" type="text" placeholder="Optional" autocomplete="address-line2"></div>
+        <div class="form__row">
+          <div class="field"><label for="p-city">City</label><input class="input" id="p-city" type="text" value="Malibu" autocomplete="address-level2"></div>
+          <div class="field"><label for="p-state">State</label>
+            <select class="input" id="p-state" autocomplete="address-level1">
+              <option>CA</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+            </select>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field"><label for="p-zip">ZIP code</label><input class="input" id="p-zip" type="text" value="90265" autocomplete="postal-code"></div>
+        </div>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn btn--primary" type="submit">Save Changes</button>
+          <button class="btn btn--ghost" type="reset">Discard</button>
+        </div>
+      </form>
+
+      <form class="card form section-gap" data-save-form="Password updated" data-reveal>
+        <h2 class="h3">Change Your Password</h2>
+        <div class="form__row">
+          <div class="field"><label for="p-pass1">New password</label><input class="input" id="p-pass1" type="password" autocomplete="new-password"></div>
+          <div class="field"><label for="p-pass2">Confirm new password</label><input class="input" id="p-pass2" type="password" autocomplete="new-password"></div>
+        </div>
+        <div class="btn-row" style="margin-top:4px">
+          <button class="btn btn--dark" type="submit">Save Password</button>
+        </div>
+      </form>
+
+      <section class="card section-gap" data-reveal aria-labelledby="acct-title">
+        <h2 class="h3" id="acct-title" style="margin-bottom:10px">Account</h2>
+        <div class="meta-list">
+          <div><span>Business</span><b>Colony House Liquor</b></div>
+          <div><span>Merchant ID</span><b class="tabular">554402059848457</b></div>
+          <div><span>Account type</span><b>Merchant Admin</b></div>
+          <div><span>Account status</span><b><span class="pill-status pill-status--ok">Active</span></b></div>
+          <div><span>Date joined</span><b>February 25, 2026</b></div>
+          <div><span>Last login</span><b>August 15, 2026</b></div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__logo" viewBox="0 0 26 30" fill="none" aria-hidden="true"><defs><linearGradient id="lgGf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14a45a"/><stop offset="1" stop-color="#2ec973"/></linearGradient><clipPath id="lgCf"><rect x="6.8" y="0.8" width="10.6" height="28.4" rx="2.8"/></clipPath></defs><rect x="0.6" y="3.6" width="3.8" height="20" rx="1.9" fill="#1e88f7"/><g clip-path="url(#lgCf)"><rect x="6.8" y="0.8" width="10.6" height="7.4" fill="#2196f3"/><rect x="6.8" y="8.2" width="10.6" height="14.6" fill="url(#lgGf)"/><rect x="6.8" y="22.8" width="10.6" height="6.4" fill="#8ce6a1"/></g><rect x="19.8" y="8" width="3.8" height="20" rx="1.9" fill="#35d07a"/></svg>
+            <span class="brand__word"><b>wholesale</b><span>payments</span></span>
+            <span class="brand__divider" aria-hidden="true"></span>
+            <span class="brand__product">Rewards</span>
+          </a>
+          <p class="footer__blurb">It's time for merchants to earn rewards. Points on every transaction you process, redeemable for the things you actually want.</p>
+          <p class="footer__powered">Powered by <b>WHOLESALE PAYMENTS</b></p>
+        </div>
+        <div>
+          <p class="footer__title">Portal</p>
+          <div class="footer__links">
+            <a href="index.html">Dashboard</a>
+            <a href="rewards.html">Rewards Catalog</a>
+            <a href="earnings.html">Earnings Summary</a>
+            <a href="orders.html">Order History</a>
+            <a href="demo.html">How It Works — Demo</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer__title">Support</p>
+          <div class="footer__links">
+            <a href="mailto:support@wholesalepayments.com">support@wholesalepayments.com</a>
+            <a href="tel:+18066980625">(806)-698-0625</a>
+            <a href="mailto:support@wholesalepayments.com">Contact Us</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer__title">Legal</p>
+          <div class="footer__links">
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Wholesale Payments. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="https://www.facebook.com/wholesalepaymentscorporate/" aria-label="Facebook" rel="noopener" target="_blank"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.2 0-1-.1-1.9-.1-1.9 0-3.5 1.2-3.5 3.9V11H8.5v3H11v7z"/></svg></a>
+          <a href="https://www.linkedin.com/company/wholesalepayments/posts/?feedView=all" aria-label="LinkedIn" rel="noopener" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.9 3.5a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM3.3 8.8h3.2V21H3.3zM9 8.8h3.1v1.7h.1c.4-.8 1.5-1.9 3.2-1.9 3.4 0 4 2.2 4 5.2V21h-3.2v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
+          <a href="https://www.instagram.com/wholesale.payments/" aria-label="Instagram" rel="noopener" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

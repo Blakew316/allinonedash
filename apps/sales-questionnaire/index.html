@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sales Talent Questionnaire · Wholesale Payments</title>
+  <meta name="description" content="A 10-question sales talent assessment used in the Wholesale Payments hiring process." />
+  <meta name="theme-color" content="#f6fafd" />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="WPI TEST" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="bg-wash" aria-hidden="true">
+    <div class="blob blob-blue"></div>
+    <div class="blob blob-green"></div>
+  </div>
+
+  <header class="app-header">
+    <img src="assets/logo.png" alt="Wholesale Payments" class="brand-logo" />
+    <button id="install-btn" class="install-btn" hidden>
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Install app
+    </button>
+  </header>
+
+  <main class="stage" id="stage">
+
+    <!-- ============ MANAGER DASHBOARD ============ -->
+    <section class="screen is-active" id="screen-dashboard" data-screen="dashboard">
+      <div class="dash-titlebar">
+        <div>
+          <h1 class="dash-title">Hiring Dashboard</h1>
+          <p class="dash-subtitle">Add new hires, send them the questionnaire, and results arrive in your inbox.</p>
+        </div>
+        <a class="btn btn-ghost btn-compact" id="btn-preview" href="assessment.html" target="_blank" rel="noopener">
+          Preview assessment
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <p class="section-label">Results delivery</p>
+      <div class="panel">
+        <div class="settings-row">
+          <div class="squircle sq-blue">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="settings-info">
+            <label for="team-select" class="settings-title">Your team</label>
+            <p class="settings-sub">Choose your team and your email fills in automatically. Every completed assessment is scored and sent there &mdash; agents never see their results.</p>
+          </div>
+        </div>
+        <div class="settings-input-row select-row">
+          <select id="team-select" class="apple-input apple-select" aria-label="Choose your team">
+            <option value="" disabled selected>Choose your team&hellip;</option>
+          </select>
+          <span class="select-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 9 12 4 17 9"/><polyline points="7 15 12 20 17 15"/></svg>
+          </span>
+        </div>
+        <div class="settings-input-row">
+          <input type="email" id="manager-email" class="apple-input" placeholder="manager@wholesalepayments.com" autocomplete="email" />
+          <span class="save-check" id="manager-email-check" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <p class="section-label">Add candidates</p>
+      <div class="panel">
+        <div class="action-tiles">
+          <button class="tile" id="tile-upload" aria-label="Upload a resume PDF — name, email and phone are read automatically">
+            <span class="squircle sq-blue">
+              <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+            </span>
+            <span class="tile-text">
+              <span class="tile-title">Upload Résumé</span>
+              <span class="tile-sub">Drop a PDF — details are read automatically</span>
+            </span>
+          </button>
+          <button class="tile" id="tile-add" aria-label="Add a new hire manually">
+            <span class="squircle sq-green">
+              <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+            <span class="tile-text">
+              <span class="tile-title">Add Manually</span>
+              <span class="tile-sub">Type a name, email &amp; phone</span>
+            </span>
+          </button>
+        </div>
+        <p class="panel-status" id="upload-status" role="status"></p>
+      </div>
+      <input type="file" id="resume-input" accept="application/pdf,.pdf" hidden />
+
+      <div class="section-label-row">
+        <p class="section-label">Candidates <span class="count-badge" id="cand-count" hidden></span></p>
+      </div>
+      <div class="panel panel-flush">
+        <div class="list" id="roster-list"></div>
+        <div class="list-empty" id="roster-empty">
+          <div class="squircle sq-gray">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+          </div>
+          <p class="list-empty-title">No candidates yet</p>
+          <p class="list-empty-sub">Upload a résumé or add a new hire to get started.</p>
+        </div>
+      </div>
+
+      <div class="sendbar" id="sendbar" hidden>
+        <button class="btn btn-primary btn-wide" id="btn-send-all">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span id="btn-send-all-label">Send questionnaire</span>
+        </button>
+        <p class="sendbar-note" id="sendbar-note"></p>
+      </div>
+
+      <div class="section-label-row">
+        <p class="section-label">Reports <span class="count-badge" id="report-count" hidden></span></p>
+      </div>
+      <div class="panel panel-flush">
+        <div class="list" id="report-list"></div>
+        <div class="list-empty" id="report-empty">
+          <div class="squircle sq-gray">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          </div>
+          <p class="list-empty-title">No reports yet</p>
+          <p class="list-empty-sub">When a new hire completes the questionnaire, their score and time appear here &mdash; remote completions also arrive in your email.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <span>Wholesale Payments &middot; Sales Hiring Assessment</span>
+    <span id="offline-note" class="offline-note" hidden>Offline &mdash; answers are saved on this device</span>
+  </footer>
+
+  <!-- ============ ADD / EDIT CANDIDATE SHEET ============ -->
+  <div class="sheet-backdrop" id="sheet-backdrop" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <div class="sheet-grabber" aria-hidden="true"></div>
+      <h3 id="sheet-title">New hire</h3>
+      <p class="sheet-sub" id="sheet-sub">Enter the candidate's contact details.</p>
+      <form id="sheet-form" novalidate>
+        <div class="field">
+          <label for="sheet-name">Full name</label>
+          <input type="text" id="sheet-name" autocomplete="off" placeholder="e.g. Jordan Rivers" required />
+          <small class="field-error" id="sheet-err-name">Please enter a name.</small>
+        </div>
+        <div class="field">
+          <label for="sheet-email">Email address</label>
+          <input type="email" id="sheet-email" autocomplete="off" placeholder="e.g. jordan@email.com" required />
+          <small class="field-error" id="sheet-err-email">Please enter a valid email address.</small>
+        </div>
+        <div class="field">
+          <label for="sheet-phone">Phone number <span class="optional">(optional)</span></label>
+          <input type="tel" id="sheet-phone" autocomplete="off" placeholder="e.g. (806) 555-0142" />
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-ghost" id="sheet-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="sheet-save">Save candidate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <script src="vendor/pdfjs/pdf.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/email.js"></script>
+  <script src="js/resume.js"></script>
+  <script src="js/roster.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>
