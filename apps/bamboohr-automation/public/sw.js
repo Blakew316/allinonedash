@@ -6,7 +6,7 @@
 // shell (HTML, CSS, JS, icons) is cached, which is what makes the app open
 // instantly from the home screen and survive a dropped signal.
 
-const VERSION = 'v3';
+const VERSION = 'v4';
 const SHELL_CACHE = `wp-shell-${VERSION}`;
 
 // Enough to open and run the app offline. Relative to this script, so the

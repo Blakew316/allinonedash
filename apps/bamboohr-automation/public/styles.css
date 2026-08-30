@@ -131,7 +131,8 @@ main { padding: 26px 20px 64px; }
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-top: 34px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 .page-head h1 { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.015em; color: var(--navy); }

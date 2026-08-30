@@ -96,55 +96,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .nav-logo{display:flex;align-items:center;flex-shrink:0}
 .nav-logo img{height:30px;width:auto}
-.nav-links{display:flex;gap:6px;margin-left:auto}
-.nav-links a{
-  font-size:14px;font-weight:500;color:var(--body);
-  padding:7px 13px;border-radius:99px;
-  transition:background .25s var(--ease),color .25s var(--ease);
-}
-.nav-links a:hover{background:var(--tint-navy);color:var(--ink)}
-.nav-chip{
-  flex-shrink:0;display:inline-flex;align-items:center;gap:7px;
-  font-size:12.5px;font-weight:600;color:var(--navy);
-  border:1px solid var(--hairline);border-radius:99px;padding:6px 13px;
-  background:var(--surface);
-}
-.nav-chip .pulse{
-  width:7px;height:7px;border-radius:50%;background:var(--green);
-  box-shadow:0 0 0 0 rgba(0,199,118,.45);
-  animation:pulse 2.4s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(0,199,118,.45)}
-  70%{box-shadow:0 0 0 7px rgba(0,199,118,0)}
-  100%{box-shadow:0 0 0 0 rgba(0,199,118,0)}
-}
-.nav-burger{
-  display:none;flex-direction:column;justify-content:center;gap:4px;
-  width:40px;height:40px;border-radius:11px;border:1px solid var(--hairline);
-  background:var(--surface);cursor:pointer;align-items:center;flex-shrink:0;
-}
-.nav-burger span{display:block;width:17px;height:2px;border-radius:2px;background:var(--navy);
-  transition:transform .3s var(--ease),opacity .3s var(--ease)}
-.nav.menu-open .nav-burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.nav.menu-open .nav-burger span:nth-child(2){opacity:0}
-.nav.menu-open .nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-@media (max-width:820px){
-  .nav-links{display:none}
-  .nav-burger{display:flex}
-  .nav.menu-open .nav-links{
-    display:flex;flex-direction:column;gap:2px;
-    position:absolute;top:100%;left:0;right:0;margin:0;
-    padding:10px 20px 16px;
-    background:rgba(250,251,253,.97);
-    -webkit-backdrop-filter:saturate(180%) blur(18px);
-    backdrop-filter:saturate(180%) blur(18px);
-    border-bottom:1px solid var(--hairline);
-    box-shadow:0 16px 32px rgba(13,20,64,.08);
-  }
-  .nav.menu-open .nav-links a{padding:12px 14px;font-size:15px}
-}
-@media (max-width:480px){.nav-chip{display:none}}
 
 /* ---------------- tickers ---------------- */
 .ticker{
@@ -158,7 +109,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .ticker-track{
   display:flex;width:max-content;
-  animation:ticker 150s linear infinite;
+  animation:ticker 120s linear infinite;
 }
 .ticker--stats .ticker-track{animation:ticker 120s linear infinite}
 .ticker:hover .ticker-track{animation-play-state:paused}
@@ -227,51 +178,17 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   background:radial-gradient(circle,rgba(0,163,230,.10),transparent 65%)}
 .hub-bg::after{width:560px;height:560px;bottom:-320px;left:-180px;
   background:radial-gradient(circle,rgba(0,199,118,.09),transparent 65%)}
-.hub-head{position:relative;text-align:center;max-width:1120px;margin:0 auto 48px}
-.hub-greeting{font-size:clamp(17px,2.2vw,23px);font-weight:650;color:var(--navy);margin-bottom:14px;letter-spacing:-.01em}
+.hub-head{position:relative;text-align:center;max-width:none;margin:0 auto 52px}
+.hub-head p.hub-greeting{font-size:clamp(48px,8.2vw,108px);font-weight:750;color:var(--ink);margin:0 0 14px;letter-spacing:-.038em;line-height:1.02}
 .hub-head h1{
-  font-size:clamp(46px,7.5vw,96px);font-weight:750;letter-spacing:-.035em;
-  line-height:1.02;margin-bottom:18px;
+  font-size:clamp(27px,4.2vw,54px);font-weight:750;letter-spacing:-.03em;
+  line-height:1.06;margin-bottom:6px;
 }
 .hub-head h1 .accent{
   background:linear-gradient(92deg,var(--blue),var(--green) 70%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hub-head p{font-size:17px;color:var(--muted)}
-
-.hub-controls{
-  position:relative;display:flex;flex-direction:column;gap:16px;align-items:center;
-  margin-bottom:40px;
-}
-.hub-search{
-  width:min(460px,100%);position:relative;
-}
-.hub-search svg{
-  position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  width:17px;height:17px;color:var(--faint);pointer-events:none;
-}
-.hub-search input{
-  width:100%;height:50px;border-radius:99px;border:1px solid var(--hairline);
-  background:var(--surface);box-shadow:var(--shadow-sm);
-  padding:0 44px 0 44px;font-family:inherit;font-size:15px;color:var(--ink);
-  transition:box-shadow .3s var(--ease),border-color .3s var(--ease);
-}
-.hub-search input::placeholder{color:var(--faint)}
-.hub-search input:focus{outline:none;border-color:rgba(0,163,230,.45);box-shadow:0 0 0 4px rgba(0,163,230,.1),var(--shadow-md)}
-.hub-search kbd{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  font-family:inherit;font-size:11px;font-weight:650;color:var(--faint);
-  border:1px solid var(--hairline);border-radius:6px;padding:2px 7px;background:var(--bg);
-}
-.hub-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.filter-chip{
-  font-family:inherit;font-size:13px;font-weight:600;color:var(--body);
-  border:1px solid var(--hairline);border-radius:99px;padding:7px 16px;
-  background:var(--surface);cursor:pointer;
-  transition:all .25s var(--ease);
-}
-.filter-chip:hover{border-color:rgba(0,163,230,.4);color:var(--ink)}
-.filter-chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
 
 .launch-grid{
   position:relative;
@@ -286,7 +203,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease),opacity .3s var(--ease);
 }
 .launch:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(0,163,230,.3)}
-.launch.hidden{display:none}
 .launch-ic{width:58px;height:58px;border-radius:16px}
 .launch-ic svg{width:36px;height:36px}
 .launch-txt{min-width:0}
@@ -300,74 +216,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .launch-open svg{width:15px;height:15px}
 .launch:hover .launch-open{transform:translateX(3px);background:rgba(0,163,230,.16)}
-.launch-empty{
-  display:none;text-align:center;color:var(--muted);font-size:14.5px;
-  padding:36px 0 8px;
-}
-.launch-empty.show{display:block}
-
-/* ---------------- quick reference rows ---------------- */
-.qr-list{display:flex;flex-direction:column;gap:14px}
-.qr{
-  background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
-  box-shadow:var(--shadow-sm);overflow:hidden;
-  transition:box-shadow .35s var(--ease),border-color .35s var(--ease);
-}
-.qr:hover{box-shadow:var(--shadow-md);border-color:rgba(0,163,230,.22)}
-.qr-row{
-  display:flex;align-items:center;gap:16px;padding:16px 20px;
-}
-.qr-ic{width:44px;height:44px;border-radius:12px}
-.qr-ic svg{width:27px;height:27px}
-.qr-txt{min-width:0;flex:1}
-.qr-txt b{display:block;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
-.qr-meta{font-size:12px;color:var(--faint);font-weight:500;flex-shrink:0;white-space:nowrap}
-.qr-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.qr-open{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:13.5px;font-weight:650;color:#fff;background:var(--navy);
-  border-radius:99px;padding:8px 17px;
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
-  box-shadow:0 4px 12px rgba(0,18,94,.18);
-}
-.qr-open:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,18,94,.24)}
-.qr details{border-top:1px solid var(--hairline-soft)}
-.qr summary{
-  list-style:none;cursor:pointer;
-  display:flex;align-items:center;gap:8px;
-  padding:11px 20px;font-size:12.5px;font-weight:650;color:var(--blue);
-  transition:background .25s var(--ease);
-  -webkit-user-select:none;user-select:none;
-}
-.qr summary::-webkit-details-marker{display:none}
-.qr summary:hover{background:var(--tint-blue)}
-.qr summary .chev{transition:transform .3s var(--ease);width:12px;height:12px}
-.qr details[open] summary .chev{transform:rotate(90deg)}
-.qr-feats{
-  display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;
-  padding:6px 20px 18px;
-}
-@media (max-width:720px){
-  .qr-feats{grid-template-columns:1fr}
-  .qr-meta{display:none}
-}
-.qr-feats li{
-  position:relative;padding-left:22px;font-size:13px;color:var(--body);line-height:1.55;
-}
-.qr-feats li::before{
-  content:"";position:absolute;left:0;top:5px;width:13px;height:13px;border-radius:50%;
-  background:var(--tint-green);
-}
-.qr-feats li::after{
-  content:"";position:absolute;left:3.5px;top:8.5px;width:6px;height:3.5px;
-  border-left:1.6px solid var(--green);border-bottom:1.6px solid var(--green);
-  transform:rotate(-45deg);
-}
-.qr-note{font-size:12px;color:var(--muted);padding:0 20px 16px;line-height:1.55}
-.qr-note code{
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;
-  background:var(--tint-navy);border-radius:5px;padding:1.5px 6px;color:var(--navy);
-}
 
 /* ---------------- footer ---------------- */
 .footer{border-top:1px solid var(--hairline-soft);background:var(--surface)}
@@ -413,14 +261,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <a class="nav-logo" href="#top" aria-label="Wholesale Payments — home">
       <img src="assets/logo.png" alt="Wholesale Payments" width="877" height="218">
     </a>
-    <div class="nav-links" id="navLinks">
-      <a href="#launchpad">Launchpad</a>
-      <a href="#reference">Quick Reference</a>
-    </div>
-    <span class="nav-chip"><span class="pulse" aria-hidden="true"></span>13 apps · all systems go</span>
-    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 
@@ -477,23 +317,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <div class="hub-head reveal">
       <p class="hub-greeting" id="hubGreeting">Welcome back</p>
       <h1>Every tool. <span class="accent">One place.</span></h1>
-    </div>
-
-    <div class="hub-controls reveal" style="transition-delay:.08s">
-      <div class="hub-search">
-        <svg aria-hidden="true"><use href="#i-search"/></svg>
-        <input type="search" id="hubSearch" placeholder="Search apps &amp; sites…" aria-label="Search apps and sites" autocomplete="off">
-        <kbd>/</kbd>
-      </div>
-      <div class="hub-filters" role="group" aria-label="Filter by category">
-        <button class="filter-chip active" data-filter="all">All</button>
-        <button class="filter-chip" data-filter="sales">Sales</button>
-        <button class="filter-chip" data-filter="field">Field</button>
-        <button class="filter-chip" data-filter="finance">Finance</button>
-        <button class="filter-chip" data-filter="training">Training</button>
-        <button class="filter-chip" data-filter="hr">HR</button>
-        <button class="filter-chip" data-filter="sites">Sites</button>
-      </div>
     </div>
 
     <div class="launch-grid" id="launchGrid">
@@ -563,7 +386,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
     </div>
-    <p class="launch-empty" id="launchEmpty">No matches — try a different search.</p>
   </div>
 </header>
 
@@ -609,310 +431,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   </div>
 </div>
 
-<!-- ================= QUICK REFERENCE ================= -->
-<section class="section" id="reference">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Quick Reference</p>
-      <h2>Need the details?</h2>
-    </div>
-
-    <div class="qr-list">
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span>
-          <span class="qr-txt"><b>Kloser CRM</b></span>
-          <span class="qr-meta">15 screens</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/kloser/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Full-bleed territory map with Area Search, Biz Search, drag-to-select lassoing and clustered pins — Google Maps with a key, or the built-in tile map offline</li>
-            <li>Installable iOS PWA that cold-launches with zero network, with a Home Screen badge for overdue items</li>
-            <li>Cmd+K command palette across every page, 200 leads, 925 reps and every activity</li>
-            <li>Lead list with filters, sort, bulk actions, CSV export and a detail drawer</li>
-            <li>Ten-column pipeline board, KPIs, conversion funnel and rep leaderboard</li>
-            <li>Route builder with stop progress and field sessions</li>
-            <li>Rep Schedule month calendar plus the weekly availability matrix</li>
-            <li>GPS location-verification report with flagged reps</li>
-            <li>Google Calendar + Gmail connect (optional)</li>
-            <li>Notification center driven by the data — overdue, untouched, QA-waiting</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span>
-          <span class="qr-txt"><b>Maverick Dashboard</b></span>
-          <span class="qr-meta">4 tabs</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/team-maverick/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Monthly rep rankings with deals, volume and processing ratio, plus momentum vs last month</li>
-            <li>Merchant health tiers (White/Green/Yellow/Red) with a nonprocessing watchlist</li>
-            <li>Searchable all-merchants table with inline and bulk edit, backed by Supabase</li>
-            <li>Pended deals tracker with underwriter comments</li>
-            <li>Recruiting pipeline synced from BambooHR, with training and paperwork boards</li>
-            <li>RingCentral call-transfer log and GMASS email-reply tracking</li>
-            <li>Google Sheet transfer sync with per-row notes</li>
-            <li>Click-to-call, click-to-text and mailto on every contact</li>
-            <li>Daily GitHub Actions data sync and automated stop-processing email alerts</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-q-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>
-          <span class="qr-txt"><b>Maverick Appointments</b></span>
-          <span class="qr-meta">4 views</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/maverick-appointments/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Day, Week, Month and Schedule views with keyboard shortcuts</li>
-            <li>Gold payout events stamped automatically at $1,000 and $5,000 merchant volume</li>
-            <li>Live itinerary ticker, clickable through to event details</li>
-            <li>18 color-coded agent calendars, toggleable like Google Calendar</li>
-            <li>Time-grid views with a live now-line and overlap layout</li>
-            <li>Search across every appointment</li>
-            <li>Google Apps Script sync with automatic fallback and 5-minute refresh</li>
-            <li>Installable PWA with offline shell and cached data</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span>
-          <span class="qr-txt"><b>AppUpload</b></span>
-          <span class="qr-meta">12 forms</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/appupload/public/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Auto-detects Citizens, Merrick, FD North and PB&amp;T applications with confidence scoring</li>
-            <li>Claude vision reads the handwriting, the license and the voided check — photos or full PDFs</li>
-            <li>Fills all 12 forms: applications, coversheet, purchase order, Clover addendum, bank change, change request, Hemp &amp; CBD, CBD amendment and gift card setup</li>
-            <li>Multi-select any document combination into one merged, DBA-named packet PDF</li>
-            <li>Sales-rep picker, manual form chooser and merchant directory lookup</li>
-            <li>Sign-now signature pad stamped onto every signature line</li>
-            <li>Menu → Clover: photograph a menu, download the filled inventory spreadsheet</li>
-            <li>Past uploads &amp; downloads history with search, rep filter, reopen and re-download</li>
-            <li>API key, rep roster and history saved permanently in this browser</li>
-          </ul>
-          <p class="qr-note">Runs entirely inside this dashboard — add an Anthropic API key once in its Settings (saved permanently in this browser) or flip on demo mode.</p>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-q-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span>
-          <span class="qr-txt"><b>WPI Route</b></span>
-          <span class="qr-meta">1-file app</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/agentroute/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Auto-generates 6 days × up to 25 stops from Google Places, filtered to small businesses</li>
-            <li>Team accounts with a 6-character join code and per-team security</li>
-            <li>Live team-activity ticker over Postgres realtime</li>
-            <li>Stop cards with tap-to-call, tap-to-navigate and owner contacts</li>
-            <li>One-tap notes that time-stamp and advance the route</li>
-            <li>Copyable day reports and a PDF export of all six days</li>
-            <li>Paste-import of your own prospect list</li>
-            <li>Installable iOS PWA with offline shell and light/dark icons</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span>
-          <span class="qr-txt"><b>Statement Studio</b></span>
-          <span class="qr-meta">5 engines</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/statement-generator/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Voided Check, Card Processing Statement, Bank Statement, Bank Letter and Billing Statement styles</li>
-            <li>Live PDF preview that regenerates as you type</li>
-            <li>Import an existing statement PDF and auto-fill every field</li>
-            <li>Pixel-accurate layouts, down to the print-house barcodes and marks</li>
-            <li>Upload a logo or check image to lift branding onto the output</li>
-            <li>Fee lines auto-calculate with totals, tax and amount due</li>
-            <li>Form autosaves locally; everything stays on the device</li>
-            <li>Works offline as an installable PWA</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span>
-          <span class="qr-txt"><b>WPI University</b></span>
-          <span class="qr-meta">15 pages</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/wpi-university/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Four training tracks with search, filters and sort</li>
-            <li>Lesson player with resume, auto-complete and saved playback speed</li>
-            <li>Cmd+K palette across courses, lessons, people and pages</li>
-            <li>Merchant savings proposal generator quoting real interchange rates</li>
-            <li>3,703-rep roster across 48 teams with completion history</li>
-            <li>Offline PWA with per-course video downloads</li>
-            <li>Billing panel with invoices and reconciliation</li>
-            <li>Reports, activity feeds and a full admin surface</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-q-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>
-          <span class="qr-txt"><b>Wholesale Payments</b></span>
-          <span class="qr-meta">10 pages</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/wholesale-payments/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Merchant Portal sign-in gated by credentials plus Merchant ID</li>
-            <li>32,255 encrypted merchant records, decrypted only in the browser</li>
-            <li>405 encrypted statement PDFs, downloadable per merchant</li>
-            <li>Merchant dashboard with sales stats and statement history</li>
-            <li>Callback, replacement-terminal and receipt-paper request cards</li>
-            <li>Real hardware catalog: Valor, Dejavoo, Clover, Genius, Union POS</li>
-            <li>Seven marketing pages with scroll reveals and an industry ticker</li>
-            <li>Quote and contact forms ready to wire to a CRM</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span>
-          <span class="qr-txt"><b>Customer Connect</b></span>
-          <span class="qr-meta">43 pages</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/customerconnect/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>43 pages across 7 solutions and 10 products, plus pricing, blog and legal</li>
-            <li>Animated hero phone with a live SMS loyalty thread</li>
-            <li>Mega menus with keyboard navigation and a mobile drawer</li>
-            <li>Pricing toggle, testimonials carousel and count-up stats</li>
-            <li>Book-a-Demo and Sign-In with validated forms</li>
-            <li>14 blog articles carried over from the live site</li>
-            <li>Zero external requests, zero dependencies</li>
-            <li>Installable via web manifest</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-q-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span>
-          <span class="qr-txt"><b>Integration Atlas</b></span>
-          <span class="qr-meta">624 brands</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/integrations/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Instant search over 624 brands (press / to focus) plus category pills with counts</li>
-            <li>Solution-type filters — Point of Sale, Virtual, Gateway, API — and sort by rank, name or category</li>
-            <li>Per-brand detail sheet: 1–10 rank meter, SaaS fees with verification source, merchant benefits</li>
-            <li>Tap-to-dial vendor contacts on 398 brands, plus email and website links</li>
-            <li>Conversion and compatibility notes: EMV terminals, gift cards, cash discount, hardware costs</li>
-            <li>Client-side PDF flyer generator personalized with merchant name and AE contact</li>
-            <li>Installable PWA with offline support</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span>
-          <span class="qr-txt"><b>Sales Questionnaire</b></span>
-          <span class="qr-meta">Static PWA</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/sales-questionnaire/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>10-question situational-judgment quiz scored 0–100 across 5 sales competencies with 4 talent tiers</li>
-            <li>Manager dashboard with candidate roster and Not sent / Sent / Completed tracking</li>
-            <li>PDF resume upload that parses name, email and phone on-device</li>
-            <li>Team picker that auto-fills the results-delivery email from preset team leads</li>
-            <li>Invite and results emails via EmailJS or a mailto fallback</li>
-            <li>Candidates only see a thank-you screen — never their score</li>
-            <li>Reports list with each completion's score, tier and time-to-complete</li>
-            <li>Installable PWA with offline precache and auto-saved quiz progress</li>
-          </ul>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span>
-          <span class="qr-txt"><b>Hiring HQ</b></span>
-          <span class="qr-meta">Node backend</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/bamboohr-automation/public/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>Candidate pipeline board grouped by BambooHR hiring stages with one-click stage moves</li>
-            <li>Resume upload (PDF/DOCX/TXT) with automatic name, email and phone extraction</li>
-            <li>One-click hire that creates the BambooHR employee record</li>
-            <li>One-button onboarding packet: 7 personalized PDFs generated, emailed and filed on the record</li>
-            <li>Six-step new-hire e-sign paperwork portal with signature capture</li>
-            <li>Employee directory synced from BambooHR with new-hire flags</li>
-            <li>Demo mode with sample candidates when no credentials are configured</li>
-            <li>Installable PWA with an optional password gate</li>
-          </ul>
-          <p class="qr-note">Runs on its own server: <code>cd apps/bamboohr-automation &amp;&amp; npm install &amp;&amp; npm start</code></p>
-        </details>
-      </div>
-
-      <div class="qr reveal">
-        <div class="qr-row">
-          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-q-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span>
-          <span class="qr-txt"><b>WPI Rewards</b></span>
-          <span class="qr-meta">10 pages</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/wpi-rewards/index.html">Open</a></span>
-        </div>
-        <details>
-          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
-          <ul class="qr-feats">
-            <li>34-item rewards catalog with categories, search, sort and a "Within my points" toggle</li>
-            <li>Working cart with points math, an insufficient-points guard and demo checkout into Order History</li>
-            <li>Balance donut and points-over-time charts with hover tooltips — no chart library</li>
-            <li>Earnings outlook with 3/6/12-month projections from the transaction snapshot</li>
-            <li>Page-to-page View Transitions, scroll reveals and count-up numerals</li>
-            <li>Persistent dark/light theme with system default</li>
-            <li>Installable, offline-capable PWA</li>
-            <li>Hands-free animated demo walkthrough page</li>
-          </ul>
-        </details>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 </main>
@@ -934,7 +452,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   var g = document.getElementById("hubGreeting");
   var h = new Date().getHours();
   var word = h < 5 ? "Working late" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
-  g.textContent = word + ", Blake — " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  g.textContent = word + ", Blake " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
 
   /* nav scroll state + progress line */
   var nav = document.getElementById("nav");
@@ -948,62 +466,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-
-  /* mobile menu */
-  var burger = document.getElementById("navBurger");
-  function closeMenu(){ nav.classList.remove("menu-open"); burger.setAttribute("aria-expanded", "false"); }
-  burger.addEventListener("click", function(e){
-    e.stopPropagation();
-    var open = nav.classList.toggle("menu-open");
-    burger.setAttribute("aria-expanded", String(open));
-  });
-  document.querySelectorAll("#navLinks a").forEach(function(a){ a.addEventListener("click", closeMenu); });
-  document.addEventListener("click", function(e){
-    if (nav.classList.contains("menu-open") && !nav.contains(e.target)) closeMenu();
-  });
-  document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && nav.classList.contains("menu-open")) closeMenu();
-  });
-
-  /* launchpad search + filters */
-  var search = document.getElementById("hubSearch");
-  var chips = document.querySelectorAll(".filter-chip");
-  var tiles = document.querySelectorAll("#launchGrid .launch");
-  var empty = document.getElementById("launchEmpty");
-  var activeCat = "all";
-  function applyFilter(){
-    var q = search.value.trim().toLowerCase();
-    var visible = 0;
-    tiles.forEach(function(t){
-      var okCat = activeCat === "all" || t.getAttribute("data-cat") === activeCat;
-      var hay = (t.textContent + " " + t.getAttribute("data-kw")).toLowerCase();
-      var okQ = !q || hay.indexOf(q) !== -1;
-      var show = okCat && okQ;
-      t.classList.toggle("hidden", !show);
-      if (show) visible++;
-    });
-    empty.classList.toggle("show", visible === 0);
-  }
-  search.addEventListener("input", applyFilter);
-  chips.forEach(function(c){
-    c.addEventListener("click", function(){
-      chips.forEach(function(x){ x.classList.remove("active"); });
-      c.classList.add("active");
-      activeCat = c.getAttribute("data-filter");
-      applyFilter();
-    });
-  });
-  document.addEventListener("keydown", function(e){
-    if (e.key === "/" && document.activeElement !== search &&
-        !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
-      e.preventDefault(); search.focus();
-    }
-    if (e.key === "Enter" && document.activeElement === search) {
-      var first = document.querySelector("#launchGrid .launch:not(.hidden)");
-      if (first) window.location.href = first.getAttribute("href");
-    }
-    if (e.key === "Escape" && document.activeElement === search) { search.value = ""; applyFilter(); search.blur(); }
-  });
 
   /* scroll reveals */
   var revealEls = document.querySelectorAll(".reveal");

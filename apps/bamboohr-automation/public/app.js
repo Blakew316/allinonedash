@@ -121,7 +121,7 @@ async function saveOverride(id, data) {
   try {
     await api('/api/saved/overrides', { method: 'POST', body: { id: String(id), details: data || null } });
   } catch (err) {
-    toast(`Saved on this device only — ${err.message}`, true);
+    console.warn('Saved on this device only:', err.message);
   }
 }
 
@@ -259,7 +259,7 @@ function chipClass(label) {
 }
 
 // The BambooHR hiring stages, used to group the board and fill the per-card
-// status dropdowns. Candidates themselves are only pulled on Sync.
+// status dropdowns when the BambooHR-backed API is available.
 async function loadStages() {
   const res = await api('/api/statuses');
   state.statuses = res.statuses.map((x) => ({ id: x.id, label: x.label || x.name }));
@@ -416,7 +416,7 @@ function renderBoard() {
   if (!all.length) {
     board.innerHTML = state.synced
       ? '<div class="empty-state">No candidates in BambooHR yet.</div>'
-      : '<div class="empty-state">No candidates yet — press Sync to pull them from BambooHR.</div>';
+      : '<div class="empty-state">No candidates yet — add your first hire.</div>';
     return;
   }
 
@@ -561,7 +561,6 @@ const addHireForm = $('#add-hire-form');
 function toggleAddHire(show) {
   addHirePanel.hidden = show === undefined ? !addHirePanel.hidden : !show;
   if (!addHirePanel.hidden) {
-    $('#upload-panel').hidden = true;
     addHirePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     addHireForm.firstName.focus();
   }
@@ -604,7 +603,7 @@ addHireForm.addEventListener('submit', (e) => {
   state.localCandidates.unshift(candidate);
   saveLocalCandidates();
   api('/api/saved/candidates', { method: 'POST', body: { candidate } }).catch((err) =>
-    toast(`Saved on this device only — ${err.message}`, true)
+    console.warn('Saved on this device only:', err.message)
   );
 
   f.reset();
@@ -614,118 +613,6 @@ addHireForm.addEventListener('submit', (e) => {
   renderBoard();
   toast(`${candidate.applicant.firstName} ${candidate.applicant.lastName} added — ready to send their packet`);
   document.querySelector(`.candidate-card[data-id="${candidate.id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-});
-
-// ── Resume upload ────────────────────────────────────────────────────────────
-
-const uploadPanel = $('#upload-panel');
-const dropzone = $('#dropzone');
-const resumeFile = $('#resume-file');
-const uploadReview = $('#upload-review');
-const uploadStatus = $('#upload-status');
-let pendingResumeName = '';
-
-$('#upload-resume-btn').addEventListener('click', () => {
-  uploadPanel.hidden = !uploadPanel.hidden;
-  if (!uploadPanel.hidden) {
-    addHirePanel.hidden = true;
-    uploadPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-});
-
-$('#upload-cancel').addEventListener('click', () => {
-  uploadReview.hidden = true;
-  uploadPanel.hidden = true;
-});
-
-dropzone.addEventListener('click', () => resumeFile.click());
-dropzone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  dropzone.classList.add('drag');
-});
-dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
-dropzone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  dropzone.classList.remove('drag');
-  const file = e.dataTransfer.files?.[0];
-  if (file) handleResumeFile(file);
-});
-resumeFile.addEventListener('change', () => {
-  if (resumeFile.files?.[0]) handleResumeFile(resumeFile.files[0]);
-});
-
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result).split(',')[1] || '');
-    r.onerror = () => reject(new Error('Could not read the file'));
-    r.readAsDataURL(file);
-  });
-}
-
-async function handleResumeFile(file) {
-  if (file.size > 4 * 1024 * 1024) return toast("Resume is too large (4 MB max)", true);
-  pendingResumeName = file.name;
-  uploadStatus.hidden = false;
-  uploadStatus.textContent = `Reading ${file.name}…`;
-  uploadReview.hidden = true;
-  const f = uploadReview;
-  try {
-    const contentBase64 = await fileToBase64(file);
-    const res = await api('/api/resume/parse', {
-      method: 'POST',
-      body: { filename: file.name, contentBase64 },
-    });
-    f.firstName.value = res.candidate.firstName || '';
-    f.lastName.value = res.candidate.lastName || '';
-    f.email.value = res.candidate.email || '';
-    f.phone.value = res.candidate.phone || '';
-    $('#upload-note').textContent = res.note || '';
-  } catch (err) {
-    // Never dead-end the upload: open the form empty so the details can be
-    // typed in even when parsing is unavailable.
-    f.firstName.value = '';
-    f.lastName.value = '';
-    f.email.value = '';
-    f.phone.value = '';
-    $('#upload-note').textContent = `Couldn't read the resume automatically (${err.message}) — enter the details below and the candidate will still be added.`;
-    toast(err.message, true);
-  } finally {
-    uploadStatus.hidden = true;
-    uploadReview.hidden = false;
-    resumeFile.value = '';
-  }
-}
-
-uploadReview.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const f = e.target;
-  const candidate = {
-    id: `local-${Date.now()}`,
-    local: true,
-    resumeName: pendingResumeName,
-    appliedDate: new Date().toISOString().slice(0, 10),
-    applicant: {
-      firstName: f.firstName.value.trim(),
-      lastName: f.lastName.value.trim(),
-      email: f.email.value.trim(),
-      phoneNumber: f.phone.value.trim(),
-    },
-    job: { title: { label: f.jobTitle.value.trim() || 'Uploaded resume' } },
-    status: { id: 'local', label: 'Uploaded' },
-  };
-  state.localCandidates.unshift(candidate);
-  saveLocalCandidates();
-  api('/api/saved/candidates', { method: 'POST', body: { candidate } }).catch((err) =>
-    toast(`Saved on this device only — ${err.message}`, true)
-  );
-  f.reset();
-  uploadReview.hidden = true;
-  uploadPanel.hidden = true;
-  renderStats();
-  renderBoard();
-  toast(`${candidate.applicant.firstName} ${candidate.applicant.lastName} added — ready to send their packet`);
-  document.querySelector('.candidate-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 
 // ── Hire ─────────────────────────────────────────────────────────────────────
@@ -992,39 +879,6 @@ async function loadDirectory() {
 
 $('#refresh-directory').addEventListener('click', loadDirectory);
 
-// ── Sync ─────────────────────────────────────────────────────────────────────
-// Pulls candidates and the employee directory from BambooHR, only when asked.
-
-$('#sync-btn').addEventListener('click', async () => {
-  const btn = $('#sync-btn');
-  const label = btn.querySelector('.sync-label');
-  if (btn.disabled) return;
-  btn.disabled = true;
-  btn.classList.remove('is-done');
-  btn.classList.add('is-syncing');
-  label.textContent = 'Syncing';
-  try {
-    await loadSaved();
-    await loadStages();
-    const pulled = await loadCandidates();
-    await loadDirectory();
-    btn.classList.remove('is-syncing');
-    btn.classList.add('is-done');
-    label.textContent = 'Synced';
-    toast(pulled === 1 ? '1 candidate synced from BambooHR' : `${pulled} candidates synced from BambooHR`);
-    setTimeout(() => {
-      btn.classList.remove('is-done');
-      label.textContent = 'Sync';
-    }, 2200);
-  } catch (err) {
-    btn.classList.remove('is-syncing');
-    label.textContent = 'Sync';
-    toast(err.message, true);
-  } finally {
-    btn.disabled = false;
-  }
-});
-
 // A badge beats a failed request the user cannot explain.
 function renderConnection() {
   $('#offline-badge').hidden = navigator.onLine;
@@ -1056,8 +910,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Reopening the app should show current numbers. Only the app's own saved
-// records are re-read — BambooHR is still only ever pulled by pressing Sync.
+// Reopening the app should show current numbers from the app's own saved
+// records.
 document.addEventListener('visibilitychange', async () => {
   if (document.hidden) return;
   await loadSaved();
@@ -1090,11 +944,10 @@ state.overrides = cacheGet(OVERRIDES_KEY, {}) || {};
 
 (async () => {
   await loadSaved();
-  loadStatus().catch((e) => toast(e.message, true));
-  // Stage metadata only — candidates and the directory are pulled from
-  // BambooHR when Sync is pressed, never on their own.
+  loadStatus().catch(() => {});
+  // Stage metadata only, and only when the BambooHR-backed API is available.
   loadStages().then(renderBoard).catch(() => {});
-  loadDocuments().catch((e) => toast(e.message, true));
+  loadDocuments().catch(() => {});
   renderStats();
   renderBoard();
   maybeOfferInstall();

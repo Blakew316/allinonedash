@@ -59,20 +59,11 @@
       <div class="page-head">
         <div>
           <h1>Candidate pipeline</h1>
-          <p class="page-sub">Everyone you are onboarding — press Sync to pull the latest from BambooHR</p>
         </div>
         <div class="page-actions">
           <button id="add-hire-btn" class="btn btn-primary">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Add hire
-          </button>
-          <button id="upload-resume-btn" class="btn btn-ghost">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Upload resume
-          </button>
-          <button id="sync-btn" class="sync-btn" type="button" title="Sync hires from BambooHR">
-            <svg class="sync-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="sync-label">Sync</span>
           </button>
         </div>
       </div>
@@ -91,30 +82,6 @@
           <div class="edit-actions">
             <button type="submit" class="btn btn-primary">Add to pipeline</button>
             <button type="button" id="add-hire-cancel" class="btn btn-ghost">Cancel</button>
-          </div>
-        </form>
-      </div>
-
-      <div id="upload-panel" class="card upload-panel" hidden>
-        <input type="file" id="resume-file" accept=".pdf,.docx,.txt" hidden />
-        <div id="dropzone" class="dropzone">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 2v6h6M12 18v-6M9 15l3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <p><strong>Drop a resume here</strong> or tap to choose a file</p>
-          <p class="fine-print">PDF, Word (.docx), or text · 4 MB max · name, email, and phone are read automatically</p>
-        </div>
-        <div id="upload-status" class="upload-status" hidden></div>
-        <form id="upload-review" hidden>
-          <p id="upload-note" class="upload-note"></p>
-          <div class="field-grid">
-            <label class="field">First name<input name="firstName" required /></label>
-            <label class="field">Last name<input name="lastName" required /></label>
-            <label class="field">Email<input name="email" type="email" /></label>
-            <label class="field">Phone<input name="phone" type="tel" /></label>
-            <label class="field span-2">Role / job title<input name="jobTitle" value="Account Executive" /></label>
-          </div>
-          <div class="edit-actions">
-            <button type="submit" class="btn btn-primary">Add candidate</button>
-            <button type="button" id="upload-cancel" class="btn btn-ghost">Cancel</button>
           </div>
         </form>
       </div>
