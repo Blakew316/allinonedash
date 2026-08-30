@@ -122,11 +122,11 @@ export default async (req) => {
     .split(",").map(s => s.trim()).filter(Boolean).slice(0, 16);
   const categories = cats.length ? cats : CATEGORIES;
 
-  const key = process.env.GOOGLE_PLACES_API_KEY;
-  if (!key) return json({ error: "missing_key", hint: "Set GOOGLE_PLACES_API_KEY in Netlify environment variables and redeploy." }, 500);
+  const key = process.env.GOOGLE_PLACES_API_KEY || (url.searchParams.get("key") || "").trim();
+  if (!key) return json({ error: "missing_key", hint: "Add your Google Places API key in the app (saved in this browser), or set GOOGLE_PLACES_API_KEY in Netlify environment variables." }, 500);
   if (!/^\d{5}$/.test(zip)) return json({ error: "bad_zip", hint: "zip must be a 5-digit ZIP code" }, 400);
 
-  const ck = zip + "|" + max + "|" + limit + "|" + categories.join(",");
+  const ck = zip + "|" + max + "|" + limit + "|" + categories.join(",") + "|" + key.slice(-6);
   const hit = CACHE.get(ck);
   if (hit && Date.now() - hit.at < CACHE_MS) return json(hit.body);
 
