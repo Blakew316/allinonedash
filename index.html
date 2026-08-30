@@ -154,7 +154,8 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .launch:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
 
 /* ---------------- hub / launchpad ---------------- */
-.hub{position:relative;padding:92px 0 84px;overflow:hidden}
+.hub{position:relative;padding:26px 0 84px;overflow:hidden}
+.hub-date{text-align:right;font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--muted);margin:0 0 58px;font-variant-numeric:tabular-nums}
 .hub-bg{position:absolute;inset:0;pointer-events:none}
 .hub-bg::before,.hub-bg::after{content:"";position:absolute;border-radius:50%;filter:blur(70px)}
 .hub-bg::before{width:640px;height:640px;top:-280px;right:-160px;
@@ -289,6 +290,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <header class="hub" id="launchpad">
   <div class="hub-bg" aria-hidden="true"></div>
   <div class="wrap">
+    <p class="hub-date" id="hubDate" aria-hidden="false"></p>
     <div class="hub-head reveal">
       <p class="hub-greeting" id="hubGreeting">Welcome back</p>
       <h1>Every tool. <span class="accent">One place.</span></h1>
@@ -427,7 +429,9 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   var g = document.getElementById("hubGreeting");
   var h = new Date().getHours();
   var word = h < 5 ? "Working late" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
-  g.textContent = word + ", Blake " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  g.textContent = word + ", Blake";
+  document.getElementById("hubDate").textContent =
+    new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
   // Keep the greeting on one row, spanning the page: shrink until it fits.
   function fitGreeting(){
     g.style.fontSize = "";
