@@ -12,6 +12,15 @@ export const TEMPLATES = {
   citizens: { file: "citizens.pdf", pages: 3, label: "Citizens Bank — Merchant Processing Application" },
   merrick: { file: "merrick.pdf", pages: 2, label: "Merrick Bank — Merchant Application" },
   coversheet: { file: "coversheet.pdf", pages: 1, label: "Wholesale Payments — Required Set Up Form" },
+  purchase_order: { file: "purchase_order.pdf", pages: 1, label: "Wholesale Payments — Purchase Order" },
+  clover_addendum: { file: "clover_addendum.pdf", pages: 1, label: "Clover Equipment & Services Addendum" },
+  bank_change: { file: "bank_change.pdf", pages: 1, label: "Bank Account Change Request" },
+  fd_north: { file: "fd_north.pdf", pages: 3, label: "FD North — Merchant Processing Application (Synovus)" },
+  pbt: { file: "pbt.pdf", pages: 6, label: "PB&T Bank — Merchant Processing Application (Pueblo Bank and Trust)" },
+  crf: { file: "crf.pdf", pages: 1, label: "Change Request Form" },
+  hemp_cbd: { file: "hemp_cbd.pdf", pages: 3, label: "Hemp and CBD Related Business Disclosure Form" },
+  cbd_amendment: { file: "cbd_amendment.pdf", pages: 1, label: "CBD Merchant \u2014 Amendment to Merchant Agreement" },
+  gift_card: { file: "gift_card.pdf", pages: 6, label: "Clover Gift Card Setup Forms" },
 };
 
 const cache = new Map(); // form -> { pages: [{ width, height, items }] }

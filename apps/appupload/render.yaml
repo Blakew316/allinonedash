@@ -1,0 +1,27 @@
+# Render blueprint — https://render.com/docs/blueprint-spec
+# Deploy: render.com -> New + -> Blueprint -> connect this repo.
+# When prompted, paste your ANTHROPIC_API_KEY (it is not stored in the repo).
+services:
+  - type: web
+    name: appupload
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false # Render prompts you for this at deploy time
+      - key: NODE_VERSION
+        value: "22"
+      # Shared submission history (Supabase). URL is public; the service-role key
+      # is secret and server-only — Render prompts you for it.
+      - key: SUPABASE_URL
+        value: https://xeevmevxjuawskugedds.supabase.co
+      - key: SUPABASE_SERVICE_KEY
+        sync: false # paste the service_role secret from Supabase → Settings → API
+      # Optional: use the most capable model for the hardest handwriting
+      # - key: ANTHROPIC_MODEL
+      #   value: claude-opus-4-8

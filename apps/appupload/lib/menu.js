@@ -2,6 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
 import ExcelJS from "exceljs";
+import { friendlyApiError } from "./apiError.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TEMPLATE = path.join(__dirname, "..", "assets", "templates", "clover_menu_template.xlsx");
@@ -58,29 +59,38 @@ export async function extractMenu(images, opts = {}) {
     err.statusCode = 503;
     throw err;
   }
-  const client = new Anthropic({ apiKey });
+  const client = new Anthropic({ apiKey: apiKey.trim() });
   const model = opts.model || DEFAULT_MODEL;
 
   const content = [];
   images.forEach((img, i) => {
-    if (!ALLOWED_MEDIA.has(img.mediaType)) {
-      const err = new Error(`Unsupported image type: ${img.mediaType}`);
+    if (img.mediaType === "application/pdf") {
+      content.push({ type: "text", text: `Menu file ${i + 1} (PDF):` });
+      content.push({ type: "document", source: { type: "base64", media_type: "application/pdf", data: img.data } });
+    } else if (ALLOWED_MEDIA.has(img.mediaType)) {
+      content.push({ type: "text", text: `Menu image ${i + 1}:` });
+      content.push({ type: "image", source: { type: "base64", media_type: img.mediaType, data: img.data } });
+    } else {
+      const err = new Error(`Unsupported file type: ${img.mediaType}`);
       err.statusCode = 415;
       throw err;
     }
-    content.push({ type: "text", text: `Menu image ${i + 1}:` });
-    content.push({ type: "image", source: { type: "base64", media_type: img.mediaType, data: img.data } });
   });
   content.push({ type: "text", text: "Extract the full menu by calling the menu_items tool." });
 
-  const message = await client.messages.create({
-    model,
-    max_tokens: 4096,
-    system: SYSTEM_PROMPT,
-    tools: [MENU_TOOL],
-    tool_choice: { type: "tool", name: MENU_TOOL.name },
-    messages: [{ role: "user", content }],
-  });
+  let message;
+  try {
+    message = await client.messages.create({
+      model,
+      max_tokens: 4096,
+      system: SYSTEM_PROMPT,
+      tools: [MENU_TOOL],
+      tool_choice: { type: "tool", name: MENU_TOOL.name },
+      messages: [{ role: "user", content }],
+    });
+  } catch (e) {
+    throw friendlyApiError(e);
+  }
   const toolUse = message.content.find((b) => b.type === "tool_use" && b.name === MENU_TOOL.name);
   if (!toolUse) throw new Error("The model did not return menu data.");
   return normalizeMenu(toolUse.input);
@@ -105,7 +115,10 @@ export function normalizeMenu(raw = {}) {
 function cleanPrice(p) {
   if (p == null) return "";
   const m = String(p).replace(/[^0-9.]/g, "");
-  return m;
+  // Collapse extra decimal points (e.g. "12.99.5" -> "12.99") so the value parses
+  // to a finite number and never lands in Clover's Price column as a bad string.
+  const dot = m.indexOf(".");
+  return dot === -1 ? m : m.slice(0, dot + 1) + m.slice(dot + 1).replace(/\./g, "");
 }
 
 /**
@@ -139,7 +152,10 @@ export async function buildCloverWorkbook(menu) {
     row.commit();
   }
 
-  // Unique categories -> Categories sheet.
+  // Categories sheet — mirror Clover's own export format: one block per category
+  // with the Category Name on the block's first row and every item in that
+  // category listed down the "Item Sort Order" column (one per row), then a blank
+  // separator row before the next category.
   const catSheet = wb.getWorksheet("Categories");
   if (catSheet) {
     const catHeader = catSheet.getRow(1);
@@ -148,12 +164,34 @@ export async function buildCloverWorkbook(menu) {
       const key = String(cell.value || "").trim();
       if (key && !(key in catCol)) catCol[key] = c;
     });
-    const cats = [...new Set(menu.items.map((it) => it.category).filter(Boolean))];
+    const nameCol = catCol["Category Name"] || 2;
+    const itemCol = catCol["Item Sort Order"] || 4;
+
+    // Group item names by category, preserving first-seen order of both.
+    const order = [];
+    const byCat = new Map();
+    for (const it of menu.items) {
+      const cat = (it.category || "").trim();
+      if (!cat || !it.name) continue;
+      if (!byCat.has(cat)) { byCat.set(cat, []); order.push(cat); }
+      byCat.get(cat).push(it.name);
+    }
+
     let cr = 2;
-    for (const name of cats) {
-      const row = catSheet.getRow(cr++);
-      if (catCol["Category Name"]) row.getCell(catCol["Category Name"]).value = name;
-      row.commit();
+    for (const cat of order) {
+      const names = byCat.get(cat);
+      // First row carries the category name alongside its first item.
+      const first = catSheet.getRow(cr++);
+      first.getCell(nameCol).value = cat;
+      if (names[0]) first.getCell(itemCol).value = names[0];
+      first.commit();
+      // Remaining items, one per row, listed under "Item Sort Order".
+      for (let i = 1; i < names.length; i++) {
+        const row = catSheet.getRow(cr++);
+        row.getCell(itemCol).value = names[i];
+        row.commit();
+      }
+      cr++; // blank separator row between category blocks
     }
   }
 

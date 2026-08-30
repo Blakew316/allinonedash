@@ -1,6 +1,7 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { loadAnchors, findLabel, renderedPageBytes, TEMPLATES } from "./anchors.js";
 import { FORM_MAPS } from "./formMaps.js";
+import { isClover } from "./pricing.js";
 
 const INK = rgb(0.05, 0.1, 0.45); // dark blue so filled values read as the typed overlay
 const DEFAULT_SIZE = 9;
@@ -19,6 +20,7 @@ export async function fillForm(form, record) {
   const font = await pdf.embedFont(StandardFonts.Helvetica);
   const fontBold = await pdf.embedFont(StandardFonts.HelveticaBold);
 
+  const map = FORM_MAPS[form];
   const pages = [];
   for (let i = 0; i < anchors.pages.length; i++) {
     const { width, height } = anchors.pages[i];
@@ -28,10 +30,49 @@ export async function fillForm(form, record) {
     pages.push(page);
   }
 
+  // White-out boxes drawn over the background to hide pre-printed template text we
+  // want to relabel (e.g. "TSYS" -> "Merrick" on the coversheet).
+  for (const cov of map.cover || []) {
+    const page = pages[cov.page - 1];
+    if (page) page.drawRectangle({ x: cov.x, y: cov.y, width: cov.w, height: cov.h, color: rgb(1, 1, 1) });
+  }
+
   const measure = (text, size) => font.widthOfTextAtSize(text, size);
   for (const item of computePlacements(form, record, measure)) {
     const page = pages[item.page - 1];
-    page.drawText(item.text, { x: item.x, y: item.y, size: item.size, font: item.bold ? fontBold : font, color: INK });
+    const f = item.bold ? fontBold : font;
+    const opts = { x: item.x, y: item.y, size: item.size, font: f, color: item.color === "black" ? rgb(0, 0, 0) : INK };
+    try {
+      page.drawText(item.text, opts);
+    } catch {
+      // The standard PDF font is WinAnsi-only; a stray non-encodable character
+      // (emoji, CJK, …) would otherwise throw and fail the whole document. Strip
+      // unencodable characters and retry so the rest of the field still renders.
+      const clean = item.text.replace(/[^\x20-\x7E -ÿ]/g, "");
+      if (clean) { try { page.drawText(clean, opts); } catch { /* skip this field */ } }
+    }
+  }
+
+  // "Sign Now": stamp Owner #1's signature image at each mapped signature spot.
+  // Only a PNG data URL is accepted (the signature pad always emits PNG); any bad
+  // or undecodable image is skipped so a stray signature never fails the packet.
+  const sigData = record._signature;
+  if (sigData && map.sign && map.sign.length && /^data:image\/png;base64,/.test(String(sigData))) {
+    try {
+      const b64 = String(sigData).replace(/^data:image\/png;base64,/, "");
+      const png = await pdf.embedPng(Buffer.from(b64, "base64"));
+      for (const s of map.sign) {
+        // A spot may be conditional (e.g. only when its optional section is used).
+        if (s.on && !s.on(record)) continue;
+        const page = pages[s.page - 1];
+        if (!page) continue;
+        const d = png.scale(1);
+        const k = Math.min(s.maxW / d.width, s.maxH / d.height);
+        page.drawImage(png, { x: s.x, y: s.y, width: d.width * k, height: d.height * k });
+      }
+    } catch (e) {
+      console.warn("Signature embed failed, skipping:", String(e));
+    }
   }
 
   return pdf.save();
@@ -48,30 +89,43 @@ export function computePlacements(form, record, measure) {
   const anchors = loadAnchors(form);
   const out = [];
 
+  // Scanned pages have no text layer to anchor on; specs may omit `text` and
+  // position purely by absX/absY (both required in that case).
+  const NO_ANCHOR = { x: 0, y: 0, w: 0, h: 0, x2: 0 };
   for (const spec of map.text || []) {
     const value = safe(spec.get(record));
     if (!value) continue;
-    const anchor = findLabel(anchors, { page: spec.page, text: spec.text, occ: spec.occ, region: spec.region, exact: spec.exact });
+    const anchor = spec.text == null ? NO_ANCHOR : findLabel(anchors, { page: spec.page, text: spec.text, occ: spec.occ, region: spec.region, exact: spec.exact });
     if (!anchor) continue;
 
     const { text, size } = fitText(value, measure, spec.size ?? DEFAULT_SIZE, spec.maxWidth);
-    const isBelow = spec.place !== "right" && spec.place !== "leftOf";
+    const isBelow = spec.place !== "right" && spec.place !== "leftOf" && spec.place !== "center";
     const y = (spec.absY != null ? spec.absY : anchor.y) + (spec.dy ?? (isBelow ? BELOW_DY : 0));
     let x;
-    if (spec.absX != null) x = spec.absX + (spec.dx ?? 0);
+    if (spec.place === "center") {
+      // Center the text horizontally on absX (or the anchor's mid-point) — used to
+      // sit a value neatly on a printed line or inside a box.
+      const cx = spec.absX != null ? spec.absX : (anchor.x + anchor.x2) / 2;
+      x = cx - measure(text, size) / 2 + (spec.dx ?? 0);
+    } else if (spec.absX != null) x = spec.absX + (spec.dx ?? 0);
     else if (spec.place === "right") x = anchor.x2 + (spec.dx ?? 4);
     else if (spec.place === "leftOf") x = anchor.x - measure(text, size) - (spec.pad ?? 2) + (spec.dx ?? 0);
     else x = anchor.x + (spec.dx ?? 0);
-    out.push({ page: spec.page, x, y, text, size, bold: false });
+    out.push({ page: spec.page, x, y, text, size, bold: spec.bold || false, color: spec.color });
   }
 
   for (const spec of map.check || []) {
     if (!spec.on(record)) continue;
-    const anchor = findLabel(anchors, { page: spec.page, text: spec.text, occ: spec.occ, region: spec.region, exact: spec.exact });
+    const anchor = spec.text == null ? NO_ANCHOR : findLabel(anchors, { page: spec.page, text: spec.text, occ: spec.occ, region: spec.region, exact: spec.exact });
     if (!anchor) continue;
-    const x = spec.absX != null ? spec.absX : (spec.fromRight ? anchor.x2 : anchor.x) + (spec.dx ?? 0);
+    const mark = spec.mark || "X";
+    const size = spec.size ?? 8; // checkbox marks are small to fit the printed boxes
+    // center: true treats absX as the box center and centers the mark on it.
+    let x;
+    if (spec.center) x = (spec.absX != null ? spec.absX : (anchor.x + anchor.x2) / 2) - measure(mark, size) / 2 + (spec.dx ?? 0);
+    else x = (spec.absX != null ? spec.absX : (spec.fromRight ? anchor.x2 : anchor.x)) + (spec.dx ?? 0);
     const y = (spec.absY != null ? spec.absY : anchor.y) + (spec.dy ?? 0);
-    out.push({ page: spec.page, x, y, text: spec.mark || "X", size: spec.size ?? 10, bold: true });
+    out.push({ page: spec.page, x, y, text: mark, size, bold: true });
   }
   return out;
 }
@@ -82,26 +136,44 @@ export function computePlacements(form, record, measure) {
  * @param {object} record  normalized extraction record
  * @param {object} [opts]  { form?: 'citizens'|'merrick', date?: string }
  */
-export async function buildPacket(record, opts = {}) {
-  const form =
-    opts.form || (record.appType === "merrick" ? "merrick" : record.appType === "citizens" ? "citizens" : null);
-
-  const coverRecord = {
-    ...record,
-    _date: opts.date || "",
-    _appLabel: appLabel(form),
-    _bankShort: form === "merrick" ? "Merrick" : form === "citizens" ? "Citizens" : "",
-  };
-  const coversheetPdf = await fillForm("coversheet", coverRecord);
-  const applicationPdf = form ? await fillForm(form, record) : null;
-
-  return { form, applicationPdf, coversheetPdf };
+export function resolveForm(record, formOverride) {
+  const APPS = ["citizens", "merrick", "fd_north", "pbt"];
+  if (formOverride && APPS.includes(formOverride)) return formOverride;
+  return APPS.includes(record.appType) ? record.appType : null;
 }
 
-function appLabel(form) {
-  if (form === "citizens") return "Application: Citizens Bank (Priority Payment Systems)";
-  if (form === "merrick") return "Application: Merrick Bank";
-  return "";
+/** True if any equipment line is a Clover device (drives the Clover addendum). */
+export function hasCloverEquipment(record) {
+  return (record.equipment || []).some((e) => e && isClover(e.model || e.type));
+}
+
+/**
+ * Prepare a fill-ready record: stamp the date and derive the coversheet boarding
+ * fees from the application's fee schedule when not entered directly.
+ */
+export function prepareRecord(record, opts = {}) {
+  const c = record.coversheet || {};
+  const f = record.fees || {};
+  return {
+    ...record,
+    _date: opts.date || "",
+    _signature: opts.signature || "",
+    coversheet: {
+      ...c,
+      etf: c.etf || f.earlyTermination || "",
+      annualFee: c.annualFee || f.annual || "",
+      monthlyMin: c.monthlyMin || f.monthlyMinimum || "",
+      svcFee: c.svcFee || f.monthlyService || "",
+    },
+  };
+}
+
+export async function buildPacket(record, opts = {}) {
+  const form = resolveForm(record, opts.form);
+  const base = prepareRecord(record, opts);
+  const coversheetPdf = await fillForm("coversheet", base);
+  const applicationPdf = form ? await fillForm(form, base) : null;
+  return { form, applicationPdf, coversheetPdf };
 }
 
 export function formTitle(form) {
@@ -122,7 +194,16 @@ export async function mergePdfs(parts) {
 
 function safe(v) {
   if (v == null) return "";
-  return String(v).replace(/\s+/g, " ").trim();
+  // The standard PDF font (Helvetica) is WinAnsi-only and throws on characters it
+  // can't encode — even while measuring. Transliterate common smart punctuation and
+  // drop anything outside the encodable set so one exotic glyph can't fail the fill.
+  return String(v)
+    .replace(/[‘’‚‛]/g, "'")
+    .replace(/[“”„‟]/g, '"')
+    .replace(/[–—]/g, "-")
+    .replace(/[^\x20-\x7E -ÿ…€]/g, "") // keep ASCII, Latin-1, ellipsis, euro
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /** Shrink the font (then truncate) so text fits within maxWidth. `measure(text,size)->width`. */

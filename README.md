@@ -29,7 +29,7 @@ HTTP matters: Kloser CRM loads its datasets with `fetch`, so it won't run from `
 | Kloser CRM | `apps/kloser/` | Offline-first field sales CRM — 15 screens, territory map, routes, GPS verification |
 | Maverick Dashboard | `apps/team-maverick/` | Team Maverick command center — rankings, merchant health, recruiting, call transfers |
 | Maverick Appointments | `apps/maverick-appointments/` | Google-Calendar-style appointment hub with payout milestones |
-| AppUpload | `apps/appupload/` | Handwritten merchant applications → typed PDFs — live at [myappupload.com](https://myappupload.com); this folder is the source snapshot |
+| AppUpload | `apps/appupload/` | Handwritten merchant applications → typed PDFs — runs fully in the browser inside the dashboard: 12 fillable forms, packet builder, signature pad, rep picker and on-device history |
 | WPI Route | `apps/agentroute/` | ZIP-based six-day field-route planner with live team sync |
 | Statement Studio | `apps/statement-generator/` | Pixel-accurate financial-document PDFs, generated entirely in the browser |
 | WPI University | `apps/wpi-university/` | The 30-course training & certification platform, plus proposal tooling |
