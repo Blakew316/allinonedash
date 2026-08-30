@@ -60,6 +60,47 @@ const KIND_FORM = {
 const APP_FORMS = ["citizens", "merrick", "fd_north", "pbt"];
 const APP_NAMES = { citizens: "Citizens", merrick: "Merrick", fd_north: "FD North", pbt: "PB&T" };
 
+/* Which record sections each form's field map actually reads — traced by
+   running every map getter against a Proxy record (scripts/audit-extra.mjs
+   family). Drives the manual-entry view so only relevant fields show. */
+const FORM_SECTIONS = {
+  citizens: ["business", "owners", "transaction", "banking", "fees", "serviceAcceptance", "signatures"],
+  merrick: ["business", "owners", "banking", "transaction", "fees", "serviceAcceptance", "signatures"],
+  fd_north: ["business", "owners", "transaction", "banking", "fees", "serviceAcceptance", "signatures"],
+  pbt: ["sales", "business", "owners", "transaction", "banking", "serviceAcceptance", "fees", "coversheet", "equipment", "signatures"],
+  coversheet: ["sales", "coversheet", "business", "owners", "equipment", "documents"],
+  purchase_order: ["po", "coversheet", "business", "sales", "equipment", "banking"],
+  clover_addendum: ["business", "po", "signatures", "owners"],
+  bank_change: ["bankChange", "po", "owners", "business"],
+  crf: ["crf", "po", "owners", "business"],
+  hemp_cbd: ["business", "cbd", "signatures", "owners"],
+  cbd_amendment: ["cbd", "business", "signatures", "owners"],
+  gift_card: ["giftCard", "business", "owners", "signatures"],
+};
+// Record roots -> review-section keys ("owners" spans two sections).
+const sectionKeysFor = (forms) => {
+  const roots = new Set();
+  forms.forEach((f) => (FORM_SECTIONS[f] || []).forEach((r) => roots.add(r)));
+  const keys = [];
+  for (const r of roots) {
+    if (r === "owners") keys.push("owner1", "owner2");
+    else keys.push(r);
+  }
+  return keys;
+};
+// The forms behind the currently ticked kinds (+ the chosen application).
+function formsForTickedKinds() {
+  const forms = [];
+  for (const k of checkedKinds()) {
+    if (k === "application") {
+      const f = el("appTypeSelect").value;
+      if (APP_FORMS.includes(f)) forms.push(f);
+    } else if (KIND_FORM[k]) forms.push(KIND_FORM[k]);
+  }
+  return forms;
+}
+let sectionFilter = null; // null = full review (after extraction)
+
 function safeDbaName(record) {
   const dba = (record.business.dba || record.business.legalName || "").trim();
   return dba.replace(/[\/\\:*?"<>|\x00-\x1f]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 60) || "Application";
@@ -516,7 +557,7 @@ const MERCHANT_FIELDS = new Set(["po.mid", "bankChange.merchantId", "crf.merchan
 let workingRecord = null;
 let signatureData = "";
 
-function renderReviewForm(record) {
+function renderReviewForm(record, only) {
   const container = el("reviewForm");
   container.innerHTML = "";
 
@@ -569,10 +610,11 @@ function renderReviewForm(record) {
   };
 
   REVIEW_SECTIONS.forEach((s) => {
+    if (only && !only.includes(s.key)) return;
     const det = document.createElement("details");
     det.className = "review-section";
     det.dataset.sec = s.key;
-    if (s.open) det.open = true;
+    if (s.open || (only && only.length <= 8)) det.open = true;
     const sum = document.createElement("summary");
     sum.textContent = s.title;
     det.appendChild(sum);
@@ -643,6 +685,7 @@ async function extractApplication() {
     // Initial set: the identified application, its coversheet and the purchase
     // order (equipment selection). Everything else is generated only when
     // ticked, using the data entered on this record.
+    sectionFilter = null;
     showReview(workingRecord);
     setKinds(APP_FORMS.includes(record.appType) ? ["coversheet", "application", "po"] : ["coversheet"]);
     openSection("equipment");
@@ -679,20 +722,18 @@ function openManualForm(choice) {
   const title = isApp ? `${APP_NAMES[choice]} application` : (AUPipeline.TEMPLATES[choice]?.label || choice);
   badge.textContent = `Manual entry — ${title}`;
   el("appTypeSelect").value = isApp ? choice : "unknown";
-  renderReviewForm(workingRecord);
   updateSigButton();
 
   let kinds = ["coversheet"];
-  let section = "business";
-  if (isApp) kinds = ["coversheet", "application", "po"];
-  else if (choice === "coversheet") { kinds = ["coversheet"]; section = "coversheet"; }
+  let forms = [choice];
+  if (isApp) { kinds = ["coversheet", "application", "po"]; forms = [choice, "coversheet", "purchase_order"]; }
   else {
     const kind = Object.keys(KIND_FORM).find((k) => KIND_FORM[k] === choice);
     if (kind) kinds = [kind];
-    section = { purchase_order: "po", clover_addendum: "equipment", bank_change: "bankChange", crf: "crf", hemp_cbd: "cbd", cbd_amendment: "cbd", gift_card: "giftCard" }[choice] || "business";
   }
+  sectionFilter = sectionKeysFor(forms);
+  renderReviewForm(workingRecord, sectionFilter);
   setKinds(kinds);
-  openSection(section);
   switchMode("app");
   showSection("app", "review");
   el("manualFormSelect").value = "";
@@ -990,6 +1031,7 @@ function reopenHistory(h) {
     workingRecord = AUPipeline.normalizeRecord(JSON.parse(JSON.stringify(h.record)));
     el("coverDate").value = h.date || "";
     signatureData = h.signature || "";
+    sectionFilter = null;
     showReview(workingRecord);
     setKinds(Array.isArray(h.kinds) && h.kinds.length ? h.kinds : ["coversheet"]);
     switchMode("app");
@@ -1194,6 +1236,15 @@ function init() {
   renderReps();
   el("repSelect").addEventListener("change", onRepChange);
   el("manualFormSelect").addEventListener("change", (e) => openManualForm(e.target.value));
+  const refreshFilteredSections = () => {
+    if (!sectionFilter || !workingRecord) return;
+    collectReview();
+    sectionFilter = sectionKeysFor(formsForTickedKinds());
+    renderReviewForm(workingRecord, sectionFilter);
+  };
+  document.querySelectorAll("#kindRow input").forEach((c) => c.addEventListener("change", refreshFilteredSections));
+  el("appTypeSelect").addEventListener("change", refreshFilteredSections);
+
   el("histSearch").addEventListener("input", renderHistory);
   el("histRep").addEventListener("change", renderHistory);
   el("histExport").addEventListener("click", exportHistory);
