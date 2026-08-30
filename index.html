@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Wholesale Payments — All-In-One Dashboard</title>
-<meta name="description" content="Every Wholesale Payments product in one place — nine applications, eighty-eight screens, one dashboard.">
+<title>Wholesale Payments — Hub</title>
+<meta name="description" content="The Wholesale Payments hub — every team tool and site, one tap away.">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <meta name="theme-color" content="#ffffff">
 <style>
 /* ============================================================
-   Wholesale Payments · All-In-One Dashboard
+   Wholesale Payments · Hub
    Brand tokens sampled from the official logo. Used only as
    tints, hairlines and micro-gradients — never as large fills.
    ============================================================ */
@@ -40,7 +40,6 @@
   --shadow-lg:0 4px 12px rgba(13,20,64,.06),0 24px 56px rgba(13,20,64,.11);
 
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
-  --radius:18px;
   --ease:cubic-bezier(.22,1,.36,1);
   color-scheme:light;
 }
@@ -131,7 +130,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .nav.menu-open .nav-burger span:nth-child(2){opacity:0}
 .nav.menu-open .nav-burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 @media (max-width:820px){
-  .nav{position:sticky}
   .nav-links{display:none}
   .nav-burger{display:flex}
   .nav.menu-open .nav-links{
@@ -160,7 +158,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .ticker-track{
   display:flex;width:max-content;
-  animation:ticker 58s linear infinite;
+  animation:ticker 64s linear infinite;
 }
 .ticker--stats .ticker-track{animation:ticker-rev 48s linear infinite}
 .ticker:hover .ticker-track{animation-play-state:paused}
@@ -187,8 +185,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
 /* ---------------- shared layout ---------------- */
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
-.section{padding:104px 0}
-.section--tight{padding:84px 0}
+.section{padding:92px 0}
 .eyebrow{
   display:inline-flex;align-items:center;gap:9px;
   font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -196,9 +193,9 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;
   background:linear-gradient(90deg,var(--blue),var(--green))}
-.section-head{max-width:720px;margin-bottom:56px}
-.section-head h2{font-size:clamp(30px,4.2vw,44px);letter-spacing:-.025em;margin-bottom:16px}
-.section-head p{font-size:17.5px;color:var(--muted);line-height:1.65}
+.section-head{max-width:720px;margin-bottom:48px}
+.section-head h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.025em;margin-bottom:14px}
+.section-head p{font-size:17px;color:var(--muted);line-height:1.65}
 
 /* ---------------- reveals ---------------- */
 .reveal{opacity:0;transform:translateY(26px);
@@ -206,209 +203,189 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
-/* ---------------- hero ---------------- */
-.hero{position:relative;padding:110px 0 96px;overflow:hidden}
-.hero-bg{position:absolute;inset:0;pointer-events:none}
-.hero-bg::before,.hero-bg::after{content:"";position:absolute;border-radius:50%;filter:blur(70px)}
-.hero-bg::before{width:640px;height:640px;top:-260px;right:-160px;
-  background:radial-gradient(circle,rgba(0,163,230,.10),transparent 65%)}
-.hero-bg::after{width:560px;height:560px;bottom:-300px;left:-180px;
-  background:radial-gradient(circle,rgba(0,199,118,.09),transparent 65%)}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
-.hero h1{
-  font-size:clamp(40px,6vw,68px);font-weight:750;letter-spacing:-.032em;
-  line-height:1.04;margin-bottom:22px;
+/* ---------------- icon tiles (iOS style) ---------------- */
+.ic--blue,.ic--green,.ic--mint,.ic--navy{color:#fff;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ic--blue svg,.ic--green svg,.ic--mint svg,.ic--navy svg{position:relative;z-index:1}
+.ic--blue::before,.ic--green::before,.ic--mint::before,.ic--navy::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 55%);
 }
-.hero h1 .accent{
+.ic--blue{background:linear-gradient(160deg,#31b6ee,#0080cc);box-shadow:0 5px 12px rgba(0,140,215,.28)}
+.ic--green{background:linear-gradient(160deg,#14cf85,#009e5d);box-shadow:0 5px 12px rgba(0,170,105,.28)}
+.ic--mint{background:linear-gradient(160deg,#5fe57c,#22bd53);box-shadow:0 5px 12px rgba(45,190,90,.28)}
+.ic--navy{background:linear-gradient(160deg,#2c3d92,#021058);box-shadow:0 5px 12px rgba(5,20,90,.3)}
+
+/* ---------------- hub / launchpad ---------------- */
+.hub{position:relative;padding:72px 0 84px;overflow:hidden}
+.hub-bg{position:absolute;inset:0;pointer-events:none}
+.hub-bg::before,.hub-bg::after{content:"";position:absolute;border-radius:50%;filter:blur(70px)}
+.hub-bg::before{width:640px;height:640px;top:-280px;right:-160px;
+  background:radial-gradient(circle,rgba(0,163,230,.10),transparent 65%)}
+.hub-bg::after{width:560px;height:560px;bottom:-320px;left:-180px;
+  background:radial-gradient(circle,rgba(0,199,118,.09),transparent 65%)}
+.hub-head{position:relative;text-align:center;max-width:640px;margin:0 auto 40px}
+.hub-greeting{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:10px}
+.hub-head h1{
+  font-size:clamp(34px,5vw,52px);font-weight:750;letter-spacing:-.03em;
+  line-height:1.06;margin-bottom:14px;
+}
+.hub-head h1 .accent{
   background:linear-gradient(92deg,var(--blue),var(--green) 70%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hero-sub{font-size:19px;color:var(--muted);line-height:1.65;max-width:520px;margin-bottom:36px}
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-.btn{
-  display:inline-flex;align-items:center;gap:9px;
-  font-size:15px;font-weight:600;border-radius:99px;padding:13px 26px;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .25s var(--ease);
-  cursor:pointer;border:none;font-family:inherit;
-}
-.btn:active{transform:scale(.97)}
-.btn--primary{background:var(--navy);color:#fff;box-shadow:0 8px 24px rgba(0,18,94,.22)}
-.btn--primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,18,94,.28)}
-.btn--ghost{background:var(--surface);color:var(--navy);border:1px solid var(--hairline);box-shadow:var(--shadow-sm)}
-.btn--ghost:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
-.btn .arrow{transition:transform .3s var(--ease)}
-.btn:hover .arrow{transform:translateX(3px)}
+.hub-head p{font-size:17px;color:var(--muted)}
 
-/* hero constellation */
-.constellation{
-  position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
-  padding:10px;
+.hub-controls{
+  position:relative;display:flex;flex-direction:column;gap:16px;align-items:center;
+  margin-bottom:40px;
 }
-.tile{
-  aspect-ratio:1;border-radius:24px;background:var(--surface);
-  border:1px solid var(--hairline);box-shadow:var(--shadow-sm);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  font-size:30px;
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
-  animation:float 7s ease-in-out infinite;
+.hub-search{
+  width:min(460px,100%);position:relative;
 }
-.tile span{font-size:11px;font-weight:650;color:var(--muted);letter-spacing:.01em}
-.tile:hover{transform:translateY(-6px) scale(1.03);box-shadow:var(--shadow-md);border-color:rgba(0,163,230,.35)}
-.tile:nth-child(3n+1){animation-delay:0s}
-.tile:nth-child(3n+2){animation-delay:-2.3s}
-.tile:nth-child(3n+3){animation-delay:-4.6s}
-.tile:nth-child(2){background:linear-gradient(160deg,var(--surface) 55%,var(--tint-blue))}
-.tile:nth-child(4){background:linear-gradient(160deg,var(--surface) 55%,var(--tint-green))}
-.tile:nth-child(6){background:linear-gradient(160deg,var(--surface) 55%,var(--tint-mint))}
-.tile:nth-child(8){background:linear-gradient(160deg,var(--surface) 55%,var(--tint-blue))}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@media (prefers-reduced-motion:reduce){.tile{animation:none}}
+.hub-search svg{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  width:17px;height:17px;color:var(--faint);pointer-events:none;
+}
+.hub-search input{
+  width:100%;height:50px;border-radius:99px;border:1px solid var(--hairline);
+  background:var(--surface);box-shadow:var(--shadow-sm);
+  padding:0 44px 0 44px;font-family:inherit;font-size:15px;color:var(--ink);
+  transition:box-shadow .3s var(--ease),border-color .3s var(--ease);
+}
+.hub-search input::placeholder{color:var(--faint)}
+.hub-search input:focus{outline:none;border-color:rgba(0,163,230,.45);box-shadow:0 0 0 4px rgba(0,163,230,.1),var(--shadow-md)}
+.hub-search kbd{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  font-family:inherit;font-size:11px;font-weight:650;color:var(--faint);
+  border:1px solid var(--hairline);border-radius:6px;padding:2px 7px;background:var(--bg);
+}
+.hub-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.filter-chip{
+  font-family:inherit;font-size:13px;font-weight:600;color:var(--body);
+  border:1px solid var(--hairline);border-radius:99px;padding:7px 16px;
+  background:var(--surface);cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.filter-chip:hover{border-color:rgba(0,163,230,.4);color:var(--ink)}
+.filter-chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
 
-/* hero stats */
-.hero-stats{
-  position:relative;margin-top:76px;
+.launch-grid{
+  position:relative;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+@media (max-width:1020px){.launch-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.launch-grid{grid-template-columns:1fr}}
+.launch{
+  position:relative;display:flex;align-items:center;gap:18px;
+  background:var(--surface);border:1px solid var(--hairline);border-radius:22px;
+  padding:22px 24px;box-shadow:var(--shadow-sm);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease),opacity .3s var(--ease);
+}
+.launch:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(0,163,230,.3)}
+.launch.hidden{display:none}
+.launch-ic{width:58px;height:58px;border-radius:16px}
+.launch-ic svg{width:28px;height:28px}
+.launch-txt{min-width:0}
+.launch-txt b{display:block;font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.015em;line-height:1.25}
+.launch-txt span{display:block;font-size:12.5px;color:var(--muted);font-weight:500;margin-top:2px}
+.launch-open{
+  margin-left:auto;flex-shrink:0;
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--tint-blue);color:var(--blue);
+  transition:transform .3s var(--ease),background .3s var(--ease);
+}
+.launch-open svg{width:15px;height:15px}
+.launch:hover .launch-open{transform:translateX(3px);background:rgba(0,163,230,.16)}
+.launch-empty{
+  display:none;text-align:center;color:var(--muted);font-size:14.5px;
+  padding:36px 0 8px;
+}
+.launch-empty.show{display:block}
+
+.hub-stats{
+  position:relative;margin-top:56px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
 }
+@media (max-width:960px){.hub-stats{grid-template-columns:repeat(2,1fr)}}
 .stat{
-  background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);
-  padding:24px 26px;box-shadow:var(--shadow-sm);
+  background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
+  padding:22px 24px;box-shadow:var(--shadow-sm);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease);
 }
 .stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.stat .value{
-  font-size:40px;font-weight:750;letter-spacing:-.02em;color:var(--ink);line-height:1.1;
-  display:flex;align-items:baseline;gap:2px;
-}
-.stat .value .unit{font-size:20px;font-weight:650;color:var(--muted)}
-.stat .label{font-size:13.5px;color:var(--muted);margin-top:6px;font-weight:500}
-.stat .bar{height:3px;border-radius:3px;margin-top:14px;width:34px;
+.stat .value{font-size:36px;font-weight:750;letter-spacing:-.02em;color:var(--ink);line-height:1.1}
+.stat .label{font-size:13px;color:var(--muted);margin-top:5px;font-weight:500}
+.stat .bar{height:3px;border-radius:3px;margin-top:13px;width:34px;
   background:linear-gradient(90deg,var(--blue),var(--green))}
-@media (max-width:960px){
-  .hero-grid{grid-template-columns:1fr;gap:48px}
-  .hero-stats{grid-template-columns:repeat(2,1fr)}
-}
 
-/* ---------------- app cards grid ---------------- */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-@media (max-width:1020px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:660px){.grid{grid-template-columns:1fr}}
-.card{
-  position:relative;display:flex;flex-direction:column;
-  background:var(--surface);border:1px solid var(--hairline);border-radius:22px;
-  padding:28px;box-shadow:var(--shadow-sm);
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
+/* ---------------- quick reference rows ---------------- */
+.qr-list{display:flex;flex-direction:column;gap:14px}
+.qr{
+  background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
+  box-shadow:var(--shadow-sm);overflow:hidden;
+  transition:box-shadow .35s var(--ease),border-color .35s var(--ease);
 }
-.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(0,163,230,.28)}
-.card-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-.card-icon{
-  width:52px;height:52px;border-radius:15px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:25px;
-  border:1px solid var(--hairline-soft);
+.qr:hover{box-shadow:var(--shadow-md);border-color:rgba(0,163,230,.22)}
+.qr-row{
+  display:flex;align-items:center;gap:16px;padding:16px 20px;
 }
-.ic--blue{background:var(--tint-blue)}
-.ic--green{background:var(--tint-green)}
-.ic--mint{background:var(--tint-mint)}
-.ic--navy{background:var(--tint-navy)}
-.card h3{font-size:18.5px;letter-spacing:-.015em;line-height:1.25}
-.chip{
-  display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
-  border-radius:6px;padding:3px 8px;margin-top:5px;
+.qr-ic{width:44px;height:44px;border-radius:12px}
+.qr-ic svg{width:21px;height:21px}
+.qr-txt{min-width:0;flex:1}
+.qr-txt b{display:block;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.qr-txt span{display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:1px}
+.qr-meta{font-size:12px;color:var(--faint);font-weight:500;flex-shrink:0;white-space:nowrap}
+.qr-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.qr-open{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13.5px;font-weight:650;color:#fff;background:var(--navy);
+  border-radius:99px;padding:8px 17px;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  box-shadow:0 4px 12px rgba(0,18,94,.18);
 }
-.chip--blue{color:#0075ad;background:var(--tint-blue)}
-.chip--green{color:#00885a;background:var(--tint-green)}
-.chip--mint{color:#2d9a4b;background:var(--tint-mint)}
-.chip--navy{color:var(--navy);background:var(--tint-navy)}
-.card-tagline{font-size:14.5px;color:var(--muted);line-height:1.6;margin-bottom:18px}
-.card-feats{display:flex;flex-direction:column;gap:9px;margin-bottom:22px}
-.card-feats li{
-  position:relative;padding-left:24px;font-size:13.5px;color:var(--body);line-height:1.5;
+.qr-open:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,18,94,.24)}
+.qr details{border-top:1px solid var(--hairline-soft)}
+.qr summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  padding:11px 20px;font-size:12.5px;font-weight:650;color:var(--blue);
+  transition:background .25s var(--ease);
+  -webkit-user-select:none;user-select:none;
 }
-.card-feats li::before{
-  content:"";position:absolute;left:0;top:5px;width:14px;height:14px;border-radius:50%;
+.qr summary::-webkit-details-marker{display:none}
+.qr summary:hover{background:var(--tint-blue)}
+.qr summary .chev{transition:transform .3s var(--ease);width:12px;height:12px}
+.qr details[open] summary .chev{transform:rotate(90deg)}
+.qr-feats{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;
+  padding:6px 20px 18px;
+}
+@media (max-width:720px){
+  .qr-feats{grid-template-columns:1fr}
+  .qr-meta{display:none}
+  .qr-txt span{display:none}
+}
+.qr-feats li{
+  position:relative;padding-left:22px;font-size:13px;color:var(--body);line-height:1.55;
+}
+.qr-feats li::before{
+  content:"";position:absolute;left:0;top:5px;width:13px;height:13px;border-radius:50%;
   background:var(--tint-green);
 }
-.card-feats li::after{
-  content:"";position:absolute;left:4px;top:9px;width:6px;height:3.5px;
+.qr-feats li::after{
+  content:"";position:absolute;left:3.5px;top:8.5px;width:6px;height:3.5px;
   border-left:1.6px solid var(--green);border-bottom:1.6px solid var(--green);
   transform:rotate(-45deg);
 }
-.card-foot{
-  margin-top:auto;display:flex;align-items:center;justify-content:space-between;
-  padding-top:18px;border-top:1px solid var(--hairline-soft);
-}
-.card-meta{font-size:12.5px;color:var(--faint);font-weight:500}
-.card-open{
-  font-size:14px;font-weight:650;color:var(--blue);
-  display:inline-flex;align-items:center;gap:6px;
-}
-.card-open .arrow{transition:transform .3s var(--ease)}
-.card:hover .card-open .arrow{transform:translateX(4px)}
-.card-link{position:absolute;inset:0;border-radius:22px;z-index:1}
-.card-open,.card-foot{position:relative;z-index:2;pointer-events:none}
-
-/* ---------------- app detail sections ---------------- */
-.app-detail{padding:88px 0;border-top:1px solid var(--hairline-soft)}
-.app-detail:nth-child(even){background:var(--surface)}
-.detail-grid{display:grid;grid-template-columns:380px 1fr;gap:56px;align-items:start}
-@media (max-width:960px){.detail-grid{grid-template-columns:1fr;gap:36px}}
-.detail-side{position:sticky;top:96px}
-@media (max-width:960px){.detail-side{position:static}}
-.detail-num{
-  font-size:13px;font-weight:750;letter-spacing:.16em;color:var(--faint);margin-bottom:14px;
-}
-.detail-num em{font-style:normal;color:var(--blue)}
-.detail-head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
-.detail-icon{
-  width:60px;height:60px;border-radius:17px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:29px;
-  border:1px solid var(--hairline-soft);
-}
-.detail-side h3{font-size:26px;letter-spacing:-.02em;line-height:1.2}
-.detail-purpose{font-size:15px;color:var(--muted);line-height:1.65;margin:16px 0 22px}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.badge{
-  font-size:11.5px;font-weight:600;color:var(--body);
-  background:var(--bg);border:1px solid var(--hairline-soft);
-  border-radius:8px;padding:4px 10px;
-}
-.badge--status{color:#00885a;background:var(--tint-green);border-color:transparent;font-weight:700}
-.badge--server{color:#8a6d00;background:rgba(255,193,7,.12);border-color:transparent;font-weight:700}
-.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px}
-.mini-stat{
-  background:var(--bg);border:1px solid var(--hairline-soft);border-radius:13px;
-  padding:12px 14px;font-size:12.5px;color:var(--body);line-height:1.45;font-weight:500;
-}
-.app-detail:nth-child(even) .mini-stat{background:var(--bg)}
-.detail-feats{
-  display:grid;grid-template-columns:1fr 1fr;gap:13px;
-}
-@media (max-width:660px){.detail-feats{grid-template-columns:1fr}}
-.detail-feats li{
-  position:relative;background:var(--surface);
-  border:1px solid var(--hairline-soft);border-radius:15px;
-  padding:15px 17px 15px 44px;font-size:13.8px;line-height:1.55;color:var(--body);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease);
-}
-.app-detail:nth-child(even) .detail-feats li{background:var(--bg)}
-.detail-feats li:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:rgba(0,163,230,.25)}
-.detail-feats li::before{
-  content:"";position:absolute;left:16px;top:17px;width:16px;height:16px;border-radius:50%;
-  background:var(--tint-blue);
-}
-.detail-feats li::after{
-  content:"";position:absolute;left:20.5px;top:21.5px;width:7px;height:4px;
-  border-left:1.7px solid var(--blue);border-bottom:1.7px solid var(--blue);
-  transform:rotate(-45deg);
-}
-.detail-note{
-  margin-top:18px;font-size:12.5px;color:var(--muted);line-height:1.55;
-  padding:11px 14px;border-left:2px solid var(--blue);
-  background:var(--tint-blue);border-radius:0 10px 10px 0;
+.qr-note{font-size:12px;color:var(--muted);padding:0 20px 16px;line-height:1.55}
+.qr-note code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;
+  background:var(--tint-navy);border-radius:5px;padding:1.5px 6px;color:var(--navy);
 }
 
 /* ---------------- glance / chart ---------------- */
-.glance-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:64px}
-@media (max-width:960px){.glance-grid{grid-template-columns:repeat(2,1fr)}}
 .chart{
   background:var(--surface);border:1px solid var(--hairline);border-radius:22px;
   padding:34px 38px;box-shadow:var(--shadow-sm);
@@ -427,27 +404,12 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .chart-row .val{font-size:13px;font-weight:650;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
 
-/* ---------------- directory / footer ---------------- */
-.directory{background:var(--surface);border-top:1px solid var(--hairline-soft)}
-.dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media (max-width:960px){.dir-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:620px){.dir-grid{grid-template-columns:1fr}}
-.dir-item{
-  display:flex;align-items:center;gap:13px;
-  border:1px solid var(--hairline-soft);border-radius:15px;padding:14px 17px;
-  background:var(--bg);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease);
+/* ---------------- footer ---------------- */
+.serve-note{
+  margin-top:40px;font-size:13px;color:var(--muted);line-height:1.7;
+  border:1px dashed var(--hairline);border-radius:14px;padding:16px 20px;background:var(--surface);
 }
-.dir-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:rgba(0,163,230,.3)}
-.dir-item .di{font-size:19px;width:38px;height:38px;border-radius:11px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center}
-.dir-item b{display:block;font-size:14px;color:var(--ink);font-weight:650;letter-spacing:-.01em}
-.dir-item span{display:block;font-size:11.5px;color:var(--faint)}
-.dir-note{
-  margin-top:28px;font-size:13px;color:var(--muted);line-height:1.7;
-  border:1px dashed var(--hairline);border-radius:14px;padding:16px 20px;background:var(--bg);
-}
-.dir-note code{
+.serve-note code{
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
   background:var(--tint-navy);border-radius:6px;padding:2px 7px;color:var(--navy);
 }
@@ -462,11 +424,33 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   font-size:13.5px;font-weight:600;color:var(--blue);
   display:inline-flex;align-items:center;gap:6px;
 }
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 </style>
 </head>
 <body>
 
-<a class="skip-link" href="#suite">Skip to the apps</a>
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6.6-9 12.5-9 12.5S3 16.6 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4.5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.2a3 3 0 0 0 3.1 3.4"/><path d="M17 6h2.8a3 3 0 0 1-3.1 3.4"/><path d="M12 13.5V17"/><path d="M10 20.5l.6-3.5h2.8l.6 3.5"/><path d="M8.5 20.5h7"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17"/><path d="M8.5 3v4"/><path d="M15.5 3v4"/></symbol>
+    <symbol id="i-doc-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5L13.5 3z"/><path d="M13.5 3v5.5H19"/><path d="M12 17.5V12"/><path d="M9.5 14.5 12 12l2.5 2.5"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z"/><path d="M9 4v14"/><path d="M15 6v14"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12V21l-2-1.5-2 1.5-2-1.5L10 21l-2-1.5L6 21V3.5z"/><path d="M9 8.5h6"/><path d="M9 12h6"/><path d="M9 15.5h3.5"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2.5 8.5 12 13l9.5-4.5L12 4z"/><path d="M6.2 11v4.2c0 1.5 2.6 2.8 5.8 2.8s5.8-1.3 5.8-2.8V11"/><path d="M21.5 9v4.5"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 15h4"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 4H18a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5"/><rect x="8.5" y="2.5" width="7" height="3.5" rx="1"/><path d="M9 11.5h6"/><path d="M9 15.5h4"/></symbol>
+    <symbol id="i-user-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20.5V19a4.5 4.5 0 0 1 4.5-4.5h4A4.5 4.5 0 0 1 15.5 19v1.5"/><path d="M19.5 8v5"/><path d="M17 10.5h5"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12v8.5h-15V12"/><rect x="3" y="7.5" width="18" height="4.5" rx="1"/><path d="M12 20.5v-13"/><path d="M12 7.5H8a2.25 2.25 0 0 1 0-4.5C11 3 12 7.5 12 7.5z"/><path d="M12 7.5h4a2.25 2.25 0 0 0 0-4.5C13 3 12 7.5 12 7.5z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#launchpad">Skip to the launchpad</a>
 <div class="brand-hairline" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
@@ -477,238 +461,167 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <img src="assets/logo.png" alt="Wholesale Payments" width="877" height="218">
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="#suite">The Suite</a>
-      <a href="#apps">Inside the Apps</a>
+      <a href="#launchpad">Launchpad</a>
+      <a href="#reference">Quick Reference</a>
       <a href="#glance">At a Glance</a>
-      <a href="#directory">Directory</a>
     </div>
-    <span class="nav-chip"><span class="pulse" aria-hidden="true"></span>9 apps · all systems go</span>
+    <span class="nav-chip"><span class="pulse" aria-hidden="true"></span>13 apps · all systems go</span>
     <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- ================= TICKER: UPDATES ================= -->
-<div class="ticker" aria-label="Latest updates across the suite">
+<!-- ================= TICKER: WHAT'S HERE + UPDATES ================= -->
+<div class="ticker" aria-label="The sites and latest updates">
   <div class="ticker-track">
     <div class="ticker-group">
-      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--blue"></span><strong>Kloser CRM</strong> — 15 screens, installs on iOS and keeps working with no signal</span>
-      <span class="ticker-item"><span class="dot dot--green"></span><strong>Maverick Dashboard</strong> — daily GitHub Actions sync keeps rankings &amp; merchant health current</span>
-      <span class="ticker-item"><span class="dot dot--mint"></span><strong>Statement Studio</strong> — five PDF engines running entirely in the browser</span>
-      <span class="ticker-item"><span class="dot dot--navy"></span><strong>Merchant Portal</strong> — 32,255 encrypted merchant records, decrypted only by the right MID</span>
-      <span class="ticker-item"><span class="dot dot--blue"></span><strong>WPI University</strong> — 30 courses · 228 lessons · 25.2 hours of mapped video</span>
-      <span class="ticker-item"><span class="dot dot--green"></span><strong>WPI Route</strong> — turns a territory ZIP into a six-day merchant route with live team sync</span>
-      <span class="ticker-item"><span class="dot dot--mint"></span><strong>AppUpload</strong> — reads handwritten applications with Claude vision and returns typed PDFs</span>
-      <span class="ticker-item"><span class="dot dot--navy"></span><strong>Customer Connect</strong> — 43 pages rebuilt with zero external requests</span>
-      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Maverick Appointments</strong> — gold payout events stamped at $1K and $5K merchant volume</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Kloser CRM</strong> — the field sales CRM: leads, territory map, routes and GPS-verified visits</span>
+      <span class="ticker-item"><span class="dot dot--green"></span><strong>Maverick Dashboard</strong> — tracks Team Maverick's rep rankings, merchant processing and recruiting</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>Maverick Appointments</strong> — the team's shared appointment calendar</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>AppUpload</strong> — turns photos of handwritten merchant applications into typed PDFs</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>WPI Route</strong> — builds a six-day merchant route from an agent's territory ZIP</span>
+      <span class="ticker-item"><span class="dot dot--green"></span><strong>Statement Studio</strong> — generates merchant and bank statement PDFs in the browser</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>WPI University</strong> — the rep training and certification platform</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>Wholesale Payments</strong> — the company website, with the merchant portal inside</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Customer Connect</strong> — the site for the text-marketing and loyalty platform</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Integration Atlas</strong> — the directory of 624 processing-compatible software brands</span>
+      <span class="ticker-item"><span class="dot dot--green"></span><strong>Sales Questionnaire</strong> — sends candidates a scored 10-question sales assessment</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>Hiring HQ</strong> — runs the BambooHR pipeline, hiring and onboarding packets</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>WPI Rewards</strong> — the merchant portal for earning and redeeming points</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--green"></span><strong>Maverick Dashboard</strong> — patched to keep rendering when its live data connection is unavailable</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--blue"></span><strong>All thirteen builds</strong> — live inside this hub, each one click away</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--mint"></span><strong>New look</strong> — Apple-style icons and a launchpad-first home</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--navy"></span><strong>Four new destinations</strong> — Integration Atlas, Sales Questionnaire, Hiring HQ and WPI Rewards just landed</span>
     </div>
     <div class="ticker-group" aria-hidden="true">
-      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--blue"></span><strong>Kloser CRM</strong> — 15 screens, installs on iOS and keeps working with no signal</span>
-      <span class="ticker-item"><span class="dot dot--green"></span><strong>Maverick Dashboard</strong> — daily GitHub Actions sync keeps rankings &amp; merchant health current</span>
-      <span class="ticker-item"><span class="dot dot--mint"></span><strong>Statement Studio</strong> — five PDF engines running entirely in the browser</span>
-      <span class="ticker-item"><span class="dot dot--navy"></span><strong>Merchant Portal</strong> — 32,255 encrypted merchant records, decrypted only by the right MID</span>
-      <span class="ticker-item"><span class="dot dot--blue"></span><strong>WPI University</strong> — 30 courses · 228 lessons · 25.2 hours of mapped video</span>
-      <span class="ticker-item"><span class="dot dot--green"></span><strong>WPI Route</strong> — turns a territory ZIP into a six-day merchant route with live team sync</span>
-      <span class="ticker-item"><span class="dot dot--mint"></span><strong>AppUpload</strong> — reads handwritten applications with Claude vision and returns typed PDFs</span>
-      <span class="ticker-item"><span class="dot dot--navy"></span><strong>Customer Connect</strong> — 43 pages rebuilt with zero external requests</span>
-      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Maverick Appointments</strong> — gold payout events stamped at $1K and $5K merchant volume</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Kloser CRM</strong> — the field sales CRM: leads, territory map, routes and GPS-verified visits</span>
+      <span class="ticker-item"><span class="dot dot--green"></span><strong>Maverick Dashboard</strong> — tracks Team Maverick's rep rankings, merchant processing and recruiting</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>Maverick Appointments</strong> — the team's shared appointment calendar</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>AppUpload</strong> — turns photos of handwritten merchant applications into typed PDFs</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>WPI Route</strong> — builds a six-day merchant route from an agent's territory ZIP</span>
+      <span class="ticker-item"><span class="dot dot--green"></span><strong>Statement Studio</strong> — generates merchant and bank statement PDFs in the browser</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>WPI University</strong> — the rep training and certification platform</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>Wholesale Payments</strong> — the company website, with the merchant portal inside</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Customer Connect</strong> — the site for the text-marketing and loyalty platform</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>Integration Atlas</strong> — the directory of 624 processing-compatible software brands</span>
+      <span class="ticker-item"><span class="dot dot--green"></span><strong>Sales Questionnaire</strong> — sends candidates a scored 10-question sales assessment</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>Hiring HQ</strong> — runs the BambooHR pipeline, hiring and onboarding packets</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>WPI Rewards</strong> — the merchant portal for earning and redeeming points</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--green"></span><strong>Maverick Dashboard</strong> — patched to keep rendering when its live data connection is unavailable</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--blue"></span><strong>All thirteen builds</strong> — live inside this hub, each one click away</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--mint"></span><strong>New look</strong> — Apple-style icons and a launchpad-first home</span>
+      <span class="ticker-item"><span class="tag">Update</span><span class="dot dot--navy"></span><strong>Four new destinations</strong> — Integration Atlas, Sales Questionnaire, Hiring HQ and WPI Rewards just landed</span>
     </div>
   </div>
 </div>
 
 <main id="top">
 
-<!-- ================= HERO ================= -->
-<header class="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
+<!-- ================= HUB / LAUNCHPAD ================= -->
+<header class="hub" id="launchpad">
+  <div class="hub-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow reveal">Wholesale Payments · Product Suite</p>
-        <h1 class="reveal" style="transition-delay:.06s">Every tool.<br>One <span class="accent">dashboard.</span></h1>
-        <p class="hero-sub reveal" style="transition-delay:.12s">
-          Nine applications built for the Wholesale Payments team — field CRM, routing,
-          appointments, training, statements, document automation and the sites that sell it all —
-          gathered in a single, gorgeous command center.
-        </p>
-        <div class="hero-ctas reveal" style="transition-delay:.18s">
-          <a class="btn btn--primary" href="#suite">Browse the suite <span class="arrow">→</span></a>
-          <a class="btn btn--ghost" href="#directory">Open the directory</a>
-        </div>
+    <div class="hub-head reveal">
+      <p class="hub-greeting" id="hubGreeting">Welcome back</p>
+      <h1>Every tool. <span class="accent">One place.</span></h1>
+      <p>The Wholesale Payments hub — pick a destination.</p>
+    </div>
+
+    <div class="hub-controls reveal" style="transition-delay:.08s">
+      <div class="hub-search">
+        <svg aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" id="hubSearch" placeholder="Search apps &amp; sites…" aria-label="Search apps and sites" autocomplete="off">
+        <kbd>/</kbd>
       </div>
-      <div class="constellation reveal" style="transition-delay:.15s" aria-hidden="true">
-        <a class="tile" href="apps/kloser/index.html" tabindex="-1">📍<span>Kloser</span></a>
-        <a class="tile" href="apps/team-maverick/index.html" tabindex="-1">🏆<span>Maverick</span></a>
-        <a class="tile" href="apps/maverick-appointments/index.html" tabindex="-1">📅<span>Appointments</span></a>
-        <a class="tile" href="apps/appupload/public/index.html" tabindex="-1">📄<span>AppUpload</span></a>
-        <a class="tile" href="apps/agentroute/index.html" tabindex="-1">🗺️<span>Route</span></a>
-        <a class="tile" href="apps/statement-generator/index.html" tabindex="-1">🧾<span>Statements</span></a>
-        <a class="tile" href="apps/wpi-university/index.html" tabindex="-1">🎓<span>University</span></a>
-        <a class="tile" href="apps/wholesale-payments/index.html" tabindex="-1">💳<span>WPI Site</span></a>
-        <a class="tile" href="apps/customerconnect/index.html" tabindex="-1">💬<span>Connect</span></a>
+      <div class="hub-filters" role="group" aria-label="Filter by category">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="sales">Sales</button>
+        <button class="filter-chip" data-filter="field">Field</button>
+        <button class="filter-chip" data-filter="finance">Finance</button>
+        <button class="filter-chip" data-filter="training">Training</button>
+        <button class="filter-chip" data-filter="hr">HR</button>
+        <button class="filter-chip" data-filter="sites">Sites</button>
       </div>
     </div>
 
-    <div class="hero-stats">
-      <div class="stat reveal"><div class="value"><span data-count="9">0</span></div><div class="label">Applications, live in this repo</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.07s"><div class="value"><span data-count="88">0</span></div><div class="label">Screens &amp; pages across the suite</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.14s"><div class="value"><span data-count="7">0</span></div><div class="label">Install to a phone's home screen</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.21s"><div class="value"><span data-count="5">0</span></div><div class="label">Work fully offline, no signal needed</div><div class="bar"></div></div>
+    <div class="launch-grid" id="launchGrid">
+      <a class="launch reveal" href="apps/kloser/index.html" data-cat="sales" data-kw="kloser crm leads territory map routes gps pipeline field">
+        <span class="launch-ic ic--blue"><svg><use href="#i-pin"/></svg></span>
+        <span class="launch-txt"><b>Kloser CRM</b><span>Field sales CRM</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.04s" href="apps/team-maverick/index.html" data-cat="sales" data-kw="maverick dashboard rankings merchants recruiting transfers team">
+        <span class="launch-ic ic--green"><svg><use href="#i-trophy"/></svg></span>
+        <span class="launch-txt"><b>Maverick Dashboard</b><span>Team command center</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.08s" href="apps/maverick-appointments/index.html" data-cat="sales" data-kw="appointments calendar schedule agents payouts maverick">
+        <span class="launch-ic ic--mint"><svg><use href="#i-cal"/></svg></span>
+        <span class="launch-txt"><b>Maverick Appointments</b><span>Team calendar</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.12s" href="apps/appupload/public/index.html" data-cat="sales" data-kw="appupload applications upload handwriting pdf coversheet clover menu documents">
+        <span class="launch-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
+        <span class="launch-txt"><b>AppUpload</b><span>Application processor</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.16s" href="apps/agentroute/index.html" data-cat="field" data-kw="route planner zip territory stops field days wpi">
+        <span class="launch-ic ic--blue"><svg><use href="#i-map"/></svg></span>
+        <span class="launch-txt"><b>WPI Route</b><span>Route planner</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.2s" href="apps/statement-generator/index.html" data-cat="finance" data-kw="statement studio pdf bank voided check letter billing generator">
+        <span class="launch-ic ic--green"><svg><use href="#i-receipt"/></svg></span>
+        <span class="launch-txt"><b>Statement Studio</b><span>Statement generator</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.24s" href="apps/wpi-university/index.html" data-cat="training" data-kw="university training courses lessons certification learning wpi proposals">
+        <span class="launch-ic ic--mint"><svg><use href="#i-cap"/></svg></span>
+        <span class="launch-txt"><b>WPI University</b><span>Training platform</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.28s" href="apps/wholesale-payments/index.html" data-cat="sites" data-kw="wholesale payments website marketing merchant portal statements equipment">
+        <span class="launch-ic ic--navy"><svg><use href="#i-card"/></svg></span>
+        <span class="launch-txt"><b>Wholesale Payments</b><span>Company site + portal</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.32s" href="apps/customerconnect/index.html" data-cat="sites" data-kw="customer connect texting sms loyalty kiosks reviews marketing site">
+        <span class="launch-ic ic--blue"><svg><use href="#i-chat"/></svg></span>
+        <span class="launch-txt"><b>Customer Connect</b><span>Product site</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.36s" href="apps/integrations/index.html" data-cat="sales" data-kw="integrations atlas pos compatible brands directory saas fees rankings vendors flyer emv">
+        <span class="launch-ic ic--blue"><svg><use href="#i-grid"/></svg></span>
+        <span class="launch-txt"><b>Integration Atlas</b><span>POS integrations directory</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.4s" href="apps/sales-questionnaire/index.html" data-cat="hr" data-kw="sales talent questionnaire assessment hiring candidate quiz score resume recruiting interview">
+        <span class="launch-ic ic--green"><svg><use href="#i-clipboard"/></svg></span>
+        <span class="launch-txt"><b>Sales Questionnaire</b><span>Hiring assessment</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.44s" href="apps/bamboohr-automation/public/index.html" data-cat="hr" data-kw="hiring hq bamboohr hr onboarding candidates pipeline hire packet employee paperwork esign">
+        <span class="launch-ic ic--mint"><svg><use href="#i-user-plus"/></svg></span>
+        <span class="launch-txt"><b>Hiring HQ</b><span>HR hiring automation</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+      <a class="launch reveal" style="transition-delay:.48s" href="apps/wpi-rewards/index.html" data-cat="sites" data-kw="wpi rewards merchant portal points redemption gift cards catalog cart loyalty">
+        <span class="launch-ic ic--navy"><svg><use href="#i-gift"/></svg></span>
+        <span class="launch-txt"><b>WPI Rewards</b><span>Merchant rewards portal</span></span>
+        <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
+      </a>
+    </div>
+    <p class="launch-empty" id="launchEmpty">No matches — try a different search.</p>
+
+    <div class="hub-stats">
+      <div class="stat reveal"><div class="value"><span data-count="13">0</span></div><div class="label">Applications in the hub</div><div class="bar"></div></div>
+      <div class="stat reveal" style="transition-delay:.07s"><div class="value"><span data-count="103">0</span></div><div class="label">Screens &amp; pages inside</div><div class="bar"></div></div>
+      <div class="stat reveal" style="transition-delay:.14s"><div class="value"><span data-count="11">0</span></div><div class="label">Install to a phone's home screen</div><div class="bar"></div></div>
+      <div class="stat reveal" style="transition-delay:.21s"><div class="value"><span data-count="9">0</span></div><div class="label">Work fully offline</div><div class="bar"></div></div>
     </div>
   </div>
 </header>
-
-<!-- ================= SUITE GRID ================= -->
-<section class="section" id="suite">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">The Suite</p>
-      <h2>Nine products, one team</h2>
-      <p>Everything shipped for Wholesale Payments — each card opens the full, working build.
-         Scroll on for the complete feature breakdown of every app.</p>
-    </div>
-
-    <div class="grid">
-
-      <article class="card reveal">
-        <a class="card-link" href="apps/kloser/index.html" aria-label="Open Kloser CRM"></a>
-        <div class="card-top">
-          <div class="card-icon ic--blue">📍</div>
-          <div><h3>Kloser CRM</h3><span class="chip chip--blue">Sales Tools</span></div>
-        </div>
-        <p class="card-tagline">Mobile-first field CRM — leads, territory maps, routes, booking and GPS-verified visits that keep working with no signal.</p>
-        <ul class="card-feats">
-          <li>Territory map with lead lassoing, clustered pins &amp; offline tiles</li>
-          <li>Cmd+K palette over 200 leads, 925 reps and every screen</li>
-          <li>Offline-first iOS PWA with 88 device-exact launch screens</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">15 screens · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal" style="transition-delay:.05s">
-        <a class="card-link" href="apps/team-maverick/index.html" aria-label="Open Maverick Team Dashboard"></a>
-        <div class="card-top">
-          <div class="card-icon ic--green">🏆</div>
-          <div><h3>Maverick Dashboard</h3><span class="chip chip--green">Sales Tools</span></div>
-        </div>
-        <p class="card-tagline">Team Maverick's command center — rep rankings, merchant processing health, recruiting and call transfers in one place.</p>
-        <ul class="card-feats">
-          <li>Merchant health tiers with a nonprocessing watchlist</li>
-          <li>Daily GitHub Actions scrape bakes fresh data into the page</li>
-          <li>Recruiting pipeline synced from BambooHR</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">4-tab SPA · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal" style="transition-delay:.1s">
-        <a class="card-link" href="apps/maverick-appointments/index.html" aria-label="Open Team Maverick Appointments"></a>
-        <div class="card-top">
-          <div class="card-icon ic--mint">📅</div>
-          <div><h3>Maverick Appointments</h3><span class="chip chip--mint">Sales Tools</span></div>
-        </div>
-        <p class="card-tagline">A Google-Calendar-style appointment hub with live payout milestones when merchants cross volume thresholds.</p>
-        <ul class="card-feats">
-          <li>Day, Week, Month &amp; Schedule views with a live now-line</li>
-          <li>Gold payout events auto-stamped at $1K and $5K volume</li>
-          <li>18 color-coded agent calendars, toggleable like Google's</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">Calendar SPA · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal">
-        <a class="card-link" href="apps/appupload/public/index.html" aria-label="Open AppUpload"></a>
-        <div class="card-top">
-          <div class="card-icon ic--navy">📄</div>
-          <div><h3>AppUpload</h3><span class="chip chip--navy">Sales Tools</span></div>
-        </div>
-        <p class="card-tagline">Photograph a handwritten merchant application — get back a clean typed PDF, a pre-filled coversheet, even a Clover menu import.</p>
-        <ul class="card-feats">
-          <li>Claude vision reads handwriting, licenses &amp; MICR lines</li>
-          <li>Auto-detects Citizens vs. Merrick application forms</li>
-          <li>Menu photo → filled Clover inventory spreadsheet</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">Node backend · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal" style="transition-delay:.05s">
-        <a class="card-link" href="apps/agentroute/index.html" aria-label="Open WPI Route"></a>
-        <div class="card-top">
-          <div class="card-icon ic--blue">🗺️</div>
-          <div><h3>WPI Route</h3><span class="chip chip--blue">Field Operations</span></div>
-        </div>
-        <p class="card-tagline">Turns an agent's territory ZIP into a six-day merchant route with live team tracking and printable route sheets.</p>
-        <ul class="card-feats">
-          <li>Auto-builds 6 days × 25 stops from Google Places</li>
-          <li>Live team-activity ticker over Postgres realtime</li>
-          <li>Hand-built PDF route sheets — zero libraries</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">1-file app · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal" style="transition-delay:.1s">
-        <a class="card-link" href="apps/statement-generator/index.html" aria-label="Open Statement Studio"></a>
-        <div class="card-top">
-          <div class="card-icon ic--green">🧾</div>
-          <div><h3>Statement Studio</h3><span class="chip chip--green">Finance Tools</span></div>
-        </div>
-        <p class="card-tagline">Pixel-accurate merchant statements, bank statements, voided checks and verification letters — generated entirely in the browser.</p>
-        <ul class="card-feats">
-          <li>Five PDF layout engines with live keystroke preview</li>
-          <li>Imports existing statement PDFs back into the form</li>
-          <li>100% client-side — no data ever leaves the page</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">Offline PWA · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal">
-        <a class="card-link" href="apps/wpi-university/index.html" aria-label="Open WPI University"></a>
-        <div class="card-top">
-          <div class="card-icon ic--mint">🎓</div>
-          <div><h3>WPI University</h3><span class="chip chip--mint">Training</span></div>
-        </div>
-        <p class="card-tagline">The training and certification platform behind every rep — 30 courses, 228 lessons, and a full admin surface.</p>
-        <ul class="card-feats">
-          <li>Lesson player with resume, auto-complete &amp; speed memory</li>
-          <li>3,703-rep roster across 48 sales teams</li>
-          <li>Merchant savings proposal generator with real rates</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">15 pages · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal" style="transition-delay:.05s">
-        <a class="card-link" href="apps/wholesale-payments/index.html" aria-label="Open the Wholesale Payments site"></a>
-        <div class="card-top">
-          <div class="card-icon ic--navy">💳</div>
-          <div><h3>Wholesale Payments</h3><span class="chip chip--navy">Marketing Site</span></div>
-        </div>
-        <p class="card-tagline">The Apple-inspired redesign of wholesalepayments.com — with an encrypted, MID-gated merchant portal inside.</p>
-        <ul class="card-feats">
-          <li>32,255 AES-encrypted merchant records, decrypted in-browser</li>
-          <li>405 encrypted statement PDFs served client-side</li>
-          <li>Real product catalog: Valor, Dejavoo, Clover, Genius, Union</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">10 pages · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-      <article class="card reveal" style="transition-delay:.1s">
-        <a class="card-link" href="apps/customerconnect/index.html" aria-label="Open Customer Connect"></a>
-        <div class="card-top">
-          <div class="card-icon ic--blue">💬</div>
-          <div><h3>Customer Connect</h3><span class="chip chip--blue">Marketing Site</span></div>
-        </div>
-        <p class="card-tagline">Text marketing, loyalty, kiosks and reviews for local business — rebuilt as a dependency-free, 43-page static site.</p>
-        <ul class="card-feats">
-          <li>43 pages, one stylesheet, zero external requests</li>
-          <li>Animated hero phone with a live SMS loyalty thread</li>
-          <li>Mega menus, pricing toggle &amp; scroll-snap testimonials</li>
-        </ul>
-        <div class="card-foot"><span class="card-meta">43 pages · Production</span><span class="card-open">Open <span class="arrow">→</span></span></div>
-      </article>
-
-    </div>
-  </div>
-</section>
 
 <!-- ================= TICKER: NUMBERS ================= -->
 <div class="ticker ticker--stats" aria-label="Suite statistics">
@@ -717,10 +630,12 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <span class="ticker-item"><span class="dot dot--navy"></span><strong>32,255</strong> encrypted merchant records</span>
       <span class="ticker-item"><span class="dot dot--blue"></span><strong>3,703</strong> reps on the University roster</span>
       <span class="ticker-item"><span class="dot dot--green"></span><strong>925</strong> field reps in Kloser</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>624</strong> compatible brands in Integration Atlas</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>34</strong> rewards in the redemption catalog</span>
       <span class="ticker-item"><span class="dot dot--mint"></span><strong>405</strong> statement PDFs in the portal</span>
       <span class="ticker-item"><span class="dot dot--blue"></span><strong>228</strong> lessons in the training catalog</span>
       <span class="ticker-item"><span class="dot dot--green"></span><strong>200</strong> live leads on the territory map</span>
-      <span class="ticker-item"><span class="dot dot--navy"></span><strong>88</strong> screens &amp; pages across the suite</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>103</strong> screens &amp; pages across the suite</span>
       <span class="ticker-item"><span class="dot dot--mint"></span><strong>48</strong> sales teams tracked</span>
       <span class="ticker-item"><span class="dot dot--blue"></span><strong>43</strong> static pages on Customer Connect</span>
       <span class="ticker-item"><span class="dot dot--green"></span><strong>30</strong> courses in WPI University</span>
@@ -733,10 +648,12 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <span class="ticker-item"><span class="dot dot--navy"></span><strong>32,255</strong> encrypted merchant records</span>
       <span class="ticker-item"><span class="dot dot--blue"></span><strong>3,703</strong> reps on the University roster</span>
       <span class="ticker-item"><span class="dot dot--green"></span><strong>925</strong> field reps in Kloser</span>
+      <span class="ticker-item"><span class="dot dot--blue"></span><strong>624</strong> compatible brands in Integration Atlas</span>
+      <span class="ticker-item"><span class="dot dot--mint"></span><strong>34</strong> rewards in the redemption catalog</span>
       <span class="ticker-item"><span class="dot dot--mint"></span><strong>405</strong> statement PDFs in the portal</span>
       <span class="ticker-item"><span class="dot dot--blue"></span><strong>228</strong> lessons in the training catalog</span>
       <span class="ticker-item"><span class="dot dot--green"></span><strong>200</strong> live leads on the territory map</span>
-      <span class="ticker-item"><span class="dot dot--navy"></span><strong>88</strong> screens &amp; pages across the suite</span>
+      <span class="ticker-item"><span class="dot dot--navy"></span><strong>103</strong> screens &amp; pages across the suite</span>
       <span class="ticker-item"><span class="dot dot--mint"></span><strong>48</strong> sales teams tracked</span>
       <span class="ticker-item"><span class="dot dot--blue"></span><strong>43</strong> static pages on Customer Connect</span>
       <span class="ticker-item"><span class="dot dot--green"></span><strong>30</strong> courses in WPI University</span>
@@ -748,364 +665,309 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   </div>
 </div>
 
-<!-- ================= APP DETAILS ================= -->
-<section id="apps" aria-label="Inside every app">
-  <div class="wrap" style="padding-top:104px">
+<!-- ================= QUICK REFERENCE ================= -->
+<section class="section" id="reference">
+  <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">Inside the Apps</p>
-      <h2>Every feature, nothing missing</h2>
-      <p>The complete build of each application — every capability listed, every link live.</p>
+      <p class="eyebrow">Quick Reference</p>
+      <h2>Need the details?</h2>
+      <p>One line per destination — expand only if you want the full rundown.</p>
+    </div>
+
+    <div class="qr-list">
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--blue"><svg><use href="#i-pin"/></svg></span>
+          <span class="qr-txt"><b>Kloser CRM</b><span>Leads, territory map, routes, schedules and GPS-verified visits — offline-capable.</span></span>
+          <span class="qr-meta">15 screens</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/kloser/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Full-bleed territory map with Area Search, Biz Search, drag-to-select lassoing and clustered pins — Google Maps with a key, or the built-in tile map offline</li>
+            <li>Installable iOS PWA that cold-launches with zero network, with a Home Screen badge for overdue items</li>
+            <li>Cmd+K command palette across every page, 200 leads, 925 reps and every activity</li>
+            <li>Lead list with filters, sort, bulk actions, CSV export and a detail drawer</li>
+            <li>Ten-column pipeline board, KPIs, conversion funnel and rep leaderboard</li>
+            <li>Route builder with stop progress and field sessions</li>
+            <li>Rep Schedule month calendar plus the weekly availability matrix</li>
+            <li>GPS location-verification report with flagged reps</li>
+            <li>Google Calendar + Gmail connect (optional)</li>
+            <li>Notification center driven by the data — overdue, untouched, QA-waiting</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--green"><svg><use href="#i-trophy"/></svg></span>
+          <span class="qr-txt"><b>Maverick Dashboard</b><span>Rep rankings, merchant health, pended deals, recruiting and call transfers.</span></span>
+          <span class="qr-meta">4 tabs</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/team-maverick/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Monthly rep rankings with deals, volume and processing ratio, plus momentum vs last month</li>
+            <li>Merchant health tiers (White/Green/Yellow/Red) with a nonprocessing watchlist</li>
+            <li>Searchable all-merchants table with inline and bulk edit, backed by Supabase</li>
+            <li>Pended deals tracker with underwriter comments</li>
+            <li>Recruiting pipeline synced from BambooHR, with training and paperwork boards</li>
+            <li>RingCentral call-transfer log and GMASS email-reply tracking</li>
+            <li>Google Sheet transfer sync with per-row notes</li>
+            <li>Click-to-call, click-to-text and mailto on every contact</li>
+            <li>Daily GitHub Actions data sync and automated stop-processing email alerts</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--mint"><svg><use href="#i-cal"/></svg></span>
+          <span class="qr-txt"><b>Maverick Appointments</b><span>Every agent's appointments by day, week, month or schedule digest.</span></span>
+          <span class="qr-meta">4 views</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/maverick-appointments/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Day, Week, Month and Schedule views with keyboard shortcuts</li>
+            <li>Gold payout events stamped automatically at $1,000 and $5,000 merchant volume</li>
+            <li>Live itinerary ticker, clickable through to event details</li>
+            <li>18 color-coded agent calendars, toggleable like Google Calendar</li>
+            <li>Time-grid views with a live now-line and overlap layout</li>
+            <li>Search across every appointment</li>
+            <li>Google Apps Script sync with automatic fallback and 5-minute refresh</li>
+            <li>Installable PWA with offline shell and cached data</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
+          <span class="qr-txt"><b>AppUpload</b><span>Photograph a handwritten application — get back a typed PDF and coversheet.</span></span>
+          <span class="qr-meta">Node backend</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/appupload/public/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Auto-detects Citizens vs Merrick application forms with confidence scoring</li>
+            <li>Claude vision reads the handwriting, the license and the voided check's MICR line</li>
+            <li>Fills the typed application PDF with crisp selectable text, anchored to the form's boxes</li>
+            <li>Generates the pre-filled Required Set Up Form coversheet</li>
+            <li>Review-and-edit every field before generating</li>
+            <li>Menu → Clover: photograph a menu, download the filled inventory spreadsheet</li>
+            <li>Drag-and-drop or camera capture, up to 15 images</li>
+            <li>Everything processed in memory — documents are never stored</li>
+          </ul>
+          <p class="qr-note">Processing runs on its own server: <code>cd apps/appupload &amp;&amp; npm install &amp;&amp; npm start</code></p>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--blue"><svg><use href="#i-map"/></svg></span>
+          <span class="qr-txt"><b>WPI Route</b><span>A six-day merchant route from a territory ZIP, with live team tracking.</span></span>
+          <span class="qr-meta">1-file app</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/agentroute/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Auto-generates 6 days × up to 25 stops from Google Places, filtered to small businesses</li>
+            <li>Team accounts with a 6-character join code and per-team security</li>
+            <li>Live team-activity ticker over Postgres realtime</li>
+            <li>Stop cards with tap-to-call, tap-to-navigate and owner contacts</li>
+            <li>One-tap notes that time-stamp and advance the route</li>
+            <li>Copyable day reports and a PDF export of all six days</li>
+            <li>Paste-import of your own prospect list</li>
+            <li>Installable iOS PWA with offline shell and light/dark icons</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--green"><svg><use href="#i-receipt"/></svg></span>
+          <span class="qr-txt"><b>Statement Studio</b><span>Merchant statements, bank statements, voided checks and letters as PDFs.</span></span>
+          <span class="qr-meta">5 engines</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/statement-generator/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Voided Check, Card Processing Statement, Bank Statement, Bank Letter and Billing Statement styles</li>
+            <li>Live PDF preview that regenerates as you type</li>
+            <li>Import an existing statement PDF and auto-fill every field</li>
+            <li>Pixel-accurate layouts, down to the print-house barcodes and marks</li>
+            <li>Upload a logo or check image to lift branding onto the output</li>
+            <li>Fee lines auto-calculate with totals, tax and amount due</li>
+            <li>Form autosaves locally; everything stays on the device</li>
+            <li>Works offline as an installable PWA</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--mint"><svg><use href="#i-cap"/></svg></span>
+          <span class="qr-txt"><b>WPI University</b><span>30 courses and 228 lessons of rep training, plus the admin surface.</span></span>
+          <span class="qr-meta">15 pages</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/wpi-university/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Four training tracks with search, filters and sort</li>
+            <li>Lesson player with resume, auto-complete and saved playback speed</li>
+            <li>Cmd+K palette across courses, lessons, people and pages</li>
+            <li>Merchant savings proposal generator quoting real interchange rates</li>
+            <li>3,703-rep roster across 48 teams with completion history</li>
+            <li>Offline PWA with per-course video downloads</li>
+            <li>Billing panel with invoices and reconciliation</li>
+            <li>Reports, activity feeds and a full admin surface</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--navy"><svg><use href="#i-card"/></svg></span>
+          <span class="qr-txt"><b>Wholesale Payments</b><span>The public site — solutions, equipment, careers — with the merchant portal.</span></span>
+          <span class="qr-meta">10 pages</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/wholesale-payments/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Merchant Portal sign-in gated by credentials plus Merchant ID</li>
+            <li>32,255 encrypted merchant records, decrypted only in the browser</li>
+            <li>405 encrypted statement PDFs, downloadable per merchant</li>
+            <li>Merchant dashboard with sales stats and statement history</li>
+            <li>Callback, replacement-terminal and receipt-paper request cards</li>
+            <li>Real hardware catalog: Valor, Dejavoo, Clover, Genius, Union POS</li>
+            <li>Seven marketing pages with scroll reveals and an industry ticker</li>
+            <li>Quote and contact forms ready to wire to a CRM</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--blue"><svg><use href="#i-chat"/></svg></span>
+          <span class="qr-txt"><b>Customer Connect</b><span>The product site for texting, loyalty, kiosks and reviews.</span></span>
+          <span class="qr-meta">43 pages</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/customerconnect/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>43 pages across 7 solutions and 10 products, plus pricing, blog and legal</li>
+            <li>Animated hero phone with a live SMS loyalty thread</li>
+            <li>Mega menus with keyboard navigation and a mobile drawer</li>
+            <li>Pricing toggle, testimonials carousel and count-up stats</li>
+            <li>Book-a-Demo and Sign-In with validated forms</li>
+            <li>14 blog articles carried over from the live site</li>
+            <li>Zero external requests, zero dependencies</li>
+            <li>Installable via web manifest</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--blue"><svg><use href="#i-grid"/></svg></span>
+          <span class="qr-txt"><b>Integration Atlas</b><span>The searchable directory of every processing-compatible software brand.</span></span>
+          <span class="qr-meta">624 brands</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/integrations/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Instant search over 624 brands (press / to focus) plus category pills with counts</li>
+            <li>Solution-type filters — Point of Sale, Virtual, Gateway, API — and sort by rank, name or category</li>
+            <li>Per-brand detail sheet: 1–10 rank meter, SaaS fees with verification source, merchant benefits</li>
+            <li>Tap-to-dial vendor contacts on 398 brands, plus email and website links</li>
+            <li>Conversion and compatibility notes: EMV terminals, gift cards, cash discount, hardware costs</li>
+            <li>Client-side PDF flyer generator personalized with merchant name and AE contact</li>
+            <li>Installable PWA with offline support</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--green"><svg><use href="#i-clipboard"/></svg></span>
+          <span class="qr-txt"><b>Sales Questionnaire</b><span>Send candidates a scored sales assessment; results go straight to the manager.</span></span>
+          <span class="qr-meta">Static PWA</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/sales-questionnaire/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>10-question situational-judgment quiz scored 0–100 across 5 sales competencies with 4 talent tiers</li>
+            <li>Manager dashboard with candidate roster and Not sent / Sent / Completed tracking</li>
+            <li>PDF resume upload that parses name, email and phone on-device</li>
+            <li>Team picker that auto-fills the results-delivery email from preset team leads</li>
+            <li>Invite and results emails via EmailJS or a mailto fallback</li>
+            <li>Candidates only see a thank-you screen — never their score</li>
+            <li>Reports list with each completion's score, tier and time-to-complete</li>
+            <li>Installable PWA with offline precache and auto-saved quiz progress</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--mint"><svg><use href="#i-user-plus"/></svg></span>
+          <span class="qr-txt"><b>Hiring HQ</b><span>The BambooHR pipeline: candidates, one-click hires and onboarding packets.</span></span>
+          <span class="qr-meta">Node backend</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/bamboohr-automation/public/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>Candidate pipeline board grouped by BambooHR hiring stages with one-click stage moves</li>
+            <li>Resume upload (PDF/DOCX/TXT) with automatic name, email and phone extraction</li>
+            <li>One-click hire that creates the BambooHR employee record</li>
+            <li>One-button onboarding packet: 7 personalized PDFs generated, emailed and filed on the record</li>
+            <li>Six-step new-hire e-sign paperwork portal with signature capture</li>
+            <li>Employee directory synced from BambooHR with new-hire flags</li>
+            <li>Demo mode with sample candidates when no credentials are configured</li>
+            <li>Installable PWA with an optional password gate</li>
+          </ul>
+          <p class="qr-note">Runs on its own server: <code>cd apps/bamboohr-automation &amp;&amp; npm install &amp;&amp; npm start</code></p>
+        </details>
+      </div>
+
+      <div class="qr reveal">
+        <div class="qr-row">
+          <span class="qr-ic ic--navy"><svg><use href="#i-gift"/></svg></span>
+          <span class="qr-txt"><b>WPI Rewards</b><span>Merchants track points earned on processing and redeem them for rewards.</span></span>
+          <span class="qr-meta">10 pages</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/wpi-rewards/index.html">Open</a></span>
+        </div>
+        <details>
+          <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
+          <ul class="qr-feats">
+            <li>34-item rewards catalog with categories, search, sort and a "Within my points" toggle</li>
+            <li>Working cart with points math, an insufficient-points guard and demo checkout into Order History</li>
+            <li>Balance donut and points-over-time charts with hover tooltips — no chart library</li>
+            <li>Earnings outlook with 3/6/12-month projections from the transaction snapshot</li>
+            <li>Page-to-page View Transitions, scroll reveals and count-up numerals</li>
+            <li>Persistent dark/light theme with system default</li>
+            <li>Installable, offline-capable PWA</li>
+            <li>Hands-free animated demo walkthrough page</li>
+          </ul>
+        </details>
+      </div>
+
     </div>
   </div>
-
-  <!-- 01 · Kloser CRM -->
-  <article class="app-detail" id="app-kloser">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>01</em> / 09 · SALES TOOLS</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--blue">📍</div>
-          <h3>Kloser CRM</h3>
-        </div>
-        <p class="detail-purpose">A ground-up redesign of the field sales CRM, rebuilt as an installable offline-first PWA spanning 390px phones to 1600px desktops. Reps work their book of 200 leads across a territory map; managers run the leaderboard, funnel and GPS verification across 925 reps.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Vanilla JS · ES modules</span><span class="badge">PWA + Service Worker</span>
-          <span class="badge">Hash-router SPA</span><span class="badge">Custom SVG charts</span>
-          <span class="badge">Custom tile map</span><span class="badge">Google Maps (optional)</span>
-          <span class="badge">Google OAuth (optional)</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">15 screens in one SPA</div>
-          <div class="mini-stat">88 iOS launch screens</div>
-          <div class="mini-stat">200 leads · 925 reps of real data</div>
-          <div class="mini-stat">Works with or without a Maps key</div>
-        </div>
-        <a class="btn btn--primary" href="apps/kloser/index.html">Launch Kloser CRM <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Full-bleed territory map with Area Search, Biz Search, drag-to-select lead lassoing, clustered pins and lead detail — Google Maps with a key, or a from-scratch Web Mercator tile map offline</li>
-        <li>Installable iOS PWA that cold-launches with zero network: 54-entry precached shell, 88 device-exact launch screens, dark-mode icons and a Home Screen badge showing the overdue count</li>
-        <li>Cmd+K command palette indexing every page, action, all 200 leads, all 925 reps and every activity</li>
-        <li>Lead list with stage rail, filters written into the URL hash, sort, pagination, bulk actions, column chooser, CSV export and a detail drawer</li>
-        <li>Ten-column rep pipeline stage board plus dashboard KPIs, conversion funnel and per-rep leaderboard</li>
-        <li>Route builder with planned routes, stop progress, completed runs and field sessions</li>
-        <li>Rep Schedule month calendar merging the activity log and GPS records, filterable by rep and type, with the 925-rep weekly availability matrix</li>
-        <li>GPS location-verification report with flagged reps and per-record detail</li>
-        <li>Google account connect pulling Calendar events into the schedule and pushing CRM appointments back, plus Gmail-send scope for the Email screen</li>
-        <li>Data-derived notification center — overdue activities, untouched leads, QA-waiting cards, sub-target verification rates — with persistent read state</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 02 · Maverick Dashboard -->
-  <article class="app-detail" id="app-maverick">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>02</em> / 09 · SALES TOOLS</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--green">🏆</div>
-          <h3>Maverick Dashboard</h3>
-        </div>
-        <p class="detail-purpose">Operations dashboard for Team Maverick. Leads and reps monitor monthly rankings and deal volume, watch which signed merchants are actually processing, work pended deals, and run the recruiting pipeline — with data auto-synced daily by GitHub Actions.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Single-file SPA</span><span class="badge">Supabase DB + Edge Functions</span>
-          <span class="badge">GitHub Actions daily sync</span><span class="badge">Cloudflare Worker</span>
-          <span class="badge">Nodemailer alerts</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">4 tabs: Rankings · Merchants · Recruiting · RGA's</div>
-          <div class="mini-stat">Daily scrape + Supabase backup to git</div>
-          <div class="mini-stat">6 Supabase tables · 3 Edge Function syncs</div>
-          <div class="mini-stat">White/Green/Yellow/Red health scoring</div>
-        </div>
-        <a class="btn btn--primary" href="apps/team-maverick/index.html">Launch Maverick Dashboard <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Sales rep rankings with deals, volume, and processing ratio per month, plus month/year selector and this-month-vs-last momentum view</li>
-        <li>Merchant health tiers (White/Green/Yellow/Red) auto-assigned from transaction count and volume, with nonprocessing-merchant watchlist and top-5-by-volume table</li>
-        <li>Searchable all-merchants table (MID, rep, owner, phone, email, equipment, status) with inline edit, bulk edit, and merchant detail modal backed by Supabase</li>
-        <li>Pended deals tracker showing pend category, sub-category, underwriter comments, and pend date</li>
-        <li>Recruiting pipeline: BambooHR sync via Cloudflare Worker proxy, add/edit/bulk-edit hires, training and paperwork status boards, move-to-team roster</li>
-        <li>RingCentral call-transfer log with per-call notes, synced through a Supabase Edge Function</li>
-        <li>GMASS email-reply tracking for Account Manager recruiting campaigns with week/date-range filters</li>
-        <li>Google Sheet transfer sync with editable per-row notes</li>
-        <li>Click-to-call, click-to-text, and mailto contact links on every merchant and hire</li>
-        <li>Automated email alerts when merchants stop processing, with escalation tracking committed to git</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 03 · Maverick Appointments -->
-  <article class="app-detail" id="app-appointments">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>03</em> / 09 · SALES TOOLS</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--mint">📅</div>
-          <h3>Maverick Appointments</h3>
-        </div>
-        <p class="detail-purpose">A branded appointment calendar for Team Maverick — the whole team sees every agent's merchant appointments by day, week, month or schedule digest, pulled live from a Google Apps Script feed, with gold payout events stamped when merchants cross volume milestones.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Zero dependencies</span><span class="badge">PWA + Service Worker</span>
-          <span class="badge">Google Apps Script sync</span><span class="badge">JSONP fallback</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">1,866-line hand-rolled calendar engine</div>
-          <div class="mini-stat">Offline app shell + data cache</div>
-          <div class="mini-stat">$1K / $5K payout automation</div>
-          <div class="mini-stat">No build step, hosts anywhere</div>
-        </div>
-        <a class="btn btn--primary" href="apps/maverick-appointments/index.html">Launch Appointments <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Four calendar views — Day, Week, Month, Schedule — with keyboard shortcuts (D/W/M/A, T, arrows, /, ?)</li>
-        <li>Merchant volume tracking that auto-adds gold payout events when a merchant crosses $1,000 and $5,000</li>
-        <li>Live scrolling ticker of today's itinerary and payouts, clickable through to event details</li>
-        <li>Per-agent color-coded calendars for an 18-agent roster, toggleable like Google Calendar's "My calendars"</li>
-        <li>Time-grid Day/Week views with a live now-line and side-by-side layout for overlapping appointments</li>
-        <li>Search across every appointment — title, agent, location, notes, status</li>
-        <li>Google Apps Script sync with automatic JSONP fallback when CORS blocks fetch, plus 5-minute auto-refresh</li>
-        <li>Sidebar mini-month navigator and "Today at a glance" stats panel</li>
-        <li>Installable PWA with offline app shell and last-loaded data cache</li>
-        <li>Settings modal with team setup link sharing, demo data mode, and Auto/Light/Dark theme</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 04 · AppUpload -->
-  <article class="app-detail" id="app-appupload">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>04</em> / 09 · SALES TOOLS</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--navy">📄</div>
-          <h3>AppUpload</h3>
-        </div>
-        <p class="detail-purpose">Document automation for merchant-services agents. Photograph a handwritten application, the voided check and the driver's license — Claude's vision model reads the handwriting and the server returns a typed application PDF plus a pre-filled coversheet. A second workflow turns menu photos into Clover inventory imports.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge badge--server">Runs with its Node server</span>
-          <span class="badge">Node / Express</span><span class="badge">Claude vision</span>
-          <span class="badge">pdf-lib</span><span class="badge">ExcelJS</span><span class="badge">Playwright tests</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">Reads handwriting, checks &amp; licenses</div>
-          <div class="mini-stat">Citizens &amp; Merrick forms auto-detected</div>
-          <div class="mini-stat">Documents processed in memory, never stored</div>
-          <div class="mini-stat">Mock mode previews the flow with no API key</div>
-        </div>
-        <a class="btn btn--primary" href="apps/appupload/public/index.html">Open AppUpload <span class="arrow">→</span></a>
-        <p class="detail-note">Full processing needs its Express backend: <strong>cd apps/appupload &amp;&amp; npm install &amp;&amp; npm start</strong>. The interface itself opens right here.</p>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Auto-detects which handwritten form was photographed — Citizens (Priority/Citizens Bank) or Merrick Bank — with confidence scoring</li>
-        <li>Claude vision extraction that pulls each value from the most authoritative source: owner identity from the driver's license, bank/routing/account numbers from the voided check's MICR line, everything else from the application</li>
-        <li>Fills encrypted application PDFs by compositing prebuilt page images with a crisp selectable-text overlay, anchored to preprinted $ and % symbols</li>
-        <li>Generates a pre-filled coversheet and downloads a combined packet, application only, or coversheet only</li>
-        <li>Full review-and-edit form for every extracted field — owners, business, fees, volumes — before generating, including blank or unreadable fields</li>
-        <li>Menu-to-Clover workflow: photograph a restaurant menu and download the Clover inventory-import .xlsx filled with items, prices and categories</li>
-        <li>Editable menu table with add/remove rows and a restaurant-name field that names the spreadsheet</li>
-        <li>Drag-and-drop or camera-capture uploader (up to 15 images) with client-side downscaling and thumbnail previews</li>
-        <li>In-memory processing — uploaded documents are never stored on disk</li>
-        <li>Demo mock mode that previews the entire flow without an Anthropic API key</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 05 · WPI Route -->
-  <article class="app-detail" id="app-route">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>05</em> / 09 · FIELD OPERATIONS</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--blue">🗺️</div>
-          <h3>WPI Route</h3>
-        </div>
-        <p class="detail-purpose">The team field-route planner. Managers sign in, create a team and share a 6-character join code; each agent gets a territory ZIP and a six-day route of merchant stops. Notes roll in live on the team ticker while managers export day reports and PDF route sheets.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Single-file app</span><span class="badge">Supabase realtime + RLS</span>
-          <span class="badge">Netlify Functions</span><span class="badge">Google Places API</span>
-          <span class="badge">PWA + Service Worker</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">Entire app in one 2,238-line file</div>
-          <div class="mini-stat">Live team sync via Postgres realtime</div>
-          <div class="mini-stat">Hand-built PDF exporter, zero libraries</div>
-          <div class="mini-stat">Installable iOS PWA with offline shell</div>
-        </div>
-        <a class="btn btn--primary" href="apps/agentroute/index.html">Launch WPI Route <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Auto-generates a full 6-day route (up to 25 merchants/day, checkpoints every 5 stops) from an agent's territory ZIP via Google Places, filtered to small businesses under a 150-review cap</li>
-        <li>Best-effort scrapes each prospect's public website for a contact email and owner name</li>
-        <li>Team accounts on Supabase: email/password sign-in, create-a-team or join via 6-character code, row-level security per team</li>
-        <li>Silent live team sync via Postgres realtime, with per-team device caching and offline edits merged newest-wins</li>
-        <li>Animated live team-activity ticker above the header showing worked stops, deals, and checkpoints</li>
-        <li>Merchant stop cards with tap-to-call phone, tap-to-open Maps address, and tappable owner contact</li>
-        <li>One-tap notes that stamp the time, mark the stop worked, advance the Up-next marker, and feed day/week tallies</li>
-        <li>Copyable day report plus a hand-built PDF export of all six days — raw PDF written in JavaScript, no library</li>
-        <li>Manual paste-import of one business per line with owner name, second phone, and email auto-detected</li>
-        <li>Installable iOS PWA with offline shell, safe-area layout, and light/dark app icons that follow the in-app theme toggle</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 06 · Statement Studio -->
-  <article class="app-detail" id="app-statements">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>06</em> / 09 · FINANCE TOOLS</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--green">🧾</div>
-          <h3>Statement Studio</h3>
-        </div>
-        <p class="detail-purpose">A self-contained tool that builds financial-document PDFs — card-processing statements, bank statements, voided checks and verification letters — from form input, with a live preview that regenerates as you type. All data stays on the device.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Offline PWA</span><span class="badge">pdf-lib + fontkit</span>
-          <span class="badge">pdf.js import</span><span class="badge">Vendored — zero CDN calls</span>
-          <span class="badge">localStorage autosave</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">5 PDF layout engines</div>
-          <div class="mini-stat">Live preview on every keystroke</div>
-          <div class="mini-stat">100% client-side — nothing leaves the page</div>
-          <div class="mini-stat">Round-trips reference PDFs exactly</div>
-        </div>
-        <a class="btn btn--primary" href="apps/statement-generator/index.html">Launch Statement Studio <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Four switchable document styles — Voided Check, Card Processing Statement, Bank Statement, and Bank Letter — plus a legacy Billing Statement kept for import compatibility</li>
-        <li>Live PDF preview that regenerates on every keystroke, with a clean statement filename convention</li>
-        <li>Import an existing statement PDF and auto-populate every form field — auto-detects billing, card-processing and bank statement styles</li>
-        <li>Card Processing Statement with CMYK-banded funding-by-batch tables, per-card-type summaries, grouped fee schedule, and tax-reportable sales</li>
-        <li>Print-house artifacts reproduced: Intelligent Mail (IMb) barcode, OMR marks, and control codes</li>
-        <li>Voided check engine with MICR line, amount box, signature line and prominent VOID marking for direct-deposit/ACH verification</li>
-        <li>Bank Statement engine: masthead, account-summary box, Deposits &amp; Credits / Withdrawals &amp; Debits / Checks Paid tables with computed daily-balance summary</li>
-        <li>Bank verification letter with letterhead, account-holder block, verification body, and signature block</li>
-        <li>Upload a check, letter, or logo image — normalized to PNG — to lift branding onto generated output</li>
-        <li>Live fee arithmetic: line items auto-calculate from Volume×Rate or Fee×Count with category totals, tax and Amount Due recomputed live; the form autosaves to localStorage</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 07 · WPI University -->
-  <article class="app-detail" id="app-university">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>07</em> / 09 · TRAINING</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--mint">🎓</div>
-          <h3>WPI University</h3>
-        </div>
-        <p class="detail-purpose">The LMS that trains and certifies every Wholesale Payments rep, rebuilt as a fast, animated static app. Reps work a 30-course, 228-lesson catalog; administrators manage the 3,703-rep roster, learning plans, invitations, reports and billing — plus sales tooling like the savings proposal generator.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Offline PWA</span><span class="badge">View Transitions API</span>
-          <span class="badge">localStorage progress</span><span class="badge">No build step</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">15 pages, zero dependencies</div>
-          <div class="mini-stat">Per-course video downloads offline</div>
-          <div class="mini-stat">3,703 reps · 48 sales teams</div>
-          <div class="mini-stat">199 lessons · 25.2 hours of video</div>
-        </div>
-        <a class="btn btn--primary" href="apps/wpi-university/index.html">Launch WPI University <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Catalog of 30 courses / 228 lessons in four tracks — Certification, Foundations, Selling, Tools — with filters, lesson-title search and four sort orders</li>
-        <li>Lesson player for Vimeo, YouTube, Wistia or self-hosted video with saved resume position, auto-complete at 95%, persistent playback speed and full keyboard control</li>
-        <li>Cmd+K command palette with prefix, substring and subsequence matching across all courses, lessons, people and pages</li>
-        <li>Merchant savings proposal generator with a shared quote engine blending real interchange programs, network dues and markup, with print / save-as-PDF output</li>
-        <li>Interchange pricing screens fed from the processor's published Interchange Rate/Fee Schedule, regenerated by an importer</li>
-        <li>Real roster of 3,703 reps across 48 sales teams with per-lesson completion history, search, status and team filters, paged 100 at a time</li>
-        <li>Offline PWA: precached app shell, per-course video downloads, storage-quota view and per-course removal in Settings</li>
-        <li>Billing panel on real records — 50 invoices and 58 charge attempts with linked PDF invoices, exact reconciliation and decline-cluster flags</li>
-        <li>Reports with daily activity, a lessons-completed log and completion by course; dashboard with live activity feed, weekly volume chart and resume cards</li>
-        <li>Admin surface: single/bulk invitations, learning plans, appearance settings, API keys, SSO, webhooks and data retention</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 08 · Wholesale Payments site -->
-  <article class="app-detail" id="app-wpi-site">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>08</em> / 09 · MARKETING SITE</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--navy">💳</div>
-          <h3>Wholesale Payments</h3>
-        </div>
-        <p class="detail-purpose">The complete Apple-inspired redesign of wholesalepayments.com. Prospective merchants browse solutions, equipment, careers and contact pages; existing merchants sign in to a portal guarding 32,255 client-side-encrypted records for statements and service requests.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Web Crypto API (AES-GCM)</span><span class="badge">PWA manifest</span>
-          <span class="badge">Zero-build static site</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">10 HTML pages</div>
-          <div class="mini-stat">32,255 AES-encrypted merchant records</div>
-          <div class="mini-stat">405 encrypted statement PDFs</div>
-          <div class="mini-stat">Real vendor hardware catalog</div>
-        </div>
-        <a class="btn btn--primary" href="apps/wholesale-payments/index.html">Launch the WPI Site <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>Merchant Portal sign-in gated by username/password (SHA-256 checked) plus Merchant ID, with per-MID AES-GCM encryption so records only decrypt with the correct MID</li>
-        <li>32,255 encrypted merchant records sharded across 256 JSON files, looked up and decrypted entirely in the browser via the Web Crypto API</li>
-        <li>Statement PDFs (405 files) stored AES-GCM encrypted and decrypted client-side at download time</li>
-        <li>Merchant dashboard with stat tiles — total sales, transactions, average ticket, amount charged — and a downloadable statement history table</li>
-        <li>Self-service request cards: callback scheduling, replacement terminal pre-filled with that merchant's actual equipment on file, and receipt paper orders</li>
-        <li>Products catalog covering real vendor hardware — Valor VL550, Dejavoo P1, Clover Station Duo, Genius POS, Union POS — and SaaS integrations</li>
-        <li>Seven marketing pages: home, about, processing solutions, Wholesale Advantage, equipment, careers with application form, and contact with quote form</li>
-        <li>Scroll-reveal animations, easeOutExpo count-up stats, and an infinite industry ticker, all honoring prefers-reduced-motion</li>
-        <li>Floating live-chat widget and quote/contact forms, ready to wire to a CRM</li>
-        <li>Installable web app manifest with full icon set and brand theming from the official logo palette</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- 09 · Customer Connect -->
-  <article class="app-detail" id="app-connect">
-    <div class="wrap detail-grid">
-      <div class="detail-side reveal">
-        <p class="detail-num"><em>09</em> / 09 · MARKETING SITE</p>
-        <div class="detail-head">
-          <div class="detail-icon ic--blue">💬</div>
-          <h3>Customer Connect</h3>
-        </div>
-        <p class="detail-purpose">The marketing site for Customer Connect by Wholesale Payments — a text-marketing, loyalty, kiosk and reputation platform serving 10,000+ merchants. The WordPress original is replaced by 43 hand-tuned pages, one stylesheet and one script.</p>
-        <div class="badges">
-          <span class="badge badge--status">Production Ready</span>
-          <span class="badge">Zero JS dependencies</span><span class="badge">Inline SVG icons</span>
-          <span class="badge">IntersectionObserver motion</span><span class="badge">Python page generator</span>
-        </div>
-        <div class="mini-stats">
-          <div class="mini-stat">43 static HTML pages</div>
-          <div class="mini-stat">Zero external requests</div>
-          <div class="mini-stat">80+ inline SVG icons</div>
-          <div class="mini-stat">Installable PWA icon set</div>
-        </div>
-        <a class="btn btn--primary" href="apps/customerconnect/index.html">Launch Customer Connect <span class="arrow">→</span></a>
-      </div>
-      <ul class="detail-feats reveal" style="transition-delay:.1s">
-        <li>43 pages covering 7 solutions and 10 products — SMS/MMS, loyalty, kiosks, reviews, 1-to-1 conversations, recruiting, analytics — plus pricing, blog, legal, and kiosk troubleshooting</li>
-        <li>Custom motion system: scroll reveals with stagger, hero word rotator, count-up stats, spring tab rail, scroll-snap testimonial carousel, cursor-tracked card glow — all gated behind prefers-reduced-motion</li>
-        <li>Animated hero phone mock with a live SMS loyalty conversation thread</li>
-        <li>Mega menus with hover intent, keyboard navigation and Escape handling, plus a mobile drawer</li>
-        <li>Pricing page with animated monthly/annual billing toggle and sliding knob</li>
-        <li>Book-a-Demo and Sign-In pages with client-side validated forms</li>
-        <li>14 blog articles plus privacy policy and merchant terms carried over verbatim from the live site</li>
-        <li>Installable PWA via web manifest with maskable icons and home-screen branding</li>
-        <li>Brand system sampled programmatically from the Wholesale Payments logo, Apple system type stack, 80+ inline SVG icons</li>
-        <li>Python generator rebuilds every page, sitemap.xml and robots.txt from cached WordPress content</li>
-      </ul>
-    </div>
-  </article>
 </section>
 
 <!-- ================= AT A GLANCE ================= -->
@@ -1113,60 +975,34 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">At a Glance</p>
-      <h2>The portfolio in numbers</h2>
-      <p>What nine production builds add up to.</p>
-    </div>
-
-    <div class="glance-grid">
-      <div class="stat reveal"><div class="value"><span data-count="74">0</span></div><div class="label">Hand-tuned HTML files</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.06s"><div class="value"><span data-count="32255">0</span></div><div class="label">Encrypted merchant records</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.12s"><div class="value"><span data-count="228">0</span></div><div class="label">Lessons in the training catalog</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.18s"><div class="value"><span data-count="5">0</span></div><div class="label">Product categories covered</div><div class="bar"></div></div>
+      <h2>The hub in numbers</h2>
     </div>
 
     <div class="chart reveal">
-      <h3>Screens &amp; pages per product</h3>
-      <p class="sub">Distinct screens or pages shipped in each build</p>
+      <h3>Screens &amp; pages per destination</h3>
+      <p class="sub">Distinct screens or pages inside each build</p>
       <div class="chart-rows" role="table" aria-label="Screens and pages per product">
         <div class="chart-row" role="row"><span class="name" role="rowheader">Customer Connect</span><span class="track"><span class="fill" data-width="100"></span></span><span class="val" role="cell">43</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">Kloser CRM</span><span class="track"><span class="fill" data-width="35"></span></span><span class="val" role="cell">15</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">WPI University</span><span class="track"><span class="fill" data-width="35"></span></span><span class="val" role="cell">15</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">Wholesale Payments</span><span class="track"><span class="fill" data-width="23"></span></span><span class="val" role="cell">10</span></div>
+        <div class="chart-row" role="row"><span class="name" role="rowheader">WPI Rewards</span><span class="track"><span class="fill" data-width="23"></span></span><span class="val" role="cell">10</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">Maverick Dashboard</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">Maverick Appointments</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">Statement Studio</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">WPI Route</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">AppUpload</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
+        <div class="chart-row" role="row"><span class="name" role="rowheader">Sales Questionnaire</span><span class="track"><span class="fill" data-width="5"></span></span><span class="val" role="cell">2</span></div>
+        <div class="chart-row" role="row"><span class="name" role="rowheader">Hiring HQ</span><span class="track"><span class="fill" data-width="5"></span></span><span class="val" role="cell">2</span></div>
+        <div class="chart-row" role="row"><span class="name" role="rowheader">Integration Atlas</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= DIRECTORY ================= -->
-<section class="section--tight directory" id="directory" style="padding:84px 0">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Directory</p>
-      <h2>Jump straight in</h2>
-      <p>Every build in this repository, one click away.</p>
-    </div>
-    <div class="dir-grid reveal">
-      <a class="dir-item" href="apps/kloser/index.html"><span class="di ic--blue">📍</span><span><b>Kloser CRM</b><span>apps/kloser</span></span></a>
-      <a class="dir-item" href="apps/team-maverick/index.html"><span class="di ic--green">🏆</span><span><b>Maverick Dashboard</b><span>apps/team-maverick</span></span></a>
-      <a class="dir-item" href="apps/maverick-appointments/index.html"><span class="di ic--mint">📅</span><span><b>Maverick Appointments</b><span>apps/maverick-appointments</span></span></a>
-      <a class="dir-item" href="apps/appupload/public/index.html"><span class="di ic--navy">📄</span><span><b>AppUpload</b><span>apps/appupload</span></span></a>
-      <a class="dir-item" href="apps/agentroute/index.html"><span class="di ic--blue">🗺️</span><span><b>WPI Route</b><span>apps/agentroute</span></span></a>
-      <a class="dir-item" href="apps/statement-generator/index.html"><span class="di ic--green">🧾</span><span><b>Statement Studio</b><span>apps/statement-generator</span></span></a>
-      <a class="dir-item" href="apps/wpi-university/index.html"><span class="di ic--mint">🎓</span><span><b>WPI University</b><span>apps/wpi-university</span></span></a>
-      <a class="dir-item" href="apps/wholesale-payments/index.html"><span class="di ic--navy">💳</span><span><b>Wholesale Payments</b><span>apps/wholesale-payments</span></span></a>
-      <a class="dir-item" href="apps/customerconnect/index.html"><span class="di ic--blue">💬</span><span><b>Customer Connect</b><span>apps/customerconnect</span></span></a>
-    </div>
-    <p class="dir-note reveal">
-      <strong>Serving this dashboard:</strong> host the repository on any static server —
-      for example <code>python3 -m http.server 8000</code> from the repo root, then open
-      <code>http://localhost:8000</code>. Kloser CRM loads its datasets over HTTP, so use a server rather than
-      opening files directly. AppUpload's document processing additionally needs its Node backend
-      (<code>cd apps/appupload &amp;&amp; npm install &amp;&amp; npm start</code>).
+    <p class="serve-note reveal">
+      <strong>Hosting note:</strong> serve this repository from any static host
+      (<code>python3 -m http.server 8000</code> locally). Kloser CRM loads its data over HTTP, so use a
+      server rather than opening files directly. AppUpload's processing needs its Node backend:
+      <code>cd apps/appupload &amp;&amp; npm install &amp;&amp; npm start</code>.
     </p>
   </div>
 </section>
@@ -1177,7 +1013,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <footer class="footer">
   <div class="footer-inner">
     <img src="assets/logo.png" alt="Wholesale Payments">
-    <p>Wholesale Payments · Internal product suite — nine applications, one dashboard.</p>
+    <p>Wholesale Payments · The team hub — thirteen destinations, one place.</p>
     <a class="to-top" href="#top">Back to top ↑</a>
   </div>
 </footer>
@@ -1186,6 +1022,12 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 (function(){
   "use strict";
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* greeting */
+  var g = document.getElementById("hubGreeting");
+  var h = new Date().getHours();
+  var word = h < 5 ? "Working late" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+  g.textContent = word + " — " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
 
   /* nav scroll state + progress line */
   var nav = document.getElementById("nav");
@@ -1214,6 +1056,46 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   });
   document.addEventListener("keydown", function(e){
     if (e.key === "Escape" && nav.classList.contains("menu-open")) closeMenu();
+  });
+
+  /* launchpad search + filters */
+  var search = document.getElementById("hubSearch");
+  var chips = document.querySelectorAll(".filter-chip");
+  var tiles = document.querySelectorAll("#launchGrid .launch");
+  var empty = document.getElementById("launchEmpty");
+  var activeCat = "all";
+  function applyFilter(){
+    var q = search.value.trim().toLowerCase();
+    var visible = 0;
+    tiles.forEach(function(t){
+      var okCat = activeCat === "all" || t.getAttribute("data-cat") === activeCat;
+      var hay = (t.textContent + " " + t.getAttribute("data-kw")).toLowerCase();
+      var okQ = !q || hay.indexOf(q) !== -1;
+      var show = okCat && okQ;
+      t.classList.toggle("hidden", !show);
+      if (show) visible++;
+    });
+    empty.classList.toggle("show", visible === 0);
+  }
+  search.addEventListener("input", applyFilter);
+  chips.forEach(function(c){
+    c.addEventListener("click", function(){
+      chips.forEach(function(x){ x.classList.remove("active"); });
+      c.classList.add("active");
+      activeCat = c.getAttribute("data-filter");
+      applyFilter();
+    });
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "/" && document.activeElement !== search &&
+        !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+      e.preventDefault(); search.focus();
+    }
+    if (e.key === "Enter" && document.activeElement === search) {
+      var first = document.querySelector("#launchGrid .launch:not(.hidden)");
+      if (first) window.location.href = first.getAttribute("href");
+    }
+    if (e.key === "Escape" && document.activeElement === search) { search.value = ""; applyFilter(); search.blur(); }
   });
 
   /* scroll reveals */

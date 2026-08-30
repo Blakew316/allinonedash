@@ -1624,10 +1624,13 @@ var BHR = {
   // Worker URL persists across devices/browsers — not just on this one machine.
   _cfg: null,
   _localGet: function(){
+    /* the committed worker URL is the default, so a fresh browser works before any save or cloud read;
+       a URL saved (or cleared) in Settings still wins via localStorage/Supabase */
+    var DEFAULT_WORKER_URL = 'https://square-brook-15c1.blakewoodruff9.workers.dev/';
     try {
       var c = JSON.parse(localStorage.getItem('bhr_config') || '{}');
-      return { workerUrl: c.workerUrl||'', lastSync: c.lastSync||null };
-    } catch(e) { return { workerUrl:'', lastSync:null }; }
+      return { workerUrl: ('workerUrl' in c) ? (c.workerUrl||'') : DEFAULT_WORKER_URL, lastSync: c.lastSync||null };
+    } catch(e) { return { workerUrl: DEFAULT_WORKER_URL, lastSync:null }; }
   },
   _localSet: function(cfg){
     try { localStorage.setItem('bhr_config', JSON.stringify(cfg)); } catch(e){}
