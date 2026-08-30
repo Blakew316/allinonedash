@@ -669,6 +669,7 @@
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="config.js"></script>
 <script>
 "use strict";
 
@@ -1805,7 +1806,10 @@ F("sbyZip").addEventListener("click",()=>{ const ag=A(); ag.searchBy="zip"; ag.m
 F("sbyCity").addEventListener("click",()=>{ const ag=A(); ag.searchBy="city"; ag.metaUp=tick(ag.metaUp); save(); updateProf(); });
 F("impGo").addEventListener("click",runImport);
 const PLACES_KEY="ar-places-key-v1";
+const teamPlacesKey=()=>((window.AR_CONFIG&&window.AR_CONFIG.placesKey)||"").trim();
+const effPlacesKey=()=>{ let v=""; try{ v=(localStorage.getItem(PLACES_KEY)||"").trim(); }catch(e){} return v||teamPlacesKey(); };
 try{ F("genKey").value=localStorage.getItem(PLACES_KEY)||""; }catch(e){}
+if(teamPlacesKey()&&!F("genKey").value) F("genKey").placeholder="Team key active — override here";
 F("genKey").addEventListener("input",()=>{ try{ localStorage.setItem(PLACES_KEY, F("genKey").value.trim()); }catch(e){} });
 let genBusy=false;
 F("genGo").addEventListener("click",async ()=>{
@@ -1816,7 +1820,7 @@ F("genGo").addEventListener("click",async ()=>{
   const max=Math.max(0, parseInt(F("genMax").value,10)||150);
   btn.textContent="Searching "+zip+"…"; st.textContent="";
   try{
-    const gk=(F("genKey").value||"").trim();
+    const gk=effPlacesKey();
     const r=await fetch("/.netlify/functions/prospect?zip="+encodeURIComponent(zip)+"&max="+max+"&limit=150"+(gk?"&key="+encodeURIComponent(gk):""), {cache:"no-store"});
     let data=null;
     try{ data=await r.json(); }catch(e){}
@@ -1863,7 +1867,7 @@ F("genGo").addEventListener("click",async ()=>{
           : "Raise the review cap (currently "+Math.min(max,100000)+") for fuller days."), true);
   }catch(e){
     st.textContent="";
-    toast((F("genKey").value.trim()?"":"Paste your Google Places API key above (saved in this browser). ")+(e&&e.message?e.message:"Auto-generate needs the hosted site."));
+    toast((effPlacesKey()?"":"Paste your Google Places API key above (saved in this browser). ")+(e&&e.message?e.message:"Auto-generate needs the hosted site."));
   }finally{
     genBusy=false;
     btn.textContent="Auto-generate list";
