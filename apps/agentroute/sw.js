@@ -1,10 +1,11 @@
 /* Wholesale Payments Route Planner — offline service worker.
    Active only on real hosting (Netlify etc.); the Claude artifact host
    runs its own live-sync runtime and skips registration. */
-const VER = "wp-routes-v8";
+const VER = "wp-routes-v9";
 const CORE = [
   "./",
   "index.html",
+  "config.js",
   "manifest.webmanifest",
   "manifest-dark.webmanifest",
   "icons/icon-180.png",
