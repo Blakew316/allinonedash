@@ -78,6 +78,13 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   background:linear-gradient(90deg,rgba(0,18,94,.55),rgba(0,18,94,.35));
   transition:width .08s linear;
 }
+/* ---- faded brand watermark behind the homepage ---- */
+.brand-watermark{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.brand-watermark img{height:min(86vh,900px);width:auto;opacity:.08}
+
 
 
 /* ---------------- tickers ---------------- */
@@ -238,6 +245,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <a class="skip-link" href="#launchpad">Skip to the launchpad</a>
 <div class="brand-hairline" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<div class="brand-watermark" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
 
 
 <!-- ================= TICKER: WHAT'S HERE + UPDATES ================= -->
