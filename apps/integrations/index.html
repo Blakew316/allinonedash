@@ -171,19 +171,6 @@
   }
   .count{font-size:12.5px; color:var(--slate); letter-spacing:.01em}
   .count b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums}
-  .legend-btn{
-    border:0; background:none; color:var(--blue-tx); font:inherit; font-size:12.5px;
-    font-weight:500; cursor:pointer; padding:0;
-  }
-  .legend-btn:hover{text-decoration:underline}
-  .legend{
-    display:none; border-radius:16px; background:var(--card); box-shadow:var(--shadow-card);
-    padding:18px 22px; margin:0 0 16px; font-size:13.5px; line-height:1.65; color:var(--slate);
-    letter-spacing:-.003em;
-  }
-  .legend.open{display:block}
-  .legend b{color:var(--ink); font-weight:600}
-  .legend .pill{margin-right:4px}
 
   /* ---------- grid ---------- */
   .grid{
@@ -246,12 +233,7 @@
     flex:none; font-size:10.5px; font-weight:600; letter-spacing:.02em;
     border-radius:999px; padding:4.5px 10px;
   }
-  .pill{background:var(--int-bg); color:var(--int-tx)}
-  .pill.pos{background:var(--pos-bg); color:var(--pos-tx)}
-  .pill.virtual{background:var(--virt-bg); color:var(--virt-tx)}
-  .pill.gateway{background:var(--gw-bg); color:var(--gw-tx)}
-  .pill.api{background:var(--api-bg); color:var(--api-tx)}
-  .pill.internal{background:var(--int-bg); color:var(--int-tx)}
+  .pill{background:var(--int-bg); color:var(--ink)}
 
   .empty{grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--slate)}
   .empty b{display:block; font-size:19px; font-weight:600; color:var(--ink); margin-bottom:6px; letter-spacing:-.015em}
@@ -403,12 +385,6 @@
   <main class="wrap">
     <div class="meta-row">
       <p class="count" id="count"></p>
-      <button class="legend-btn" id="legendBtn" aria-expanded="false">How to read this directory</button>
-    </div>
-    <div class="legend" id="legend">
-      <p style="margin:0 0 10px"><b>Every brand here is processing-compatible</b> &mdash; the source workbook lists only green-checkmark systems that can run Wholesale Payments processing, so the conversation is an integration, not a rip-and-replace.</p>
-      <p style="margin:0 0 10px"><span class="pill pos">Point of Sale</span> <span class="pill virtual">Virtual Solution</span> <span class="pill gateway">Gateway</span> <span class="pill api">API Solution</span> How the brand connects &mdash; a countertop/register system, a cloud product, a payment gateway, or a direct API integration.</p>
-      <p style="margin:0"><b>Rank</b> is a 1&ndash;10 read on the software&rsquo;s overall strength today. <b>SaaS fees</b> are the vendor&rsquo;s published pricing where verifiable. A <b>phone badge</b> on a card means a direct integration line is on file. Confirm pricing and compatibility with the vendor before quoting a merchant.</p>
     </div>
     <div class="grid" id="grid"></div>
   </main>
@@ -822,10 +798,6 @@ $('seg').querySelectorAll('button').forEach(b=>{
   });
 });
 $('sort').addEventListener('change', e=>{ state.sort = e.target.value; render(); });
-$('legendBtn').addEventListener('click', ()=>{
-  const l = $('legend'); const open = l.classList.toggle('open');
-  $('legendBtn').setAttribute('aria-expanded', String(open));
-});
 
 render();
 
