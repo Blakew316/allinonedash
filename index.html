@@ -79,23 +79,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   transition:width .08s linear;
 }
 
-/* ---------------- nav ---------------- */
-.nav{
-  position:sticky;top:0;z-index:100;
-  padding-top:3px;
-  background:rgba(250,251,253,.82);
-  -webkit-backdrop-filter:saturate(180%) blur(18px);
-  backdrop-filter:saturate(180%) blur(18px);
-  border-bottom:1px solid transparent;
-  transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
-}
-.nav.scrolled{border-bottom-color:var(--hairline);box-shadow:0 1px 12px rgba(13,20,64,.05)}
-.nav-inner{
-  max-width:1180px;margin:0 auto;padding:0 28px;height:62px;
-  display:flex;align-items:center;gap:28px;
-}
-.nav-logo{display:flex;align-items:center;flex-shrink:0}
-.nav-logo img{height:30px;width:auto}
 
 /* ---------------- tickers ---------------- */
 .ticker{
@@ -179,7 +162,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .hub-bg::after{width:560px;height:560px;bottom:-320px;left:-180px;
   background:radial-gradient(circle,rgba(0,199,118,.09),transparent 65%)}
 .hub-head{position:relative;text-align:center;max-width:none;margin:0 auto 52px}
-.hub-head p.hub-greeting{font-size:clamp(48px,8.2vw,108px);font-weight:750;color:var(--ink);margin:0 0 14px;letter-spacing:-.038em;line-height:1.02}
+.hub-head p.hub-greeting{font-size:clamp(24px,4.6vw,76px);font-weight:750;color:var(--ink);margin:0 0 12px;letter-spacing:-.035em;line-height:1.06;white-space:nowrap}
 .hub-head h1{
   font-size:clamp(27px,4.2vw,54px);font-weight:750;letter-spacing:-.03em;
   line-height:1.06;margin-bottom:6px;
@@ -255,14 +238,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <div class="brand-hairline" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-<!-- ================= NAV ================= -->
-<nav class="nav" id="nav" aria-label="Main">
-  <div class="nav-inner">
-    <a class="nav-logo" href="#top" aria-label="Wholesale Payments — home">
-      <img src="assets/logo.png" alt="Wholesale Payments" width="877" height="218">
-    </a>
-  </div>
-</nav>
 
 <!-- ================= TICKER: WHAT'S HERE + UPDATES ================= -->
 <div class="ticker" aria-label="The sites and latest updates">
@@ -453,13 +428,20 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   var h = new Date().getHours();
   var word = h < 5 ? "Working late" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
   g.textContent = word + ", Blake " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  // Keep the greeting on one row, spanning the page: shrink until it fits.
+  function fitGreeting(){
+    g.style.fontSize = "";
+    var size = parseFloat(getComputedStyle(g).fontSize);
+    var limit = g.parentElement.clientWidth;
+    while (g.scrollWidth > limit && size > 14) { size -= 1; g.style.fontSize = size + "px"; }
+  }
+  fitGreeting();
+  window.addEventListener("resize", fitGreeting);
 
-  /* nav scroll state + progress line */
-  var nav = document.getElementById("nav");
+  /* scroll progress line */
   var progress = document.getElementById("scrollProgress");
   function onScroll(){
     var y = window.scrollY || document.documentElement.scrollTop;
-    nav.classList.toggle("scrolled", y > 8);
     var doc = document.documentElement;
     var max = doc.scrollHeight - doc.clientHeight;
     progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
