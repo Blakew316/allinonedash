@@ -1180,7 +1180,7 @@ const coversheet = {
     { get: (r) => cs(r).shippingOther, page: 1, text: "Other:", region: { yMin: 482, yMax: 490, xMin: 270, xMax: 330 }, place: "right", dx: 6, maxWidth: 110 },
     { get: (r) => cs(r).specialOther, page: 1, text: "Other:", region: { yMin: 181, yMax: 189, xMin: 480 }, place: "right", dx: 6, maxWidth: 90 },
     // Notes and Special Instructions (user-entered, on the blank line below the header)
-    { get: (r) => cs(r).notes, page: 1, text: "Notes and Special Instructions:", absX: 24, absY: 112, place: "right", maxWidth: 540 },
+    { get: (r) => cs(r).notes, page: 1, text: "Notes and Special Instructions:", absX: 24, absY: 102.5, place: "right", maxWidth: 540 },
   ],
   check: [
     // All boxes centered on the detected box mid-points (center: true).

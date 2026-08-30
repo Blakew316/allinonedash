@@ -640,12 +640,12 @@ async function extractApplication() {
     });
     workingRecord = record;
     applyRep(workingRecord);
-    // Default document selection mirrors the server's combined packet.
-    const kinds = ["coversheet"];
-    if (APP_FORMS.includes(record.appType)) kinds.push("application");
-    if (AUPipeline.hasCloverEquipment(record)) kinds.push("clover");
+    // Initial set: the identified application, its coversheet and the purchase
+    // order (equipment selection). Everything else is generated only when
+    // ticked, using the data entered on this record.
     showReview(workingRecord);
-    setKinds(kinds);
+    setKinds(APP_FORMS.includes(record.appType) ? ["coversheet", "application", "po"] : ["coversheet"]);
+    openSection("equipment");
   } catch (e) {
     showSection("app", "upload");
     showBanner("error", e.message);
@@ -684,7 +684,7 @@ function openManualForm(choice) {
 
   let kinds = ["coversheet"];
   let section = "business";
-  if (isApp) kinds = ["coversheet", "application"];
+  if (isApp) kinds = ["coversheet", "application", "po"];
   else if (choice === "coversheet") { kinds = ["coversheet"]; section = "coversheet"; }
   else {
     const kind = Object.keys(KIND_FORM).find((k) => KIND_FORM[k] === choice);
@@ -721,35 +721,27 @@ async function buildKindsPdf(record, chosen, formChoice, date, signature) {
 }
 
 let generating = false;
-async function generate(mode) {
+async function generate() {
   if (generating || !workingRecord) return;
   collectReview();
   const formChoice = el("appTypeSelect").value;
   const date = el("coverDate").value.trim();
   const record = AUPipeline.normalizeRecord(workingRecord);
 
-  let chosen;
-  if (mode === "combined") {
-    const form = AUPipeline.resolveForm(record, formChoice);
-    chosen = ["coversheet"];
-    if (form) chosen.push("application");
-    if (AUPipeline.hasCloverEquipment(record)) chosen.push("clover");
-  } else {
-    chosen = KIND_ORDER.filter((k) => checkedKinds().includes(k));
-    if (!chosen.length) {
-      showBanner("warn", "Tick at least one document to generate.");
-      return;
-    }
+  const chosen = KIND_ORDER.filter((k) => checkedKinds().includes(k));
+  if (!chosen.length) {
+    showBanner("warn", "Tick at least one document to generate.");
+    return;
   }
 
   generating = true;
-  const btns = [el("genSelectedBtn"), el("genPacketBtn")];
+  const btns = [el("genSelectedBtn")];
   btns.forEach((b) => { b.disabled = true; });
   const orig = el("genSelectedBtn").textContent;
   el("genSelectedBtn").textContent = "Generating…";
   try {
     const { bytes, form } = await buildKindsPdf(record, chosen, formChoice, date, signatureData);
-    const label = mode === "combined" ? KIND_LABELS.combined : chosen.length === 1 ? KIND_LABELS[chosen[0]] : "Packet";
+    const label = chosen.length === 1 ? KIND_LABELS[chosen[0]] : "Packet";
     const fileName = `${safeDbaName(record)} - ${label}.pdf`;
     triggerDownload(new Blob([bytes], { type: "application/pdf" }), fileName);
     addHistory({
@@ -1176,8 +1168,7 @@ function init() {
 
   el("extractBtn").addEventListener("click", extractApplication);
   el("appClearBtn").addEventListener("click", () => appUploader.clear());
-  el("genSelectedBtn").addEventListener("click", () => generate("selected"));
-  el("genPacketBtn").addEventListener("click", () => generate("combined"));
+  el("genSelectedBtn").addEventListener("click", () => generate());
   el("appRestartBtn").addEventListener("click", () => {
     appUploader.clear();
     signatureData = "";
