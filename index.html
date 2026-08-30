@@ -369,25 +369,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   background:var(--tint-navy);border-radius:5px;padding:1.5px 6px;color:var(--navy);
 }
 
-/* ---------------- glance / chart ---------------- */
-.chart{
-  background:var(--surface);border:1px solid var(--hairline);border-radius:22px;
-  padding:34px 38px;box-shadow:var(--shadow-sm);
-}
-.chart h3{font-size:17px;letter-spacing:-.01em;margin-bottom:4px}
-.chart h3{margin-bottom:22px}
-.chart-rows{display:flex;flex-direction:column;gap:13px}
-.chart-row{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
-@media (max-width:660px){.chart-row{grid-template-columns:146px 1fr 36px;gap:10px}.chart-row .name{font-size:12px}}
-.chart-row .name{font-size:13px;font-weight:550;color:var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-row .track{height:10px;border-radius:6px;background:rgba(0,163,230,.08);overflow:hidden}
-.chart-row .fill{
-  height:100%;width:0;border-radius:6px;
-  background:linear-gradient(90deg,rgba(0,163,230,.75),rgba(0,199,118,.75));
-  transition:width 1.2s var(--ease);
-}
-.chart-row .val{font-size:13px;font-weight:650;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
-
 /* ---------------- footer ---------------- */
 .footer{border-top:1px solid var(--hairline-soft);background:var(--surface)}
 .footer-inner{
@@ -435,7 +416,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <div class="nav-links" id="navLinks">
       <a href="#launchpad">Launchpad</a>
       <a href="#reference">Quick Reference</a>
-      <a href="#glance">At a Glance</a>
     </div>
     <span class="nav-chip"><span class="pulse" aria-hidden="true"></span>13 apps · all systems go</span>
     <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
@@ -934,34 +914,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   </div>
 </section>
 
-<!-- ================= AT A GLANCE ================= -->
-<section class="section" id="glance" style="border-top:1px solid var(--hairline-soft)">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">At a Glance</p>
-      <h2>The hub in numbers</h2>
-    </div>
-
-    <div class="chart reveal">
-      <h3>Screens &amp; pages per destination</h3>
-      <div class="chart-rows" role="table" aria-label="Screens and pages per product">
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Customer Connect</span><span class="track"><span class="fill" data-width="100"></span></span><span class="val" role="cell">43</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Kloser CRM</span><span class="track"><span class="fill" data-width="35"></span></span><span class="val" role="cell">15</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">WPI University</span><span class="track"><span class="fill" data-width="35"></span></span><span class="val" role="cell">15</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Wholesale Payments</span><span class="track"><span class="fill" data-width="23"></span></span><span class="val" role="cell">10</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">WPI Rewards</span><span class="track"><span class="fill" data-width="23"></span></span><span class="val" role="cell">10</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Maverick Dashboard</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Maverick Appointments</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Statement Studio</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">WPI Route</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">AppUpload</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Sales Questionnaire</span><span class="track"><span class="fill" data-width="5"></span></span><span class="val" role="cell">2</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Hiring HQ</span><span class="track"><span class="fill" data-width="5"></span></span><span class="val" role="cell">2</span></div>
-        <div class="chart-row" role="row"><span class="name" role="rowheader">Integration Atlas</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 </main>
 
@@ -1094,19 +1046,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     });
   }
 
-  /* chart bars grow on reveal */
-  var fills = document.querySelectorAll(".fill[data-width]");
-  function growBar(el){ el.style.width = el.getAttribute("data-width") + "%"; }
-  if ("IntersectionObserver" in window && !reduced) {
-    var bio = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) { growBar(e.target); bio.unobserve(e.target); }
-      });
-    }, { threshold: 0.4 });
-    fills.forEach(function(el){ bio.observe(el); });
-  } else {
-    fills.forEach(growBar);
-  }
 })();
 </script>
 </body>
