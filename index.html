@@ -557,7 +557,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
         <span class="launch-txt"><b>Maverick Appointments</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
-      <a class="launch reveal" style="transition-delay:.12s" href="apps/appupload/public/index.html" data-cat="sales" data-kw="appupload applications upload handwriting pdf coversheet clover menu documents">
+      <a class="launch reveal" style="transition-delay:.12s" href="https://myappupload.com" target="_blank" rel="noopener" data-cat="sales" data-kw="appupload applications upload handwriting pdf coversheet clover menu documents">
         <span class="launch-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
         <span class="launch-txt"><b>AppUpload</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
@@ -744,8 +744,8 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
         <div class="qr-row">
           <span class="qr-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
           <span class="qr-txt"><b>AppUpload</b></span>
-          <span class="qr-meta">Node backend</span>
-          <span class="qr-actions"><a class="qr-open" href="apps/appupload/public/index.html">Open</a></span>
+          <span class="qr-meta">Live site</span>
+          <span class="qr-actions"><a class="qr-open" href="https://myappupload.com" target="_blank" rel="noopener">Open</a></span>
         </div>
         <details>
           <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
@@ -759,7 +759,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
             <li>Drag-and-drop or camera capture, up to 15 images</li>
             <li>Everything processed in memory — documents are never stored</li>
           </ul>
-          <p class="qr-note">Processing runs on its own server: <code>cd apps/appupload &amp;&amp; npm install &amp;&amp; npm start</code></p>
+          <p class="qr-note">Opens the live app at <code>myappupload.com</code> — full processing, rep picker, form chooser and team history. The repo keeps a source snapshot under <code>apps/appupload</code>.</p>
         </details>
       </div>
 
@@ -995,8 +995,9 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <p class="serve-note reveal">
       <strong>Hosting note:</strong> serve this repository from any static host
       (<code>python3 -m http.server 8000</code> locally). Kloser CRM loads its data over HTTP, so use a
-      server rather than opening files directly. AppUpload's processing needs its Node backend:
-      <code>cd apps/appupload &amp;&amp; npm install &amp;&amp; npm start</code>.
+      server rather than opening files directly. AppUpload opens its live deployment at
+      <code>myappupload.com</code>; Hiring HQ's processing needs its Node backend
+      (<code>cd apps/bamboohr-automation &amp;&amp; npm install &amp;&amp; npm start</code>).
     </p>
   </div>
 </section>
