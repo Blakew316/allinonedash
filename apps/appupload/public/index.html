@@ -4,14 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AppUpload — Handwritten applications → typed forms</title>
-    <meta name="description" content="Upload a photo of a handwritten merchant application and supporting documents; get the typed application, a pre-filled coversheet, and a Clover menu import." />
+    <meta name="description" content="Upload a photo or PDF of a handwritten merchant application; get the typed application, coversheet, purchase order, addendums, and a Clover menu import." />
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
       <div class="brand"><span class="brand-mark" style="display:inline-flex;align-items:center;gap:3px" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 7 21h10a1.5 1.5 0 0 0 1.5-1.5V7.5L14 3z"/><path d="M14 3v4.5h4.5"/><path d="M9 12.5h6M9 16h6"/></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3.5h10V8"/><path d="M7 17H4.5A1.5 1.5 0 0 1 3 15.5v-6A1.5 1.5 0 0 1 4.5 8h15A1.5 1.5 0 0 1 21 9.5v6a1.5 1.5 0 0 1-1.5 1.5H17"/><rect x="7" y="13.5" width="10" height="7" rx="1"/></svg></span><span class="brand-name">AppUpload</span></div>
-      <p class="tagline">Photograph a handwritten merchant application and supporting documents — get a clean typed application, a pre-filled coversheet, and a Clover menu import.</p>
+      <div class="toolbar">
+        <label class="tool-field">
+          <span>Sales rep</span>
+          <select id="repSelect"></select>
+        </label>
+        <label class="tool-field">
+          <span>Or fill a form manually</span>
+          <select id="manualFormSelect">
+            <option value="">Choose a form…</option>
+            <optgroup label="Applications">
+              <option value="citizens">Citizens application</option>
+              <option value="merrick">Merrick application</option>
+              <option value="fd_north">FD North application</option>
+              <option value="pbt">PB&amp;T application</option>
+            </optgroup>
+            <optgroup label="Documents">
+              <option value="coversheet">Coversheet</option>
+              <option value="purchase_order">Purchase Order</option>
+              <option value="clover_addendum">Clover Addendum</option>
+              <option value="bank_change">Bank Account Change</option>
+              <option value="crf">Change Request Form</option>
+              <option value="hemp_cbd">Hemp &amp; CBD Disclosure</option>
+              <option value="cbd_amendment">CBD Amendment</option>
+              <option value="gift_card">Gift Card Setup</option>
+            </optgroup>
+          </select>
+        </label>
+        <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Settings"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V19.6a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.12-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.03H4.4a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.56-1.12 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09a1.7 1.7 0 0 0 1.03-1.56V4.4a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56h.09a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09a1.7 1.7 0 0 0 1.56 1.03h.17a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.56 1.03z"/></svg></button>
+      </div>
     </header>
 
     <nav class="mode-tabs" role="tablist" aria-label="Workflow">
@@ -27,18 +55,13 @@
         <!-- Step 1: upload -->
         <section id="appUpload" class="card">
           <h2 class="step-title"><span class="step-num">1</span> Upload the application &amp; supporting documents</h2>
-          <p class="muted small">
-            Add photos of the handwritten <strong>application pages</strong>, the <strong>voided check</strong>
-            (for bank name, routing &amp; account #), and the owner's <strong>driver's license(s)</strong>
-            (for owner name, address, DOB &amp; license #). The app auto-detects whether it's the Citizens or Merrick form.
-          </p>
-          <div id="appDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload images">
-            <input id="appFileInput" type="file" accept="image/*" multiple capture="environment" hidden />
+          <div id="appDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload images or a PDF">
+            <input id="appFileInput" type="file" accept="image/*,application/pdf" multiple capture="environment" hidden />
             <div class="dropzone-inner">
               <div class="dropzone-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 7.5h2.6l1.5-2.2a1.5 1.5 0 0 1 1.24-.66h4.32a1.5 1.5 0 0 1 1.24.66l1.5 2.2h2.6A1.5 1.5 0 0 1 21 9v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18V9a1.5 1.5 0 0 1 1.5-1.5z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
-              <p class="dropzone-primary">Drag &amp; drop photos here</p>
+              <p class="dropzone-primary">Drag &amp; drop photos or a PDF here</p>
               <p class="dropzone-secondary">or <button type="button" id="appBrowseBtn" class="link-btn">browse / take a photo</button></p>
-              <p class="dropzone-hint">Application pages + voided check + driver's license · JPEG/PNG/WebP</p>
+              <p class="dropzone-hint">Application pages + voided check + driver's license · JPEG/PNG/WebP/PDF</p>
             </div>
           </div>
           <ul id="appThumbs" class="thumb-list" aria-live="polite"></ul>
@@ -60,32 +83,49 @@
             <h2 class="step-title"><span class="step-num">2</span> Review &amp; complete</h2>
             <div id="detectBadge" class="detect-badge"></div>
           </div>
-          <p class="muted small">
-            Everything the AI read is below — <strong>edit any field, and fill in anything that was blank or
-            unreadable</strong> before generating. Detected document type:
-          </p>
 
-          <div class="field-row">
+          <div class="field-row review-topline">
             <label class="field">
               <span>Application form</span>
               <select id="appTypeSelect">
                 <option value="citizens">Citizens (Priority / Citizens Bank)</option>
                 <option value="merrick">Merrick Bank</option>
-                <option value="unknown">Unknown — coversheet only</option>
+                <option value="fd_north">FD North (Synovus)</option>
+                <option value="pbt">PB&amp;T Bank</option>
+                <option value="unknown">Unknown — no application</option>
               </select>
             </label>
             <label class="field">
-              <span>Coversheet date</span>
+              <span>Date</span>
               <input id="coverDate" type="text" placeholder="MM/DD/YYYY" />
             </label>
+            <div class="field">
+              <span>Signature</span>
+              <div class="sig-row">
+                <button id="sigBtn" class="btn btn-secondary sig-btn" type="button">Sign now</button>
+                <button id="sigClearBtn" class="link-btn hidden" type="button">Remove</button>
+              </div>
+            </div>
           </div>
 
           <div id="reviewForm"></div>
 
+          <fieldset id="kindRow" class="kinds">
+            <legend>Documents to generate</legend>
+            <label><input type="checkbox" value="coversheet" checked /> Coversheet</label>
+            <label><input type="checkbox" value="application" checked /> Application</label>
+            <label><input type="checkbox" value="po" /> Purchase Order</label>
+            <label><input type="checkbox" value="clover" /> Clover Addendum</label>
+            <label><input type="checkbox" value="bankchange" /> Bank Account Change</label>
+            <label><input type="checkbox" value="crf" /> Change Request</label>
+            <label><input type="checkbox" value="hempcbd" /> Hemp &amp; CBD Disclosure</label>
+            <label><input type="checkbox" value="cbdamendment" /> CBD Amendment</label>
+            <label><input type="checkbox" value="giftcard" /> Gift Card Setup</label>
+          </fieldset>
+
           <div class="actions wrap generate-actions">
-            <button id="genPacketBtn" class="btn btn-primary">Download packet (coversheet + application)</button>
-            <button id="genAppBtn" class="btn btn-secondary">Application only</button>
-            <button id="genCoverBtn" class="btn btn-secondary">Coversheet only</button>
+            <button id="genSelectedBtn" class="btn btn-primary">Generate selected (PDF)</button>
+            <button id="genPacketBtn" class="btn btn-secondary">Full packet</button>
             <button id="appRestartBtn" class="btn btn-ghost">Start over</button>
           </div>
         </section>
@@ -95,14 +135,13 @@
       <div id="menuMode" class="hidden">
         <section id="menuUpload" class="card">
           <h2 class="step-title"><span class="step-num">1</span> Upload the menu</h2>
-          <p class="muted small">Photograph each page of the menu. The AI extracts items, prices and categories and fills the Clover inventory import template.</p>
           <div id="menuDropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload menu photos">
-            <input id="menuFileInput" type="file" accept="image/*" multiple capture="environment" hidden />
+            <input id="menuFileInput" type="file" accept="image/*,application/pdf" multiple capture="environment" hidden />
             <div class="dropzone-inner">
               <div class="dropzone-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V3"/><path d="M8 3v18M8 11v0"/><path d="M19 15V3a4 4 0 0 0-3 3.9V13a2 2 0 0 0 2 2h1zm0 0v6"/></svg></div>
-              <p class="dropzone-primary">Drag &amp; drop menu photos here</p>
+              <p class="dropzone-primary">Drag &amp; drop menu photos or a PDF here</p>
               <p class="dropzone-secondary">or <button type="button" id="menuBrowseBtn" class="link-btn">browse / take a photo</button></p>
-              <p class="dropzone-hint">JPEG/PNG/WebP · multiple pages OK</p>
+              <p class="dropzone-hint">JPEG/PNG/WebP/PDF · multiple pages OK</p>
             </div>
           </div>
           <ul id="menuThumbs" class="thumb-list" aria-live="polite"></ul>
@@ -119,7 +158,6 @@
 
         <section id="menuReview" class="card hidden">
           <h2 class="step-title"><span class="step-num">2</span> Review items</h2>
-          <p class="muted small">Edit, add or remove items. Prices are numbers only. Then download the Clover-ready spreadsheet.</p>
           <label class="field" style="max-width: 320px">
             <span>Restaurant name (file name)</span>
             <input id="restaurantName" type="text" placeholder="Restaurant name" />
@@ -137,20 +175,111 @@
           </div>
         </section>
       </div>
+
+      <!-- ============ HISTORY ============ -->
+      <section id="historyCard" class="card hist-card">
+        <div class="result-head">
+          <h2 class="step-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.2em"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> Past uploads &amp; downloads</h2>
+          <span class="hist-note">Saved on this device</span>
+        </div>
+        <div class="hist-controls">
+          <input id="histSearch" type="search" placeholder="Search…" aria-label="Search history" />
+          <select id="histRep" aria-label="Filter by rep"><option value="">All reps</option></select>
+          <button id="histExport" class="btn btn-ghost">Export all</button>
+          <button id="histClear" class="btn btn-ghost">Clear history</button>
+        </div>
+        <p id="histEmpty" class="hist-empty">Nothing yet — generated documents will show up here.</p>
+        <p id="histNoMatch" class="hist-empty hidden">No matches.</p>
+        <ul id="histList" class="hist-list"></ul>
+      </section>
     </main>
 
     <footer class="site-footer">
-      <p>Documents are processed in memory and not stored. <span id="modelInfo"></span></p>
+      <p>Documents are processed in your browser and sent only to Anthropic for reading. <span id="modelInfo"></span></p>
     </footer>
 
+    <datalist id="merchantList"></datalist>
+
+    <!-- ============ SETTINGS MODAL ============ -->
+    <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Settings">
+      <div class="modal-card">
+        <h3 class="modal-title">Settings</h3>
+        <label class="field">
+          <span>Anthropic API key</span>
+          <span class="key-row">
+            <input id="setKey" type="password" placeholder="sk-ant-…" autocomplete="off" />
+            <button id="setKeyToggle" class="icon-btn" type="button" title="Show / hide" aria-label="Show or hide key"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </span>
+        </label>
+        <label class="field">
+          <span>Model</span>
+          <input id="setModel" type="text" placeholder="claude-sonnet-4-6" />
+        </label>
+        <label class="field checkfield">
+          <input id="setDemo" type="checkbox" />
+          <span>Demo mode (sample data, no key needed)</span>
+        </label>
+        <p class="modal-note">Saved permanently in this browser — never expires.</p>
+        <div class="actions">
+          <button id="setSave" class="btn btn-primary">Save</button>
+          <button id="setCancel" class="btn btn-ghost">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIGNATURE MODAL ============ -->
+    <div id="sigModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Sign">
+      <div class="modal-card sig-card">
+        <h3 class="modal-title">Sign here</h3>
+        <div class="sig-canvas-wrap"><canvas id="sigCanvas"></canvas></div>
+        <div class="actions">
+          <button id="sigSave" class="btn btn-primary">Save signature</button>
+          <button id="sigClear" class="btn btn-secondary">Clear</button>
+          <button id="sigCancel" class="btn btn-ghost">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="vendor/pdf-lib.min.js"></script>
+    <script src="vendor/exceljs.min.js"></script>
+    <script src="vendor/pdfjs.min.js"></script>
+    <script src="config.js"></script>
+    <script src="pipeline.js"></script>
     <script src="app.js"></script>
   <!-- wpi-hub-link -->
 <style>
-#wpiHubLink{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:7px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid rgba(0,18,94,.14);box-shadow:0 4px 16px rgba(13,20,64,.18);font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif;color:#00125e !important;text-decoration:none !important;-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);opacity:.94;transition:opacity .2s,box-shadow .2s,transform .2s}
-#wpiHubLink:hover{opacity:1;box-shadow:0 6px 22px rgba(13,20,64,.26);transform:translateY(-1px)}
-@media (max-width:760px){#wpiHubLink{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
-@media print{#wpiHubLink{display:none}}
+#wpiHubNav{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:8px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif}
+#wpiHubNav .wpi-pill{display:flex;align-items:center;gap:7px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid rgba(0,18,94,.14);box-shadow:0 4px 16px rgba(13,20,64,.18);font-size:12.5px;font-weight:600;line-height:1;color:#00125e !important;text-decoration:none !important;cursor:pointer;-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);opacity:.94;transition:opacity .2s,box-shadow .2s,transform .2s}
+#wpiHubNav .wpi-pill:hover{opacity:1;box-shadow:0 6px 22px rgba(13,20,64,.26);transform:translateY(-1px)}
+#wpiAppsMenu{position:fixed;left:14px;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:2147483001;display:none;flex-direction:column;gap:1px;min-width:224px;max-height:min(440px,68vh);overflow:auto;padding:8px;border-radius:16px;background:rgba(255,255,255,.97);border:1px solid rgba(0,18,94,.12);box-shadow:0 12px 40px rgba(13,20,64,.28);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif;-webkit-backdrop-filter:saturate(160%) blur(12px);backdrop-filter:saturate(160%) blur(12px)}
+#wpiAppsMenu.open{display:flex}
+#wpiAppsMenu a{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;line-height:1.2;color:#00125e !important;text-decoration:none !important;white-space:nowrap}
+#wpiAppsMenu a:hover{background:rgba(0,163,230,.1)}
+#wpiAppsMenu a[data-here]{background:rgba(0,200,83,.12)}
+#wpiAppsMenu .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#00a3e6,#00c853)}
+@media (max-width:760px){#wpiHubNav{bottom:calc(76px + env(safe-area-inset-bottom,0px))}#wpiAppsMenu{bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+@media print{#wpiHubNav,#wpiAppsMenu{display:none !important}}
 </style>
-<a id="wpiHubLink" href="../../../index.html" aria-label="Back to the hub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00a3e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>Hub</a>
+<nav id="wpiHubNav" aria-label="Suite navigation">
+<a class="wpi-pill" href="../../../index.html" aria-label="Back to the hub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00a3e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>Hub</a>
+<button id="wpiAppsBtn" class="wpi-pill" type="button" aria-haspopup="true" aria-expanded="false"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00c853" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg>Apps</button>
+</nav>
+<div id="wpiAppsMenu" role="menu" aria-label="All apps">
+<a href="../../../index.html"><span class="dot"></span>Hub</a>
+<a href="../../../apps/kloser/index.html"><span class="dot"></span>Kloser CRM</a>
+<a href="../../../apps/team-maverick/index.html"><span class="dot"></span>Maverick Dashboard</a>
+<a href="../../../apps/maverick-appointments/index.html"><span class="dot"></span>Maverick Appointments</a>
+<a href="../../../apps/appupload/public/index.html"><span class="dot"></span>AppUpload</a>
+<a href="../../../apps/agentroute/index.html"><span class="dot"></span>WPI Route</a>
+<a href="../../../apps/statement-generator/index.html"><span class="dot"></span>Statement Studio</a>
+<a href="../../../apps/wpi-university/index.html"><span class="dot"></span>WPI University</a>
+<a href="../../../apps/wholesale-payments/index.html"><span class="dot"></span>Wholesale Payments</a>
+<a href="../../../apps/customerconnect/index.html"><span class="dot"></span>Customer Connect</a>
+<a href="../../../apps/integrations/index.html"><span class="dot"></span>Integration Atlas</a>
+<a href="../../../apps/sales-questionnaire/index.html"><span class="dot"></span>Sales Questionnaire</a>
+<a href="../../../apps/bamboohr-automation/public/index.html"><span class="dot"></span>Hiring HQ</a>
+<a href="../../../apps/wpi-rewards/index.html"><span class="dot"></span>WPI Rewards</a>
+</div>
+<script>(function(){var b=document.getElementById('wpiAppsBtn'),m=document.getElementById('wpiAppsMenu');if(!b||!m)return;function close(){m.classList.remove('open');b.setAttribute('aria-expanded','false')}b.addEventListener('click',function(e){e.stopPropagation();var open=m.classList.toggle('open');b.setAttribute('aria-expanded',String(open))});document.addEventListener('click',function(e){if(!m.contains(e.target))close()});document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});var here=location.pathname.replace(/\/+$/,'');m.querySelectorAll('a').forEach(function(a){try{if(new URL(a.href,location.href).pathname.replace(/\/+$/,'')===here)a.setAttribute('data-here','')}catch(err){}})})();</script>
 </body>
 </html>

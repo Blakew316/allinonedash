@@ -182,11 +182,38 @@
   <script src="assets/js/app.js"></script>
 <!-- wpi-hub-link -->
 <style>
-#wpiHubLink{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:7px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid rgba(0,18,94,.14);box-shadow:0 4px 16px rgba(13,20,64,.18);font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif;color:#00125e !important;text-decoration:none !important;-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);opacity:.94;transition:opacity .2s,box-shadow .2s,transform .2s}
-#wpiHubLink:hover{opacity:1;box-shadow:0 6px 22px rgba(13,20,64,.26);transform:translateY(-1px)}
-@media (max-width:760px){#wpiHubLink{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
-@media print{#wpiHubLink{display:none}}
+#wpiHubNav{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:8px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif}
+#wpiHubNav .wpi-pill{display:flex;align-items:center;gap:7px;padding:9px 15px 9px 11px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid rgba(0,18,94,.14);box-shadow:0 4px 16px rgba(13,20,64,.18);font-size:12.5px;font-weight:600;line-height:1;color:#00125e !important;text-decoration:none !important;cursor:pointer;-webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);opacity:.94;transition:opacity .2s,box-shadow .2s,transform .2s}
+#wpiHubNav .wpi-pill:hover{opacity:1;box-shadow:0 6px 22px rgba(13,20,64,.26);transform:translateY(-1px)}
+#wpiAppsMenu{position:fixed;left:14px;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:2147483001;display:none;flex-direction:column;gap:1px;min-width:224px;max-height:min(440px,68vh);overflow:auto;padding:8px;border-radius:16px;background:rgba(255,255,255,.97);border:1px solid rgba(0,18,94,.12);box-shadow:0 12px 40px rgba(13,20,64,.28);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Inter,Roboto,sans-serif;-webkit-backdrop-filter:saturate(160%) blur(12px);backdrop-filter:saturate(160%) blur(12px)}
+#wpiAppsMenu.open{display:flex}
+#wpiAppsMenu a{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;line-height:1.2;color:#00125e !important;text-decoration:none !important;white-space:nowrap}
+#wpiAppsMenu a:hover{background:rgba(0,163,230,.1)}
+#wpiAppsMenu a[data-here]{background:rgba(0,200,83,.12)}
+#wpiAppsMenu .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#00a3e6,#00c853)}
+@media (max-width:760px){#wpiHubNav{bottom:calc(76px + env(safe-area-inset-bottom,0px))}#wpiAppsMenu{bottom:calc(120px + env(safe-area-inset-bottom,0px))}}
+@media print{#wpiHubNav,#wpiAppsMenu{display:none !important}}
 </style>
-<a id="wpiHubLink" href="../../index.html" aria-label="Back to the hub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00a3e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>Hub</a>
+<nav id="wpiHubNav" aria-label="Suite navigation">
+<a class="wpi-pill" href="../../index.html" aria-label="Back to the hub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00a3e6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/></svg>Hub</a>
+<button id="wpiAppsBtn" class="wpi-pill" type="button" aria-haspopup="true" aria-expanded="false"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00c853" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg>Apps</button>
+</nav>
+<div id="wpiAppsMenu" role="menu" aria-label="All apps">
+<a href="../../index.html"><span class="dot"></span>Hub</a>
+<a href="../../apps/kloser/index.html"><span class="dot"></span>Kloser CRM</a>
+<a href="../../apps/team-maverick/index.html"><span class="dot"></span>Maverick Dashboard</a>
+<a href="../../apps/maverick-appointments/index.html"><span class="dot"></span>Maverick Appointments</a>
+<a href="../../apps/appupload/public/index.html"><span class="dot"></span>AppUpload</a>
+<a href="../../apps/agentroute/index.html"><span class="dot"></span>WPI Route</a>
+<a href="../../apps/statement-generator/index.html"><span class="dot"></span>Statement Studio</a>
+<a href="../../apps/wpi-university/index.html"><span class="dot"></span>WPI University</a>
+<a href="../../apps/wholesale-payments/index.html"><span class="dot"></span>Wholesale Payments</a>
+<a href="../../apps/customerconnect/index.html"><span class="dot"></span>Customer Connect</a>
+<a href="../../apps/integrations/index.html"><span class="dot"></span>Integration Atlas</a>
+<a href="../../apps/sales-questionnaire/index.html"><span class="dot"></span>Sales Questionnaire</a>
+<a href="../../apps/bamboohr-automation/public/index.html"><span class="dot"></span>Hiring HQ</a>
+<a href="../../apps/wpi-rewards/index.html"><span class="dot"></span>WPI Rewards</a>
+</div>
+<script>(function(){var b=document.getElementById('wpiAppsBtn'),m=document.getElementById('wpiAppsMenu');if(!b||!m)return;function close(){m.classList.remove('open');b.setAttribute('aria-expanded','false')}b.addEventListener('click',function(e){e.stopPropagation();var open=m.classList.toggle('open');b.setAttribute('aria-expanded',String(open))});document.addEventListener('click',function(e){if(!m.contains(e.target))close()});document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});var here=location.pathname.replace(/\/+$/,'');m.querySelectorAll('a').forEach(function(a){try{if(new URL(a.href,location.href).pathname.replace(/\/+$/,'')===here)a.setAttribute('data-here','')}catch(err){}})})();</script>
 </body>
 </html>

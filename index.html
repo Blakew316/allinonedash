@@ -158,12 +158,11 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .ticker-track{
   display:flex;width:max-content;
-  animation:ticker 64s linear infinite;
+  animation:ticker 150s linear infinite;
 }
-.ticker--stats .ticker-track{animation:ticker-rev 48s linear infinite}
+.ticker--stats .ticker-track{animation:ticker 120s linear infinite}
 .ticker:hover .ticker-track{animation-play-state:paused}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes ticker-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .ticker-group{display:flex;align-items:center;flex-shrink:0}
 .ticker-item{
   display:inline-flex;align-items:center;gap:9px;
@@ -215,20 +214,24 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .ic--green{background:linear-gradient(160deg,#14cf85,#009e5d);box-shadow:0 5px 12px rgba(0,170,105,.28)}
 .ic--mint{background:linear-gradient(160deg,#5fe57c,#22bd53);box-shadow:0 5px 12px rgba(45,190,90,.28)}
 .ic--navy{background:linear-gradient(160deg,#2c3d92,#021058);box-shadow:0 5px 12px rgba(5,20,90,.3)}
+.ic--logo{display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;
+  background:linear-gradient(150deg,#ffffff,#f1f7fc);border:1px solid rgba(0,18,94,.09);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 4px 10px rgba(13,20,64,.08)}
+.launch:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
 
 /* ---------------- hub / launchpad ---------------- */
-.hub{position:relative;padding:72px 0 84px;overflow:hidden}
+.hub{position:relative;padding:92px 0 84px;overflow:hidden}
 .hub-bg{position:absolute;inset:0;pointer-events:none}
 .hub-bg::before,.hub-bg::after{content:"";position:absolute;border-radius:50%;filter:blur(70px)}
 .hub-bg::before{width:640px;height:640px;top:-280px;right:-160px;
   background:radial-gradient(circle,rgba(0,163,230,.10),transparent 65%)}
 .hub-bg::after{width:560px;height:560px;bottom:-320px;left:-180px;
   background:radial-gradient(circle,rgba(0,199,118,.09),transparent 65%)}
-.hub-head{position:relative;text-align:center;max-width:640px;margin:0 auto 40px}
-.hub-greeting{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:10px}
+.hub-head{position:relative;text-align:center;max-width:1120px;margin:0 auto 48px}
+.hub-greeting{font-size:clamp(17px,2.2vw,23px);font-weight:650;color:var(--navy);margin-bottom:14px;letter-spacing:-.01em}
 .hub-head h1{
-  font-size:clamp(34px,5vw,52px);font-weight:750;letter-spacing:-.03em;
-  line-height:1.06;margin-bottom:14px;
+  font-size:clamp(46px,7.5vw,96px);font-weight:750;letter-spacing:-.035em;
+  line-height:1.02;margin-bottom:18px;
 }
 .hub-head h1 .accent{
   background:linear-gradient(92deg,var(--blue),var(--green) 70%);
@@ -285,7 +288,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .launch:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(0,163,230,.3)}
 .launch.hidden{display:none}
 .launch-ic{width:58px;height:58px;border-radius:16px}
-.launch-ic svg{width:28px;height:28px}
+.launch-ic svg{width:36px;height:36px}
 .launch-txt{min-width:0}
 .launch-txt b{display:block;font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.015em;line-height:1.25}
 .launch-open{
@@ -303,22 +306,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .launch-empty.show{display:block}
 
-.hub-stats{
-  position:relative;margin-top:56px;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
-}
-@media (max-width:960px){.hub-stats{grid-template-columns:repeat(2,1fr)}}
-.stat{
-  background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
-  padding:22px 24px;box-shadow:var(--shadow-sm);
-  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
-}
-.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.stat .value{font-size:36px;font-weight:750;letter-spacing:-.02em;color:var(--ink);line-height:1.1}
-.stat .label{font-size:13px;color:var(--muted);margin-top:5px;font-weight:500}
-.stat .bar{height:3px;border-radius:3px;margin-top:13px;width:34px;
-  background:linear-gradient(90deg,var(--blue),var(--green))}
-
 /* ---------------- quick reference rows ---------------- */
 .qr-list{display:flex;flex-direction:column;gap:14px}
 .qr{
@@ -331,7 +318,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   display:flex;align-items:center;gap:16px;padding:16px 20px;
 }
 .qr-ic{width:44px;height:44px;border-radius:12px}
-.qr-ic svg{width:21px;height:21px}
+.qr-ic svg{width:27px;height:27px}
 .qr-txt{min-width:0;flex:1}
 .qr-txt b{display:block;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
 .qr-meta{font-size:12px;color:var(--faint);font-weight:500;flex-shrink:0;white-space:nowrap}
@@ -402,14 +389,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .chart-row .val{font-size:13px;font-weight:650;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
 
 /* ---------------- footer ---------------- */
-.serve-note{
-  margin-top:40px;font-size:13px;color:var(--muted);line-height:1.7;
-  border:1px dashed var(--hairline);border-radius:14px;padding:16px 20px;background:var(--surface);
-}
-.serve-note code{
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
-  background:var(--tint-navy);border-radius:6px;padding:2px 7px;color:var(--navy);
-}
 .footer{border-top:1px solid var(--hairline-soft);background:var(--surface)}
 .footer-inner{
   max-width:1180px;margin:0 auto;padding:44px 28px;
@@ -417,10 +396,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .footer-inner img{height:24px;width:auto;opacity:.92}
 .footer-inner p{font-size:13px;color:var(--faint)}
-.to-top{
-  font-size:13.5px;font-weight:600;color:var(--blue);
-  display:inline-flex;align-items:center;gap:6px;
-}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 </style>
 </head>
@@ -543,79 +518,72 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
     <div class="launch-grid" id="launchGrid">
       <a class="launch reveal" href="apps/kloser/index.html" data-cat="sales" data-kw="kloser crm leads territory map routes gps pipeline field">
-        <span class="launch-ic ic--blue"><svg><use href="#i-pin"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span>
         <span class="launch-txt"><b>Kloser CRM</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.04s" href="apps/team-maverick/index.html" data-cat="sales" data-kw="maverick dashboard rankings merchants recruiting transfers team">
-        <span class="launch-ic ic--green"><svg><use href="#i-trophy"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span>
         <span class="launch-txt"><b>Maverick Dashboard</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.08s" href="apps/maverick-appointments/index.html" data-cat="sales" data-kw="appointments calendar schedule agents payouts maverick">
-        <span class="launch-ic ic--mint"><svg><use href="#i-cal"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>
         <span class="launch-txt"><b>Maverick Appointments</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
-      <a class="launch reveal" style="transition-delay:.12s" href="https://myappupload.com" target="_blank" rel="noopener" data-cat="sales" data-kw="appupload applications upload handwriting pdf coversheet clover menu documents">
-        <span class="launch-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
+      <a class="launch reveal" style="transition-delay:.12s" href="apps/appupload/public/index.html" data-cat="sales" data-kw="appupload applications upload handwriting pdf coversheet clover menu documents">
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span>
         <span class="launch-txt"><b>AppUpload</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.16s" href="apps/agentroute/index.html" data-cat="field" data-kw="route planner zip territory stops field days wpi">
-        <span class="launch-ic ic--blue"><svg><use href="#i-map"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span>
         <span class="launch-txt"><b>WPI Route</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.2s" href="apps/statement-generator/index.html" data-cat="finance" data-kw="statement studio pdf bank voided check letter billing generator">
-        <span class="launch-ic ic--green"><svg><use href="#i-receipt"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span>
         <span class="launch-txt"><b>Statement Studio</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.24s" href="apps/wpi-university/index.html" data-cat="training" data-kw="university training courses lessons certification learning wpi proposals">
-        <span class="launch-ic ic--mint"><svg><use href="#i-cap"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span>
         <span class="launch-txt"><b>WPI University</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.28s" href="apps/wholesale-payments/index.html" data-cat="sites" data-kw="wholesale payments website marketing merchant portal statements equipment">
-        <span class="launch-ic ic--navy"><svg><use href="#i-card"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>
         <span class="launch-txt"><b>Wholesale Payments</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.32s" href="apps/customerconnect/index.html" data-cat="sites" data-kw="customer connect texting sms loyalty kiosks reviews marketing site">
-        <span class="launch-ic ic--blue"><svg><use href="#i-chat"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span>
         <span class="launch-txt"><b>Customer Connect</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.36s" href="apps/integrations/index.html" data-cat="sales" data-kw="integrations atlas pos compatible brands directory saas fees rankings vendors flyer emv">
-        <span class="launch-ic ic--blue"><svg><use href="#i-grid"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span>
         <span class="launch-txt"><b>Integration Atlas</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.4s" href="apps/sales-questionnaire/index.html" data-cat="hr" data-kw="sales talent questionnaire assessment hiring candidate quiz score resume recruiting interview">
-        <span class="launch-ic ic--green"><svg><use href="#i-clipboard"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span>
         <span class="launch-txt"><b>Sales Questionnaire</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.44s" href="apps/bamboohr-automation/public/index.html" data-cat="hr" data-kw="hiring hq bamboohr hr onboarding candidates pipeline hire packet employee paperwork esign">
-        <span class="launch-ic ic--mint"><svg><use href="#i-user-plus"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span>
         <span class="launch-txt"><b>Hiring HQ</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.48s" href="apps/wpi-rewards/index.html" data-cat="sites" data-kw="wpi rewards merchant portal points redemption gift cards catalog cart loyalty">
-        <span class="launch-ic ic--navy"><svg><use href="#i-gift"/></svg></span>
+        <span class="launch-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span>
         <span class="launch-txt"><b>WPI Rewards</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
     </div>
     <p class="launch-empty" id="launchEmpty">No matches — try a different search.</p>
-
-    <div class="hub-stats">
-      <div class="stat reveal"><div class="value"><span data-count="13">0</span></div><div class="label">Applications in the hub</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.07s"><div class="value"><span data-count="103">0</span></div><div class="label">Screens &amp; pages inside</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.14s"><div class="value"><span data-count="11">0</span></div><div class="label">Install to a phone's home screen</div><div class="bar"></div></div>
-      <div class="stat reveal" style="transition-delay:.21s"><div class="value"><span data-count="9">0</span></div><div class="label">Work fully offline</div><div class="bar"></div></div>
-    </div>
   </div>
 </header>
 
@@ -673,7 +641,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--blue"><svg><use href="#i-pin"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span>
           <span class="qr-txt"><b>Kloser CRM</b></span>
           <span class="qr-meta">15 screens</span>
           <span class="qr-actions"><a class="qr-open" href="apps/kloser/index.html">Open</a></span>
@@ -697,7 +665,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--green"><svg><use href="#i-trophy"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span>
           <span class="qr-txt"><b>Maverick Dashboard</b></span>
           <span class="qr-meta">4 tabs</span>
           <span class="qr-actions"><a class="qr-open" href="apps/team-maverick/index.html">Open</a></span>
@@ -720,7 +688,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--mint"><svg><use href="#i-cal"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-q-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>
           <span class="qr-txt"><b>Maverick Appointments</b></span>
           <span class="qr-meta">4 views</span>
           <span class="qr-actions"><a class="qr-open" href="apps/maverick-appointments/index.html">Open</a></span>
@@ -742,30 +710,31 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span>
           <span class="qr-txt"><b>AppUpload</b></span>
-          <span class="qr-meta">Live site</span>
-          <span class="qr-actions"><a class="qr-open" href="https://myappupload.com" target="_blank" rel="noopener">Open</a></span>
+          <span class="qr-meta">12 forms</span>
+          <span class="qr-actions"><a class="qr-open" href="apps/appupload/public/index.html">Open</a></span>
         </div>
         <details>
           <summary><svg class="chev"><use href="#i-chev"/></svg>What's inside</summary>
           <ul class="qr-feats">
-            <li>Auto-detects Citizens vs Merrick application forms with confidence scoring</li>
-            <li>Claude vision reads the handwriting, the license and the voided check's MICR line</li>
-            <li>Fills the typed application PDF with crisp selectable text, anchored to the form's boxes</li>
-            <li>Generates the pre-filled Required Set Up Form coversheet</li>
-            <li>Review-and-edit every field before generating</li>
+            <li>Auto-detects Citizens, Merrick, FD North and PB&amp;T applications with confidence scoring</li>
+            <li>Claude vision reads the handwriting, the license and the voided check — photos or full PDFs</li>
+            <li>Fills all 12 forms: applications, coversheet, purchase order, Clover addendum, bank change, change request, Hemp &amp; CBD, CBD amendment and gift card setup</li>
+            <li>Multi-select any document combination into one merged, DBA-named packet PDF</li>
+            <li>Sales-rep picker, manual form chooser and merchant directory lookup</li>
+            <li>Sign-now signature pad stamped onto every signature line</li>
             <li>Menu → Clover: photograph a menu, download the filled inventory spreadsheet</li>
-            <li>Drag-and-drop or camera capture, up to 15 images</li>
-            <li>Everything processed in memory — documents are never stored</li>
+            <li>Past uploads &amp; downloads history with search, rep filter, reopen and re-download</li>
+            <li>API key, rep roster and history saved permanently in this browser</li>
           </ul>
-          <p class="qr-note">Opens the live app at <code>myappupload.com</code> — full processing, rep picker, form chooser and team history. The repo keeps a source snapshot under <code>apps/appupload</code>.</p>
+          <p class="qr-note">Runs entirely inside this dashboard — add an Anthropic API key once in its Settings (saved permanently in this browser) or flip on demo mode.</p>
         </details>
       </div>
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--blue"><svg><use href="#i-map"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-q-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span>
           <span class="qr-txt"><b>WPI Route</b></span>
           <span class="qr-meta">1-file app</span>
           <span class="qr-actions"><a class="qr-open" href="apps/agentroute/index.html">Open</a></span>
@@ -787,7 +756,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--green"><svg><use href="#i-receipt"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span>
           <span class="qr-txt"><b>Statement Studio</b></span>
           <span class="qr-meta">5 engines</span>
           <span class="qr-actions"><a class="qr-open" href="apps/statement-generator/index.html">Open</a></span>
@@ -809,7 +778,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--mint"><svg><use href="#i-cap"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span>
           <span class="qr-txt"><b>WPI University</b></span>
           <span class="qr-meta">15 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/wpi-university/index.html">Open</a></span>
@@ -831,7 +800,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--navy"><svg><use href="#i-card"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-q-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>
           <span class="qr-txt"><b>Wholesale Payments</b></span>
           <span class="qr-meta">10 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/wholesale-payments/index.html">Open</a></span>
@@ -853,7 +822,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--blue"><svg><use href="#i-chat"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span>
           <span class="qr-txt"><b>Customer Connect</b></span>
           <span class="qr-meta">43 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/customerconnect/index.html">Open</a></span>
@@ -875,7 +844,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--blue"><svg><use href="#i-grid"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-q-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span>
           <span class="qr-txt"><b>Integration Atlas</b></span>
           <span class="qr-meta">624 brands</span>
           <span class="qr-actions"><a class="qr-open" href="apps/integrations/index.html">Open</a></span>
@@ -896,7 +865,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--green"><svg><use href="#i-clipboard"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span>
           <span class="qr-txt"><b>Sales Questionnaire</b></span>
           <span class="qr-meta">Static PWA</span>
           <span class="qr-actions"><a class="qr-open" href="apps/sales-questionnaire/index.html">Open</a></span>
@@ -918,7 +887,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--mint"><svg><use href="#i-user-plus"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-q-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span>
           <span class="qr-txt"><b>Hiring HQ</b></span>
           <span class="qr-meta">Node backend</span>
           <span class="qr-actions"><a class="qr-open" href="apps/bamboohr-automation/public/index.html">Open</a></span>
@@ -941,7 +910,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
       <div class="qr reveal">
         <div class="qr-row">
-          <span class="qr-ic ic--navy"><svg><use href="#i-gift"/></svg></span>
+          <span class="qr-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-q-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-q-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span>
           <span class="qr-txt"><b>WPI Rewards</b></span>
           <span class="qr-meta">10 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/wpi-rewards/index.html">Open</a></span>
@@ -991,14 +960,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
         <div class="chart-row" role="row"><span class="name" role="rowheader">Integration Atlas</span><span class="track"><span class="fill" data-width="3"></span></span><span class="val" role="cell">1</span></div>
       </div>
     </div>
-
-    <p class="serve-note reveal">
-      <strong>Hosting note:</strong> serve this repository from any static host
-      (<code>python3 -m http.server 8000</code> locally). Kloser CRM loads its data over HTTP, so use a
-      server rather than opening files directly. AppUpload opens its live deployment at
-      <code>myappupload.com</code>; Hiring HQ's processing needs its Node backend
-      (<code>cd apps/bamboohr-automation &amp;&amp; npm install &amp;&amp; npm start</code>).
-    </p>
   </div>
 </section>
 
@@ -1009,7 +970,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   <div class="footer-inner">
     <img src="assets/logo.png" alt="Wholesale Payments">
     <p>Wholesale Payments</p>
-    <a class="to-top" href="#top">Back to top ↑</a>
   </div>
 </footer>
 
@@ -1022,7 +982,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   var g = document.getElementById("hubGreeting");
   var h = new Date().getHours();
   var word = h < 5 ? "Working late" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
-  g.textContent = word + " — " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  g.textContent = word + ", Blake — " + new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
 
   /* nav scroll state + progress line */
   var nav = document.getElementById("nav");
