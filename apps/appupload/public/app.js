@@ -82,7 +82,7 @@ function makeUploader({ dropzone, input, browseBtn, thumbs, onChange }) {
     pages.forEach((p, idx) => {
       const li = document.createElement("li");
       li.className = "thumb";
-      li.innerHTML = `<span class="page-badge">${idx + 1}</span><button class="remove-thumb" aria-label="Remove">×</button><img alt="upload ${idx + 1}" />`;
+      li.innerHTML = `<span class="page-badge">${idx + 1}</span><button class="remove-thumb" aria-label="Remove"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button><img alt="upload ${idx + 1}" />`;
       li.querySelector("img").src = p.dataUrl;
       li.querySelector(".remove-thumb").addEventListener("click", () => remove(p.id));
       thumbs.appendChild(li);
@@ -406,7 +406,7 @@ function renderMenuTable() {
       <td class="price-col"><input data-k="price" value="${esc(it.price)}" inputmode="decimal" /></td>
       <td class="cat-col"><input data-k="category" value="${esc(it.category)}" /></td>
       <td><input data-k="description" value="${esc(it.description)}" /></td>
-      <td><button class="row-del" title="Remove">×</button></td>`;
+      <td><button class="row-del" title="Remove" aria-label="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.15em"><path d="M5 5l14 14M19 5 5 19"/></svg></button></td>`;
     tr.querySelectorAll("input").forEach((inp) =>
       inp.addEventListener("input", () => (menuItems[idx][inp.dataset.k] = inp.value))
     );

@@ -10,6 +10,10 @@ const WPQRoster = (() => {
   const STORAGE_KEY = "wpq-candidates-v1";
   const REPORTS_KEY = "wpq-reports-v1";
 
+  // Inline checkmark glyph used in confirmation notes (static markup only).
+  const CHECK_SVG =
+    '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
   const $ = (sel) => document.querySelector(sel);
   const listEl = $("#roster-list");
   const emptyEl = $("#roster-empty");
@@ -114,7 +118,7 @@ const WPQRoster = (() => {
     }
     WPQEmail.saveManagerEmail(val);
     if (val) {
-      managerCheck.textContent = "Saved ✓";
+      managerCheck.innerHTML = "Saved " + CHECK_SVG;
       managerCheck.classList.add("show");
       window.clearTimeout(commitManagerEmail._t);
       commitManagerEmail._t = window.setTimeout(
@@ -302,7 +306,7 @@ const WPQRoster = (() => {
 
   function setNote(kind, msg) {
     sendbarNote.className = "sendbar-note" + (kind ? " " + kind : "");
-    sendbarNote.textContent = msg;
+    sendbarNote.innerHTML = msg; // messages are app-authored; dynamic values are escaped by callers
     window.clearTimeout(noteTimer);
     if (msg) {
       noteTimer = window.setTimeout(() => {
@@ -336,7 +340,7 @@ const WPQRoster = (() => {
         save();
         render();
         setNote("ok", mode === "sent"
-          ? `Questionnaire emailed to ${cand.email} ✓`
+          ? `Questionnaire emailed to ${escapeHtml(cand.email)} ${CHECK_SVG}`
           : "Your mail app has opened with the invite — just hit send.");
       } catch (err) {
         console.error("Invite failed:", err);
@@ -363,7 +367,7 @@ const WPQRoster = (() => {
         setNote(res.failed ? "error" : "ok",
           res.failed
             ? `Sent ${res.sent} of ${res.sent + res.failed} — retry the failed ones from their rows.`
-            : `Questionnaire sent to ${res.sent} candidate${res.sent === 1 ? "" : "s"} ✓`);
+            : `Questionnaire sent to ${res.sent} candidate${res.sent === 1 ? "" : "s"} ${CHECK_SVG}`);
       } else {
         setNote("ok", "Your mail app has opened with everyone added — just hit send.");
       }
@@ -385,7 +389,7 @@ const WPQRoster = (() => {
     sheetPhone.value = src.phone || "";
     sheetTitle.textContent = candidate ? "Edit candidate" : "New hire";
     sheetSub.innerHTML = fromResume
-      ? '<span class="from-resume">Read from the résumé ✓</span> — double-check the details, then save.'
+      ? `<span class="from-resume">Read from the résumé ${CHECK_SVG}</span> — double-check the details, then save.`
       : "Enter the candidate's contact details.";
     sheetForm.querySelectorAll(".field").forEach((f) => f.classList.remove("invalid"));
     backdrop.hidden = false;

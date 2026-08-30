@@ -46,5 +46,6 @@ python3 -m http.server 8000
   values** — swap in real account data when wiring to the API.
 - Terms and Privacy pages are clearly-marked placeholders; paste the official
   program text before launch.
-- Everything is self-contained: no fonts, images, or scripts are fetched from
-  the network.
+- Fonts and scripts are self-contained (nothing fetched from CDNs). Product
+  photos load from the live catalog's image host; when those are unreachable,
+  each card falls back to its built-in gradient art automatically.

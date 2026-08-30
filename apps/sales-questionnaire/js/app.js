@@ -252,7 +252,8 @@
       const mode = await WPQEmail.sendResults(state.result);
       if (mode === "sent") {
         completeStatus.classList.add("ok");
-        completeStatus.textContent = "Your responses have been delivered to the hiring team ✓";
+        completeStatus.innerHTML =
+          'Your responses have been delivered to the hiring team <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-0.15em" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
       } else if (mode === "mailto") {
         completeStatus.textContent =
           "One last step — your mail app has opened with your submission. Just press send.";

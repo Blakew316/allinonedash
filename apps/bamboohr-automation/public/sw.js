@@ -6,23 +6,24 @@
 // shell (HTML, CSS, JS, icons) is cached, which is what makes the app open
 // instantly from the home screen and survive a dropped signal.
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL_CACHE = `wp-shell-${VERSION}`;
 
-// Enough to open and run the app offline.
+// Enough to open and run the app offline. Relative to this script, so the
+// same worker serves a root deploy and a subpath deploy (the hub) alike.
 const SHELL = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/paperwork.html',
-  '/paperwork.css',
-  '/paperwork.js',
-  '/logo.png',
-  '/favicon.png',
-  '/apple-touch-icon.png',
-  '/icon-192.png',
-  '/manifest.webmanifest',
+  './',
+  './index.html',
+  './styles.css',
+  './app.js',
+  './paperwork.html',
+  './paperwork.css',
+  './paperwork.js',
+  './logo.png',
+  './favicon.png',
+  './apple-touch-icon.png',
+  './icon-192.png',
+  './manifest.webmanifest',
 ];
 
 self.addEventListener('install', (event) => {
@@ -69,7 +70,7 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // fonts and the like
-  if (url.pathname.startsWith('/api/')) return; // never cache hiring data
+  if (url.pathname.includes('/api/')) return; // never cache hiring data
 
   // Pages: always try the network so a new deploy lands, fall back to cache.
   if (request.mode === 'navigate') {
@@ -83,7 +84,7 @@ self.addEventListener('fetch', (event) => {
         } catch {
           return (
             (await caches.match(request)) ||
-            (await caches.match(url.pathname.startsWith('/paperwork') ? '/paperwork.html' : '/index.html')) ||
+            (await caches.match(/paperwork/.test(url.pathname) ? './paperwork.html' : './index.html')) ||
             new Response('Offline', { status: 503, headers: { 'content-type': 'text/plain' } })
           );
         }

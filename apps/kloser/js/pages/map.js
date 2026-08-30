@@ -824,7 +824,7 @@ function openAreaSearch(inArea, bounds, { onShow, onClear }) {
               <span class="grow" style="min-width:0;text-align:left">
                 <span class="list-title truncate" style="display:block">${esc(p.name)}</span>
                 <span class="list-sub truncate" style="display:block">${esc(p.address)}</span></span>
-              ${p.rating ? `<span class="badge outline">${p.rating}★</span>` : ''}</div>`).join('')
+              ${p.rating ? `<span class="badge outline" aria-label="Rated ${p.rating}">${p.rating}${icon('star', { size: 11 })}</span>` : ''}</div>`).join('')
         : '<div class="subtle" style="font-size:var(--fs-12);padding:var(--s-2)">Google found nothing new here.</div>';
     });
   }

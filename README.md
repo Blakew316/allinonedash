@@ -17,7 +17,9 @@ python3 -m http.server 8000     # from the repo root
 # open http://localhost:8000
 ```
 
-Any static host works (GitHub Pages included — `.nojekyll` is present). Serving over
+Any static host works (GitHub Pages included — `.nojekyll` is present). On Netlify,
+`netlify.toml` also deploys WPI Route's prospect-generator function — set
+`GOOGLE_PLACES_API_KEY` in the site's environment variables to enable Auto-generate. Serving over
 HTTP matters: Kloser CRM loads its datasets with `fetch`, so it won't run from `file://`.
 
 ## The apps

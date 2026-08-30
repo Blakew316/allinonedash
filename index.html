@@ -288,7 +288,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .launch-ic svg{width:28px;height:28px}
 .launch-txt{min-width:0}
 .launch-txt b{display:block;font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.015em;line-height:1.25}
-.launch-txt span{display:block;font-size:12.5px;color:var(--muted);font-weight:500;margin-top:2px}
 .launch-open{
   margin-left:auto;flex-shrink:0;
   width:34px;height:34px;border-radius:50%;
@@ -335,7 +334,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .qr-ic svg{width:21px;height:21px}
 .qr-txt{min-width:0;flex:1}
 .qr-txt b{display:block;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
-.qr-txt span{display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:1px}
 .qr-meta{font-size:12px;color:var(--faint);font-weight:500;flex-shrink:0;white-space:nowrap}
 .qr-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .qr-open{
@@ -365,7 +363,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 @media (max-width:720px){
   .qr-feats{grid-template-columns:1fr}
   .qr-meta{display:none}
-  .qr-txt span{display:none}
 }
 .qr-feats li{
   position:relative;padding-left:22px;font-size:13px;color:var(--body);line-height:1.55;
@@ -391,7 +388,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   padding:34px 38px;box-shadow:var(--shadow-sm);
 }
 .chart h3{font-size:17px;letter-spacing:-.01em;margin-bottom:4px}
-.chart .sub{font-size:13px;color:var(--muted);margin-bottom:26px}
+.chart h3{margin-bottom:22px}
 .chart-rows{display:flex;flex-direction:column;gap:13px}
 .chart-row{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
 @media (max-width:660px){.chart-row{grid-template-columns:146px 1fr 36px;gap:10px}.chart-row .name{font-size:12px}}
@@ -525,7 +522,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <div class="hub-head reveal">
       <p class="hub-greeting" id="hubGreeting">Welcome back</p>
       <h1>Every tool. <span class="accent">One place.</span></h1>
-      <p>The Wholesale Payments hub — pick a destination.</p>
     </div>
 
     <div class="hub-controls reveal" style="transition-delay:.08s">
@@ -548,67 +544,67 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <div class="launch-grid" id="launchGrid">
       <a class="launch reveal" href="apps/kloser/index.html" data-cat="sales" data-kw="kloser crm leads territory map routes gps pipeline field">
         <span class="launch-ic ic--blue"><svg><use href="#i-pin"/></svg></span>
-        <span class="launch-txt"><b>Kloser CRM</b><span>Field sales CRM</span></span>
+        <span class="launch-txt"><b>Kloser CRM</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.04s" href="apps/team-maverick/index.html" data-cat="sales" data-kw="maverick dashboard rankings merchants recruiting transfers team">
         <span class="launch-ic ic--green"><svg><use href="#i-trophy"/></svg></span>
-        <span class="launch-txt"><b>Maverick Dashboard</b><span>Team command center</span></span>
+        <span class="launch-txt"><b>Maverick Dashboard</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.08s" href="apps/maverick-appointments/index.html" data-cat="sales" data-kw="appointments calendar schedule agents payouts maverick">
         <span class="launch-ic ic--mint"><svg><use href="#i-cal"/></svg></span>
-        <span class="launch-txt"><b>Maverick Appointments</b><span>Team calendar</span></span>
+        <span class="launch-txt"><b>Maverick Appointments</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.12s" href="apps/appupload/public/index.html" data-cat="sales" data-kw="appupload applications upload handwriting pdf coversheet clover menu documents">
         <span class="launch-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
-        <span class="launch-txt"><b>AppUpload</b><span>Application processor</span></span>
+        <span class="launch-txt"><b>AppUpload</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.16s" href="apps/agentroute/index.html" data-cat="field" data-kw="route planner zip territory stops field days wpi">
         <span class="launch-ic ic--blue"><svg><use href="#i-map"/></svg></span>
-        <span class="launch-txt"><b>WPI Route</b><span>Route planner</span></span>
+        <span class="launch-txt"><b>WPI Route</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.2s" href="apps/statement-generator/index.html" data-cat="finance" data-kw="statement studio pdf bank voided check letter billing generator">
         <span class="launch-ic ic--green"><svg><use href="#i-receipt"/></svg></span>
-        <span class="launch-txt"><b>Statement Studio</b><span>Statement generator</span></span>
+        <span class="launch-txt"><b>Statement Studio</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.24s" href="apps/wpi-university/index.html" data-cat="training" data-kw="university training courses lessons certification learning wpi proposals">
         <span class="launch-ic ic--mint"><svg><use href="#i-cap"/></svg></span>
-        <span class="launch-txt"><b>WPI University</b><span>Training platform</span></span>
+        <span class="launch-txt"><b>WPI University</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.28s" href="apps/wholesale-payments/index.html" data-cat="sites" data-kw="wholesale payments website marketing merchant portal statements equipment">
         <span class="launch-ic ic--navy"><svg><use href="#i-card"/></svg></span>
-        <span class="launch-txt"><b>Wholesale Payments</b><span>Company site + portal</span></span>
+        <span class="launch-txt"><b>Wholesale Payments</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.32s" href="apps/customerconnect/index.html" data-cat="sites" data-kw="customer connect texting sms loyalty kiosks reviews marketing site">
         <span class="launch-ic ic--blue"><svg><use href="#i-chat"/></svg></span>
-        <span class="launch-txt"><b>Customer Connect</b><span>Product site</span></span>
+        <span class="launch-txt"><b>Customer Connect</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.36s" href="apps/integrations/index.html" data-cat="sales" data-kw="integrations atlas pos compatible brands directory saas fees rankings vendors flyer emv">
         <span class="launch-ic ic--blue"><svg><use href="#i-grid"/></svg></span>
-        <span class="launch-txt"><b>Integration Atlas</b><span>POS integrations directory</span></span>
+        <span class="launch-txt"><b>Integration Atlas</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.4s" href="apps/sales-questionnaire/index.html" data-cat="hr" data-kw="sales talent questionnaire assessment hiring candidate quiz score resume recruiting interview">
         <span class="launch-ic ic--green"><svg><use href="#i-clipboard"/></svg></span>
-        <span class="launch-txt"><b>Sales Questionnaire</b><span>Hiring assessment</span></span>
+        <span class="launch-txt"><b>Sales Questionnaire</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.44s" href="apps/bamboohr-automation/public/index.html" data-cat="hr" data-kw="hiring hq bamboohr hr onboarding candidates pipeline hire packet employee paperwork esign">
         <span class="launch-ic ic--mint"><svg><use href="#i-user-plus"/></svg></span>
-        <span class="launch-txt"><b>Hiring HQ</b><span>HR hiring automation</span></span>
+        <span class="launch-txt"><b>Hiring HQ</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
       <a class="launch reveal" style="transition-delay:.48s" href="apps/wpi-rewards/index.html" data-cat="sites" data-kw="wpi rewards merchant portal points redemption gift cards catalog cart loyalty">
         <span class="launch-ic ic--navy"><svg><use href="#i-gift"/></svg></span>
-        <span class="launch-txt"><b>WPI Rewards</b><span>Merchant rewards portal</span></span>
+        <span class="launch-txt"><b>WPI Rewards</b></span>
         <span class="launch-open"><svg><use href="#i-arrow"/></svg></span>
       </a>
     </div>
@@ -671,7 +667,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     <div class="section-head reveal">
       <p class="eyebrow">Quick Reference</p>
       <h2>Need the details?</h2>
-      <p>One line per destination — expand only if you want the full rundown.</p>
     </div>
 
     <div class="qr-list">
@@ -679,7 +674,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--blue"><svg><use href="#i-pin"/></svg></span>
-          <span class="qr-txt"><b>Kloser CRM</b><span>Leads, territory map, routes, schedules and GPS-verified visits — offline-capable.</span></span>
+          <span class="qr-txt"><b>Kloser CRM</b></span>
           <span class="qr-meta">15 screens</span>
           <span class="qr-actions"><a class="qr-open" href="apps/kloser/index.html">Open</a></span>
         </div>
@@ -703,7 +698,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--green"><svg><use href="#i-trophy"/></svg></span>
-          <span class="qr-txt"><b>Maverick Dashboard</b><span>Rep rankings, merchant health, pended deals, recruiting and call transfers.</span></span>
+          <span class="qr-txt"><b>Maverick Dashboard</b></span>
           <span class="qr-meta">4 tabs</span>
           <span class="qr-actions"><a class="qr-open" href="apps/team-maverick/index.html">Open</a></span>
         </div>
@@ -726,7 +721,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--mint"><svg><use href="#i-cal"/></svg></span>
-          <span class="qr-txt"><b>Maverick Appointments</b><span>Every agent's appointments by day, week, month or schedule digest.</span></span>
+          <span class="qr-txt"><b>Maverick Appointments</b></span>
           <span class="qr-meta">4 views</span>
           <span class="qr-actions"><a class="qr-open" href="apps/maverick-appointments/index.html">Open</a></span>
         </div>
@@ -748,7 +743,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--navy"><svg><use href="#i-doc-up"/></svg></span>
-          <span class="qr-txt"><b>AppUpload</b><span>Photograph a handwritten application — get back a typed PDF and coversheet.</span></span>
+          <span class="qr-txt"><b>AppUpload</b></span>
           <span class="qr-meta">Node backend</span>
           <span class="qr-actions"><a class="qr-open" href="apps/appupload/public/index.html">Open</a></span>
         </div>
@@ -771,7 +766,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--blue"><svg><use href="#i-map"/></svg></span>
-          <span class="qr-txt"><b>WPI Route</b><span>A six-day merchant route from a territory ZIP, with live team tracking.</span></span>
+          <span class="qr-txt"><b>WPI Route</b></span>
           <span class="qr-meta">1-file app</span>
           <span class="qr-actions"><a class="qr-open" href="apps/agentroute/index.html">Open</a></span>
         </div>
@@ -793,7 +788,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--green"><svg><use href="#i-receipt"/></svg></span>
-          <span class="qr-txt"><b>Statement Studio</b><span>Merchant statements, bank statements, voided checks and letters as PDFs.</span></span>
+          <span class="qr-txt"><b>Statement Studio</b></span>
           <span class="qr-meta">5 engines</span>
           <span class="qr-actions"><a class="qr-open" href="apps/statement-generator/index.html">Open</a></span>
         </div>
@@ -815,7 +810,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--mint"><svg><use href="#i-cap"/></svg></span>
-          <span class="qr-txt"><b>WPI University</b><span>30 courses and 228 lessons of rep training, plus the admin surface.</span></span>
+          <span class="qr-txt"><b>WPI University</b></span>
           <span class="qr-meta">15 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/wpi-university/index.html">Open</a></span>
         </div>
@@ -837,7 +832,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--navy"><svg><use href="#i-card"/></svg></span>
-          <span class="qr-txt"><b>Wholesale Payments</b><span>The public site — solutions, equipment, careers — with the merchant portal.</span></span>
+          <span class="qr-txt"><b>Wholesale Payments</b></span>
           <span class="qr-meta">10 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/wholesale-payments/index.html">Open</a></span>
         </div>
@@ -859,7 +854,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--blue"><svg><use href="#i-chat"/></svg></span>
-          <span class="qr-txt"><b>Customer Connect</b><span>The product site for texting, loyalty, kiosks and reviews.</span></span>
+          <span class="qr-txt"><b>Customer Connect</b></span>
           <span class="qr-meta">43 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/customerconnect/index.html">Open</a></span>
         </div>
@@ -881,7 +876,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--blue"><svg><use href="#i-grid"/></svg></span>
-          <span class="qr-txt"><b>Integration Atlas</b><span>The searchable directory of every processing-compatible software brand.</span></span>
+          <span class="qr-txt"><b>Integration Atlas</b></span>
           <span class="qr-meta">624 brands</span>
           <span class="qr-actions"><a class="qr-open" href="apps/integrations/index.html">Open</a></span>
         </div>
@@ -902,7 +897,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--green"><svg><use href="#i-clipboard"/></svg></span>
-          <span class="qr-txt"><b>Sales Questionnaire</b><span>Send candidates a scored sales assessment; results go straight to the manager.</span></span>
+          <span class="qr-txt"><b>Sales Questionnaire</b></span>
           <span class="qr-meta">Static PWA</span>
           <span class="qr-actions"><a class="qr-open" href="apps/sales-questionnaire/index.html">Open</a></span>
         </div>
@@ -924,7 +919,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--mint"><svg><use href="#i-user-plus"/></svg></span>
-          <span class="qr-txt"><b>Hiring HQ</b><span>The BambooHR pipeline: candidates, one-click hires and onboarding packets.</span></span>
+          <span class="qr-txt"><b>Hiring HQ</b></span>
           <span class="qr-meta">Node backend</span>
           <span class="qr-actions"><a class="qr-open" href="apps/bamboohr-automation/public/index.html">Open</a></span>
         </div>
@@ -947,7 +942,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="qr reveal">
         <div class="qr-row">
           <span class="qr-ic ic--navy"><svg><use href="#i-gift"/></svg></span>
-          <span class="qr-txt"><b>WPI Rewards</b><span>Merchants track points earned on processing and redeem them for rewards.</span></span>
+          <span class="qr-txt"><b>WPI Rewards</b></span>
           <span class="qr-meta">10 pages</span>
           <span class="qr-actions"><a class="qr-open" href="apps/wpi-rewards/index.html">Open</a></span>
         </div>
@@ -980,7 +975,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
     <div class="chart reveal">
       <h3>Screens &amp; pages per destination</h3>
-      <p class="sub">Distinct screens or pages inside each build</p>
       <div class="chart-rows" role="table" aria-label="Screens and pages per product">
         <div class="chart-row" role="row"><span class="name" role="rowheader">Customer Connect</span><span class="track"><span class="fill" data-width="100"></span></span><span class="val" role="cell">43</span></div>
         <div class="chart-row" role="row"><span class="name" role="rowheader">Kloser CRM</span><span class="track"><span class="fill" data-width="35"></span></span><span class="val" role="cell">15</span></div>
@@ -1013,7 +1007,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <footer class="footer">
   <div class="footer-inner">
     <img src="assets/logo.png" alt="Wholesale Payments">
-    <p>Wholesale Payments · The team hub — thirteen destinations, one place.</p>
+    <p>Wholesale Payments</p>
     <a class="to-top" href="#top">Back to top ↑</a>
   </div>
 </footer>

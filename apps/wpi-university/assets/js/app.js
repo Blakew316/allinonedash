@@ -376,8 +376,11 @@
                      icon: l.k === 'quiz' ? 'quiz' : (l.k === 'download' ? 'download' : 'play'), tone: '', g: 'Lessons' });
       });
     });
-    (D.people || []).forEach(function (p) {
-      items.push({ t: p.name, s: p.team + ' · ' + p.email, href: 'people.html?q=' + encodeURIComponent(p.name),
+    /* Prefer the live roster when the page has loaded it; fall back to the
+       demo people from data.js everywhere else. */
+    var ppl = (window.WPI_ROSTER && window.WPI_ROSTER.people) || D.people || [];
+    ppl.forEach(function (p) {
+      items.push({ t: p.name, s: (p.team || 'No team') + ' · ' + p.email, href: 'people.html?q=' + encodeURIComponent(p.name),
                    icon: 'user', tone: 'navy', g: 'People' });
     });
     return items;

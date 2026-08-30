@@ -898,9 +898,11 @@
         it.setAttribute('data-i', String(i));
         it.setAttribute('tabindex', '-1'); // strip is decorative; the calendar carries the accessible copy
         it.style.setProperty('--agent-c', agentColor(e.agent));
-        var when = isPayout(e) ? '💰' : (e.allDay || !e.start ? 'All day' : fmtTime(e.start));
+        var when = isPayout(e)
+          ? '<svg viewBox="0 0 24 24" width="1.1em" height="1.1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6.5" width="19" height="11" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg>'
+          : esc(e.allDay || !e.start ? 'All day' : fmtTime(e.start));
         var title = isPayout(e) ? e.title.replace(/^💰\s*/, '') : e.title; // the badge already carries the moneybag
-        it.innerHTML = '<span class="tick-dot"></span><span class="tick-time">' + esc(when) + '</span>' +
+        it.innerHTML = '<span class="tick-dot"></span><span class="tick-time">' + when + '</span>' +
           '<span class="tick-title">' + esc(title) + '</span><span class="tick-agent">' + esc(e.agent) + '</span>';
         seq.appendChild(it);
         var sp = el('span', 'tick-sep'); sp.textContent = '◆'; seq.appendChild(sp);
@@ -1076,7 +1078,7 @@
       s.setAttribute('aria-label', r.n + ' ' + r.l + ' — view breakdown');
       var num = el('span', 'ss-num'); num.textContent = r.n;
       var lab = el('span', 'ss-label'); lab.textContent = r.l;
-      var chev = el('span', 'ss-chev'); chev.textContent = '›';
+      var chev = el('span', 'ss-chev'); chev.innerHTML = '<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6 15.5 12l-6 6"/></svg>';
       s.appendChild(num); s.appendChild(lab); s.appendChild(chev);
       s.addEventListener('click', function () { openGlancePanel(r.kind); });
       host.appendChild(s);
@@ -1146,7 +1148,7 @@
     var b = $('banner');
     if (state.error) {
       b.hidden = false; b.className = 'banner warn';
-      b.innerHTML = '<span>⚠️ ' + esc(state.error) + '</span><button class="link-btn" data-act="retry">Try again</button><button class="link-btn" data-act="settings">Settings</button>';
+      b.innerHTML = '<span><svg viewBox="0 0 24 24" width="1.1em" height="1.1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10.2v4"/><path d="M12 17h.01"/></svg> ' + esc(state.error) + '</span><button class="link-btn" data-act="retry">Try again</button><button class="link-btn" data-act="settings">Settings</button>';
       return;
     }
     if (demoOn() && !scriptUrl()) {
@@ -1418,7 +1420,7 @@
     keys.sort();
 
     if (!keys.length) {
-      list.appendChild(emptyState('🗓️', 'No appointments' + (state.query ? ' match “' + state.query + '”' : ''), state.query ? 'Try a different search.' : 'Nothing scheduled in this range.'));
+      list.appendChild(emptyState('<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 2.8v3.4M16 2.8v3.4"/></svg>', 'No appointments' + (state.query ? ' match “' + state.query + '”' : ''), state.query ? 'Try a different search.' : 'Nothing scheduled in this range.'));
       wrap.appendChild(list); return wrap;
     }
     var todayK = dateKey(new Date());
@@ -1443,7 +1445,7 @@
     var timeHtml = e.allDay ? '<div class="st1">All day</div>'
       : '<div class="st1">' + esc(fmtTime(e.start)) + '</div>' + (e.end ? '<div class="st2">to ' + esc(fmtTime(e.end)) + '</div>' : '');
     var meta = ['<span class="ag">' + esc(e.agent) + '</span>'];
-    if (e.location) meta.push('<span>📍 ' + esc(e.location) + '</span>');
+    if (e.location) meta.push('<span><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> ' + esc(e.location) + '</span>');
     node.innerHTML =
       '<div class="sch-time">' + timeHtml + '</div>' +
       '<div class="sch-main">' +
@@ -1461,9 +1463,9 @@
     return '<span class="status-pill" style="--st-c:' + safeColor(c) + '">' + esc(status) + '</span>';
   }
 
-  function emptyState(emoji, title, sub) {
+  function emptyState(iconSvg, title, sub) {
     var e = el('div', 'empty');
-    e.innerHTML = '<div class="empty-emoji">' + emoji + '</div><div class="empty-title">' + esc(title) + '</div><p>' + esc(sub) + '</p>';
+    e.innerHTML = '<div class="empty-emoji">' + iconSvg + '</div><div class="empty-title">' + esc(title) + '</div><p>' + esc(sub) + '</p>';
     return e;
   }
 

@@ -1004,7 +1004,7 @@
       const pts = Math.round(amount * 0.2);
       await sleep(700);
       await playMachine();
-      screen.textContent = "Approved ✓";
+      screen.innerHTML = 'Approved <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg>';
       vidWrap.classList.add("is-ok");
       const chip = document.createElement("span");
       chip.className = "points-fly";

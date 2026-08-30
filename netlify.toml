@@ -1,0 +1,10 @@
+# Deployed-hub config. Static publishing is the repo root (unchanged);
+# this also deploys WPI Route's prospect generator so Auto-generate works
+# on the live site (set GOOGLE_PLACES_API_KEY in Netlify environment
+# variables). Hiring HQ and AppUpload run their own Node servers — deploy
+# apps/bamboohr-automation as its own Netlify site or run `npm start`.
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
