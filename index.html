@@ -225,9 +225,9 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
 
 .kpi-row{
-  position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px;
+  position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;
 }
-@media (max-width:1240px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1240px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 .kpi{
   background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
@@ -287,6 +287,68 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .ap-open svg{width:13px;height:13px}
 .ap-row:hover .ap-open{transform:translateX(3px)}
 .ap-row:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
+
+/* ---------------- daily brief layout ---------------- */
+.brief-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+@media (max-width:1150px){.brief-grid{grid-template-columns:1fr}}
+.brief-main{display:flex;flex-direction:column;min-width:0}
+.brief-main>.panel{margin-bottom:18px}
+.brief-rail{display:flex;flex-direction:column;gap:18px;min-width:0}
+.ros-row{display:flex;align-items:center;gap:11px;padding:7.5px 0;border-bottom:1px solid var(--hairline-soft)}
+.ros-row:last-child{border-bottom:none}
+.ros-av{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;color:#fff;font-size:11.5px;font-weight:750;
+  background:linear-gradient(135deg,var(--blue),var(--green));
+}
+.ros-txt{display:flex;flex-direction:column;line-height:1.25;min-width:0;margin-right:auto}
+.ros-txt b{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ros-txt i{font-style:normal;font-size:11px;color:var(--muted)}
+.chip--warn{color:#8a6410;background:rgba(228,190,98,.16)}
+.chip--off{color:var(--muted);background:var(--tint-navy)}
+.chip--bad{color:#a63a24;background:rgba(191,59,43,.1)}
+.chip--paper{margin-left:8px}
+.ros-row .chip{margin-left:8px}
+@media (max-width:640px){.chip--paper{display:none}}
+/* Today checklist */
+.today-bar{height:5px;border-radius:4px;background:var(--tint-navy);overflow:hidden;margin:-2px 0 10px}
+.today-bar span{display:block;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .5s var(--ease)}
+.today-item{display:flex;align-items:center;gap:10px;padding:7px 2px;border-bottom:1px solid var(--hairline-soft)}
+.today-item:last-child{border-bottom:none}
+.today-check{
+  width:20px;height:20px;flex-shrink:0;border-radius:7px;border:1.5px solid var(--hairline);
+  background:var(--surface);cursor:pointer;display:grid;place-items:center;color:#fff;
+  transition:background .2s var(--ease),border-color .2s var(--ease);
+}
+.today-check svg{opacity:0;transition:opacity .15s}
+.today-item.done .today-check{background:var(--green);border-color:var(--green)}
+.today-item.done .today-check svg{opacity:1}
+.today-txt{font-size:13px;font-weight:600;color:var(--body);line-height:1.4;min-width:0}
+.today-item.done .today-txt{color:var(--faint);text-decoration:line-through}
+.today-del{
+  margin-left:auto;flex-shrink:0;border:0;background:none;color:var(--faint);cursor:pointer;
+  width:24px;height:24px;border-radius:8px;display:grid;place-items:center;opacity:0;transition:opacity .15s;
+}
+.today-item:hover .today-del{opacity:1}
+.today-del:hover{color:#a63a24;background:rgba(191,59,43,.08)}
+.today-add{display:flex;gap:8px;margin-top:12px}
+.today-add input{
+  flex:1;min-width:0;height:36px;border-radius:10px;border:1px solid var(--hairline);
+  background:var(--bg);padding:0 12px;font-family:inherit;font-size:13px;color:var(--ink);
+}
+.today-add input::placeholder{color:var(--faint)}
+.today-add input:focus{outline:none;border-color:rgba(0,163,230,.45);box-shadow:0 0 0 3px rgba(0,163,230,.1)}
+.today-add button{
+  width:36px;height:36px;flex-shrink:0;border-radius:10px;border:0;cursor:pointer;
+  background:var(--navy);color:#fff;display:grid;place-items:center;
+}
+.today-add button:hover{background:#012182}
+/* Updates feed */
+.upd-row{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--hairline-soft)}
+.upd-row:last-child{border-bottom:none}
+.upd-row .dot{margin-top:6px}
+.upd-txt{font-size:12.5px;font-weight:600;color:var(--body);line-height:1.45;min-width:0}
+.upd-row i{font-style:normal;font-size:10.5px;font-weight:700;color:var(--faint);margin-left:auto;flex-shrink:0;padding-top:1px;font-variant-numeric:tabular-nums;letter-spacing:.02em;text-transform:uppercase}
 
 /* ---------------- footer ---------------- */
 .footer{border-top:1px solid var(--hairline-soft);background:var(--surface)}
@@ -411,36 +473,30 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <p class="hub-date" id="hubDate"></p>
     </div>
 
-    <div class="kpi-row" id="launchGrid">
-      <div class="kpi reveal"><i>Active pipeline</i><b>666</b></div>
-      <div class="kpi reveal" style="transition-delay:.03s"><i>Appointments</i><b>96</b></div>
-      <div class="kpi reveal" style="transition-delay:.06s"><i>GPS visits</i><b>100</b></div>
-      <div class="kpi reveal" style="transition-delay:.09s"><i>Deals signed</i><b>3</b></div>
-      <div class="kpi reveal" style="transition-delay:.12s"><i>Overdue activities</i><b>85</b></div>
-      <div class="kpi reveal" style="transition-delay:.15s"><i>Live leads</i><b>200</b></div>
-    </div>
+    <div class="brief-grid" id="launchGrid">
+      <div class="brief-main">
+        <div class="kpi-row">
+        <div class="kpi reveal"><i>Merchants on the books</i><b>57</b></div>
+        <div class="kpi reveal" style="transition-delay:.03s"><i>Team roster</i><b>10</b></div>
+        <div class="kpi reveal" style="transition-delay:.06s"><i>Training complete</i><b>4</b></div>
+        <div class="kpi reveal" style="transition-delay:.09s"><i>Paperwork outstanding</i><b>4</b></div>
+        </div>
 
-    <div class="panel-row reveal">
-      <section class="panel">
-        <div class="panel-head"><h2>Pipeline snapshot</h2><span class="panel-meta">605 of 666 leads · five stages</span></div>
-        <div class="bl-row"><span class="bl-label">Prospecting</span><span class="bl-track"><span class="bl-fill" style="width:100.0%"></span></span><b class="bl-val">506</b></div>
-        <div class="bl-row"><span class="bl-label">Contacted</span><span class="bl-track"><span class="bl-fill" style="width:17.0%"></span></span><b class="bl-val">86</b></div>
-        <div class="bl-row"><span class="bl-label">Appointment</span><span class="bl-track"><span class="bl-fill" style="width:1.6%"></span></span><b class="bl-val">8</b></div>
-        <div class="bl-row"><span class="bl-label">Deal signed</span><span class="bl-track"><span class="bl-fill" style="width:1.2%"></span></span><b class="bl-val">5</b></div>
-        <div class="bl-row"><span class="bl-label">Customer</span><span class="bl-track"><span class="bl-fill" style="width:1.2%"></span></span><b class="bl-val">0</b></div>
-      </section>
-      <section class="panel">
-        <div class="panel-head"><h2>Team &amp; reach</h2><span class="panel-meta">Across the suite</span></div>
-        <div class="kv-row"><span>Field reps</span><b>925</b></div>
-        <div class="kv-row"><span>Sales teams</span><b>48</b></div>
-        <div class="kv-row"><span>University roster</span><b>3,703</b></div>
-        <div class="kv-row"><span>Training lessons</span><b>228</b></div>
-        <div class="kv-row"><span>Merchant records</span><b>32,255</b></div>
-        <div class="kv-row"><span>Compatible brands</span><b>624</b></div>
-      </section>
-    </div>
+        <section class="panel reveal">
+          <div class="panel-head"><h2>Team Maverick — recruiting &amp; training</h2><span class="panel-meta">10 on the roster · 4 fully ramped</span></div>
+          <div class="ros-row"><span class="ros-av">JD</span><span class="ros-txt"><b>Jaden Dufek</b><i>Hired Mar 10</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
+          <div class="ros-row"><span class="ros-av">GC</span><span class="ros-txt"><b>Gabriel Craft</b><i>Hired Apr 1</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
+          <div class="ros-row"><span class="ros-av">JS</span><span class="ros-txt"><b>Judah Steelman</b><i>Hired Apr 15</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
+          <div class="ros-row"><span class="ros-av">TC</span><span class="ros-txt"><b>Timothy Constenius</b><i>Hired May 5</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
+          <div class="ros-row"><span class="ros-av">SS</span><span class="ros-txt"><b>Sadie Scoville</b><i>Hired May 20</i></span><span class="chip chip--upd"><span class="chip-dot"></span>In Progress</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
+          <div class="ros-row"><span class="ros-av">JC</span><span class="ros-txt"><b>Jason Coutcher</b><i>Hired Jun 2</i></span><span class="chip chip--upd"><span class="chip-dot"></span>In Progress</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
+          <div class="ros-row"><span class="ros-av">JS</span><span class="ros-txt"><b>Jaden Schoenrock</b><i>Hired Jun 8</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--warn chip--paper"><span class="chip-dot"></span>Sent</span></div>
+          <div class="ros-row"><span class="ros-av">LC</span><span class="ros-txt"><b>Lloyd Cruz</b><i>Hired Jun 10</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--warn chip--paper"><span class="chip-dot"></span>Sent</span></div>
+          <div class="ros-row"><span class="ros-av">SM</span><span class="ros-txt"><b>Seth Manshum</b><i>Hired Jun 14</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--warn chip--paper"><span class="chip-dot"></span>Sent</span></div>
+          <div class="ros-row"><span class="ros-av">WS</span><span class="ros-txt"><b>Walter Smith</b><i>Hired Jun 16</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--bad chip--paper"><span class="chip-dot"></span>Not Returned</span></div>
+        </section>
 
-    <section class="panel reveal" style="transition-delay:.06s">
+        <section class="panel reveal" >
       <div class="panel-head"><h2>Apps</h2><span class="panel-meta">13 live in the hub</span></div>
       <div class="ap-grid">
         <a class="ap-row" href="apps/kloser/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span><span class="ap-txt"><b>Kloser CRM</b><i>GPS-verified visits, territory map and routes for the field team.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
@@ -458,6 +514,30 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
         <a class="ap-row" href="apps/wpi-rewards/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span><span class="ap-txt"><b>WPI Rewards</b><i>Merchant points, redemption catalog and cart.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
       </div>
     </section>
+      </div>
+
+      <aside class="brief-rail">
+        <section class="panel reveal">
+          <div class="panel-head"><h2>Today</h2><span class="panel-meta" id="todayCount"></span></div>
+          <div class="today-bar"><span id="todayFill"></span></div>
+          <div id="todayList"></div>
+          <form id="todayAdd" class="today-add" autocomplete="off">
+            <input id="todayInput" type="text" placeholder="Add a task…" aria-label="Add a task" />
+            <button type="submit" aria-label="Add"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </form>
+        </section>
+
+        <section class="panel reveal" style="transition-delay:.05s">
+          <div class="panel-head"><h2>Updates</h2><span class="panel-meta">Latest changes</span></div>
+          <div class="upd-row"><span class="dot dot--blue"></span><span class="upd-txt">Homepage rebuilt as the Team Maverick daily brief</span><i>Aug 31</i></div>
+          <div class="upd-row"><span class="dot dot--green"></span><span class="upd-txt">WPI Route: team Places key — routes generate for everyone</span><i>Aug 31</i></div>
+          <div class="upd-row"><span class="dot dot--blue"></span><span class="upd-txt">AppUpload: app + coversheet + PO defaults; every form placement-audited</span><i>Aug 30</i></div>
+          <div class="upd-row"><span class="dot dot--green"></span><span class="upd-txt">AppUpload rebuilt fully inside the dashboard — 12 forms, signature pad, history</span><i>Aug 30</i></div>
+          <div class="upd-row"><span class="dot dot--mint"></span><span class="upd-txt">Hiring HQ: one-tap Add hire, error toasts gone</span><i>Aug 30</i></div>
+          <div class="upd-row"><span class="dot dot--navy"></span><span class="upd-txt">Apple-style icons and the suite launcher on all 89 pages</span><i>Aug 29</i></div>
+        </section>
+      </aside>
+    </div>
   </div>
 </div>
 
@@ -536,6 +616,61 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   }
   fitGreeting();
   window.addEventListener("resize", fitGreeting);
+
+  /* Today checklist — saved in this browser, fresh defaults each day */
+  var TKEY = "hub-checklist-v1";
+  var DEFAULT_TASKS = [
+    "Follow up with Walter Smith — paperwork not returned",
+    "Start training: Schoenrock, Cruz, Manshum, Smith",
+    "Check Sadie & Jason's training progress",
+    "Review Maverick rankings & merchant volume",
+    "Sync BambooHR recruiting in Maverick Dashboard",
+    "Clear yesterday's AppUpload packet queue"
+  ];
+  function todayStamp(){ return new Date().toLocaleDateString("en-CA"); }
+  function loadTasks(){
+    var st = null;
+    try { st = JSON.parse(localStorage.getItem(TKEY)); } catch(e){}
+    if (!st || st.date !== todayStamp()) {
+      st = { date: todayStamp(), items: DEFAULT_TASKS.map(function(t, i){ return { id: "d" + i, text: t, done: false }; }) };
+      saveTasks(st);
+    }
+    return st;
+  }
+  function saveTasks(st){ try { localStorage.setItem(TKEY, JSON.stringify(st)); } catch(e){} }
+  var tstate = loadTasks();
+  function renderTasks(){
+    var list = document.getElementById("todayList");
+    list.innerHTML = "";
+    tstate.items.forEach(function(item){
+      var row = document.createElement("div");
+      row.className = "today-item" + (item.done ? " done" : "");
+      var chk = document.createElement("button");
+      chk.type = "button"; chk.className = "today-check"; chk.setAttribute("aria-label", "Toggle");
+      chk.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+      chk.addEventListener("click", function(){ item.done = !item.done; saveTasks(tstate); renderTasks(); });
+      var txt = document.createElement("span");
+      txt.className = "today-txt"; txt.textContent = item.text;
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "today-del"; del.setAttribute("aria-label", "Remove");
+      del.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>';
+      del.addEventListener("click", function(){ tstate.items = tstate.items.filter(function(x){ return x !== item; }); saveTasks(tstate); renderTasks(); });
+      row.appendChild(chk); row.appendChild(txt); row.appendChild(del);
+      list.appendChild(row);
+    });
+    var done = tstate.items.filter(function(x){ return x.done; }).length;
+    document.getElementById("todayCount").textContent = done + " of " + tstate.items.length + " done";
+    document.getElementById("todayFill").style.width = (tstate.items.length ? (done / tstate.items.length) * 100 : 0) + "%";
+  }
+  renderTasks();
+  document.getElementById("todayAdd").addEventListener("submit", function(e){
+    e.preventDefault();
+    var inp = document.getElementById("todayInput");
+    var v = inp.value.trim();
+    if (!v) return;
+    tstate.items.push({ id: "c" + Date.now(), text: v, done: false });
+    saveTasks(tstate); renderTasks(); inp.value = "";
+  });
 
   /* scroll progress line */
   var progress = document.getElementById("scrollProgress");
