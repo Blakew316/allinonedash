@@ -218,9 +218,34 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hub-date{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--muted);margin:6px 0 0;font-variant-numeric:tabular-nums}
+.menu-btn{
+  display:none;flex-direction:column;justify-content:center;align-items:center;gap:4.5px;
+  width:42px;height:42px;flex-shrink:0;border-radius:13px;border:1px solid var(--hairline);
+  background:var(--surface);box-shadow:var(--shadow-sm);cursor:pointer;
+}
+.menu-btn span{display:block;width:17px;height:2px;border-radius:2px;background:var(--navy);
+  transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.menu-btn.open{position:relative;z-index:301}
+.menu-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0}
+.menu-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.scrim{
+  position:fixed;inset:0;z-index:299;background:rgba(13,20,64,.32);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  opacity:0;pointer-events:none;transition:opacity .3s var(--ease);
+}
+.scrim.show{opacity:1;pointer-events:auto}
 @media (max-width:900px){
-  .side{display:none}
+  .menu-btn{display:flex}
+  .side{
+    position:fixed;top:0;left:0;bottom:0;z-index:300;width:284px;max-height:none;
+    padding-top:calc(20px + env(safe-area-inset-top,0px));
+    transform:translateX(-104%);transition:transform .35s var(--ease);
+    box-shadow:0 0 60px rgba(13,20,64,.25);border-right:1px solid var(--hairline);
+  }
+  .side.open{transform:none}
   .maincol{padding:22px 18px 56px}
+  .main-head{align-items:center}
 }
 
 
@@ -403,8 +428,9 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <main id="top">
 
 <!-- ================= HUB / LAUNCHPAD ================= -->
+<div class="scrim" id="scrim" aria-hidden="true"></div>
 <div class="shell" id="launchpad">
-  <aside class="side" aria-label="Apps">
+  <aside class="side" id="sideNav" aria-label="Apps">
     <a class="side-brand" href="#top"><img src="assets/logo-mark.png" alt="" width="30" height="30"><span><b>Wholesale Payments</b><i>Team hub</i></span></a>
     <nav class="side-nav">
       <p class="side-label">Sales</p>
@@ -432,6 +458,9 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   <div class="maincol">
     <div class="hub-bg" aria-hidden="true"></div>
     <div class="main-head reveal">
+      <button id="menuBtn" class="menu-btn" aria-label="Apps menu" aria-expanded="false" aria-controls="sideNav">
+        <span></span><span></span><span></span>
+      </button>
       <div class="hub-head">
         <p class="hub-greeting" id="hubGreeting">Welcome back</p>
         <h1>Every tool. <span class="accent">One place.</span></h1>
@@ -567,6 +596,22 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   }
   fitGreeting();
   window.addEventListener("resize", fitGreeting);
+
+  /* mobile drawer: hamburger opens the app sidebar */
+  var menuBtn = document.getElementById("menuBtn");
+  var sideNav = document.getElementById("sideNav");
+  var scrim = document.getElementById("scrim");
+  function setMenu(open){
+    sideNav.classList.toggle("open", open);
+    scrim.classList.toggle("show", open);
+    menuBtn.classList.toggle("open", open);
+    menuBtn.setAttribute("aria-expanded", String(open));
+  }
+  menuBtn.addEventListener("click", function(){ setMenu(!sideNav.classList.contains("open")); });
+  scrim.addEventListener("click", function(){ setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") setMenu(false); });
+  sideNav.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", function(){ setMenu(false); }); });
+  window.addEventListener("resize", function(){ if (window.innerWidth > 900) setMenu(false); });
 
   /* Today checklist — saved in this browser, fresh defaults each day */
   var TKEY = "hub-checklist-v2";
