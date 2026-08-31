@@ -224,50 +224,69 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 
 
-.ov-grid{
-  position:relative;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+.kpi-row{
+  position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px;
 }
-@media (max-width:1240px){.ov-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:700px){.ov-grid{grid-template-columns:1fr}}
-.ov-card{
-  position:relative;display:flex;flex-direction:column;
-  background:var(--surface);border:1px solid var(--hairline);border-radius:22px;
+@media (max-width:1240px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+.kpi{
+  background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
+  padding:16px 18px 14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:2px;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.kpi i{font-style:normal;font-size:11.5px;font-weight:650;color:var(--muted);letter-spacing:-.005em;white-space:nowrap}
+.kpi b{font-size:28px;font-weight:750;color:var(--ink);letter-spacing:-.03em;line-height:1.15;font-variant-numeric:tabular-nums}
+.panel-row{position:relative;display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-bottom:18px}
+@media (max-width:1100px){.panel-row{grid-template-columns:1fr}}
+.panel{
+  position:relative;background:var(--surface);border:1px solid var(--hairline);border-radius:22px;
   padding:20px 22px 18px;box-shadow:var(--shadow-sm);
-  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease),opacity .3s var(--ease);
 }
-.ov-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(0,163,230,.3)}
-.ov-top{display:flex;align-items:center;gap:14px}
-.ov-ic{width:48px;height:48px;border-radius:14px}
-.ov-ic svg{width:30px;height:30px}
-.ov-name{display:flex;flex-direction:column;gap:4px;min-width:0}
-.ov-name b{font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:-.015em;line-height:1.2}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.panel-head h2{font-size:15px;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+.panel-meta{font-size:11.5px;font-weight:600;color:var(--faint);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bl-row{display:grid;grid-template-columns:110px 1fr 52px;align-items:center;gap:12px;padding:7px 0}
+.bl-label{font-size:12.5px;font-weight:600;color:var(--body);white-space:nowrap}
+.bl-track{height:10px;border-radius:6px;background:var(--tint-navy);overflow:hidden}
+.bl-fill{display:block;height:100%;border-radius:0 4px 4px 0;background:var(--blue);min-width:2px}
+.bl-val{font-size:13px;font-weight:700;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.kv-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:9.5px 0;border-bottom:1px solid var(--hairline-soft);
+}
+.kv-row:last-child{border-bottom:none}
+.kv-row span{font-size:13px;font-weight:600;color:var(--body)}
+.kv-row b{font-size:15px;font-weight:750;color:var(--ink);font-variant-numeric:tabular-nums}
+.ap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
+@media (max-width:1100px){.ap-grid{grid-template-columns:1fr}}
+.ap-row{
+  display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:12px;min-width:0;
+  transition:background .2s var(--ease);
+}
+.ap-row:hover{background:var(--tint-blue)}
+.ap-ic{width:36px;height:36px;border-radius:11px}
+.ap-ic svg{width:23px;height:23px}
+.ap-txt{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.ap-txt b{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.ap-txt i{font-style:normal;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip{
-  display:inline-flex;align-items:center;gap:5px;align-self:flex-start;
-  font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  border-radius:99px;padding:2.5px 9px;
+  display:inline-flex;align-items:center;gap:5px;flex-shrink:0;margin-left:auto;
+  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border-radius:99px;padding:2.5px 8px;
 }
 .chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 .chip--live{color:#067a3e;background:var(--tint-green)}
 .chip--upd{color:#0b57a4;background:var(--tint-blue)}
-.ov-open{
-  margin-left:auto;flex-shrink:0;align-self:flex-start;
-  width:32px;height:32px;border-radius:50%;
+.ap-open{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   background:var(--tint-blue);color:var(--blue);
-  transition:transform .3s var(--ease),background .3s var(--ease);
+  transition:transform .3s var(--ease);
 }
-.ov-open svg{width:14px;height:14px}
-.ov-card:hover .ov-open{transform:translateX(3px);background:rgba(0,163,230,.16)}
-.ov-note{font-size:13px;color:var(--muted);line-height:1.55;margin:12px 0 14px;letter-spacing:-.005em}
-.ov-metrics{
-  display:flex;gap:22px;margin-top:auto;
-  border-top:1px solid var(--hairline-soft);padding-top:13px;
-}
-.ov-metrics .m{display:flex;flex-direction:column;line-height:1.25;min-width:0}
-.ov-metrics b{font-size:18px;font-weight:750;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.ov-metrics i{font-style:normal;font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap}
-.ov-card:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
+.ap-open svg{width:13px;height:13px}
+.ap-row:hover .ap-open{transform:translateX(3px)}
+.ap-row:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
 
 /* ---------------- footer ---------------- */
 .footer{border-top:1px solid var(--hairline-soft);background:var(--surface)}
@@ -392,73 +411,53 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <p class="hub-date" id="hubDate"></p>
     </div>
 
-    <div class="ov-grid" id="launchGrid">
-      <a class="ov-card reveal" href="apps/kloser/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span><span class="ov-name"><b>Kloser CRM</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">GPS-verified visits, territory map and routes for the field team.</p>
-        <div class="ov-metrics"><span class="m"><b>925</b><i>Field reps</i></span><span class="m"><b>200</b><i>Live leads</i></span><span class="m"><b>15</b><i>Screens</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.03s" href="apps/team-maverick/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span><span class="ov-name"><b>Maverick Dashboard</b><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Patched to keep rendering when its live data connection drops.</p>
-        <div class="ov-metrics"><span class="m"><b>32,255</b><i>Merchant records</i></span><span class="m"><b>48</b><i>Teams</i></span><span class="m"><b>4</b><i>Tabs</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.06s" href="apps/maverick-appointments/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span><span class="ov-name"><b>Maverick Appointments</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">The team's shared appointment calendar across every agent.</p>
-        <div class="ov-metrics"><span class="m"><b>18</b><i>Agent calendars</i></span><span class="m"><b>4</b><i>Views</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.09s" href="apps/appupload/public/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span><span class="ov-name"><b>AppUpload</b><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Runs fully in this dashboard — packet builder, signature pad, history.</p>
-        <div class="ov-metrics"><span class="m"><b>12</b><i>Fillable forms</i></span><span class="m"><b>4</b><i>Bank applications</i></span><span class="m"><b>2</b><i>Workflows</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.12s" href="apps/agentroute/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span><span class="ov-name"><b>WPI Route</b><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Auto-generates a six-day route from one ZIP with the team key.</p>
-        <div class="ov-metrics"><span class="m"><b>6</b><i>Day routes</i></span><span class="m"><b>25</b><i>Stops per day</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.15s" href="apps/statement-generator/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span><span class="ov-name"><b>Statement Studio</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Merchant and bank statement PDFs generated in the browser.</p>
-        <div class="ov-metrics"><span class="m"><b>5</b><i>PDF engines</i></span><span class="m"><b>405</b><i>Portal statements</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.18s" href="apps/wpi-university/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span><span class="ov-name"><b>WPI University</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Rep training and certification with proposals built in.</p>
-        <div class="ov-metrics"><span class="m"><b>3,703</b><i>Reps on roster</i></span><span class="m"><b>228</b><i>Lessons</i></span><span class="m"><b>30</b><i>Courses</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.21s" href="apps/wholesale-payments/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span><span class="ov-name"><b>Wholesale Payments</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">The company site with the merchant portal inside.</p>
-        <div class="ov-metrics"><span class="m"><b>10</b><i>Pages</i></span><span class="m"><b>1</b><i>Merchant portal</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.24s" href="apps/customerconnect/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span><span class="ov-name"><b>Customer Connect</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">The text-marketing and loyalty platform's full site.</p>
-        <div class="ov-metrics"><span class="m"><b>43</b><i>Pages</i></span><span class="m"><b>2</b><i>Kiosk flows</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.27s" href="apps/integrations/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span><span class="ov-name"><b>Integration Atlas</b><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Every processing-compatible brand — ranked, priced, with who to call.</p>
-        <div class="ov-metrics"><span class="m"><b>624</b><i>Brands</i></span><span class="m"><b>33</b><i>Categories</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.30s" href="apps/sales-questionnaire/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span><span class="ov-name"><b>Sales Questionnaire</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Scored candidate assessment for hiring interviews.</p>
-        <div class="ov-metrics"><span class="m"><b>2</b><i>Screens</i></span><span class="m"><b>1</b><i>Scored quiz</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.33s" href="apps/bamboohr-automation/public/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span><span class="ov-name"><b>Hiring HQ</b><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Add hires on-device and send their onboarding packets.</p>
-        <div class="ov-metrics"><span class="m"><b>4</b><i>Tabs</i></span><span class="m"><b>1</b><i>Packet flow</i></span></div>
-      </a>
-      <a class="ov-card reveal" style="transition-delay:.36s" href="apps/wpi-rewards/index.html">
-        <div class="ov-top"><span class="ov-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span><span class="ov-name"><b>WPI Rewards</b><span class="chip chip--live"><span class="chip-dot"></span>Live</span></span><span class="ov-open"><svg><use href="#i-arrow"/></svg></span></div>
-        <p class="ov-note">Merchant points, redemption catalog and cart.</p>
-        <div class="ov-metrics"><span class="m"><b>34</b><i>Rewards</i></span><span class="m"><b>10</b><i>Pages</i></span></div>
-      </a>
+    <div class="kpi-row" id="launchGrid">
+      <div class="kpi reveal"><i>Active pipeline</i><b>666</b></div>
+      <div class="kpi reveal" style="transition-delay:.03s"><i>Appointments</i><b>96</b></div>
+      <div class="kpi reveal" style="transition-delay:.06s"><i>GPS visits</i><b>100</b></div>
+      <div class="kpi reveal" style="transition-delay:.09s"><i>Deals signed</i><b>3</b></div>
+      <div class="kpi reveal" style="transition-delay:.12s"><i>Overdue activities</i><b>85</b></div>
+      <div class="kpi reveal" style="transition-delay:.15s"><i>Live leads</i><b>200</b></div>
     </div>
+
+    <div class="panel-row reveal">
+      <section class="panel">
+        <div class="panel-head"><h2>Pipeline snapshot</h2><span class="panel-meta">605 of 666 leads · five stages</span></div>
+        <div class="bl-row"><span class="bl-label">Prospecting</span><span class="bl-track"><span class="bl-fill" style="width:100.0%"></span></span><b class="bl-val">506</b></div>
+        <div class="bl-row"><span class="bl-label">Contacted</span><span class="bl-track"><span class="bl-fill" style="width:17.0%"></span></span><b class="bl-val">86</b></div>
+        <div class="bl-row"><span class="bl-label">Appointment</span><span class="bl-track"><span class="bl-fill" style="width:1.6%"></span></span><b class="bl-val">8</b></div>
+        <div class="bl-row"><span class="bl-label">Deal signed</span><span class="bl-track"><span class="bl-fill" style="width:1.2%"></span></span><b class="bl-val">5</b></div>
+        <div class="bl-row"><span class="bl-label">Customer</span><span class="bl-track"><span class="bl-fill" style="width:1.2%"></span></span><b class="bl-val">0</b></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Team &amp; reach</h2><span class="panel-meta">Across the suite</span></div>
+        <div class="kv-row"><span>Field reps</span><b>925</b></div>
+        <div class="kv-row"><span>Sales teams</span><b>48</b></div>
+        <div class="kv-row"><span>University roster</span><b>3,703</b></div>
+        <div class="kv-row"><span>Training lessons</span><b>228</b></div>
+        <div class="kv-row"><span>Merchant records</span><b>32,255</b></div>
+        <div class="kv-row"><span>Compatible brands</span><b>624</b></div>
+      </section>
+    </div>
+
+    <section class="panel reveal" style="transition-delay:.06s">
+      <div class="panel-head"><h2>Apps</h2><span class="panel-meta">13 live in the hub</span></div>
+      <div class="ap-grid">
+        <a class="ap-row" href="apps/kloser/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span><span class="ap-txt"><b>Kloser CRM</b><i>GPS-verified visits, territory map and routes for the field team.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/team-maverick/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span><span class="ap-txt"><b>Maverick Dashboard</b><i>Patched to keep rendering when its live data connection drops.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/maverick-appointments/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span><span class="ap-txt"><b>Maverick Appointments</b><i>The team's shared appointment calendar across every agent.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/appupload/public/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span><span class="ap-txt"><b>AppUpload</b><i>Runs fully in this dashboard — packet builder, signature pad, history.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/agentroute/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span><span class="ap-txt"><b>WPI Route</b><i>Auto-generates a six-day route from one ZIP with the team key.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/statement-generator/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span><span class="ap-txt"><b>Statement Studio</b><i>Merchant and bank statement PDFs generated in the browser.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/wpi-university/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span><span class="ap-txt"><b>WPI University</b><i>Rep training and certification with proposals built in.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/wholesale-payments/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span><span class="ap-txt"><b>Wholesale Payments</b><i>The company site with the merchant portal inside.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/customerconnect/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span><span class="ap-txt"><b>Customer Connect</b><i>The text-marketing and loyalty platform's full site.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/integrations/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span><span class="ap-txt"><b>Integration Atlas</b><i>Every processing-compatible brand — ranked, priced, with who to call.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/sales-questionnaire/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span><span class="ap-txt"><b>Sales Questionnaire</b><i>Scored candidate assessment for hiring interviews.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/bamboohr-automation/public/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span><span class="ap-txt"><b>Hiring HQ</b><i>Add hires on-device and send their onboarding packets.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="ap-row" href="apps/wpi-rewards/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span><span class="ap-txt"><b>WPI Rewards</b><i>Merchant points, redemption catalog and cart.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
+      </div>
+    </section>
   </div>
 </div>
 
