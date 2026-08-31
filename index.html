@@ -160,32 +160,76 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 4px 10px rgba(13,20,64,.08)}
 .launch:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
 
-/* ---------------- hub / launchpad ---------------- */
-.hub{position:relative;padding:26px 0 84px;overflow:hidden}
-.hub-date{text-align:right;font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--muted);margin:0 0 58px;font-variant-numeric:tabular-nums}
+/* ---------------- integrated dashboard shell ---------------- */
+.shell{display:flex;max-width:1480px;margin:0 auto;align-items:stretch;min-height:calc(100vh - 40px)}
+.side{
+  width:256px;flex-shrink:0;display:flex;flex-direction:column;
+  background:var(--surface);border-right:1px solid var(--hairline-soft);
+  padding:20px 14px 16px;position:sticky;top:0;align-self:flex-start;
+  max-height:100vh;overflow-y:auto;
+}
+.side-brand{display:flex;align-items:center;gap:11px;padding:2px 10px 14px}
+.side-brand img{display:block}
+.side-brand span{display:flex;flex-direction:column;line-height:1.2}
+.side-brand b{font-size:14px;font-weight:750;color:var(--ink);letter-spacing:-.015em}
+.side-brand i{font-style:normal;font-size:11px;color:var(--muted);font-weight:500}
+.side-nav{display:flex;flex-direction:column;gap:2px}
+.side-label{
+  font-size:10.5px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);padding:16px 10px 5px;
+}
+.side-link{
+  display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;
+  font-size:13.5px;font-weight:600;color:var(--body);letter-spacing:-.005em;
+  transition:background .2s var(--ease),color .2s var(--ease);
+}
+.side-link:hover{background:var(--tint-blue);color:var(--ink)}
+.side-ic{display:inline-flex;width:22px;height:22px;flex-shrink:0}
+.side-ic svg{width:22px;height:22px}
+.side-user{
+  margin-top:auto;display:flex;align-items:center;gap:10px;
+  padding:14px 10px 2px;border-top:1px solid var(--hairline-soft);margin-top:18px;
+}
+.side-user-name{display:flex;flex-direction:column;line-height:1.25}
+.side-user-name b{font-size:13.5px;font-weight:700;color:var(--ink)}
+.side-user-name i{font-style:normal;font-size:11.5px;color:var(--muted)}
+.side-avatar{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;color:#fff;font-size:14px;font-weight:750;
+  background:linear-gradient(135deg,var(--blue),var(--green));
+}
+.maincol{flex:1;min-width:0;position:relative;padding:30px 34px 70px;overflow:hidden}
 .hub-bg{position:absolute;inset:0;pointer-events:none}
 .hub-bg::before,.hub-bg::after{content:"";position:absolute;border-radius:50%;filter:blur(70px)}
 .hub-bg::before{width:640px;height:640px;top:-280px;right:-160px;
   background:radial-gradient(circle,rgba(0,163,230,.10),transparent 65%)}
 .hub-bg::after{width:560px;height:560px;bottom:-320px;left:-180px;
   background:radial-gradient(circle,rgba(0,199,118,.09),transparent 65%)}
-.hub-head{position:relative;text-align:center;max-width:none;margin:0 auto 52px}
-.hub-head p.hub-greeting{font-size:clamp(24px,4.6vw,76px);font-weight:750;color:var(--ink);margin:0 0 12px;letter-spacing:-.035em;line-height:1.06;white-space:nowrap}
-.hub-head h1{
-  font-size:clamp(27px,4.2vw,54px);font-weight:750;letter-spacing:-.03em;
-  line-height:1.06;margin-bottom:6px;
+.main-head{
+  position:relative;display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;margin-bottom:26px;
 }
+.hub-head p.hub-greeting{
+  font-size:clamp(24px,2.7vw,34px);font-weight:750;color:var(--ink);
+  margin:0 0 4px;letter-spacing:-.025em;line-height:1.15;white-space:nowrap;
+}
+.hub-head h1{font-size:15.5px;font-weight:650;letter-spacing:-.01em;line-height:1.3;margin:0}
 .hub-head h1 .accent{
   background:linear-gradient(92deg,var(--blue),var(--green) 70%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hub-head p{font-size:17px;color:var(--muted)}
+.hub-date{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--muted);margin:6px 0 0;font-variant-numeric:tabular-nums}
+@media (max-width:900px){
+  .side{display:none}
+  .maincol{padding:22px 18px 56px}
+}
+
 
 .launch-grid{
   position:relative;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
 }
-@media (max-width:1020px){.launch-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1240px){.launch-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.launch-grid{grid-template-columns:1fr}}
 .launch{
   position:relative;display:flex;align-items:center;gap:18px;
@@ -242,7 +286,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   </defs>
 </svg>
 
-<a class="skip-link" href="#launchpad">Skip to the launchpad</a>
+<a class="skip-link" href="#launchGrid">Skip to the apps</a>
 <div class="brand-hairline" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <div class="brand-watermark" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
@@ -295,13 +339,40 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 <main id="top">
 
 <!-- ================= HUB / LAUNCHPAD ================= -->
-<header class="hub" id="launchpad">
-  <div class="hub-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <p class="hub-date" id="hubDate" aria-hidden="false"></p>
-    <div class="hub-head reveal">
-      <p class="hub-greeting" id="hubGreeting">Welcome back</p>
-      <h1>Every tool. <span class="accent">One place.</span></h1>
+<div class="shell" id="launchpad">
+  <aside class="side" aria-label="Apps">
+    <a class="side-brand" href="#top"><img src="assets/logo-mark.png" alt="" width="30" height="30"><span><b>Wholesale Payments</b><i>Team hub</i></span></a>
+    <nav class="side-nav">
+      <p class="side-label">Sales</p>
+      <a class="side-link" href="apps/kloser/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span>Kloser CRM</a>
+      <a class="side-link" href="apps/team-maverick/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span>Maverick Dashboard</a>
+      <a class="side-link" href="apps/maverick-appointments/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-s-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>Maverick Appointments</a>
+      <a class="side-link" href="apps/appupload/public/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span>AppUpload</a>
+      <a class="side-link" href="apps/integrations/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-s-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span>Integration Atlas</a>
+      <p class="side-label">Field</p>
+      <a class="side-link" href="apps/agentroute/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-s-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span>WPI Route</a>
+      <p class="side-label">Finance</p>
+      <a class="side-link" href="apps/statement-generator/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span>Statement Studio</a>
+      <p class="side-label">Training</p>
+      <a class="side-link" href="apps/wpi-university/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span>WPI University</a>
+      <p class="side-label">HR</p>
+      <a class="side-link" href="apps/sales-questionnaire/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span>Sales Questionnaire</a>
+      <a class="side-link" href="apps/bamboohr-automation/public/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span>Hiring HQ</a>
+      <p class="side-label">Sites</p>
+      <a class="side-link" href="apps/wholesale-payments/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-s-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span>Wholesale Payments</a>
+      <a class="side-link" href="apps/customerconnect/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-s-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span>Customer Connect</a>
+      <a class="side-link" href="apps/wpi-rewards/index.html"><span class="side-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-s-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-s-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span>WPI Rewards</a>
+    </nav>
+    <div class="side-user"><span class="side-avatar">B</span><span class="side-user-name"><b>Blake</b><i>Manager</i></span></div>
+  </aside>
+  <div class="maincol">
+    <div class="hub-bg" aria-hidden="true"></div>
+    <div class="main-head reveal">
+      <div class="hub-head">
+        <p class="hub-greeting" id="hubGreeting">Welcome back</p>
+        <h1>Every tool. <span class="accent">One place.</span></h1>
+      </div>
+      <p class="hub-date" id="hubDate"></p>
     </div>
 
     <div class="launch-grid" id="launchGrid">
@@ -372,7 +443,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       </a>
     </div>
   </div>
-</header>
+</div>
 
 <!-- ================= TICKER: NUMBERS ================= -->
 <div class="ticker ticker--stats" aria-label="Suite statistics">
