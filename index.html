@@ -225,9 +225,8 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 
 
 .kpi-row{
-  position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;
+  position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px;
 }
-@media (max-width:1240px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 .kpi{
   background:var(--surface);border:1px solid var(--hairline);border-radius:18px;
@@ -258,35 +257,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .kv-row:last-child{border-bottom:none}
 .kv-row span{font-size:13px;font-weight:600;color:var(--body)}
 .kv-row b{font-size:15px;font-weight:750;color:var(--ink);font-variant-numeric:tabular-nums}
-.ap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 22px}
-@media (max-width:1100px){.ap-grid{grid-template-columns:1fr}}
-.ap-row{
-  display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:12px;min-width:0;
-  transition:background .2s var(--ease);
-}
-.ap-row:hover{background:var(--tint-blue)}
-.ap-ic{width:36px;height:36px;border-radius:11px}
-.ap-ic svg{width:23px;height:23px}
-.ap-txt{display:flex;flex-direction:column;min-width:0;line-height:1.3}
-.ap-txt b{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
-.ap-txt i{font-style:normal;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chip{
-  display:inline-flex;align-items:center;gap:5px;flex-shrink:0;margin-left:auto;
-  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  border-radius:99px;padding:2.5px 8px;
-}
-.chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.chip--live{color:#067a3e;background:var(--tint-green)}
-.chip--upd{color:#0b57a4;background:var(--tint-blue)}
-.ap-open{
-  flex-shrink:0;width:28px;height:28px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--tint-blue);color:var(--blue);
-  transition:transform .3s var(--ease);
-}
-.ap-open svg{width:13px;height:13px}
-.ap-row:hover .ap-open{transform:translateX(3px)}
-.ap-row:hover .ic--logo{box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 6px 16px rgba(0,140,215,.18)}
 
 /* ---------------- daily brief layout ---------------- */
 .brief-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
@@ -294,8 +264,10 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .brief-main{display:flex;flex-direction:column;min-width:0}
 .brief-main>.panel{margin-bottom:18px}
 .brief-rail{display:flex;flex-direction:column;gap:18px;min-width:0}
-.ros-row{display:flex;align-items:center;gap:11px;padding:7.5px 0;border-bottom:1px solid var(--hairline-soft)}
-.ros-row:last-child{border-bottom:none}
+.ros-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 26px}
+@media (max-width:640px){.ros-grid{grid-template-columns:1fr}}
+.ros-row{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid var(--hairline-soft)}
+.ros-grid .ros-row:nth-last-child(-n+2){border-bottom:none}
 .ros-av{
   width:32px;height:32px;border-radius:50%;flex-shrink:0;
   display:grid;place-items:center;color:#fff;font-size:11.5px;font-weight:750;
@@ -304,12 +276,6 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 .ros-txt{display:flex;flex-direction:column;line-height:1.25;min-width:0;margin-right:auto}
 .ros-txt b{font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ros-txt i{font-style:normal;font-size:11px;color:var(--muted)}
-.chip--warn{color:#8a6410;background:rgba(228,190,98,.16)}
-.chip--off{color:var(--muted);background:var(--tint-navy)}
-.chip--bad{color:#a63a24;background:rgba(191,59,43,.1)}
-.chip--paper{margin-left:8px}
-.ros-row .chip{margin-left:8px}
-@media (max-width:640px){.chip--paper{display:none}}
 /* Today checklist */
 .today-bar{height:5px;border-radius:4px;background:var(--tint-navy);overflow:hidden;margin:-2px 0 10px}
 .today-bar span{display:block;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .5s var(--ease)}
@@ -329,7 +295,7 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   margin-left:auto;flex-shrink:0;border:0;background:none;color:var(--faint);cursor:pointer;
   width:24px;height:24px;border-radius:8px;display:grid;place-items:center;opacity:0;transition:opacity .15s;
 }
-.today-item:hover .today-del{opacity:1}
+.today-item:hover .today-del,.upd-row:hover .today-del{opacity:1}
 .today-del:hover{color:#a63a24;background:rgba(191,59,43,.08)}
 .today-add{display:flex;gap:8px;margin-top:12px}
 .today-add input{
@@ -344,11 +310,11 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
 }
 .today-add button:hover{background:#012182}
 /* Updates feed */
-.upd-row{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--hairline-soft)}
+.upd-row{display:flex;align-items:flex-start;gap:10px;padding:8px 2px;border-bottom:1px solid var(--hairline-soft)}
 .upd-row:last-child{border-bottom:none}
-.upd-row .dot{margin-top:6px}
-.upd-txt{font-size:12.5px;font-weight:600;color:var(--body);line-height:1.45;min-width:0}
-.upd-row i{font-style:normal;font-size:10.5px;font-weight:700;color:var(--faint);margin-left:auto;flex-shrink:0;padding-top:1px;font-variant-numeric:tabular-nums;letter-spacing:.02em;text-transform:uppercase}
+.upd-txt{font-size:13px;font-weight:600;color:var(--body);line-height:1.45;min-width:0;margin-right:auto}
+.upd-row i{font-style:normal;font-size:10.5px;font-weight:700;color:var(--faint);flex-shrink:0;padding-top:2px;font-variant-numeric:tabular-nums;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+.upd-empty{font-size:12.5px;color:var(--faint);padding:6px 2px 2px}
 
 /* ---------------- footer ---------------- */
 .footer{border-top:1px solid var(--hairline-soft);background:var(--surface)}
@@ -477,43 +443,29 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
       <div class="brief-main">
         <div class="kpi-row">
         <div class="kpi reveal"><i>Merchants on the books</i><b>57</b></div>
-        <div class="kpi reveal" style="transition-delay:.03s"><i>Team roster</i><b>10</b></div>
-        <div class="kpi reveal" style="transition-delay:.06s"><i>Training complete</i><b>4</b></div>
-        <div class="kpi reveal" style="transition-delay:.09s"><i>Paperwork outstanding</i><b>4</b></div>
+        <div class="kpi reveal" style="transition-delay:.03s"><i>Team roster</i><b>14</b></div>
         </div>
 
         <section class="panel reveal">
-          <div class="panel-head"><h2>Team Maverick — recruiting &amp; training</h2><span class="panel-meta">10 on the roster · 4 fully ramped</span></div>
-          <div class="ros-row"><span class="ros-av">JD</span><span class="ros-txt"><b>Jaden Dufek</b><i>Hired Mar 10</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
-          <div class="ros-row"><span class="ros-av">GC</span><span class="ros-txt"><b>Gabriel Craft</b><i>Hired Apr 1</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
-          <div class="ros-row"><span class="ros-av">JS</span><span class="ros-txt"><b>Judah Steelman</b><i>Hired Apr 15</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
-          <div class="ros-row"><span class="ros-av">TC</span><span class="ros-txt"><b>Timothy Constenius</b><i>Hired May 5</i></span><span class="chip chip--live"><span class="chip-dot"></span>Complete</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
-          <div class="ros-row"><span class="ros-av">SS</span><span class="ros-txt"><b>Sadie Scoville</b><i>Hired May 20</i></span><span class="chip chip--upd"><span class="chip-dot"></span>In Progress</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
-          <div class="ros-row"><span class="ros-av">JC</span><span class="ros-txt"><b>Jason Coutcher</b><i>Hired Jun 2</i></span><span class="chip chip--upd"><span class="chip-dot"></span>In Progress</span><span class="chip chip--live chip--paper"><span class="chip-dot"></span>Complete</span></div>
-          <div class="ros-row"><span class="ros-av">JS</span><span class="ros-txt"><b>Jaden Schoenrock</b><i>Hired Jun 8</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--warn chip--paper"><span class="chip-dot"></span>Sent</span></div>
-          <div class="ros-row"><span class="ros-av">LC</span><span class="ros-txt"><b>Lloyd Cruz</b><i>Hired Jun 10</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--warn chip--paper"><span class="chip-dot"></span>Sent</span></div>
-          <div class="ros-row"><span class="ros-av">SM</span><span class="ros-txt"><b>Seth Manshum</b><i>Hired Jun 14</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--warn chip--paper"><span class="chip-dot"></span>Sent</span></div>
-          <div class="ros-row"><span class="ros-av">WS</span><span class="ros-txt"><b>Walter Smith</b><i>Hired Jun 16</i></span><span class="chip chip--off"><span class="chip-dot"></span>Not Started</span><span class="chip chip--bad chip--paper"><span class="chip-dot"></span>Not Returned</span></div>
+          <div class="panel-head"><h2>Team Maverick roster</h2><span class="panel-meta">14 reps</span></div>
+          <div class="ros-grid">
+            <div class="ros-row"><span class="ros-av">AD</span><span class="ros-txt"><b>Adam Drexler</b></span></div>
+            <div class="ros-row"><span class="ros-av">GC</span><span class="ros-txt"><b>Gabriel Craft</b></span></div>
+            <div class="ros-row"><span class="ros-av">IJ</span><span class="ros-txt"><b>Isaac Jenkins</b></span></div>
+            <div class="ros-row"><span class="ros-av">JS</span><span class="ros-txt"><b>Jabe Schoenrock</b></span></div>
+            <div class="ros-row"><span class="ros-av">JD</span><span class="ros-txt"><b>Jaden Dufek</b></span></div>
+            <div class="ros-row"><span class="ros-av">JC</span><span class="ros-txt"><b>Jason Coutcher</b></span></div>
+            <div class="ros-row"><span class="ros-av">JS</span><span class="ros-txt"><b>Judah Steelman</b></span></div>
+            <div class="ros-row"><span class="ros-av">JW</span><span class="ros-txt"><b>Justin Woodruff</b></span></div>
+            <div class="ros-row"><span class="ros-av">LC</span><span class="ros-txt"><b>Lloyd Cruz</b></span></div>
+            <div class="ros-row"><span class="ros-av">MA</span><span class="ros-txt"><b>Max Alperstein</b></span></div>
+            <div class="ros-row"><span class="ros-av">SS</span><span class="ros-txt"><b>Sadie Scoville</b></span></div>
+            <div class="ros-row"><span class="ros-av">SM</span><span class="ros-txt"><b>Seth Manshum</b></span></div>
+            <div class="ros-row"><span class="ros-av">TC</span><span class="ros-txt"><b>Timothy Constenius</b></span></div>
+            <div class="ros-row"><span class="ros-av">WS</span><span class="ros-txt"><b>Walter Smith</b></span></div>
+          </div>
         </section>
 
-        <section class="panel reveal" >
-      <div class="panel-head"><h2>Apps</h2><span class="panel-meta">13 live in the hub</span></div>
-      <div class="ap-grid">
-        <a class="ap-row" href="apps/kloser/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#7ce577"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-0)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#86e57f"/></svg></span><span class="ap-txt"><b>Kloser CRM</b><i>GPS-verified visits, territory map and routes for the field team.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/team-maverick/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#00b34a"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-1)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#35d07f"/></svg></span><span class="ap-txt"><b>Maverick Dashboard</b><i>Patched to keep rendering when its live data connection drops.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/maverick-appointments/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#23c9a7"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-2)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span><span class="ap-txt"><b>Maverick Appointments</b><i>The team's shared appointment calendar across every agent.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/appupload/public/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#00339c"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#00339c"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-3)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#00a3e6"/></svg></span><span class="ap-txt"><b>AppUpload</b><i>Runs fully in this dashboard — packet builder, signature pad, history.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/agentroute/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c853"/><stop offset=".55" stop-color="#7ce577"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#00a3e6"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-4)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#0084e8"/></svg></span><span class="ap-txt"><b>WPI Route</b><i>Auto-generates a six-day route from one ZIP with the team key.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/statement-generator/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#4f6fe6"/><stop offset="1" stop-color="#9db8f7"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#4f6fe6"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-5)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#5ecffb"/></svg></span><span class="ap-txt"><b>Statement Studio</b><i>Merchant and bank statement PDFs generated in the browser.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/wpi-university/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00339c"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#5ecffb"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#0060d0"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-6)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00c853"/></svg></span><span class="ap-txt"><b>WPI University</b><i>Rep training and certification with proposals built in.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/wholesale-payments/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00a3e6"/><stop offset=".55" stop-color="#0084e8"/><stop offset="1" stop-color="#00339c"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-7)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#7ce577"/></svg></span><span class="ap-txt"><b>Wholesale Payments</b><i>The company site with the merchant portal inside.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/customerconnect/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12b5cb"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#a9efc5"/></linearGradient></defs><rect x="7" y="12" width="7" height="20" rx="2.6" fill="#12b5cb"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-8)"/><rect x="33" y="14" width="7" height="26" rx="2.6" fill="#5ecffb"/></svg></span><span class="ap-txt"><b>Customer Connect</b><i>The text-marketing and loyalty platform's full site.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/integrations/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0084e8"/><stop offset=".55" stop-color="#23c9a7"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="10" width="7" height="28" rx="2.6" fill="#23c9a7"/><rect x="18" y="8" width="11" height="32" rx="2.6" fill="url(#wpg-l-9)"/><rect x="33" y="16" width="7" height="18" rx="2.6" fill="#a9efc5"/></svg></span><span class="ap-txt"><b>Integration Atlas</b><i>Every processing-compatible brand — ranked, priced, with who to call.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/sales-questionnaire/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-10" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ce577"/><stop offset=".55" stop-color="#00c853"/><stop offset="1" stop-color="#00a3e6"/></linearGradient></defs><rect x="7" y="10" width="7" height="24" rx="2.6" fill="#0084e8"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-10)"/><rect x="33" y="16" width="7" height="22" rx="2.6" fill="#00339c"/></svg></span><span class="ap-txt"><b>Sales Questionnaire</b><i>Scored candidate assessment for hiring interviews.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/bamboohr-automation/public/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00b34a"/><stop offset=".55" stop-color="#35d07f"/><stop offset="1" stop-color="#c9f2a7"/></linearGradient></defs><rect x="7" y="14" width="7" height="24" rx="2.6" fill="#35d07f"/><rect x="18" y="6" width="11" height="36" rx="2.6" fill="url(#wpg-l-11)"/><rect x="33" y="10" width="7" height="22" rx="2.6" fill="#00a3e6"/></svg></span><span class="ap-txt"><b>Hiring HQ</b><i>Add hires on-device and send their onboarding packets.</i></span><span class="chip chip--upd"><span class="chip-dot"></span>Updated</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-        <a class="ap-row" href="apps/wpi-rewards/index.html"><span class="ap-ic ic--logo"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="wpg-l-12" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ecffb"/><stop offset=".55" stop-color="#00a3e6"/><stop offset="1" stop-color="#00c853"/></linearGradient></defs><rect x="7" y="8" width="7" height="26" rx="2.6" fill="#00c853"/><rect x="18" y="7" width="11" height="34" rx="2.6" fill="url(#wpg-l-12)"/><rect x="33" y="18" width="7" height="20" rx="2.6" fill="#86e57f"/></svg></span><span class="ap-txt"><b>WPI Rewards</b><i>Merchant points, redemption catalog and cart.</i></span><span class="chip chip--live"><span class="chip-dot"></span>Live</span><span class="ap-open"><svg><use href="#i-arrow"/></svg></span></a>
-      </div>
-    </section>
       </div>
 
       <aside class="brief-rail">
@@ -528,13 +480,12 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
         </section>
 
         <section class="panel reveal" style="transition-delay:.05s">
-          <div class="panel-head"><h2>Updates</h2><span class="panel-meta">Latest changes</span></div>
-          <div class="upd-row"><span class="dot dot--blue"></span><span class="upd-txt">Homepage rebuilt as the Team Maverick daily brief</span><i>Aug 31</i></div>
-          <div class="upd-row"><span class="dot dot--green"></span><span class="upd-txt">WPI Route: team Places key — routes generate for everyone</span><i>Aug 31</i></div>
-          <div class="upd-row"><span class="dot dot--blue"></span><span class="upd-txt">AppUpload: app + coversheet + PO defaults; every form placement-audited</span><i>Aug 30</i></div>
-          <div class="upd-row"><span class="dot dot--green"></span><span class="upd-txt">AppUpload rebuilt fully inside the dashboard — 12 forms, signature pad, history</span><i>Aug 30</i></div>
-          <div class="upd-row"><span class="dot dot--mint"></span><span class="upd-txt">Hiring HQ: one-tap Add hire, error toasts gone</span><i>Aug 30</i></div>
-          <div class="upd-row"><span class="dot dot--navy"></span><span class="upd-txt">Apple-style icons and the suite launcher on all 89 pages</span><i>Aug 29</i></div>
+          <div class="panel-head"><h2>Team updates</h2><span class="panel-meta" id="updCount"></span></div>
+          <div id="updList"></div>
+          <form id="updAdd" class="today-add" autocomplete="off">
+            <input id="updInput" type="text" placeholder="Share a work update…" aria-label="Share a work update" />
+            <button type="submit" aria-label="Post"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg></button>
+          </form>
         </section>
       </aside>
     </div>
@@ -618,14 +569,14 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
   window.addEventListener("resize", fitGreeting);
 
   /* Today checklist — saved in this browser, fresh defaults each day */
-  var TKEY = "hub-checklist-v1";
+  var TKEY = "hub-checklist-v2";
   var DEFAULT_TASKS = [
-    "Follow up with Walter Smith — paperwork not returned",
-    "Start training: Schoenrock, Cruz, Manshum, Smith",
-    "Check Sadie & Jason's training progress",
     "Review Maverick rankings & merchant volume",
-    "Sync BambooHR recruiting in Maverick Dashboard",
-    "Clear yesterday's AppUpload packet queue"
+    "Check yesterday's GPS visits in Kloser",
+    "Review today's appointments",
+    "Follow up on pending merchant applications",
+    "Send any new-hire onboarding packets",
+    "Post the team's numbers below"
   ];
   function todayStamp(){ return new Date().toLocaleDateString("en-CA"); }
   function loadTasks(){
@@ -670,6 +621,47 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.15}
     if (!v) return;
     tstate.items.push({ id: "c" + Date.now(), text: v, done: false });
     saveTasks(tstate); renderTasks(); inp.value = "";
+  });
+
+  /* Team updates — a work feed the team posts to, saved in this browser */
+  var UKEY = "hub-team-updates-v1";
+  function loadUpdates(){ try { return JSON.parse(localStorage.getItem(UKEY)) || []; } catch(e){ return []; } }
+  function saveUpdates(list){ try { localStorage.setItem(UKEY, JSON.stringify(list.slice(0, 100))); } catch(e){} }
+  var updates = loadUpdates();
+  function fmtUpd(ts){ return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric" }); }
+  function renderUpdates(){
+    var list = document.getElementById("updList");
+    list.innerHTML = "";
+    if (!updates.length) {
+      var em = document.createElement("div");
+      em.className = "upd-empty";
+      em.textContent = "Nothing posted yet.";
+      list.appendChild(em);
+    }
+    updates.forEach(function(u){
+      var row = document.createElement("div");
+      row.className = "upd-row";
+      var txt = document.createElement("span");
+      txt.className = "upd-txt"; txt.textContent = u.text;
+      var when = document.createElement("i");
+      when.textContent = fmtUpd(u.ts);
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "today-del"; del.setAttribute("aria-label", "Remove");
+      del.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>';
+      del.addEventListener("click", function(){ updates = updates.filter(function(x){ return x !== u; }); saveUpdates(updates); renderUpdates(); });
+      row.appendChild(txt); row.appendChild(when); row.appendChild(del);
+      list.appendChild(row);
+    });
+    document.getElementById("updCount").textContent = updates.length ? updates.length + (updates.length === 1 ? " post" : " posts") : "";
+  }
+  renderUpdates();
+  document.getElementById("updAdd").addEventListener("submit", function(e){
+    e.preventDefault();
+    var inp = document.getElementById("updInput");
+    var v = inp.value.trim();
+    if (!v) return;
+    updates.unshift({ text: v, ts: Date.now() });
+    saveUpdates(updates); renderUpdates(); inp.value = "";
   });
 
   /* scroll progress line */
